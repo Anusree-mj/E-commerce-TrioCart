@@ -1,0 +1,38 @@
+.row {
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+.head{
+    text-align: center;
+}
+.addForm {
+    border: 2px solid rgb(46, 44, 44);
+    width: 30rem;
+    padding: 0 1rem 0.8rem 1rem;
+    box-shadow: 8px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: centre;
+    max-width: 90%;
+    margin-top: 1rem;
+    background-color: #faf9f8;
+}
+
+.label {
+    margin: 0.5rem 0 0.3rem 0 !important;
+
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.addProduct_button {
+    width: 8rem;
+    text-align: center;
+
+}

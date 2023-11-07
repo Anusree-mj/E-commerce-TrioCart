@@ -1,0 +1,206 @@
+.logo {
+  width: 5rem;
+}
+
+.navbar {
+  background-color: #faf9f8 !important;
+  padding-top: 1rem !important;
+}
+
+/* .topnav {
+  overflow: hidden;
+}
+
+.topnav .icon {
+  display: none;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: #050505;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+} */
+
+.nav_icon_text {
+  font-size: 0.9rem !important;
+  color: black;
+  padding: 0 0.5rem;
+}
+
+.nav_icon_text:hover {
+  color: black;
+}
+
+.nav_icons {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.dropdown-item {
+  padding-left: 0.5rem !important;
+}
+
+.nav_icon {
+  width: 1.5rem;
+}
+
+.nav_icons:hover {
+  text-decoration: underline;
+}
+
+.nav_search {
+  display: none;
+}
+
+.dropdown_text {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: none;
+}
+
+.dropdown_text:hover {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.dropdown_icon {
+  width: 1rem;
+}
+
+.signup_txt {
+  color: blue;
+  font-size: 0.9rem;
+  font-weight: none;
+  text-decoration: underline;
+}
+
+.sub-nav {
+  padding-top: 1.3rem;
+  /* margin-top: 1rem; */
+}
+
+.search-wrapper {
+  display: inline;
+}
+
+.search-icon {
+  width: 1.5rem;
+}
+
+.search {
+  width: 30rem;
+  height: 2.5rem;
+  border: none;
+  outline: none;
+}
+
+.search-line {
+  border: 1px solid black;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  /* display: inline-block; */
+}
+
+.dropbtn {
+  margin: 0 2rem;
+}
+
+.category {
+  color: black;
+  display: block;
+}
+
+.category:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  padding: 1rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 100%;
+  left: 0;
+}
+
+.subCategory {
+  color: black;
+  font-size: 0.8rem;
+  text-decoration: none;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.dropbtn:hover .dropdown-content {
+  display: block;
+}
+
+.subCategory:hover {
+  color: black;
+  background-color: #f8f9fa;
+}
+
+.show-products {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 980px) {
+  .sub-nav {
+    display: none;
+  }
+
+  .nav_search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 790px) {
+  .logo {
+    width: 5rem;
+  }
+
+  .nav_icon_text {
+    display: none;
+  }
+
+  /* .topnav{
+    background-color: white;
+  }
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  } */
+}

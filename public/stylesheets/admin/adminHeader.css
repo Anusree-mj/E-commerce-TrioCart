@@ -1,0 +1,51 @@
+.logo {
+    width: 5rem;
+  }
+
+.navbar {
+    background-color: #faf9f8 !important;
+    padding-top:1.2rem !important ;
+}
+
+.nav_icon_text {
+    font-size: 1rem !important;
+    color: black;
+    padding: 0 0.5rem;
+}
+
+.nav_icon_text:hover {
+    color: black;
+}
+
+.nav_icons {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+}
+
+.nav_icon {
+    width: 2rem;
+}
+
+.nav_icons:hover {
+    text-decoration: underline;
+}
+@media only screen and (max-width: 790px){
+    .nav_icon_text {
+        font-size: 0.5rem;
+    }
+    .logo{
+        width: 5rem;
+    }
+    .nav_icon {
+        width: 1.5rem;
+    }
+}
+@media only screen and (max-width: 480px){
+    .nav_icon_text {
+        display: none;
+    }
+}

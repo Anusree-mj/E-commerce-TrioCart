@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminHeader.css">
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <section>
+        <div class="container">
+            <div class="subHead">
+                <p class=" subHead-txt">Admin product page</p>
+                <a type="button" href="/admin/addProduct" class="btn btn-info ml-auto addButton">Add Product</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Tittle</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">SubCategory</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach((product, index)=> { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= index + 1 %>
+                                </th>
+                                <td><img style="width: 50px; height: 50px;" src="<%= product.image %>" alt=""></td>
+                                <td>
+                                    <%= product.name%>
+                                </td>
+                                <td>
+                                    <%= product.description%>
+                                </td>
+                                <td>
+                                    <%= product.category%>
+                                </td>
+                                <td>
+                                    <%= product.subCategory%>
+                                </td>
+                                <td>
+                                    <%= product.size%>
+                                </td>
+                                <td>
+                                    <%= product.price%>
+                                </td>
+                                <td><a href="/editProducts/{{_id}}"><img src="/images/edit.png" alt="edit"></a> </td>
+                                <td> <a href="/deleteProducts/{{_id}}"><img style="width: 1.2rem;"
+                                            src="/images/delete.png" alt="delete"></a></td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
+    </section>

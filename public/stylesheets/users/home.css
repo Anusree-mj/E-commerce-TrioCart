@@ -1,0 +1,43 @@
+
+.subTittle {
+    margin-top: 1rem;
+}
+
+.subTittle-text {
+    font-size: 0.8rem;
+}
+
+.sec-2 {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.festive {
+    background-image: url(/images/festive.jpg);
+    width: 80%;
+    max-width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 1rem 0;
+}
+.festive-head{
+    font-weight: bolder;
+}
+.festive-sub{
+    font-size: 0.8rem;
+}
+.button-txt{
+    font-weight: bolder;
+}
+@media only screen and (max-width: 980px) {
+    .sbtxt {
+        display: none;
+    }
+}
