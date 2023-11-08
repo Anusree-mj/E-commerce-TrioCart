@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminHeader.css">
+<link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="addForm">
+            <h2 class="head">Edit a Product</h2>
+            <label class="label" for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" value="<%= productData.name%>">
+
+            <label class="label" for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3"><%= productData.description %></textarea> 
+            </textarea>
+
+            <label class="label" for="detailed_description">Detailed-Description</label>
+            <textarea class="form-control" id="detailed_description" rows="3"><%= productData.detailed_description %>
+            </textarea>
+
+            <label class="label" for="category">Category</label>
+            <input type="text" class="form-control" name="category" id="category" value="<%= productData.category%>"> <label
+                class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" name="subCategory" id="subCategory" value="<%= productData.subCategory%>">
+
+            <label class="label" for="size">Size</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">S</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="size" type="checkbox" id="size-m" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">M</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="size" type="checkbox" id="size-l" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">L</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="size" type="checkbox" id="size-xl" value="option4">
+                <label class="form-check-label" for="inlineCheckbox3">XL</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5">
+                <label class="form-check-label" for="inlineCheckbox3">XXL</label>
+            </div>
+
+            <label class="label" for="price">Price</label>
+            <input type="text" class="form-control" name="price" id="price" value="<%= productData.price%>">
+
+            <label class="label" for="image">Image</label>
+            <input type="file" class="form-control-file" name="image" id="image" accept="image/*" value="<%= productData.image%>">
+
+            <div class="button">
+                <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                    onclick="editProduct('<%= productData._id %>')">Edit</button>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/admin/updateProduct.js"></script>

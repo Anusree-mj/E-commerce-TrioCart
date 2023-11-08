@@ -1,4 +1,3 @@
-
 .subTittle {
     margin-top: 1rem;
 }
@@ -7,7 +6,7 @@
     font-size: 0.8rem;
 }
 
-.sec-2 {
+.page-sectn {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -15,8 +14,8 @@
 
 }
 
-.festive {
-    background-image: url(/images/festive.jpg);
+.pagesctn-contnts {
+    background-image: url(/images/navbar/festive.jpg);
     width: 80%;
     max-width: 100%;
     background-position: center;
@@ -27,17 +26,129 @@
     color: white;
     padding: 1rem 0;
 }
-.festive-head{
+
+.pagesctn-head {
+    font-weight: bolder;
+    font-size: 1.8rem;
+}
+
+.pagesctn-sub {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.button-txt {
     font-weight: bolder;
 }
-.festive-sub{
-    font-size: 0.8rem;
+
+.adds-sectn {
+    position: relative;
+    margin: 1.5rem 0;
+    max-width: 100%;
 }
-.button-txt{
+
+.adds-img {
+    width: 80rem;
+    max-width: 80%;
+    height: 100vh;
+   
+}
+
+.adds-contnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 75%;
+    left: 35%;
+    width: 26rem;
+    max-width: 50%;
+}
+
+.head {
+    font-size: 2rem;
     font-weight: bolder;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.2rem !important;
 }
+
+.subHead {
+    font-size: 1rem;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0.2rem !important;
+}
+
+.head-men {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: rgb(177, 174, 174);
+    margin-bottom: 0.2rem !important;
+}
+
+.subHead-men {
+    font-size: 1rem;
+    font-weight: bolder;
+    color: rgb(177, 174, 174);
+    margin-bottom: 0.2rem !important;
+}
+
+.shopNow-btn {
+    width: 6.2rem;
+    text-align: center;
+}
+
+.pagesctn2-contnts {
+    background-image: url(/images/home/pgImage2.jpg);
+    width: 80%;
+    max-width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 1rem 0;
+}
+
 @media only screen and (max-width: 980px) {
     .sbtxt {
         display: none;
+    }
+
+    .adds-img {
+        height: 60vh;
+    }
+
+    .head {
+        font-size: 1rem;
+    }
+
+    .head-men {
+        font-size: 1rem;
+    }
+
+    .subHead {
+        font-size: 0.5rem;
+    }
+
+    .subHead-men {
+        font-size: 0.5rem;
+    }
+    .shopNow-btn{
+        width: 5rem;
+        font-size: 0.9rem;
+        padding: 0.2rem 0.2rem 0 0.2rem !important;
+    }
+    .adds-contnt{
+        left: 25%;
+        top: 70%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .adds-img {
+        height: 40vh;
     }
 }
