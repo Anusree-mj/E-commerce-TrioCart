@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/stylesheets/users/header.css">
+<script src="/javascripts/header.js"></script>
 <header>
     <!-- !1st section -->
     <nav class="navbar navbar-light bg-light justify-content-between">
@@ -18,31 +20,12 @@
                     aria-haspopup="true" aria-expanded="false">Profile</p>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/profile.png" alt="">
-                        <a class="dropdown_text" href="#">My profile</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/orders.png" alt="">
-                        <a class="dropdown_text" href="#">Orders</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/coupon.png" alt="">
-                        <a class="dropdown_text" href="#">Coupons</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/giftCard.png" alt="">
-                        <a class="dropdown_text" href="#">Gift Cards</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/notification.png" alt="">
-                        <a class="dropdown_text" href="#">Notifications</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/logout.png" alt="">
-                        <a class="dropdown_text" href="#">Logout</a>
+                        <p class="userWlcme">Hello User!</p>
+                        <p class="loginTxt">To access your account please</p>
+                        <a href="/login" type="button" class="btn btn-info loginBttn">Login</a>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item signup_txt" href="#">New around here? Signup</a>
+                    <a class="dropdown-item signup_txt" href="/signup">New around here? Signup</a>
                 </div>
             </div>
             <div class="nav_icons nav_search">
@@ -108,7 +91,7 @@
         <div class="search-wrapper ">
             <img class="search-icon" src="/images/navbar/search.png" alt="">
             <input class="search" type="search" id="search" placeholder="Search products...">
-            <hr class="search-line" />
+            <hr class="search-line" style="margin-top: 0 !important;"/>
         </div>
     </div>
 </header>

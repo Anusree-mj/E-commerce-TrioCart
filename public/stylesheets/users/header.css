@@ -59,6 +59,14 @@
   display: none;
 }
 
+.welcomeTxt{
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 0 ;
+  color: rgb(163, 11, 11);
+  font-weight: bold;
+}
+
 .dropdown_text {
   color: rgb(0, 0, 0);
   text-decoration: none;
@@ -76,12 +84,16 @@
 }
 
 .signup_txt {
-  color: blue;
+  color:#17a2b8;
   font-size: 0.9rem;
   font-weight: none;
+  
+}
+.signup_txt:hover{
+  color:#17a2b8;
+  font-family: bold;
   text-decoration: underline;
 }
-
 .sub-nav {
   padding-top: 1.3rem;
   /* margin-top: 1rem; */
@@ -160,6 +172,21 @@
 .show-products {
   font-size: 0.9rem;
   font-weight: bold;
+}
+.userWlcme{
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+.loginTxt{
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+.loginBttn{
+width: 4rem;
+margin-top:0.5rem ;
+border-radius: 0.2rem;
 }
 
 @media only screen and (max-width: 980px) {

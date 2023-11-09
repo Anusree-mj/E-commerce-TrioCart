@@ -51,7 +51,7 @@
     width: 80rem;
     max-width: 80%;
     height: 100vh;
-   
+
 }
 
 .adds-contnt {
@@ -112,6 +112,34 @@
     padding: 1rem 0;
 }
 
+.card-deck {
+    max-width: 80%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+    /* Change this to your desired color */
+}
+
+.newArrivals {
+    margin: 1.5rem 0;
+}
+/* .card-body{
+    padding: 0.5rem ;
+} */
+.card-title {
+    font-size: 1rem ;
+}
+.productImg{
+    position: relative;
+}
+.wishlist{
+    position: absolute;
+    top: 70%;
+    left: 85%;
+    width: 1.5rem;
+}
 @media only screen and (max-width: 980px) {
     .sbtxt {
         display: none;
@@ -136,12 +164,14 @@
     .subHead-men {
         font-size: 0.5rem;
     }
-    .shopNow-btn{
+
+    .shopNow-btn {
         width: 5rem;
         font-size: 0.9rem;
         padding: 0.2rem 0.2rem 0 0.2rem !important;
     }
-    .adds-contnt{
+
+    .adds-contnt {
         left: 25%;
         top: 70%;
     }
