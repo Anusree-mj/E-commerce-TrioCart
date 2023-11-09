@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressLayouts = require('express-ejs-layouts');
 var multer = require('multer');
+var session = require('express-session')
 
 const storage = multer.diskStorage({
   destination: ((req, file, cb) => {
@@ -36,6 +37,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
+app.use(session({
+  secret:'Key',
+  cookie:{maxAge:604800000},
+  resave:true,
+  saveUninitialized:true
+}))
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
+  res.header('Pragma', 'no-cache');
+  res.header('Expires', '0');
+  next();
+});
+
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);

@@ -50,4 +50,39 @@ const ProductSchema = new mongoose.Schema(
 
 const productsCollection = new mongoose.model("products", ProductSchema);
 
-module.exports = { productsCollection };
+const UserSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        phone: {
+            type: Number,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            required: true,
+        },
+        password:{
+            type: String,
+            required: true,
+        },
+        isBlocked: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+
+const usersCollection = new mongoose.model("users", UserSchema);
+
+
+module.exports = { productsCollection, usersCollection };

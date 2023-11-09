@@ -78,6 +78,18 @@ module.exports = {
             return { status: 'nok' }
         }
 
+    },
+    getNewArrivalProducts: async () => {
+        try {
+            const category1 = await collection.productsCollection.find({ category: "Ladies" }).limit(4);
+            const category2 = await collection.productsCollection.find({ category: "Mens" }).limit(4);
+            const category3 = await collection.productsCollection.find({ category: "Kids" }).limit(4);
+            const category4 = await collection.productsCollection.find({ category: "Girls" }).limit(4);
+            return {category1,category2,category3,category4}
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 }
 
