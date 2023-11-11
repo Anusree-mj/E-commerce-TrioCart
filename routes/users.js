@@ -59,6 +59,57 @@ router.post('/login', function(req, res, next) {
   })
 });
 
+//get all products of ladies
+router.get('/view/ladies',function(req,res,next){
+  productHelpers.viewAllLadiesProducts().then((products)=>{
+    res.render('users/ladies',{ layout: 'layout/layout',products})
+  })
+})
+
+//get all products of mens
+router.get('/view/mens',function(req,res,next){
+  productHelpers.viewAllMensProducts().then((products)=>{
+    res.render('users/mens',{ layout: 'layout/layout',products})
+  })
+})
+
+//get all products of girls
+router.get('/view/girls',function(req,res,next){
+  productHelpers.viewAllGirlsProducts().then((products)=>{
+    res.render('users/girls',{ layout: 'layout/layout',products})
+  })
+})
+
+//get all products of boys
+router.get('/view/boys',function(req,res,next){
+  productHelpers.viewAllBoysProducts().then((products)=>{
+    res.render('users/boys',{ layout: 'layout/layout',products})
+  })
+})
+
+//search each subcategory products
+router.post('/products',function(req,res,next){
+  const category= req.body.category;
+  const subcategory=req.body.subCategory
+ productHelpers.viewEachSubcategoryProducts(category,subcategory).then((products)=>{
+    console.log(products)
+  if(products){
+    res.status(200).json({ status: "ok", category,subcategory });
+  }else{
+    res.status(500).json({ status: "nok" });
+  }
+ })
+ })
+
+//get each subcategory products
+router.get('/products/:category/:subcategory',function(req,res,next){
+   const category=req.params.category
+   const subCategory=req.params.subcategory
+   productHelpers.viewEachSubcategoryProducts(category,subCategory).then((products)=>{
+   res.render('users/products',{ layout: 'layout/layout',products})
+   })
+})
+
 //logout
 router.get('/logout',function(req,res,next){
   req.session.destroy(function (err) {

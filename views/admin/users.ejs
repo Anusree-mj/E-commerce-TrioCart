@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <section>
+        <div style="padding: 2rem;"></div>
+        <div class="container">
+            <div class="table-responsive" >
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone number</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Is Blocked</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((user, index)=> { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= index + 1 %>
+                                </th>
+                                <td>
+                                    <%= user.name%>
+                                </td>
+                                <td>
+                                    <%= user.email%>
+                                </td>
+                                <td>
+                                    <%= user.phone%>
+                                </td>
+                                <td>
+                                    <%= user.address%>
+                                </td>
+                                <td id="isBlocked">
+                                   <%= user.isBlocked %>
+                                    <a href="/admin/users/<%= user._id %>/edit"><img src="/images/navbar/edit.png" alt="edit"></a>
+                                </td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <script src="/javascripts/admin/adminUsers.js"></script>
+    

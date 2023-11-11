@@ -1,3 +1,4 @@
+const { Admin } = require('mongodb');
 const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/TrioCart")
@@ -84,5 +85,21 @@ const UserSchema = new mongoose.Schema(
 
 const usersCollection = new mongoose.model("users", UserSchema);
 
+const AdminCollection=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    }
+})
+const adminCollection= new mongoose.model("admins",AdminCollection)
 
-module.exports = { productsCollection, usersCollection };
+
+module.exports = { productsCollection, usersCollection,adminCollection };

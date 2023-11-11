@@ -94,3 +94,25 @@ function editProduct(product_id){
         })
         .catch(err => console.log(err));
 }
+
+function editUser(user_id){
+   let isBlocked=Boolean
+    isBlocked=document.getElementById('isBlocked')
+    console.log(isBlocked)
+    if(isBlocked!==true || isBlocked!== false){
+        alert ("Enter either true or false")
+    }else{
+        fetch(`http://localhost:3000/admin/users/${user_id}`, {
+        method: "PATCH",
+        body: isBlocked,
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                window.location.replace("/admin/users");
+            } else {
+                alert("Editing user failed");
+            }
+        })
+        .catch(err => console.log(err));
+    }
+}

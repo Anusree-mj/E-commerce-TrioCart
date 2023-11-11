@@ -85,7 +85,56 @@ module.exports = {
             const category2 = await collection.productsCollection.find({ category: "Mens" }).limit(4);
             const category3 = await collection.productsCollection.find({ category: "Kids" }).limit(4);
             const category4 = await collection.productsCollection.find({ category: "Girls" }).limit(4);
-            return {category1,category2,category3,category4}
+            return { category1, category2, category3, category4 }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewAllLadiesProducts: async () => {
+        try {
+            const products = await collection.productsCollection.find({ category: "Ladies" })
+            return products
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewAllMensProducts: async () => {
+        try {
+            const products = await collection.productsCollection.find({ category: "Mens" })
+            return products
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewAllGirlsProducts: async () => {
+        try {
+            const kids = await collection.productsCollection.find({ category: "Kids" })
+            const girls = await collection.productsCollection.find({ category: "Girls" })
+            const products = girls.concat(kids);
+            return products
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewAllBoysProducts: async () => {
+        try {
+            const kids = await collection.productsCollection.find({ category: "Kids" })
+            const boys = await collection.productsCollection.find({ category: "Boys" })
+            const products = boys.concat(kids);
+            return products
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewEachSubcategoryProducts: async (category,subcategory)=>{
+        try{
+         const products = await collection.productsCollection.find({category:category, subCategory:subcategory})
+        return products
         }
         catch (err) {
             console.log(err)
