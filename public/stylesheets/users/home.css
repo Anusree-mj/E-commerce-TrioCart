@@ -125,21 +125,26 @@
 .newArrivals {
     margin: 1.5rem 0;
 }
+
 /* .card-body{
     padding: 0.5rem ;
 } */
 .card-title {
-    font-size: 1rem ;
+    font-size: 1rem;
 }
-.productImg{
+
+.productImg {
     position: relative;
 }
-.wishlist{
+
+.wishlist {
     position: absolute;
     top: 70%;
     left: 85%;
     width: 1.5rem;
 }
+
+
 @media only screen and (max-width: 980px) {
     .sbtxt {
         display: none;

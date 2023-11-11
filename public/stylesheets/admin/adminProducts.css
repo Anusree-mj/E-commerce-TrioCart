@@ -9,15 +9,12 @@
     align-items: center;
     justify-content: space-around;
     max-width: 100%;
+    padding-bottom: 2rem;
 }
 
 .subHead-txt {
     text-align: center;
     font-size: 2rem;
-}
-
-.table {
-    margin-top: 1rem;
 }
 
 .addButton {
