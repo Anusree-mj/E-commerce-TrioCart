@@ -7,6 +7,8 @@ var expressLayouts = require('express-ejs-layouts');
 var multer = require('multer');
 var session = require('express-session')
 
+
+//multer
 const storage = multer.diskStorage({
   destination: ((req, file, cb) => {
     cb(null, './public/images/products');
@@ -37,6 +39,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
+
+//session
 app.use(session({
   secret:'Key',
   cookie:{maxAge:604800000},

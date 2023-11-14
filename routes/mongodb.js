@@ -69,9 +69,12 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        password:{
+        password: {
             type: String,
             required: true,
+        },
+        otp: {
+            type: String,
         },
         isBlocked: {
             type: Boolean,
@@ -85,21 +88,80 @@ const UserSchema = new mongoose.Schema(
 
 const usersCollection = new mongoose.model("users", UserSchema);
 
-const AdminCollection=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const TemporaryUserSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        phone: {
+            type: Number,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        otp: {
+            type: String,
+        },
+        isBlocked: {
+            type: Boolean,
+            default: false,
+        }
     },
-    email:{
-        type:String,
-        required:true
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+
+const tempUsersCollection = new mongoose.model("tempUsers", TemporaryUserSchema);
+
+const SessionSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: String,
+        },
+        sessionId: {
+            type: String,
+        }
     },
-    password:{
-        type:String,
-        required:true
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+
+const sessionCollection = new mongoose.model("sessions", SessionSchema);
+
+const AdminCollection = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 })
-const adminCollection= new mongoose.model("admins",AdminCollection)
+const adminCollection = new mongoose.model("admins", AdminCollection)
 
 
-module.exports = { productsCollection, usersCollection,adminCollection };
+module.exports = {
+    productsCollection,
+    usersCollection,
+    tempUsersCollection,
+    adminCollection,
+    sessionCollection
+};
