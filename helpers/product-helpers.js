@@ -4,7 +4,13 @@ const path = require('path');
 module.exports = {
     addProduct: async (body, image) => {
         try {
-            const imagePathWithoutPublic = path.relative('public', image.path);
+                        const imagePathWithoutPublic = path.relative('public', image.path);
+                        console.log('imagePathWithoutPublic:', imagePathWithoutPublic);
+            // const detailedImagesWithoutPublic = files.detailedImages.map(image => {
+            //     const { path, ...rest } = image;
+            //     return rest;
+            // });
+            // console.log("detailedImagesWithoutPublic:", detailedImagesWithoutPublic);
             const data = {
                 name: body.name,
                 description: body.description,
@@ -14,6 +20,7 @@ module.exports = {
                 price: body.price,
                 size: body.size,
                 image: imagePathWithoutPublic
+                // detailedImages: detailedImagesWithoutPublic
             };
             await collection.productsCollection.insertMany([data]);
             return { status: 'ok' }
@@ -135,7 +142,7 @@ module.exports = {
         try {
             const sideBarProduct = await collection.productsCollection.find({ category: category })
             const products = await collection.productsCollection.find({ category: category, subCategory: subcategory })
-            return {sideBarProduct,products}
+            return { sideBarProduct, products }
         }
         catch (err) {
             console.log(err)

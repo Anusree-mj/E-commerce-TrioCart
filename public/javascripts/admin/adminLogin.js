@@ -29,7 +29,7 @@ function handleSubmit() {
     }).then((res) => res.json())
     .then((data) => {
         if (data.status === "ok") {
-            window.location.replace("/admin/adminDashboard");
+            window.location.replace("/admin");
         } else {
             alert("Invalid Username or Password");
 

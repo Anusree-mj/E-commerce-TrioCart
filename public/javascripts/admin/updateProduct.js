@@ -1,12 +1,18 @@
 function addProduct() {
-    let formData = new FormData();
+    let name = document.getElementById('name').value;
+    let description = document.getElementById('description').value;
+    let detailed_description = document.getElementById('detailed_description').value;
+    let category = document.getElementById('category').value;
+    let subCategory = document.getElementById('subCategory').value;
+    let price = document.getElementById('price').value;
 
-    formData.append('name', document.getElementById('name').value);
-    formData.append('description', document.getElementById('description').value);
-    formData.append('detailed_description', document.getElementById('detailed_description').value);
-    formData.append('category', document.getElementById('category').value);
-    formData.append('subCategory', document.getElementById('subCategory').value);
-    formData.append('price', document.getElementById('price').value);
+    let formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('detailed_description', detailed_description);
+    formData.append('category', category);
+    formData.append('subCategory', subCategory);
+    formData.append('price', price);
 
     let imageInput = document.getElementById('image');
     if (imageInput.files.length > 0) {
@@ -32,8 +38,9 @@ function addProduct() {
 
     formData.append('size', selectedSizes.join(','));
 
-   
-    fetch("http://localhost:3000/admin/products", {
+    console.log(formData);
+
+    fetch("http://localhost:3000/admin/product", {
         method: "POST",
         body: formData,
     }).then((res) => res.json())
@@ -47,7 +54,8 @@ function addProduct() {
         .catch(err => console.log(err));
 }
 
-function editProduct(product_id){
+
+function editProduct(product_id) {
     let formData = new FormData();
 
     formData.append('name', document.getElementById('name').value);
@@ -61,6 +69,11 @@ function editProduct(product_id){
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
     }
+
+    // let detailedimageInput = document.getElementById('detailedimage');
+    // for (let i = 0; i < detailedimageInput.files.length; i++) {
+    //     formData.append('detailedImages', detailedimageInput.files[i]);
+    // }
 
     let sizeMap = {
         'option1': 'S',
@@ -95,24 +108,24 @@ function editProduct(product_id){
         .catch(err => console.log(err));
 }
 
-function editUser(user_id){
-   let isBlocked=Boolean
-    isBlocked=document.getElementById('isBlocked')
+function editUser(user_id) {
+    let isBlocked = Boolean
+    isBlocked = document.getElementById('isBlocked')
     console.log(isBlocked)
-    if(isBlocked!==true || isBlocked!== false){
-        alert ("Enter either true or false")
-    }else{
+    if (isBlocked !== true || isBlocked !== false) {
+        alert("Enter either true or false")
+    } else {
         fetch(`http://localhost:3000/admin/users/${user_id}`, {
-        method: "PATCH",
-        body: isBlocked,
-    }).then((res) => res.json())
-        .then((data) => {
-            if (data.status === "ok") {
-                window.location.replace("/admin/users");
-            } else {
-                alert("Editing user failed");
-            }
-        })
-        .catch(err => console.log(err));
+            method: "PATCH",
+            body: isBlocked,
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    window.location.replace("/admin/users");
+                } else {
+                    alert("Editing user failed");
+                }
+            })
+            .catch(err => console.log(err));
     }
 }

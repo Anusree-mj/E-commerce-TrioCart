@@ -43,6 +43,10 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        detailedImages:{
+            type:Array,
+            requires:true,
+        },
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps
@@ -157,11 +161,27 @@ const AdminCollection = new mongoose.Schema({
 })
 const adminCollection = new mongoose.model("admins", AdminCollection)
 
+const AdminSessionSchema = new mongoose.Schema(
+    {
+        adminId: {
+            type: String,
+        },
+        sessionId: {
+            type: String,
+        }
+    },
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+
+const adminSessionCollection = new mongoose.model("adminSessions", AdminSessionSchema);
 
 module.exports = {
     productsCollection,
     usersCollection,
     tempUsersCollection,
     adminCollection,
-    sessionCollection
+    sessionCollection,
+    adminSessionCollection
 };
