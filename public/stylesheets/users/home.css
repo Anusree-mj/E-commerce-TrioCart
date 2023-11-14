@@ -180,6 +180,9 @@
         left: 25%;
         top: 70%;
     }
+    .card{
+        width: 15rem;
+    }
 }
 
 @media only screen and (max-width: 480px) {

@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="/stylesheets/users/login.css">
+<section>
+    <%- include('../../partials/loginHeader') %>
+
+        <div class=" d-flex flex-column justify-content-center align-items-center ">
+            <div class="login-form">
+                <h2 class="head">Verification required</h2>
+                <p>To continue, complete this verification step. We've sent an OTP to your email.
+                    Please enter it below to complete verification.</p>
+                <label class="label">
+                    Enter OTP
+                </label>
+                <input type="text" class=" form-control" id="otp" aria-describedby="emailHelp" placeholder=" otp">
+
+                <div class="coloumn">
+                    <button class="btn  btn-success btn-lg btn-block" type="button" id="signin_button"
+                        onclick="verifyUser()">Login</button>
+                    <hr class="dividngLine">
+                </div>
+            </div>
+        </div>
+        <%- include('../../partials/loginsFooter') %>
+</section>
+<script src="/javascripts/users/signup.js"></script>

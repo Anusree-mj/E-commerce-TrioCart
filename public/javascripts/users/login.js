@@ -11,59 +11,123 @@ function togglePassword() {
 
 }
 
-function handleSubmit() {
+//login
+function login() {
     let email = document.getElementById("my-email").value;
     let password = document.getElementById("my-password").value;
-    // let reqBody={username:userName,password:Password}
-    let reqBody = { email, password }
+    if (!email && !password) {
+        document.getElementById('emailSpan').textContent = 'Fill this field'
+        document.getElementById('passwrdSpan').textContent = 'Fill this field'
+    }
+    else if (!password) {
+        document.getElementById('passwrdSpan').textContent = 'Fill this field'
+    } else if (!email) {
+        document.getElementById('emailSpan').textContent = 'Fill this field'
+    } else {
+        let reqBody = { email, password }
+        fetch("http://localhost:3000/login", {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            },//used to specify the format of the data being sent in an HTTP request when you're making a 
+            //  POST request with JSON data.//
 
-    fetch("http://localhost:3000/login", {
-        method: "POST",
-        body: JSON.stringify(reqBody),
-        headers: {
-            "Content-Type": "application/json"
-        },//used to specify the format of the data being sent in an HTTP request when you're making a 
-        //  POST request with JSON data.//
 
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    window.location.replace("/");
+                } else {
+                    alert("Invalid Username or Password");
 
-    }).then((res) => res.json())
-    .then((data) => {
-        if (data.status === "ok") {
-            window.location.replace("/home");
-        } else {
-            alert("Invalid Username or Password");
-
-        }
-    })
-    .catch(err => console.log(err));
+                }
+            })
+            .catch(err => console.log(err));
+    }
+}
+//clearing span
+function clearSpan(spanId) {
+    document.getElementById(spanId).textContent = "";
 }
 
-function signup(){
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let address = document.getElementById("address").value;
-    let password = document.getElementById("password").value;
-    console.log(name,email,phone,address,password)
-    // let reqBody={username:userName,password:Password}
-    let reqBody = { name,email,phone,address,password }
+//get otp
+function getOtp() {
+    let email = document.getElementById('email').value
+    if (!email) {
+        document.getElementById('emailSpan').textContent = "Enter your email"
+    } else {
+        let reqBody = { email }
+        fetch("http://localhost:3000/getOtp", {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    document.getElementById('getOtp').disabled = true
+                    document.getElementById('verifyOtp').disabled = false
+                } else {
+                    alert("Email doesnt match");
 
-    fetch("http://localhost:3000/signup", {
+                }
+            })
+            .catch(err => console.log(err));
+    }
+}
+
+//verify otp for changing password
+function verifyOtp() {
+    let otp = document.getElementById('otp').value;
+    let email = document.getElementById('email').value
+    let reqbody = { email, otp }
+    fetch("http://localhost:3000/verifyOtp", {
         method: "POST",
-        body: JSON.stringify(reqBody),
+        body: JSON.stringify(reqbody),
         headers: {
             "Content-Type": "application/json"
-        },//used to specify the format of the data being sent in an HTTP request when you're making a 
-        //  POST request with JSON data.//
+        },
 
     }).then((res) => res.json())
-    .then((data) => {
-        if (data.status === "ok") {
-            window.location.replace("/login");
-        } else {
-            alert("Signup failed...Please try again");
+        .then((data) => {
+            if (data.status === "ok") {
+                document.getElementById('verifyOtp').disabled = true
+                document.getElementById('chngePsswrd').disabled = false
+            } else {
+                alert("OTP doesnt match");
+            }
+        })
+        .catch(err => console.log(err));
+}
 
-        }
-    })
-    .catch(err => console.log(err));
+//change password
+function changePassword() {
+    let email = document.getElementById('email').value
+    let password = document.getElementById('my-password').value
+    if (password !== document.getElementById("confrmPsswrd").value) {
+        document.getElementById("psswrdSpan").textContent = "Passwords doesn't match";
+        password = undefined;
+    }
+    else {
+        let reqbody = { email, password }
+        fetch("http://localhost:3000/forgotPassword", {
+            method: "PATCH",
+            body: JSON.stringify(reqbody),
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    window.location.replace("/login");
+                } else {
+                    alert("OTP doesnt match");
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
 }

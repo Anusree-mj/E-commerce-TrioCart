@@ -131,10 +131,20 @@ module.exports = {
             console.log(err)
         }
     },
-    viewEachSubcategoryProducts: async (category,subcategory)=>{
-        try{
-         const products = await collection.productsCollection.find({category:category, subCategory:subcategory})
-        return products
+    viewEachSubcategoryProducts: async (category, subcategory) => {
+        try {
+            const sideBarProduct = await collection.productsCollection.find({ category: category })
+            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory })
+            return {sideBarProduct,products}
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    viewAllProductsofEAchCAtegory: async (category) => {
+        try {
+            const products = await collection.productsCollection.find({ category: category })
+            return products
         }
         catch (err) {
             console.log(err)

@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/stylesheets/users/login.css">
+<section>
+    <%- include('../../partials/loginHeader') %>
+
+        <div class=" d-flex flex-column justify-content-center align-items-center ">
+            <div class="login-form">
+                <h2 class="head">Login</h2>
+                <label class="label">
+                    Username
+                </label>
+                <input type="text" class=" form-control" id="my-email" aria-describedby="emailHelp"
+                    placeholder=" Enter e-mailid" onclick="clearSpan('emailSpan')">
+                <span id="emailSpan" class="span"></span><br>
+
+                <label class="label">
+                    Password
+                </label>
+                <div class="password-box">
+                    <input type="password" class=" form-control" id="my-password" placeholder="Enter your password"
+                        onclick="clearSpan('emailSpan')">
+                    <button class="show" type="button" id="visibility" onclick="togglePassword()">Show</button>
+                </div>
+                <span id="passwrdSpan" class="span"></span><br>
+
+                <a href="/forgotPassword">
+                    <p class="forgot">Forgot Password?</p>
+                </a>
+                <div class="coloumn">
+                    <p id="emailHelp" class="form-text formText">
+                        By continuing, you agree to TrioCarts <a href="#">Terms & Conditions</a> .
+                    </p>
+                    <button class="btn  btn-success btn-lg btn-block" type="button" id="signin_button"
+                        onclick="login()">Login</button>
+                    <hr class="dividngLine">
+                    <a class="dropdown-item signup-text  " href="/signup">New around here? Sign up</a>
+                </div>
+            </div>
+
+        </div>
+        <%- include('../../partials/loginsFooter') %>
+</section>
+<script src="/javascripts/users/login.js"></script>

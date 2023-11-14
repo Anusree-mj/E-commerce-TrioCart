@@ -1,0 +1,26 @@
+<div class="col-md-2 sidebar-sctn">
+    <div class="sideBar">
+        <ul class="sidebar-ul">
+            <p class="sideBar-head">Member Exclusive Prices</p>
+            <li class="list"><a class="sublist" href="#">Shop Now</a>
+
+                <p class="sideBar-head">New Arrivals</p>
+            <li class="list"><a class="sublist" href="#">View all</a>
+            <li class="list"><a class="sublist" href="#">Clothes</a>
+                <p class="sideBar-head">Shop by Product</p>
+            <li class="list"><a class="sublist" href="/products/<%= categoryProducts.category %>/viewAll">View All</a>
+            </li>
+            <% const uniqueSubcategories = new Set(); %>
+            <% categoryProducts.forEach(product => { %>
+                <% if (!uniqueSubcategories.has(product.subCategory)) { %>
+                    <li class="list"><a class="sublist"
+                            href="/products/<%= product.category %>/<%= product.subCategory %>">
+                            <%= product.subCategory %>
+                        </a>
+                    </li>
+                    <% uniqueSubcategories.add(product.subCategory); %>
+                <% } %>
+            <% }); %>
+        </ul>
+    </div>
+</div>
