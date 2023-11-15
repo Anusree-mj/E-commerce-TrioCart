@@ -4,7 +4,7 @@ var router = express.Router();
 var path = require('path');
 var productHelpers = require('../helpers/product-helpers')
 const multer = require('multer');
-const adminHelpers =require('../helpers/admin-helpers');
+const adminHelpers = require('../helpers/admin-helpers');
 const uuidv4 = require('uuid').v4
 
 const storage = multer.diskStorage({
@@ -18,56 +18,74 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-//get adminlogin page
+//admin page
 router.get('/', function (req, res, next) {
+  let sessionId = req.cookies.session
+  console.log('session id of admin: ', sessionId)
+  adminHelpers.checkSessions(sessionId).then((result) => {
+    if (result.status === 'ok') {
+      adminHelpers.getAdmin(result.adminId).then((admin) => {
+        res.render('admin/adminDashboard', { layout: 'layout/layout', admin });
+      })
+    }
+    else {
+      res.redirect('/admin/login');
+    }
+  });
+});
+
+//get adminlogin page
+router.get('/login', function (req, res, next) {
   res.render('admin/adminLogin', { layout: 'layout/layout' });
 });
 
 //admin loging in
-router.post('/adminLogin',function(req,res,next){
-  adminHelpers.dologin(req.body).then((result)=>{
-    if(result){
+router.post('/adminLogin', function (req, res, next) {
+  adminHelpers.dologin(req.body).then((admin) => {
+    if (admin) {
       const sessionId = uuidv4();
-      req.session.isAuthenticated = true;
-      req.session.admin=result
+      const adminId = admin.email
+      adminHelpers.saveSessions(sessionId, adminId)
       res.cookie('session', sessionId);
       res.status(200).json({ status: "ok" });
-    }else{
-      res.status(500).json({ status: "nok" });
+    } else {
+      res.status(400).json({ status: "nok" });
     }
   })
 })
 
-/* GET users listing. */
-router.get('/adminDashboard', function (req, res, next) {
-  if (req.session.isAuthenticated) {
-    let admin=req.session.admin
-    console.log(admin)
-      res.render('admin/adminDashboard', { layout: 'layout/layout',admin });
-} else {
-    res.redirect('/admin');
-}
-});
+
 
 //get products list
 router.get('/products', function (req, res, next) {
-  if (req.session.isAuthenticated){
-    productHelpers.getAllProducts().then((products) => {
-      res.render('admin/adminProducts', { layout: 'layout/layout', products });
-    })
-  }
- else{
-  res.redirect('/admin');
- }
+  let sessionId = req.cookies.session
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+      productHelpers.getAllProducts().then((products) => {
+        res.render('admin/adminProducts', { layout: 'layout/layout', products });
+      })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
 });
 
 //add product page
 router.get('/addProduct', function (req, res, next) {
-  res.render('admin/addProduct', { layout: 'layout/layout' })
+  let sessionId = req.cookies.session
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+      res.render('admin/addProduct', { layout: 'layout/layout' })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
 })
 
 //add products
-router.post('/products', upload.single('image'), function (req, res, next) {
+router.post('/product', upload.single('image'), function (req, res, next) {
   console.log(req.body);
   console.log(req.file)
   productHelpers.addProduct(req.body, req.file).then((result) => {
@@ -95,7 +113,7 @@ router.delete('/products/:product_Id', ((req, res, next) => {
 router.get('/products/:product_Id/edit', ((req, res, next) => {
   const productId = req.params.product_Id
   console.log('Product ID:', productId);
-  productHelpers. getProductForEditing(productId).then((productData) => {
+  productHelpers.getProductForEditing(productId).then((productData) => {
     if (productData) {
       res.render('admin/editProduct', { productData })
     } else {
@@ -120,22 +138,25 @@ router.patch('/products/:product_Id/', upload.single('image'), function (req, re
 
 //get users list
 router.get('/users', function (req, res, next) {
-  if (req.session.isAuthenticated){
-    adminHelpers.getUsers().then((users) => {
-      console.log(users)
-      res.render('admin/users', { layout: 'layout/layout', users });
-    })
-  }
- else{
-  res.redirect('/admin');
- }
+  let sessionId = req.cookies.session
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+      adminHelpers.getUsers().then((users) => {
+        console.log(users)
+        res.render('admin/users', { layout: 'layout/layout', users });
+      })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
 });
 
 //block or unblock users
-router.patch('/users/:user_id/',function (req, res, next) {
+router.patch('/users/:user_id/', function (req, res, next) {
   const userId = req.params.user_id
   console.log(req.body);
-  adminHelpers.blockOrUnblockUser(userId,req.body).then((result) => {
+  adminHelpers.blockOrUnblockUser(userId, req.body).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -147,7 +168,7 @@ router.patch('/users/:user_id/',function (req, res, next) {
 //get user edit page
 router.get('/users/:user_id/edit', ((req, res, next) => {
   const userId = req.params.user_id
-  adminHelpers. getUserforupdate(userId).then((user) => {
+  adminHelpers.getUserforupdate(userId).then((user) => {
     console.log(user)
     if (user) {
       res.render('admin/editUsers', { user })
@@ -158,12 +179,15 @@ router.get('/users/:user_id/edit', ((req, res, next) => {
 }))
 
 //logout
-router.get('/logout',function(req,res,next){
-  if (req.session.isAuthenticated){
-    req.session.destroy(function (err) {
-      res.clearCookie('connect.sid');
-      res.redirect('/admin');
+router.get('/logout', function (req, res, next) {
+  let sessionId = req.cookies.session
+  adminHelpers.deleteSessions(sessionId).then((result) => {
+    if (result) {
+      req.session.destroy(function (err) {
+        res.clearCookie('connect.sid');
+        res.redirect('/admin');
+      })
+    }
   })
-  }
-  })
+})
 module.exports = router;

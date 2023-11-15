@@ -15,6 +15,7 @@ router.get('/index', function (req, res, next) {
 /* GET users home page. */
 router.get('/', function (req, res, next) {
   let sessionId = req.cookies.session
+  console.log("sessionId of user",sessionId)
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       console.log("userid in get homeeeeeeee", result.userId)

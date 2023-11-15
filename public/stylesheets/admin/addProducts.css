@@ -8,7 +8,7 @@
 
 .addForm {
     border: 2px solid rgb(46, 44, 44);
-    width: 30rem;
+    width: 38rem;
     padding: 0 1rem 0.8rem 1rem;
     box-shadow: 8px 10px 10px;
     display: flex;
@@ -18,6 +18,7 @@
     max-width: 90%;
     margin-top: 1rem;
     background-color: #faf9f8;
+    
 }
 
 .label {
@@ -49,4 +50,7 @@
 .signup-text:hover {
     font-weight: bold;
     text-decoration: underline !important;
+}
+.preview-image{
+    width: 1rem;
 }

@@ -7,11 +7,10 @@
             <label class="label" for="name">Name</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Product Name">
             <label class="label" for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3"
-                placeholder="Product description"></textarea>
-                <label class="label" for="detailed_description">Detailed-Description</label>
-                <textarea class="form-control" id="detailed_description" rows="3"
-                    placeholder="Product detailed description"></textarea>
+            <textarea class="form-control" id="description" rows="3" placeholder="Product description"></textarea>
+            <label class="label" for="detailed_description">Detailed-Description</label>
+            <textarea class="form-control" id="detailed_description" rows="3"
+                placeholder="Product detailed description"></textarea>
             <label class="label" for="category">Category</label>
             <input type="text" class="form-control" name="category" id="category" placeholder="Product Category">
             <label class="label" for="subCategory">SubCategory</label>
@@ -41,8 +40,13 @@
 
             <label class="label" for="price">Price</label>
             <input type="text" class="form-control" name="price" id="price" placeholder="Product price">
+
             <label class="label" for="image">Image</label>
             <input type="file" class="form-control-file" name="image" id="image" accept="image/*">
+
+            <!-- <label class="label" for="image">Product Detailed Images</label>
+            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple> -->
+
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                     onclick="addProduct()">Add</button>

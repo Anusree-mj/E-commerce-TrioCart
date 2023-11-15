@@ -8,7 +8,7 @@
             <input type="text" class="form-control" name="name" id="name" value="<%= productData.name%>">
 
             <label class="label" for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3"><%= productData.description %></textarea> 
+            <textarea class="form-control" id="description" rows="3"><%= productData.description %></textarea>
             </textarea>
 
             <label class="label" for="detailed_description">Detailed-Description</label>
@@ -16,29 +16,39 @@
             </textarea>
 
             <label class="label" for="category">Category</label>
-            <input type="text" class="form-control" name="category" id="category" value="<%= productData.category%>"> <label
-                class="label" for="subCategory">SubCategory</label>
-            <input type="text" class="form-control" name="subCategory" id="subCategory" value="<%= productData.subCategory%>">
+            <input type="text" class="form-control" name="category" id="category" value="<%= productData.category%>">
+            <label class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" name="subCategory" id="subCategory"
+                value="<%= productData.subCategory%>">
+                <%
+                // Convert the comma-separated string to an array
+                const storedSizes = productData.size[0].split(',');
+                                        %>
 
             <label class="label" for="size">Size</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1">
+                <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1" 
+                <%= storedSizes.includes('S') ? 'checked' : '' %> >
                 <label class="form-check-label" for="inlineCheckbox1">S</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-m" value="option2">
+                <input class="form-check-input" name="size" type="checkbox" id="size-m" value="option2"
+                 <%= storedSizes.includes('M') ? 'checked' : '' %> >
                 <label class="form-check-label" for="inlineCheckbox2">M</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-l" value="option3">
+                <input class="form-check-input" name="size" type="checkbox" id="size-l" value="option3"
+                 <%= storedSizes.includes('L') ? 'checked' : '' %> >
                 <label class="form-check-label" for="inlineCheckbox3">L</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-xl" value="option4">
+                <input class="form-check-input" name="size" type="checkbox" id="size-xl" value="option4"
+                 <%= storedSizes.includes('XL') ? 'checked' : '' %> >
                 <label class="form-check-label" for="inlineCheckbox3">XL</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5">
+                <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5"
+                 <%= storedSizes.includes('XXL') ? 'checked' : '' %> >
                 <label class="form-check-label" for="inlineCheckbox3">XXL</label>
             </div>
 
@@ -46,7 +56,23 @@
             <input type="text" class="form-control" name="price" id="price" value="<%= productData.price%>">
 
             <label class="label" for="image">Image</label>
-            <input type="file" class="form-control-file" name="image" id="image" accept="image/*" value="<%= productData.image%>">
+            <div class="image-preview">
+            <img src="/<%= productData.image %>" alt="Product Image" class="preview-image" >
+            <button type="button" class="delete-button" onclick="deleteImage('image')">X</button>
+            </div>
+            <input type="file" class="form-control-file" 
+            name="image" id="image" accept="image/*">
+            <!-- <label class="label" for="image">Product Detailed Images</label>
+            <div class="detailed-images-container">
+                <% productData.detailedImages.forEach((detailedImage, index) => { %>
+                    <div class="image-preview">
+                        <img src="<%= detailedImage %>" alt="Detailed Image <%= index + 1 %>" class="preview-image">
+                        <button type="button" class="delete-button" onclick="deleteImage('detailedImages', '<%= index %>')">X</button>
+                    </div>
+                <% }) %>
+            </div> -->
+            
+            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
 
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"

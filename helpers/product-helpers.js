@@ -4,7 +4,13 @@ const path = require('path');
 module.exports = {
     addProduct: async (body, image) => {
         try {
-            const imagePathWithoutPublic = path.relative('public', image.path);
+                        const imagePathWithoutPublic = path.relative('public', image.path);
+                        console.log('imagePathWithoutPublic:', imagePathWithoutPublic);
+            // const detailedImagesWithoutPublic = files.detailedImages.map(image => {
+            //     const { path, ...rest } = image;
+            //     return rest;
+            // });
+            // console.log("detailedImagesWithoutPublic:", detailedImagesWithoutPublic);
             const data = {
                 name: body.name,
                 description: body.description,
@@ -14,6 +20,7 @@ module.exports = {
                 price: body.price,
                 size: body.size,
                 image: imagePathWithoutPublic
+                // detailedImages: detailedImagesWithoutPublic
             };
             await collection.productsCollection.insertMany([data]);
             return { status: 'ok' }
@@ -91,51 +98,11 @@ module.exports = {
             console.log(err)
         }
     },
-    viewAllLadiesProducts: async () => {
-        try {
-            const products = await collection.productsCollection.find({ category: "Ladies" })
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllMensProducts: async () => {
-        try {
-            const products = await collection.productsCollection.find({ category: "Mens" })
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllGirlsProducts: async () => {
-        try {
-            const kids = await collection.productsCollection.find({ category: "Kids" })
-            const girls = await collection.productsCollection.find({ category: "Girls" })
-            const products = girls.concat(kids);
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllBoysProducts: async () => {
-        try {
-            const kids = await collection.productsCollection.find({ category: "Kids" })
-            const boys = await collection.productsCollection.find({ category: "Boys" })
-            const products = boys.concat(kids);
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
     viewEachSubcategoryProducts: async (category, subcategory) => {
         try {
             const sideBarProduct = await collection.productsCollection.find({ category: category })
             const products = await collection.productsCollection.find({ category: category, subCategory: subcategory })
-            return {sideBarProduct,products}
+            return { sideBarProduct, products }
         }
         catch (err) {
             console.log(err)
