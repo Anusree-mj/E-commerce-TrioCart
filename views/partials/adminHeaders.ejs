@@ -1,19 +1,31 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminHeader.css">
 <nav class="navbar navbar-light bg-light justify-content-between">
     <a href="/"><img class="logo" src="/images/navbar/logo.png" alt="logo"></a>
-    
+
     <div class="d-flex justify-content-around">
-        <div class="nav_icons">
+        <div class=" nav_icons">
             <img class="nav_icon" src="/images/navbar/dasboards.png" alt="">
-            <a href="/admin/adminDashboard/" class="nav_icon_text">Dashboard</a>
+            <a href="/admin/" class="nav_icon_text">Dashboard</a>
         </div>
-        <div class="nav_icons">
-            <img class="nav_icon" src="/images/navbar/products.png" alt="">
-            <a href="/admin/products" class="nav_icon_text">Products</a>
+
+        <div class="dropdown nav_icons">
+            <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" src="/images/navbar/products.png" alt="">
+            <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Products</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/products">Manage Products</a>
+                </div>
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="#">Manage Catagory</a>
+                </div>
+            </div>
         </div>
         <div class="nav_icons">
             <img class="nav_icon" src="/images/navbar/users.png" alt="">
-            <a href="/admin/users"class="nav_icon_text">Users</a>
+            <a href="/admin/users" class="nav_icon_text">Users</a>
         </div>
         <div class="nav_icons">
             <img class="nav_icon" src="/images/navbar/orders.png" alt="">
@@ -23,5 +35,5 @@
             <img class="nav_icon" src="/images/navbar/logout.png" alt="">
             <a href="/admin/logout" class="nav_icon_text">Logout</a>
         </div>
-    </div>  
+    </div>
 </nav>

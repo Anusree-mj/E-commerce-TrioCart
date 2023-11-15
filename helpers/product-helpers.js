@@ -98,46 +98,6 @@ module.exports = {
             console.log(err)
         }
     },
-    viewAllLadiesProducts: async () => {
-        try {
-            const products = await collection.productsCollection.find({ category: "Ladies" })
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllMensProducts: async () => {
-        try {
-            const products = await collection.productsCollection.find({ category: "Mens" })
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllGirlsProducts: async () => {
-        try {
-            const kids = await collection.productsCollection.find({ category: "Kids" })
-            const girls = await collection.productsCollection.find({ category: "Girls" })
-            const products = girls.concat(kids);
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    viewAllBoysProducts: async () => {
-        try {
-            const kids = await collection.productsCollection.find({ category: "Kids" })
-            const boys = await collection.productsCollection.find({ category: "Boys" })
-            const products = boys.concat(kids);
-            return products
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
     viewEachSubcategoryProducts: async (category, subcategory) => {
         try {
             const sideBarProduct = await collection.productsCollection.find({ category: category })
