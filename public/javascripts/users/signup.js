@@ -1,3 +1,4 @@
+//password toggling
 function togglePassword() {
     let password = document.getElementById("password");
     console.log(password)

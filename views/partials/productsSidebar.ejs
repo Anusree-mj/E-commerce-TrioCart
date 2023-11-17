@@ -8,19 +8,15 @@
             <li class="list"><a class="sublist" href="#">View all</a>
             <li class="list"><a class="sublist" href="#">Clothes</a>
                 <p class="sideBar-head">Shop by Product</p>
-            <li class="list"><a class="sublist" href="/products/<%= categoryProducts.category %>/viewAll">View All</a>
+            <li class="list"><a class="sublist" href="/products/<%= categories.category %>/viewAll">View All</a>
             </li>
-            <% const uniqueSubcategories = new Set(); %>
-            <% categoryProducts.forEach(product => { %>
-                <% if (!uniqueSubcategories.has(product.subCategory)) { %>
+            <% categories.subCategory.forEach(subcategory => { %>        
                     <li class="list"><a class="sublist"
-                            href="/products/<%= product.category %>/<%= product.subCategory %>">
-                            <%= product.subCategory %>
+                            href="/products/<%= categories.category %>/<%= subcategory.name %>">
+                            <%= subcategory.name %>
                         </a>
                     </li>
-                    <% uniqueSubcategories.add(product.subCategory); %>
-                <% } %>
-            <% }); %>
+                    <%  })%>
         </ul>
     </div>
 </div>

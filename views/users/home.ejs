@@ -1,110 +1,114 @@
 <link rel="stylesheet" href="/stylesheets/users/home.css">
 
 <div class="fluid">
-  <%- include('../partials/homeHeader') %>    
-    <%- include('../partials/subHeader') %>
-      <div class="subTittle d-flex justify-content-around align-items-center">
-        <p class="subTittle-text">Members get free shipping above Rs.1999</p">
-        <p class="subTittle-text sbtxt">Free & flexible 15 days return</p>
-        <p class="subTittle-text sbtxt">Estimated delivery time: 2-7 days</p>
-      </div>
-      <!-- add1 -->
-      <section class="adds-sectn d-flex justify-content-center">
-        <img src="/images/home/img1.avif" class="img-fluid adds-img " alt="Women in stylishjeans">
-        <div class="adds-contnt">
-          <p class="head">Meet our stretchiest fits</p>
-          <p class="subHead">True to you: denim adapts</p>
-          <a href="/products/Ladies/Jeans" class="btn btn-light shopNow-btn">Shop Now</a>
-        </div>
-      </section>
+  <% if (user) { %>
+    <%- include('../partials/homeHeader') %>
+      <%} else{ %>
+        <%- include('../partials/header') %>
+          <% } %>
+            <%- include('../partials/subHeader') %>
+              <div class="subTittle d-flex justify-content-around align-items-center">
+                <p class="subTittle-text">Members get free shipping above Rs.1999</p">
+                <p class="subTittle-text sbtxt">Free & flexible 15 days return</p>
+                <p class="subTittle-text sbtxt">Estimated delivery time: 2-7 days</p>
+              </div>
+              <!-- add1 -->
+              <section class="adds-sectn d-flex justify-content-center">
+                <img src="/images/home/img1.avif" class="img-fluid adds-img " alt="Women in stylishjeans">
+                <div class="adds-contnt">
+                  <p class="head">Meet our stretchiest fits</p>
+                  <p class="subHead">True to you: denim adapts</p>
+                  <a href="/products/Ladies/Jeans" class="btn btn-light shopNow-btn">Shop Now</a>
+                </div>
+              </section>
 
-      <!-- page redirect1 -->
-      <section class="page-sectn">
-        <div class="pagesctn-contnts">
-          <p class="pagesctn-head">The festive collection</p>
-          <p class="pagesctn-sub">Celebrate in standout styles!</p>
-          <a href="/products/Ladies/viewAll" type="button" class="btn btn-light button-txt">Ladies</a>
-          <a href="/products/Mens/viewAll" type="button" class="btn btn-light button-txt">Mens</a>
-          <a href="/products/Kids/viewAll" type="button" class="btn btn-light button-txt">Kids</a>
-        </div>
-      </section>
+              <!-- page redirect1 -->
+              <section class="page-sectn">
+                <div class="pagesctn-contnts">
+                  <p class="pagesctn-head">The festive collection</p>
+                  <p class="pagesctn-sub">Celebrate in standout styles!</p>
+                  <a href="/products/Ladies/viewAll" type="button" class="btn btn-light button-txt">Ladies</a>
+                  <a href="/products/Mens/viewAll" type="button" class="btn btn-light button-txt">Mens</a>
+                  <a href="/products/Kids/viewAll" type="button" class="btn btn-light button-txt">Kids</a>
+                </div>
+              </section>
 
-      <!-- add2 -->
-      <section class="adds-sectn d-flex justify-content-center">
-        <img src="/images/home/img2.jpg" class="img-fluid adds-img" alt="winterKid">
-        <div class="adds-contnt">
-          <p class="head-men">Jackets for the win</p>
-          <p class="subHead-men">Master the sharp looks throughout the chilly season.</p>
-          <a href="/products/Mens/Jackets" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
-        </div>
-      </section>
+              <!-- add2 -->
+              <section class="adds-sectn d-flex justify-content-center">
+                <img src="/images/home/img2.jpg" class="img-fluid adds-img" alt="winterKid">
+                <div class="adds-contnt">
+                  <p class="head-men">Jackets for the win</p>
+                  <p class="subHead-men">Master the sharp looks throughout the chilly season.</p>
+                  <a href="/products/Mens/Jackets" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
+                </div>
+              </section>
 
-      <!-- //new Arrivals -->
-      <section class="newArrivals_sectn">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-              <% if (products) { %>
-                  <% const totalProducts = [].concat(products.category1, products.category2, products.category3,
-                      products.category4); %>
-                  <% for (let i = 0; i < totalProducts.length; i += 4) { %>
-                      <div class="<%= i === 0 ? 'carousel-item active' : 'carousel-item' %>">
-                          <div class="d-flex justify-content-center max-width-80%">
+              <!-- //new Arrivals -->
+              <section class="newArrivals_sectn">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <% if (products) { %>
+                      <% const totalProducts=[].concat(products.category1, products.category2, products.category3,
+                        products.category4); %>
+                        <% for (let i=0; i < totalProducts.length; i +=4) { %>
+                          <div class="<%= i === 0 ? 'carousel-item active' : 'carousel-item' %>">
+                            <div class="d-flex justify-content-center max-width-80%">
                               <div class="card-deck">
-                                  <% for (let j = i; j < Math.min(i + 4, totalProducts.length); j++) { %>
-                                      <div class="card">
-                                          <img class="card-img-top productImg" src="/<%= totalProducts[j].image %>"
-                                              alt="Card image cap">
-                                          <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
-                                          <div class="card-body">
-                                              <h3 class="card-title">
-                                                  <%= totalProducts[j].name %>
-                                              </h3>
-                                              <p class="card-text">
-                                                  <%= totalProducts[j].price %>
-                                              </p>
-                                          </div>
-                                      </div>
+                                <% for (let j=i; j < Math.min(i + 4, totalProducts.length); j++) { %>
+                                  <div class="card">
+                                    <img class="card-img-top productImg" src="/<%= totalProducts[j].image %>"
+                                      alt="Card image cap">
+                                    <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
+                                    <div class="card-body">
+                                      <h3 class="card-title">
+                                        <%= totalProducts[j].name %>
+                                      </h3>
+                                      <p class="card-text">
+                                        <%= totalProducts[j].price %>
+                                      </p>
+                                    </div>
+                                  </div>
                                   <% } %>
                               </div>
+                            </div>
                           </div>
-                      </div>
-                  <% } %>
-              <% } else { %>
-                  <p>No products available.</p>
-              <% } %>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-          </a>
-      </div>
-      
-       
-      </section>
+                          <% } %>
+                            <% } else { %>
+                              <p>No products available.</p>
+                              <% } %>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
 
-      <!-- page redirect2 -->
-      <section class="page-sectn">
-        <div class="pagesctn2-contnts">
-          <p class="pagesctn-head">Let's layer up!</p>
-          <p class="pagesctn-sub">Breeze into autumn with style, starting ₹1299</p>
-          <a href="/products/Ladies/viewAll" type="button" class="btn  btn-dark button-txt">Ladies</a>
-          <a href="/products/Mens/viewAll" type="button" class="btn  btn-dark button-txt">Mens</a>
-          <a href="/products/Kids/viewAll" type="button" class="btn  btn-dark button-txt">Kids</a>
-        </div>
-      </section>
 
-      <!-- add3 -->
-      <section class="adds-sectn d-flex justify-content-center">
-        <img src="/images/home/img3.avif" class="img-fluid adds-img" alt="winterKid">
-        <div class="adds-contnt">
-          <p class="head-men">Winter companion</p>
-          <p class="subHead-men">Prepare for winter, styles starting ₹799</p>
-          <a href="/products/Kids/Casuals" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
-        </div>
-      </section>
+              </section>
+
+              <!-- page redirect2 -->
+              <section class="page-sectn">
+                <div class="pagesctn2-contnts">
+                  <p class="pagesctn-head">Let's layer up!</p>
+                  <p class="pagesctn-sub">Breeze into autumn with style, starting ₹1299</p>
+                  <a href="/products/Ladies/viewAll" type="button" class="btn  btn-dark button-txt">Ladies</a>
+                  <a href="/products/Mens/viewAll" type="button" class="btn  btn-dark button-txt">Mens</a>
+                  <a href="/products/Kids/viewAll" type="button" class="btn  btn-dark button-txt">Kids</a>
+                </div>
+              </section>
+
+              <!-- add3 -->
+              <section class="adds-sectn d-flex justify-content-center">
+                <img src="/images/home/img3.avif" class="img-fluid adds-img" alt="winterKid">
+                <div class="adds-contnt">
+                  <p class="head-men">Winter companion</p>
+                  <p class="subHead-men">Prepare for winter, styles starting ₹799</p>
+                  <a href="/products/Kids/Casuals" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
+                </div>
+              </section>
 </div>
 <%- include('../partials/footer') %>

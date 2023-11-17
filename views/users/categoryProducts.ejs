@@ -4,12 +4,12 @@
   <%} else{ %>
     <%- include('../partials/header') %>
     <% } %>
-    <%- include('../partials/subHeader') %>
+    <%- include('../partials/subHeader',allCategories) %>
         <section class="productsSctn d-flex justify-content-between ">
-            <%- include('../partials/productsSidebar',{categoryProducts:categoryProducts}) %>
+            <%- include('../partials/productsSidebar',categories) %>
 
                 <div class="cards-section" >
-                    <% categoryProducts.forEach(product=>{%>
+                    <% products.forEach(product=>{%>
 
                         <div class="col-sm-3">
                             <div class="card mycard" style="width: 80%;">
