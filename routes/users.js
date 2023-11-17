@@ -5,26 +5,19 @@ var userHelpers = require('../helpers/user-helpers');
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../utils/signupUtil');
 
-//get index page
-router.get('/index', function (req, res, next) {
-  productHelpers.getNewArrivalProducts().then((products) => {
-    res.render('index', { layout: 'layout/layout', products });
-  })
-});
-
-/* GET users home page. */
-router.get('/', function (req, res, next) {
+/* GET  home page. */
+router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
+  let products = await productHelpers.getNewArrivalProducts();
+  let allCategories =  await userHelpers.getCategoryDetails()
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       userHelpers.getUser(result.email).then((user) => {
-        productHelpers.getNewArrivalProducts().then((products) => {
-          res.render('users/home', { layout: 'layout/layout', products, user });
-        })
+        console.log("userrrrrr innnnnn homeeeeeeeee:",user)
+        res.render('users/home', { layout: 'layout/layout', products,allCategories, user:user });
       })
-    }
-    else {
-      res.redirect('/index');
+    } else {
+      res.render('users/home', { layout: 'layout/layout', products,allCategories, user: undefined });
     }
   });
 })
@@ -32,6 +25,23 @@ router.get('/', function (req, res, next) {
 //get login page
 router.get('/login', function (req, res, next) {
   res.render('users/logins/login', { layout: 'layout/layout' });
+});
+
+//loging in
+router.post('/login', function (req, res, next) {
+    userHelpers.dologin(req.body).then((result) => {
+       if (result) {
+      const sessionId = uuidv4();
+      const userId = result.email
+      userHelpers.saveSessions(sessionId, userId)
+      res.cookie('session', sessionId);
+      res.status(200).json({ status: "ok" });
+    } else if (result.status === 'invalid') {
+      res.status(400).json({ status: "invalid" });
+    } else {
+      res.status(400).json({ status: "blocked" });
+    }
+  })
 });
 
 //get signup page
@@ -115,32 +125,21 @@ router.post('/verifyOtp', function (req, res, next) {
   })
 });
 
-//loging in
-router.post('/login', function (req, res, next) {
-  userHelpers.dologin(req.body).then((user) => {
-    if (user) {
-      const sessionId = uuidv4();
-      const userId = user.email
-      userHelpers.saveSessions(sessionId, userId)
-      res.cookie('session', sessionId);
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
 
 // get all category products
 router.get('/products/:category/viewAll', function (req, res, next) {
   const category = req.params.category
-  productHelpers.viewAllProductsofEAchCAtegory(category).then((categoryProducts) => {
-    let sessionId = req.cookies.session
+  productHelpers.viewAllProductsofEAchCAtegory(category).then((result) => {
+    let products=result.products;
+    let categories= result.categories;
+       let sessionId = req.cookies.session
     userHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
-        let isLoggedIn = true
-        userHelpers.getUser(result.email).then((user) => {
-          res.render('users/categoryProducts', { layout: 'layout/layout', categoryProducts, user: isLoggedIn ? user : undefined })
+               userHelpers.getUser(result.email).then((user) => {
+          res.render('users/categoryProducts', { layout: 'layout/layout',products,categories, user })
         })
+      }else{
+        res.render('users/categoryProducts', { layout: 'layout/layout', products,categories, user:undefined })
       }
     })
   })
@@ -151,9 +150,20 @@ router.get('/products/:category/:subcategory', function (req, res, next) {
   const category = req.params.category
   const subCategory = req.params.subcategory
   productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
-    let categoryProducts = result.sideBarProduct
-    let products = result.products
-    res.render('users/subCategoryProducts', { layout: 'layout/layout', categoryProducts, products, user: isLoggenIb ? {} : undefined })
+       let categories= result.categories;
+       let products=result.products;
+    let sessionId = req.cookies.session
+    userHelpers.checkSessions(sessionId).then((result) => {
+      if (result.status === 'ok') {
+                userHelpers.getUser(result.email).then((user) => {
+          res.render('users/subCategoryProducts', { layout: 'layout/layout', categories, products, user})
+
+        })
+      }else{
+        res.render('users/subCategoryProducts', { layout: 'layout/layout', categories, products, user:undefined})
+
+      }
+    })
   })
 })
 
@@ -165,6 +175,7 @@ router.get('/logout', function (req, res, next) {
       req.session.isAuthenticated = false;
       req.session.destroy(function (err) {
         res.clearCookie('connect.sid');
+        res.clearCookie('session');
         res.redirect('/');
       })
     }

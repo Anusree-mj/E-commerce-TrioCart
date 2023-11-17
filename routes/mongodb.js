@@ -197,8 +197,6 @@ const CategorySchema = new mongoose.Schema(
                 },
             },
         ],
-
-
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps

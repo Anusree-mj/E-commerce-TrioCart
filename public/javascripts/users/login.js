@@ -1,3 +1,4 @@
+//password toggle
 function togglePassword() {
     let password = document.getElementById("my-password");
     console.log(password)
@@ -38,9 +39,12 @@ function login() {
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/");
-                } else {
-                    alert("Invalid Username or Password");
-
+                } 
+                else if(data.status==='blocked') {
+                    alert("Your account has been blocked");
+                }
+                else{
+                    alert("Invalid email or password");
                 }
             })
             .catch(err => console.log(err));

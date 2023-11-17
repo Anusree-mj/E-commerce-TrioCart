@@ -148,9 +148,9 @@ module.exports = {
     },
     viewEachSubcategoryProducts: async (category, subcategory) => {
         try {
-            const sideBarProduct = await collection.productsCollection.find({ category: category, isDeleted: false })
+            const categories = await collection.categoryCollection.findOne({category: category})
             const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false })
-            return { sideBarProduct, products }
+            return { categories, products }
         }
         catch (err) {
             console.log(err)
@@ -159,7 +159,8 @@ module.exports = {
     viewAllProductsofEAchCAtegory: async (category) => {
         try {
             const products = await collection.productsCollection.find({ category: category, isDeleted: false })
-            return products
+            const categories = await collection.categoryCollection.findOne({category: category})
+            return {products,categories}
         }
         catch (err) {
             console.log(err)

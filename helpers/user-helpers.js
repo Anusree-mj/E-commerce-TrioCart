@@ -46,18 +46,16 @@ module.exports = {
     dologin: async (userData) => {
         try {
             const user = await collection.usersCollection.findOne({ email: userData.email })
-            console.log(user)
-            if (user) {
-                const status = await bcrypt.compare(userData.password, user.password)
-                if (status) {
-                    console.log('login success')
+            console.log("user in dologin", user)
+            if (!user.isBlocked) {
+                const password = await bcrypt.compare(userData.password, user.password)
+                if (password) {
                     return user
                 } else {
-                    console.log('login failed')
+                    return { status: 'invalid' }
                 }
-
             } else {
-                console.log('no user')
+                return { status: 'blocked' }
             }
         }
         catch (err) {
@@ -79,18 +77,27 @@ module.exports = {
     },
     checkSessions: async (sessionId) => {
         try {
-            const check = await collection.sessionCollection.findOne({
+            const checkSession = await collection.sessionCollection.findOne({
                 sessionId: sessionId,
             })
-            if (check) {
-                let email = check.userId
-                return { status: 'ok', email }
+            console.log("check seesssionnnn :", checkSession)
+            if (checkSession) {
+                let email = checkSession.userId;
+                console.log("userid in checksession", email)
+                const userValidity = await collection.usersCollection.findOne({ email: email });
+                if (!userValidity.isBlocked) {
+                    return { status: 'ok', email }
+                } else {
+                    console.log('user is blocked')
+                    return { status: 'nok' }
+                }
             } else {
                 return { status: 'nok' }
             }
         }
         catch (err) {
             console.log(err)
+            return { status: 'nok' };
         }
     },
     deleteSessions: async (sessionId) => {
@@ -142,20 +149,28 @@ module.exports = {
         }
     },
     updatePassword: async (email, password) => {
-        try{
+        try {
             password = await bcrypt.hash(password, 10)
             const user = await collection.usersCollection.updateOne(
                 { email: email },
                 { $set: { password: password } })
-                if (user){
-                    return {status:'ok'}
-                }else{
-                    return{status:'nok'}
-                }
+            if (user) {
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
         }
         catch (err) {
             console.log(err)
         }
-        
+    },
+    getCategoryDetails: async () => {
+        try {
+            const allCategories = await collection.categoryCollection.find()
+            return allCategories
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 }
