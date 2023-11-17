@@ -103,6 +103,4 @@ module.exports = {
             return { status: 'nok' }
         }
     }
-
-
 }

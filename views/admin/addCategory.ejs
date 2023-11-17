@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center" style="height: 70vh;">
+        <div class="addForm">
+            <h2 class="head">Add Category</h2>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Category</label>
+                <select class="form-control" id="category">
+                    <option>Ladies</option>
+                    <option>Mens</option>
+                    <option>Kids</option>
+                </select>
+            </div>
+
+            <label class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" name="subCategory" id="subCategory"
+                placeholder="Product subCategory">
+
+            <div class="button">
+                <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                    onclick="addCategory()">Add</button>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/admin/adminUpdates.js"></script>

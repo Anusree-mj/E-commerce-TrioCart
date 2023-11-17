@@ -4,8 +4,8 @@ const path = require('path');
 module.exports = {
     addProduct: async (body, image) => {
         try {
-                        const imagePathWithoutPublic = path.relative('public', image.path);
-                        console.log('imagePathWithoutPublic:', imagePathWithoutPublic);
+            const imagePathWithoutPublic = path.relative('public', image.path);
+            console.log('imagePathWithoutPublic:', imagePathWithoutPublic);
             // const detailedImagesWithoutPublic = files.detailedImages.map(image => {
             //     const { path, ...rest } = image;
             //     return rest;
@@ -29,6 +29,23 @@ module.exports = {
             return { status: 'nok' }
         }
     },
+    addSubCategory: async (body) => {
+        try {
+            await collection.categoryCollection.updateOne(
+                { category: body.category },
+                {
+                    $push: {
+                        subCategory: {
+                            name: body.subCategory
+                        }
+                    }
+                })
+                return {status:'added'}
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' }
+        }
+    },
     getAllProducts: async () => {
         try {
             const products = await collection.productsCollection.find()
@@ -38,9 +55,39 @@ module.exports = {
             console.log(err)
         }
     },
+    getAllCategories: async () => {
+        try {
+            const categories = await collection.categoryCollection.find();
+            return (categories)
+        } catch (err) {
+            console.log(err)
+        }
+    },
     deleteAProduct: async (productId) => {
         try {
-            await collection.productsCollection.deleteOne({ _id: productId });
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $set: { isDeleted: true }, $unset: { _id: 1 } }, { multi: true }
+            );
+            return { status: 'deleted' }
+        }
+        catch (err) {
+            console.log(err)
+            return { status: "error" }
+        }
+    },
+    deleteSubcategory: async (subcategory) => {
+        try {
+            console.log('Subcategory:', subcategory);
+
+            await collection.productsCollection.updateMany(
+                { subCategory: subcategory },
+                { $set: { isDeleted: true } }
+            );
+            await collection.categoryCollection.updateMany(
+                { "subCategory.name": subcategory },
+                { $set: { "subCategory.$.isDeleted": true } }
+            );
             return { status: 'deleted' }
         }
         catch (err) {
@@ -71,7 +118,8 @@ module.exports = {
                         subCategory: body.subCategory,
                         price: body.price,
                         size: body.size,
-                        image: imagePathWithoutPublic
+                        image: imagePathWithoutPublic,
+                        isDeleted: body.isDeleted
                     }
                 });
             if (updateData.modifiedCount === 1) {
@@ -88,10 +136,10 @@ module.exports = {
     },
     getNewArrivalProducts: async () => {
         try {
-            const category1 = await collection.productsCollection.find({ category: "Ladies" }).limit(4);
-            const category2 = await collection.productsCollection.find({ category: "Mens" }).limit(4);
-            const category3 = await collection.productsCollection.find({ category: "Kids" }).limit(4);
-            const category4 = await collection.productsCollection.find({ category: "Girls" }).limit(4);
+            const category1 = await collection.productsCollection.find({ category: "Ladies", isDeleted: false }).limit(4);
+            const category2 = await collection.productsCollection.find({ category: "Mens", isDeleted: false }).limit(4);
+            const category3 = await collection.productsCollection.find({ category: "Kids", isDeleted: false }).limit(4);
+            const category4 = await collection.productsCollection.find({ category: "Girls", isDeleted: false }).limit(4);
             return { category1, category2, category3, category4 }
         }
         catch (err) {
@@ -100,8 +148,8 @@ module.exports = {
     },
     viewEachSubcategoryProducts: async (category, subcategory) => {
         try {
-            const sideBarProduct = await collection.productsCollection.find({ category: category })
-            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory })
+            const sideBarProduct = await collection.productsCollection.find({ category: category, isDeleted: false })
+            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false })
             return { sideBarProduct, products }
         }
         catch (err) {
@@ -110,7 +158,7 @@ module.exports = {
     },
     viewAllProductsofEAchCAtegory: async (category) => {
         try {
-            const products = await collection.productsCollection.find({ category: category })
+            const products = await collection.productsCollection.find({ category: category, isDeleted: false })
             return products
         }
         catch (err) {

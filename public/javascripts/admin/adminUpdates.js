@@ -129,3 +129,25 @@ function editUser(user_id) {
             .catch(err => console.log(err));
     }
 }
+
+function addCategory() {
+    let category = document.getElementById('category').value
+    let subCategory = document.getElementById("subCategory").value
+    let reqBody = { category, subCategory }
+console.log(reqBody)
+    fetch("http://localhost:3000/admin/category", {
+        method: "POST",
+        body: JSON.stringify(reqBody),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                window.location.replace("/admin/category");
+            } else {
+                alert("Adding category failed");
+            }
+        })
+        .catch(err => console.log(err));
+}

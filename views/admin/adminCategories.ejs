@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<%- include('../partials/adminHeaders') %>
+    <% var count=1; %>
+        <section>
+            <div class="container">
+                <div class="subHead">
+                    <a type="button" href="/admin/addCategory" class="btn btn-info ml-auto addButton" style="width: 7.5rem;">Add Category</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">SubCategory</th>
+                                <th scope="col">Is Deleted</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% var slNo=1; %>
+                                <% categories.forEach((category)=>{ %>
+                                    <% category.subCategory.forEach((subcategory)=> { %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= slNo %>
+                                            </th>
+                                            <td>
+                                                <%= category.category %>
+                                            </td>
+                                            <td>
+                                                <%= subcategory.name %>
+                                            </td>
+                                            <td>
+                                                <%= subcategory.isDeleted %>
+                                            </td>
+                                            <td> <a onclick="deleteCategory('<%= subcategory.name %>')"><img
+                                                        style="width: 1.2rem;" src="/images/navbar/delete.png"
+                                                        alt="delete"></a></td>
+                                        </tr>
+                                        <% slNo++; %>
+                                            <% }); %>
+                                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <script src="/javascripts/admin/adminDeletes.js"></script>
