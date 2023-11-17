@@ -1,18 +1,25 @@
-function toggleIsBlocked() {
-    let isBlockedElement = document.getElementById('isBlocked');
-    
-    if (isBlockedElement) {
-        let isBlockedValue = isBlockedElement.textContent.trim();
-        isBlockedValue = isBlockedValue === 'true'; // Convert to boolean
-        
-        // Toggle the status
-        isBlockedValue = !isBlockedValue;
+function editUserStatus(userEmail, userStatus) {
+    userEmail = userEmail.trim();
+    console.log('email:', userEmail)
+    console.log('userStatus:', userStatus)
+    let userEdit = Boolean
+    userEdit = (userStatus === 'false') ? true : false;
+    console.log(userEdit)
 
-        // Update the content in the element
-        isBlockedElement.textContent = isBlockedValue.toString();
-        
-        console.log(`User isBlocked status toggled to: ${isBlockedValue}`);
-    } else {
-        console.error(`Element with ID isBlocked not found.`);
-    }
+    let reqBody = { userEmail, userEdit }
+    fetch('http://localhost:3000/admin/users', {
+        method: "PATCH",
+        body: JSON.stringify(reqBody),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                location.reload();
+            } else {
+                alert("Editing user status failed");
+            }
+        })
+        .catch(err => console.log(err));
 }

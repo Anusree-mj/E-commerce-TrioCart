@@ -206,10 +206,10 @@ router.get('/users', function (req, res, next) {
 });
 
 //block or unblock users
-router.patch('/users/:user_id/', function (req, res, next) {
-  const userId = req.params.user_id
-  console.log(req.body);
-  adminHelpers.blockOrUnblockUser(userId, req.body).then((result) => {
+router.patch('/users', function (req, res, next) {
+  const email = req.body.userEmail
+  const userStatus=req.body.userEdit
+       adminHelpers.blockOrUnblockUser(email,userStatus).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -218,18 +218,6 @@ router.patch('/users/:user_id/', function (req, res, next) {
   })
 })
 
-//get user edit page
-router.get('/users/:user_id/edit', ((req, res, next) => {
-  const userId = req.params.user_id
-  adminHelpers.getUserforupdate(userId).then((user) => {
-    console.log(user)
-    if (user) {
-      res.render('admin/editUsers', { user })
-    } else {
-      res.redirect('/products');
-    }
-  })
-}))
 
 //logout
 router.get('/logout', function (req, res, next) {

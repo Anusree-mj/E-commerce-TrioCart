@@ -35,11 +35,11 @@
                                 <td>
                                     <%= user.address%>
                                 </td>
-                                <td id="isBlocked">
+                                <td>
                                     <%= user.isBlocked %>
                                 </td>
                                 <td>
-                                    <a href="/admin/users/<%= user._id %>/edit"><img src="/images/navbar/edit.png"
+                                    <a onclick="editUserStatus(' <%= user.email%>', '<%= user.isBlocked %>')"><img src="/images/navbar/edit.png"
                                             alt="edit"></a>
                                 </td>
                             </tr>

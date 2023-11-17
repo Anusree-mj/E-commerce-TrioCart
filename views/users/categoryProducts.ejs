@@ -1,10 +1,14 @@
 <link rel="stylesheet" href="/stylesheets/users/productList.css">
-<%- include('../partials/header') %>
+<% if (user) { %>
+    <%- include('../partials/homeHeader') %>
+  <%} else{ %>
+    <%- include('../partials/header') %>
+    <% } %>
     <%- include('../partials/subHeader') %>
         <section class="productsSctn d-flex justify-content-between ">
             <%- include('../partials/productsSidebar',{categoryProducts:categoryProducts}) %>
 
-                <div class="cards-section">
+                <div class="cards-section" >
                     <% categoryProducts.forEach(product=>{%>
 
                         <div class="col-sm-3">

@@ -15,11 +15,9 @@ router.get('/index', function (req, res, next) {
 /* GET users home page. */
 router.get('/', function (req, res, next) {
   let sessionId = req.cookies.session
-  console.log("sessionId of user",sessionId)
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
-      console.log("userid in get homeeeeeeee", result.userId)
-      userHelpers.getUser(result.userId).then((user) => {
+      userHelpers.getUser(result.email).then((user) => {
         productHelpers.getNewArrivalProducts().then((products) => {
           res.render('users/home', { layout: 'layout/layout', products, user });
         })
@@ -92,17 +90,17 @@ router.post('/getOtp', (req, res, next) => {
 })
 
 //CHANGE PASSWORD
-router.patch('/forgotPassword', (req, res, nxt) =>{
-  let email=req.body.email
-  let password =req.body.password
-  userHelpers.updatePassword(email,password).then((result)=>{
+router.patch('/forgotPassword', (req, res, nxt) => {
+  let email = req.body.email
+  let password = req.body.password
+  userHelpers.updatePassword(email, password).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
       res.status(400).json({ status: "nok" });
     }
   })
-} )
+})
 
 //verify otp for changing password
 router.post('/verifyOtp', function (req, res, next) {
@@ -136,8 +134,15 @@ router.post('/login', function (req, res, next) {
 router.get('/products/:category/viewAll', function (req, res, next) {
   const category = req.params.category
   productHelpers.viewAllProductsofEAchCAtegory(category).then((categoryProducts) => {
-    console.log('categoryprodcts in category page :', categoryProducts)
-    res.render('users/categoryProducts', { layout: 'layout/layout', categoryProducts })
+    let sessionId = req.cookies.session
+    userHelpers.checkSessions(sessionId).then((result) => {
+      if (result.status === 'ok') {
+        let isLoggedIn = true
+        userHelpers.getUser(result.email).then((user) => {
+          res.render('users/categoryProducts', { layout: 'layout/layout', categoryProducts, user: isLoggedIn ? user : undefined })
+        })
+      }
+    })
   })
 })
 
@@ -147,9 +152,8 @@ router.get('/products/:category/:subcategory', function (req, res, next) {
   const subCategory = req.params.subcategory
   productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
     let categoryProducts = result.sideBarProduct
-    console.log('categoryprodcts in subcategory page :', categoryProducts)
     let products = result.products
-    res.render('users/subCategoryProducts', { layout: 'layout/layout', categoryProducts, products })
+    res.render('users/subCategoryProducts', { layout: 'layout/layout', categoryProducts, products, user: isLoggenIb ? {} : undefined })
   })
 })
 
