@@ -83,8 +83,8 @@ module.exports = {
                 sessionId: sessionId,
             })
             if (check) {
-                let userId = check.userId
-                return { status: 'ok', userId }
+                let email = check.userId
+                return { status: 'ok', email }
             } else {
                 return { status: 'nok' }
             }

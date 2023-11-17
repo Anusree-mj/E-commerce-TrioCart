@@ -14,7 +14,7 @@ module.exports = {
         catch (err) {
             console.log(err)
         }
-    }, 
+    },
     saveSessions: async (sessionId, adminId) => {
         try {
             const data = {
@@ -71,26 +71,14 @@ module.exports = {
             console.log(err)
         }
     },
-    getUserforupdate: async (userId) => {
-        try {
-            const user = await collection.usersCollection.find({ _id: userId })
-            if (user) {
-                return user
-            } else {
-                console / log('error')
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-    blockOrUnblockUser: async (userId,userStatus) => {
+    blockOrUnblockUser: async (email, userStatus) => {
         try {
             const user = await collection.usersCollection.updateOne(
-                { _id: userId },
+                { email: email },
                 {
                     $set: { isBlocked: userStatus }
                 })
+            console.log(user)
             if (user.modifiedCount === 1) {
                 console.log('Data update success')
                 return { status: 'ok' }
