@@ -9,15 +9,15 @@ const signupUtil = require('../utils/signupUtil');
 router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
   let products = await productHelpers.getNewArrivalProducts();
-  let allCategories =  await userHelpers.getCategoryDetails()
+  let allCategories = await userHelpers.getCategoryDetails()
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       userHelpers.getUser(result.email).then((user) => {
-        console.log("userrrrrr innnnnn homeeeeeeeee:",user)
-        res.render('users/home', { layout: 'layout/layout', products,allCategories, user:user });
+        console.log("userrrrrr innnnnn homeeeeeeeee:", user)
+        res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user });
       })
     } else {
-      res.render('users/home', { layout: 'layout/layout', products,allCategories, user: undefined });
+      res.render('users/home', { layout: 'layout/layout', products, allCategories, user: undefined });
     }
   });
 })
@@ -29,8 +29,8 @@ router.get('/login', function (req, res, next) {
 
 //loging in
 router.post('/login', function (req, res, next) {
-    userHelpers.dologin(req.body).then((result) => {
-       if (result) {
+  userHelpers.dologin(req.body).then((result) => {
+    if (result) {
       const sessionId = uuidv4();
       const userId = result.email
       userHelpers.saveSessions(sessionId, userId)
@@ -127,40 +127,42 @@ router.post('/verifyOtp', function (req, res, next) {
 
 
 // get all category products
-router.get('/products/:category/viewAll', function (req, res, next) {
+router.get('/products/:category/viewAll', async function (req, res, next) {
   const category = req.params.category
+  let allCategories = await userHelpers.getCategoryDetails()
   productHelpers.viewAllProductsofEAchCAtegory(category).then((result) => {
-    let products=result.products;
-    let categories= result.categories;
-       let sessionId = req.cookies.session
+    let products = result.products;
+    let categories = result.categories;
+    let sessionId = req.cookies.session
     userHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
-               userHelpers.getUser(result.email).then((user) => {
-          res.render('users/categoryProducts', { layout: 'layout/layout',products,categories, user })
+        userHelpers.getUser(result.email).then((user) => {
+          res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user })
         })
-      }else{
-        res.render('users/categoryProducts', { layout: 'layout/layout', products,categories, user:undefined })
+      } else {
+        res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user: undefined })
       }
     })
   })
 })
 
 //get each subcategory products
-router.get('/products/:category/:subcategory', function (req, res, next) {
+router.get('/products/:category/:subcategory', async function (req, res, next) {
   const category = req.params.category
   const subCategory = req.params.subcategory
+  let allCategories = await userHelpers.getCategoryDetails()
   productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
-       let categories= result.categories;
-       let products=result.products;
+    let categories = result.categories;
+    let products = result.products;
     let sessionId = req.cookies.session
     userHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
-                userHelpers.getUser(result.email).then((user) => {
-          res.render('users/subCategoryProducts', { layout: 'layout/layout', categories, products, user})
+        userHelpers.getUser(result.email).then((user) => {
+          res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user })
 
         })
-      }else{
-        res.render('users/subCategoryProducts', { layout: 'layout/layout', categories, products, user:undefined})
+      } else {
+        res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user: undefined })
 
       }
     })
