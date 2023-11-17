@@ -20,7 +20,7 @@ const upload = multer({ storage: storage });
 
 //admin page
 router.get('/', function (req, res, next) {
-  let sessionId = req.cookies.session
+  let sessionId = req.cookies.adminSession
   console.log('session id of admin: ', sessionId)
   adminHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
@@ -46,7 +46,7 @@ router.post('/adminLogin', function (req, res, next) {
       const sessionId = uuidv4();
       const adminId = admin.email
       adminHelpers.saveSessions(sessionId, adminId)
-      res.cookie('session', sessionId);
+      res.cookie('adminSession', sessionId);
       res.status(200).json({ status: "ok" });
     } else {
       res.status(400).json({ status: "nok" });
@@ -58,7 +58,7 @@ router.post('/adminLogin', function (req, res, next) {
 
 //get products list
 router.get('/products', function (req, res, next) {
-  let sessionId = req.cookies.session
+  let sessionId = req.cookies.adminSession
   adminHelpers.checkSessions(sessionId).then(result => {
     if (result.status === 'ok') {
       productHelpers.getAllProducts().then((products) => {
@@ -73,7 +73,7 @@ router.get('/products', function (req, res, next) {
 
 //add product page
 router.get('/addProduct', function (req, res, next) {
-  let sessionId = req.cookies.session
+  let sessionId = req.cookies.adminSession
   adminHelpers.checkSessions(sessionId).then(result => {
     if (result.status === 'ok') {
       res.render('admin/addProduct', { layout: 'layout/layout' })
@@ -98,7 +98,7 @@ router.post('/product', upload.single('image'), function (req, res, next) {
 })
 
 //delete products
-router.delete('/products/:product_Id', ((req, res, next) => {
+router.patch('/products/dlt/:product_Id', ((req, res, next) => {
   const productId = req.params.product_Id
   productHelpers.deleteAProduct(productId).then((result) => {
     if (result.status === 'deleted') {
@@ -136,9 +136,62 @@ router.patch('/products/:product_Id/', upload.single('image'), function (req, re
   })
 })
 
+//get category page
+router.get('/category',((req,res,next) =>{
+  let sessionId = req.cookies.adminSession
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+      productHelpers.getAllCategories().then((categories) => {
+        res.render('admin/adminCategories', { layout: 'layout/layout', categories });
+      })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
+}))
+
+//add category page
+router.get('/addCategory', function (req, res, next) {
+  let sessionId = req.cookies.adminSession
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+      res.render('admin/addCategory', { layout: 'layout/layout' })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
+})
+
+//delete category
+router.patch('/category', ((req, res, next) => {
+  const subCategory = req.body.subCategory
+    productHelpers.deleteSubcategory(subCategory).then((result) => {
+    if (result.status === 'deleted') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
+
+//add subcategory
+router.post('/category', ((req, res, next) => {
+    productHelpers.addSubCategory(req.body).then((result) => {
+    if (result.status === 'added') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
+
+
+
 //get users list
 router.get('/users', function (req, res, next) {
-  let sessionId = req.cookies.session
+  let sessionId = req.cookies.adminSession
   adminHelpers.checkSessions(sessionId).then(result => {
     if (result.status === 'ok') {
       adminHelpers.getUsers().then((users) => {
@@ -180,7 +233,7 @@ router.get('/users/:user_id/edit', ((req, res, next) => {
 
 //logout
 router.get('/logout', function (req, res, next) {
-  let sessionId = req.cookies.session
+  let sessionId = req.cookies.adminSession
   adminHelpers.deleteSessions(sessionId).then((result) => {
     if (result) {
       req.session.destroy(function (err) {

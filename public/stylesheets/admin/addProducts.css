@@ -1,9 +1,10 @@
 .row {
     margin: 0 !important;
     max-width: 100% !important;
-}
+    }
 .head{
     text-align: center;
+    margin-top: 1rem;
 }
 
 .addForm {

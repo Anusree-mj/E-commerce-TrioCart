@@ -4,7 +4,7 @@
     <section>
         <div style="padding: 2rem;"></div>
         <div class="container">
-            <div class="table-responsive" >
+            <div class="table-responsive">
                 <table class="table table-striped" id="productsTable">
                     <thead>
                         <tr>
@@ -14,6 +14,7 @@
                             <th scope="col">Phone number</th>
                             <th scope="col">Address</th>
                             <th scope="col">Is Blocked</th>
+                            <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,8 +36,11 @@
                                     <%= user.address%>
                                 </td>
                                 <td id="isBlocked">
-                                   <%= user.isBlocked %>
-                                    <a href="/admin/users/<%= user._id %>/edit"><img src="/images/navbar/edit.png" alt="edit"></a>
+                                    <%= user.isBlocked %>
+                                </td>
+                                <td>
+                                    <a href="/admin/users/<%= user._id %>/edit"><img src="/images/navbar/edit.png"
+                                            alt="edit"></a>
                                 </td>
                             </tr>
                             <% })%>
@@ -46,4 +50,3 @@
         </div>
     </section>
     <script src="/javascripts/admin/adminUsers.js"></script>
-    

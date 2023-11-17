@@ -43,10 +43,14 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        detailedImages:{
-            type:Array,
-            requires:true,
+        detailedImages: {
+            type: Array,
+            requires: true,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        }
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps
@@ -177,11 +181,38 @@ const AdminSessionSchema = new mongoose.Schema(
 
 const adminSessionCollection = new mongoose.model("adminSessions", AdminSessionSchema);
 
+const CategorySchema = new mongoose.Schema(
+    {
+        category: {
+            type: String,
+        },
+        subCategory: [
+            {
+                name: {
+                    type: String,
+                    required: true,
+                }, isDeleted: {
+                    type: Boolean,
+                    default: false,
+                },
+            },
+        ],
+
+
+    },
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+
+const categoryCollection = new mongoose.model("categories", CategorySchema);
+
 module.exports = {
     productsCollection,
     usersCollection,
     tempUsersCollection,
     adminCollection,
     sessionCollection,
-    adminSessionCollection
+    adminSessionCollection,
+    categoryCollection,
 };
