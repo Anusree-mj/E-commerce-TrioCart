@@ -1,3 +1,4 @@
+//add product
 function addProduct() {
     let name = document.getElementById('name').value;
     let description = document.getElementById('description').value;
@@ -17,6 +18,10 @@ function addProduct() {
     let imageInput = document.getElementById('image');
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
+    }
+    let detailedImageInput = document.getElementById('detailedimage');
+    for (let i = 0; i < detailedImageInput.files.length; i++) {
+        formData.append('detailedImages', detailedImageInput.files[i]);
     }
 
     let sizeMap = {
@@ -54,7 +59,59 @@ function addProduct() {
         .catch(err => console.log(err));
 }
 
+//change main image
+function changeImage() {
+    document.getElementById('curentImage').style.display = 'none';
+    document.getElementById('closebutton').style.display = 'none';
+    document.getElementById('newImage').style.display = 'block';
+}
 
+// delete detailed image
+function deleteImage(image,productId) {
+    let reqBody={image,productId}
+    console.log(reqBody)
+    fetch('http://localhost:3000/admin/products/image', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                console.log('Image deleted successfully');
+                location.reload()
+            } else {
+                console.error('Image deletion failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting image:', error);
+        });
+}
+
+function openImagePreview(imagePath) {
+    // Get the modal and modal image elements
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+
+    // Set the image source in the modal
+    modalImg.src = imagePath;
+
+    // Display the modal
+    modal.style.display = 'block';
+}
+
+function closeImagePreview() {
+    // Get the modal
+    const modal = document.getElementById('imageModal');
+
+    // Hide the modal
+    modal.style.display = 'none';
+}
+
+// edit product
 function editProduct(product_id) {
     let formData = new FormData();
 
@@ -64,17 +121,17 @@ function editProduct(product_id) {
     formData.append('category', document.getElementById('category').value);
     formData.append('subCategory', document.getElementById('subCategory').value);
     formData.append('price', document.getElementById('price').value);
-
+    // image
     let imageInput = document.getElementById('image');
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
     }
-
-    // let detailedimageInput = document.getElementById('detailedimage');
-    // for (let i = 0; i < detailedimageInput.files.length; i++) {
-    //     formData.append('detailedImages', detailedimageInput.files[i]);
-    // }
-
+    // detailed image
+    let detailedImageInput = document.getElementById('detailedimage');
+    for (let i = 0; i < detailedImageInput.files.length; i++) {
+        formData.append('detailedImages', detailedImageInput.files[i]);
+    }
+    // size
     let sizeMap = {
         'option1': 'S',
         'option2': 'M',
@@ -108,33 +165,12 @@ function editProduct(product_id) {
         .catch(err => console.log(err));
 }
 
-function editUser(user_id) {
-    let isBlocked = Boolean
-    isBlocked = document.getElementById('isBlocked')
-    console.log(isBlocked)
-    if (isBlocked !== true || isBlocked !== false) {
-        alert("Enter either true or false")
-    } else {
-        fetch(`http://localhost:3000/admin/users/${user_id}`, {
-            method: "PATCH",
-            body: isBlocked,
-        }).then((res) => res.json())
-            .then((data) => {
-                if (data.status === "ok") {
-                    window.location.replace("/admin/users");
-                } else {
-                    alert("Editing user failed");
-                }
-            })
-            .catch(err => console.log(err));
-    }
-}
-
+//add category
 function addCategory() {
     let category = document.getElementById('category').value
     let subCategory = document.getElementById("subCategory").value
     let reqBody = { category, subCategory }
-console.log(reqBody)
+    console.log(reqBody)
     fetch("http://localhost:3000/admin/category", {
         method: "POST",
         body: JSON.stringify(reqBody),

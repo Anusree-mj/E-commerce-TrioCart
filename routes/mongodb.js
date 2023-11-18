@@ -56,7 +56,6 @@ const ProductSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const productsCollection = new mongoose.model("products", ProductSchema);
 
 const UserSchema = new mongoose.Schema(
@@ -93,7 +92,6 @@ const UserSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const usersCollection = new mongoose.model("users", UserSchema);
 
 const TemporaryUserSchema = new mongoose.Schema(
@@ -130,7 +128,6 @@ const TemporaryUserSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const tempUsersCollection = new mongoose.model("tempUsers", TemporaryUserSchema);
 
 const SessionSchema = new mongoose.Schema(
@@ -146,7 +143,6 @@ const SessionSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const sessionCollection = new mongoose.model("sessions", SessionSchema);
 
 const AdminCollection = new mongoose.Schema({
@@ -178,7 +174,6 @@ const AdminSessionSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const adminSessionCollection = new mongoose.model("adminSessions", AdminSessionSchema);
 
 const CategorySchema = new mongoose.Schema(
@@ -202,7 +197,6 @@ const CategorySchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-
 const categoryCollection = new mongoose.model("categories", CategorySchema);
 
 module.exports = {

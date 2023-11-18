@@ -6,7 +6,10 @@ var logger = require('morgan');
 var expressLayouts = require('express-ejs-layouts');
 var multer = require('multer');
 var session = require('express-session')
-
+var productHelpers = require('./helpers/product-helpers')
+var userHelpers = require('./helpers/user-helpers');
+const adminHelpers = require('./helpers/admin-helpers');
+const productUpdateHelpers = require('./helpers/productUpdate-helpers');
 
 //multer
 const storage = multer.diskStorage({
@@ -53,7 +56,14 @@ app.use((req, res, next) => {
   res.header('Expires', '0');
   next();
 });
-
+// Session check middleware
+app.use((req, res, next) => {
+  let sessionId = req.cookies.session;
+  userHelpers.checkSessions(sessionId).then((result) => {
+    req.session.isAuthenticated = result.status === 'ok';
+    next();
+  });
+});
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);

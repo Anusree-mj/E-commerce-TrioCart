@@ -5,6 +5,7 @@ var path = require('path');
 var productHelpers = require('../helpers/product-helpers')
 const multer = require('multer');
 const adminHelpers = require('../helpers/admin-helpers');
+const productUpdateHelpers = require('../helpers/productUpdate-helpers');
 const uuidv4 = require('uuid').v4
 
 const storage = multer.diskStorage({
@@ -54,8 +55,6 @@ router.post('/adminLogin', function (req, res, next) {
   })
 })
 
-
-
 //get products list
 router.get('/products', function (req, res, next) {
   let sessionId = req.cookies.adminSession
@@ -85,10 +84,11 @@ router.get('/addProduct', function (req, res, next) {
 })
 
 //add products
-router.post('/product', upload.single('image'), function (req, res, next) {
-  console.log(req.body);
-  console.log(req.file)
-  productHelpers.addProduct(req.body, req.file).then((result) => {
+router.post('/product', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'detailedImages', maxCount: 5 }
+]), function (req, res, next) {
+  const mainImage = req.files['image'] ? req.files['image'][0] : null;
+  const detailedImages = req.files['detailedImages'] || []; 
+  productUpdateHelpers.addProduct(req.body, mainImage, detailedImages).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -96,6 +96,21 @@ router.post('/product', upload.single('image'), function (req, res, next) {
     }
   })
 })
+
+//delte product image
+router.delete('/products/image', ((req, res, next) => {
+  const image = req.body.image
+  const productId= req.body.productId
+  console.log('image id in delet router:',image);
+  console.log('product id in delet router:',productId);
+  productUpdateHelpers.deleteAProductImage(image,productId).then((result) => {
+    if (result.status === 'deleted') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
 
 //delete products
 router.patch('/products/dlt/:product_Id', ((req, res, next) => {
@@ -113,7 +128,7 @@ router.patch('/products/dlt/:product_Id', ((req, res, next) => {
 router.get('/products/:product_Id/edit', ((req, res, next) => {
   const productId = req.params.product_Id
   console.log('Product ID:', productId);
-  productHelpers.getProductForEditing(productId).then((productData) => {
+  productUpdateHelpers.getProductForEditing(productId).then((productData) => {
     if (productData) {
       res.render('admin/editProduct', { productData })
     } else {
@@ -127,7 +142,7 @@ router.patch('/products/:product_Id/', upload.single('image'), function (req, re
   const productId = req.params.product_Id
   console.log(req.body);
   console.log(req.file);
-  productHelpers.editProduct(req.body, req.file, productId).then((result) => {
+  productUpdateHelpers.editProduct(req.body, req.file, productId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -137,7 +152,7 @@ router.patch('/products/:product_Id/', upload.single('image'), function (req, re
 })
 
 //get category page
-router.get('/category',((req,res,next) =>{
+router.get('/category', ((req, res, next) => {
   let sessionId = req.cookies.adminSession
   adminHelpers.checkSessions(sessionId).then(result => {
     if (result.status === 'ok') {
@@ -167,7 +182,7 @@ router.get('/addCategory', function (req, res, next) {
 //delete category
 router.patch('/category', ((req, res, next) => {
   const subCategory = req.body.subCategory
-    productHelpers.deleteSubcategory(subCategory).then((result) => {
+  productUpdateHelpers.deleteSubcategory(subCategory).then((result) => {
     if (result.status === 'deleted') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -178,7 +193,7 @@ router.patch('/category', ((req, res, next) => {
 
 //add subcategory
 router.post('/category', ((req, res, next) => {
-    productHelpers.addSubCategory(req.body).then((result) => {
+  productUpdateHelpers.addSubCategory(req.body).then((result) => {
     if (result.status === 'added') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -186,8 +201,6 @@ router.post('/category', ((req, res, next) => {
     }
   })
 }))
-
-
 
 //get users list
 router.get('/users', function (req, res, next) {
@@ -208,8 +221,8 @@ router.get('/users', function (req, res, next) {
 //block or unblock users
 router.patch('/users', function (req, res, next) {
   const email = req.body.userEmail
-  const userStatus=req.body.userEdit
-       adminHelpers.blockOrUnblockUser(email,userStatus).then((result) => {
+  const userStatus = req.body.userEdit
+  adminHelpers.blockOrUnblockUser(email, userStatus).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {

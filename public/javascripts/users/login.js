@@ -44,7 +44,7 @@ function login() {
                     alert("Your account has been blocked");
                 }
                 else{
-                    alert("Invalid email or password");
+                    document.getElementById('commonSpan').textContent = 'Invalid Email or Password'
                 }
             })
             .catch(err => console.log(err));
