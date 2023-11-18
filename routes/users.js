@@ -34,6 +34,7 @@ router.post('/login', function (req, res, next) {
       const sessionId = uuidv4();
       const userId = result.email
       userHelpers.saveSessions(sessionId, userId)
+      req.session.isAuthenticated = true;
       res.cookie('session', sessionId);
       res.status(200).json({ status: "ok" });
     } else if (result.status === 'invalid') {
@@ -130,12 +131,15 @@ router.post('/verifyOtp', function (req, res, next) {
 router.get('/products/:category/viewAll', async function (req, res, next) {
   const category = req.params.category
   let allCategories = await userHelpers.getCategoryDetails()
+
   productHelpers.viewAllProductsofEAchCAtegory(category).then((result) => {
     let products = result.products;
     let categories = result.categories;
     let sessionId = req.cookies.session
+
     userHelpers.checkSessions(sessionId).then((result) => {
-      if (result.status === 'ok') {
+      const isAuthenticated = result.status === 'ok';
+      if (isAuthenticated) {
         userHelpers.getUser(result.email).then((user) => {
           res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user })
         })
@@ -176,8 +180,7 @@ router.get('/logout', function (req, res, next) {
     if (result) {
       req.session.isAuthenticated = false;
       req.session.destroy(function (err) {
-        res.clearCookie('connect.sid');
-        res.clearCookie('session');
+        res.clearCookie('session'); 
         res.redirect('/');
       })
     }

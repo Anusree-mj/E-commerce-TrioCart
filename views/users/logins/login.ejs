@@ -3,8 +3,9 @@
     <%- include('../../partials/loginHeader') %>
 
         <div class=" d-flex flex-column justify-content-center align-items-center ">
-            <div class="login-form">
+            <div class="login-form" onclick="clearSpan('commonSpan')">
                 <h2 class="head">Login</h2>
+                <span id="commonSpan" class="span"></span><br>
                 <label class="label">
                     Username
                 </label>

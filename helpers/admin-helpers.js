@@ -15,6 +15,7 @@ module.exports = {
             console.log(err)
         }
     },
+    
     saveSessions: async (sessionId, adminId) => {
         try {
             const data = {
@@ -28,6 +29,7 @@ module.exports = {
             console.log(err, 'session storing failed')
         }
     },
+
     checkSessions: async (sessionId) => {
         try {
             const check = await collection.adminSessionCollection.findOne({
@@ -44,6 +46,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     deleteSessions: async (sessionId) => {
         try {
             await collection.adminSessionCollection.deleteOne({ sessionId: sessionId })
@@ -53,6 +56,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     getAdmin: async (email) => {
         try {
             const admin = await collection.adminCollection.findOne({ email: email })
@@ -62,6 +66,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     getUsers: async () => {
         try {
             const users = await collection.usersCollection.find()
@@ -71,6 +76,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     blockOrUnblockUser: async (email, userStatus) => {
         try {
             const user = await collection.usersCollection.updateOne(

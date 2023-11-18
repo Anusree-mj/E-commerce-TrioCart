@@ -4,18 +4,24 @@
     <div class="row align-items-center justify-content-center">
         <div class="addForm">
             <h2 class="head">Add a Product</h2>
+            <!-- name -->
             <label class="label" for="name">Name</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Product Name">
+            <!-- description -->
             <label class="label" for="description">Description</label>
             <textarea class="form-control" id="description" rows="3" placeholder="Product description"></textarea>
+            <!-- detailed description -->
             <label class="label" for="detailed_description">Detailed-Description</label>
             <textarea class="form-control" id="detailed_description" rows="3"
                 placeholder="Product detailed description"></textarea>
+            <!-- category -->
             <label class="label" for="category">Category</label>
             <input type="text" class="form-control" name="category" id="category" placeholder="Product Category">
+            <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" name="subCategory" id="subCategory"
                 placeholder="Product subCategory">
+            <!-- size -->
             <label class="label" for="size">Size</label>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1">
@@ -37,15 +43,16 @@
                 <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5">
                 <label class="form-check-label" for="inlineCheckbox3">XXL</label>
             </div>
-
+            
+            <!-- price -->
             <label class="label" for="price">Price</label>
             <input type="text" class="form-control" name="price" id="price" placeholder="Product price">
-
+            <!-- image -->
             <label class="label" for="image">Image</label>
             <input type="file" class="form-control-file" name="image" id="image" accept="image/*">
-
-            <!-- <label class="label" for="image">Product Detailed Images</label>
-            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple> -->
+            <!-- detailed images -->
+            <label class="label" for="image">Detailed Image</label>
+            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
 
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
