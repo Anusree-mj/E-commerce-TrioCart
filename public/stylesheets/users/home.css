@@ -143,7 +143,9 @@
     left: 85%;
     width: 1.5rem;
 }
-
+.wishlist:hover{
+    content: url('/images/navbar/redheart.png');
+}
 
 @media only screen and (max-width: 980px) {
     .sbtxt {
