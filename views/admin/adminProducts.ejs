@@ -18,6 +18,7 @@
                             <th scope="col">SubCategory</th>
                             <th scope="col">Size</th>
                             <th scope="col">Price</th>
+                            <th scope="col">IsDeleted</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -46,6 +47,9 @@
                                 </td>
                                 <td>
                                     <%= product.price%>
+                                </td>
+                                <td>
+                                    <%= product.isDeleted%>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
                                             alt="edit"></a> </td>

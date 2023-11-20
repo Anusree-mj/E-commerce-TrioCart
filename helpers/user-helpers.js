@@ -45,21 +45,25 @@ module.exports = {
     },
     dologin: async (userData) => {
         try {
-            const user = await collection.usersCollection.findOne({ email: userData.email })
-            console.log("user in dologin", user)
-            if (!user.isBlocked) {
-                const password = await bcrypt.compare(userData.password, user.password)
-                if (password) {
-                    return user
+            const user = await collection.usersCollection.findOne({ email: userData.email });
+            if (user) {
+                const passwordMatch = await bcrypt.compare(userData.password, user.password);
+console.log("user being passed",user)
+                if (passwordMatch) {
+                    if (!user.isBlocked) {
+                        return {user}; 
+                    } else {
+                        return { status: 'blocked' };
+                    }
                 } else {
-                    return { status: 'invalid' }
+                    return { status: 'invalid' };
                 }
             } else {
-                return { status: 'blocked' }
+                return { status: 'invalid' }; 
             }
-        }
-        catch (err) {
-            console.log(err)
+        } catch (err) {
+            console.log(err);
+            return { status: 'error' }; 
         }
     },
     saveSessions: async (sessionId, userId) => {

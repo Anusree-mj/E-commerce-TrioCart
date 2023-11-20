@@ -2,7 +2,7 @@ const collection = require('../routes/mongodb')
 const path = require('path');
 
 module.exports = {
-    addProduct: async (body, image,detailedImages) => {
+    addProduct: async (body, image, detailedImages) => {
         try {
             const imagePathWithoutPublic = path.relative('public', image.path);
             const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
@@ -46,7 +46,7 @@ module.exports = {
         try {
             await collection.productsCollection.updateOne(
                 { _id: productId },
-                { $set: { isDeleted: true }, $unset: { _id: 1 } }, { multi: true }
+                { $set: { isDeleted: true }}
             );
             return { status: 'deleted' }
         }
@@ -56,18 +56,18 @@ module.exports = {
         }
     },
 
-    deleteAProductImage: async (image,productId) => {
+    deleteAProductImage: async (image, productId) => {
         try {
-           const result= await collection.productsCollection.updateOne(
+            const result = await collection.productsCollection.updateOne(
                 { _id: productId },
-                { $pull: { detailedImages :image} }
+                { $pull: { detailedImages: image } }
             );
-            
-        if (result.modifiedCount > 0) {
-            return { status: 'deleted' };
-        } else {
-            return { status: 'not found' };
-        }
+
+            if (result.modifiedCount > 0) {
+                return { status: 'deleted' };
+            } else {
+                return { status: 'not found' };
+            }
         }
         catch (err) {
             console.log(err)
@@ -105,10 +105,11 @@ module.exports = {
         }
     },
 
-    editProduct: async (body, image, productId) => {
+    editProduct: async (body, productId) => {
         try {
-            const imagePathWithoutPublic = path.relative('public', image.path);
-            const updateData = await collection.productsCollection.updateOne(
+            const product = await collection.productsCollection.findOne({_id: productId})
+            console.log('product found:',product)
+                const updateData = await collection.productsCollection.updateOne(
                 { _id: productId },
                 {
                     $set: {
@@ -119,11 +120,12 @@ module.exports = {
                         subCategory: body.subCategory,
                         price: body.price,
                         size: body.size,
-                        image: imagePathWithoutPublic,
-                        isDeleted: body.isDeleted
+                        isDeleted: body.isDeleted,
                     }
                 });
+                console.log('updated data is :::',updateData)
             if (updateData.modifiedCount === 1) {
+                console.log('modified count', updateData.modifiedCount);
                 console.log('Data update success')
                 return { status: 'ok' }
             } else {

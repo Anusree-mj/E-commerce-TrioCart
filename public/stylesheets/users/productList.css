@@ -41,18 +41,27 @@
 .cards-section {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 
-}
-
-.mycard {
-    width: 100% !important;
-    padding: 0 !important;
 }
 
 .card-body {
     max-width: 90%;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 1rem;
+    color: black;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: black;
 }
 
 @media only screen and (max-width: 768px) {
@@ -63,10 +72,8 @@
     .productsSctn {
         justify-content: space-around !important;
     }
-/* .mycard {
-    width: 12rem !important;
-    } */
-    .cards-section{
+
+    .cards-section {
         max-width: 80%;
     }
 }

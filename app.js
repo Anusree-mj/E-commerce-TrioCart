@@ -6,10 +6,7 @@ var logger = require('morgan');
 var expressLayouts = require('express-ejs-layouts');
 var multer = require('multer');
 var session = require('express-session')
-var productHelpers = require('./helpers/product-helpers')
-var userHelpers = require('./helpers/user-helpers');
-const adminHelpers = require('./helpers/admin-helpers');
-const productUpdateHelpers = require('./helpers/productUpdate-helpers');
+
 
 //multer
 const storage = multer.diskStorage({
@@ -24,6 +21,7 @@ const storage = multer.diskStorage({
 
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var imageRouter = require('./routes/image');
 
 var app = express();
 
@@ -45,10 +43,10 @@ app.use('/uploads', express.static('uploads'));
 
 //session
 app.use(session({
-  secret:'Key',
-  cookie:{maxAge:604800000},
-  resave:true,
-  saveUninitialized:true
+  secret: 'Key',
+  cookie: { maxAge: 604800000 },
+  resave: true,
+  saveUninitialized: true
 }))
 app.use((req, res, next) => {
   res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -56,17 +54,10 @@ app.use((req, res, next) => {
   res.header('Expires', '0');
   next();
 });
-// Session check middleware
-app.use((req, res, next) => {
-  let sessionId = req.cookies.session;
-  userHelpers.checkSessions(sessionId).then((result) => {
-    req.session.isAuthenticated = result.status === 'ok';
-    next();
-  });
-});
 
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/image', imageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
