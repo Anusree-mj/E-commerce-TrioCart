@@ -114,10 +114,24 @@ router.delete('/products/image', ((req, res, next) => {
 
 //delete products
 router.patch('/products/dlt/:product_Id', ((req, res, next) => {
-  console.log("Entered in delete route")
-  const productId = req.params.product_Id
+    const productId = req.params.product_Id
   productUpdateHelpers.deleteAProduct(productId).then((result) => {
     if (result.status === 'deleted') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
+
+//undo product delete
+router.patch('/products/dlt/:product_id/undo', ((req, res, next) => {
+  console.log('entereddd')
+  const productId = req.params.product_id
+   console.log(productId,"iddd")
+
+  productUpdateHelpers.undoProductDelete(productId).then((result) => {
+    if (result.status === 'undo delete') {
       res.status(200).json({ status: "ok" });
     } else {
       res.status(500).json({ status: "nok" });
@@ -179,11 +193,23 @@ router.get('/addCategory', function (req, res, next) {
   })
 })
 
-//delete category
+//delete subcategory
 router.patch('/category', ((req, res, next) => {
   const subCategory = req.body.subCategory
   productUpdateHelpers.deleteSubcategory(subCategory).then((result) => {
     if (result.status === 'deleted') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
+
+//undo subcategory delete
+router.patch('/subcategory/undo', ((req, res, next) => {
+  const subCategory = req.body.subCategory
+  productUpdateHelpers.undoSubcategoryDelete(subCategory).then((result) => {
+    if (result.status === 'undo delete') {
       res.status(200).json({ status: "ok" });
     } else {
       res.status(500).json({ status: "nok" });

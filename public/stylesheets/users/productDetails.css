@@ -1,17 +1,24 @@
+.wishlist {
+    width: 1.5rem;
+}
 
+.wishlist:hover {
+    content: url('/images/navbar/redheart.png');
+}
 
-.images{
+.images {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-   
+    align-items: flex-start;
+    max-width: 45%;
 }
+
 .image {
     width: 25rem;
-       max-width: 100%;
-       padding: 0 0.2rem;
-       margin: 0.2rem 0;
+    max-width: 100%;
+    padding: 0 0.2rem;
+    margin: 0.2rem 0;
 }
 
 .modal-lg {
@@ -26,25 +33,52 @@
     overflow-y: auto;
 }
 
-.subHead{
+.subHead {
     padding: 0;
     margin: 0;
 }
 
-.details{
+.details {
     width: 50rem;
     margin-top: 3rem;
-}
-.btns{
-    width: 13rem;
-    font-weight: 700;
+    max-width: 45%;
 }
 
-.cart{
-    width: 1.5rem;
-margin-right: 0.8rem;
+.btns {
+    width: 13rem;
+    font-weight: 700;
+    max-width: 100%;
 }
-.description{
+
+.cart {
+    width: 1.5rem;
+    margin-right: 0.8rem;
+}
+
+.description {
     white-space: pre-wrap;
-    text-align: left;
+    text-align: start;
+    max-width: 100%;
+}
+
+.cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 90%;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 1rem;
+    color: black;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: black;
 }

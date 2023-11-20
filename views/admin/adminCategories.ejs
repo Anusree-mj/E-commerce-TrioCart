@@ -4,7 +4,8 @@
         <section>
             <div class="container">
                 <div class="subHead">
-                    <a type="button" href="/admin/addCategory" class="btn btn-info ml-auto addButton" style="width: 7.5rem;">Add Category</a>
+                    <a type="button" href="/admin/addCategory" class="btn btn-info ml-auto addButton"
+                        style="width: 7.5rem;">Add Category</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="productsTable">
@@ -33,6 +34,10 @@
                                             </td>
                                             <td>
                                                 <%= subcategory.isDeleted %>
+                                                    <a
+                                                        onclick="undoDelete('<%= subcategory.isDeleted%>',' <%= subcategory.name %>')"><img
+                                                            src="/images/navbar/undo.png" 
+                                                            alt="edit" style="width: 1rem;"></a>
                                             </td>
                                             <td> <a onclick="deleteCategory('<%= subcategory.name %>')"><img
                                                         style="width: 1.2rem;" src="/images/navbar/delete.png"

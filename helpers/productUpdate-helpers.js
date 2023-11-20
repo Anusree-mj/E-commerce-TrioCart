@@ -56,6 +56,20 @@ module.exports = {
         }
     },
 
+    undoProductDelete : async (productId)=>{
+        try {
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $set: { isDeleted: false }}
+            );
+            return { status: 'undo delete' }
+        }
+        catch (err) {
+            console.log(err)
+            return { status: "error" }
+        }
+    },
+
     deleteAProductImage: async (image, productId) => {
         try {
             const result = await collection.productsCollection.updateOne(
@@ -88,6 +102,26 @@ module.exports = {
                 { $set: { "subCategory.$.isDeleted": true } }
             );
             return { status: 'deleted' }
+        }
+        catch (err) {
+            console.log(err)
+            return { status: "error" }
+        }
+    },
+
+    undoSubcategoryDelete: async (subcategory) => {
+        try {
+            console.log('Subcategory:', subcategory);
+
+            await collection.productsCollection.updateMany(
+                { subCategory: subcategory },
+                { $set: { isDeleted: false } }
+            );
+            await collection.categoryCollection.updateMany(
+                { "subCategory.name": subcategory },
+                { $set: { "subCategory.$.isDeleted": false } }
+            );
+            return { status: 'undo delete' }
         }
         catch (err) {
             console.log(err)

@@ -6,7 +6,7 @@
             <div class="subHead">
                 <a type="button" href="/admin/addProduct" class="btn btn-info ml-auto addButton">Add Product</a>
             </div>
-            <div class="table-responsive" >
+            <div class="table-responsive">
                 <table class="table table-striped" id="productsTable">
                     <thead>
                         <tr>
@@ -50,6 +50,9 @@
                                 </td>
                                 <td>
                                     <%= product.isDeleted%>
+                                        <a onclick="undoDelete('<%= product._id%>','<%= product.isDeleted%>')"><img
+                                                src="/images/navbar/undo.png" id="undo_<%= product._id %>" alt="edit"
+                                                style="width: 1rem;"></a>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
                                             alt="edit"></a> </td>
@@ -62,4 +65,4 @@
             </div>
         </div>
     </section>
-    <script src="/javascripts/admin/adminDeletes.js"></script>    
+    <script src="/javascripts/admin/adminDeletes.js"></script>
