@@ -4,6 +4,7 @@ var productHelpers = require('../helpers/product-helpers')
 var userHelpers = require('../helpers/user-helpers');
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../utils/signupUtil');
+const productUpdateHelpers = require('../helpers/productUpdate-helpers');
 
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
@@ -22,6 +23,7 @@ router.get('/', async function (req, res, next) {
   });
 })
 
+// user logins //
 //get login page
 router.get('/login', function (req, res, next) {
   res.render('users/logins/login', { layout: 'layout/layout' });
@@ -30,9 +32,10 @@ router.get('/login', function (req, res, next) {
 //loging in
 router.post('/login', function (req, res, next) {
   userHelpers.dologin(req.body).then((result) => {
-    if (result) {
+    console.log('result in post ', result)
+    if (result.user) {
       const sessionId = uuidv4();
-      const userId = result.email
+      const userId = result.user.email
       userHelpers.saveSessions(sessionId, userId)
       req.session.isAuthenticated = true;
       res.cookie('session', sessionId);
@@ -125,8 +128,9 @@ router.post('/verifyOtp', function (req, res, next) {
     }
   })
 });
+// user logins ends //
 
-
+// view products starts//
 // get all category products
 router.get('/products/:category/viewAll', async function (req, res, next) {
   const category = req.params.category
@@ -155,6 +159,7 @@ router.get('/products/:category/:subcategory', async function (req, res, next) {
   const category = req.params.category
   const subCategory = req.params.subcategory
   let allCategories = await userHelpers.getCategoryDetails()
+
   productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
     let categories = result.categories;
     let products = result.products;
@@ -163,7 +168,6 @@ router.get('/products/:category/:subcategory', async function (req, res, next) {
       if (result.status === 'ok') {
         userHelpers.getUser(result.email).then((user) => {
           res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user })
-
         })
       } else {
         res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user: undefined })
@@ -173,6 +177,34 @@ router.get('/products/:category/:subcategory', async function (req, res, next) {
   })
 })
 
+// product details
+router.get('/products/:productId', async function (req, res, next) {
+  const productId = req.params.productId
+  let allCategories = await userHelpers.getCategoryDetails()
+
+  productHelpers.getAproduct(productId).then((result) => {
+    let product = result;
+    let category =result.category;
+    let subCategory= result.subCategory
+
+    productHelpers.viewEachSubcategoryProducts(category,subCategory).then(result =>{
+     let viewMoreProducts=result.products;   
+    let sessionId = req.cookies.session
+
+    userHelpers.checkSessions(sessionId).then((result) => {
+      if (result.status === 'ok') {
+        userHelpers.getUser(result.email).then((user) => {
+          res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user })
+        })
+      } else {
+        res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user: undefined })
+
+      }
+    })
+  })
+})
+})
+
 //logout
 router.get('/logout', function (req, res, next) {
   let sessionId = req.cookies.session
@@ -180,7 +212,7 @@ router.get('/logout', function (req, res, next) {
     if (result) {
       req.session.isAuthenticated = false;
       req.session.destroy(function (err) {
-        res.clearCookie('session'); 
+        res.clearCookie('session');
         res.redirect('/');
       })
     }

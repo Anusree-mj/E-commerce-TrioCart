@@ -1,2 +1,102 @@
-<%- include('../partials/header') %>
-    <%- include('../partials/subHeader') %>
+<link rel="stylesheet" href="/stylesheets/users/productDetails.css">
+<link rel="stylesheet" href="/stylesheets/users/productList.css">
+<% if (user) { %>
+    <%- include('../partials/homeHeader') %>
+        <%} else{ %>
+            <%- include('../partials/header') %>
+                <% } %>
+                    <%- include('../partials/subHeader',allCategories) %>
+                        <section class="product-sctn d-flex flex-column justify-content-around">
+                            <!-- product images -->
+                            <div class="d-flex justify-content-around mt-4">
+                                <div class="images">
+                                    <img class="image" src="/<%= product.image %>" alt=""
+                                        onclick="openImagePreview('<%= product.image %>')">
+                                    <% product.detailedImages.forEach(detailedImage=>{ %>
+                                        <img class="image" src="/<%= detailedImage %>" alt=""
+                                            onclick="openImagePreview('<%= detailedImage %>')">
+                                        <% })%>
+                                </div>
+
+                                <!-- image preview -->
+                                <div class="modal fade" id="imagePreviewModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="imagePreviewModalLabel">Image Preview</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img class="d-block w-100" id="previewedImg" src="" alt=""
+                                                    style="max-width: 90%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- product details -->
+                                <div class="details">
+                                    <h3>
+                                        <%=product.name %>
+                                    </h3>
+                                    <p class="subHead">MRP inclusive of all taxes :- </p>
+                                    <p class="subHead">
+                                        <%= product.price %>
+                                    </p>
+                                    <p class="subHead mt-2">colour</p>
+                                    <p class="subHead">Sizes</p>
+                                    <% sizesArray=product.size[0].split(','); sizesArray.forEach(size=> { %>
+                                        <button type="button" class="btn btn-outline-dark">
+                                            <%= size.trim() %>
+                                        </button>
+                                        <% }) %>
+                                            <div class="mt-4">
+                                                <button type="button" class="btn btn-dark btns"><img class="cart"
+                                                        src="/images/navbar/addCart.png" alt="">Add</button>
+                                                <button type="button" class="btn btn-dark btns"><img class="cart"
+                                                        src="/images/navbar/buy.png" alt="">Buy</button>
+                                            </div>
+                                            <div class="mt-4">
+                                                <p>Description & Fit</p>
+                                                    <p class="description">
+                                                        <%=product.detailed_description %>
+                                                    </p>
+                                               
+                                            </div>
+                                </div>
+                            </div>
+
+                            <div class="cards-section">
+                                <% viewMoreProducts.forEach(product=>{%>
+                                    <div class="col-sm-3 mb-4">
+                                        <a href="/products/<%= product._id %>">
+                                            <div class="card mycard" style="width: 18rem;">
+                                                <div>
+                                                    <img class="img-fluid img-thumbnail " src="/<%= product.image %>"
+                                                        alt="Card image cap">
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        <%=product.name %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%= product.price %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                        </section>
+                        <%- include('../partials/footer') %>
+                            <script>
+                                function openImagePreview(imageSrc) {
+                                    $('#previewedImg').attr('src', '/' + imageSrc);
+                                    $('#imagePreviewModal').modal('show');
+                                }
+                            </script>

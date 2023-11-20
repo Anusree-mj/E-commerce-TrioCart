@@ -87,7 +87,7 @@ router.get('/addProduct', function (req, res, next) {
 router.post('/product', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'detailedImages', maxCount: 5 }
 ]), function (req, res, next) {
   const mainImage = req.files['image'] ? req.files['image'][0] : null;
-  const detailedImages = req.files['detailedImages'] || []; 
+  const detailedImages = req.files['detailedImages'] || [];
   productUpdateHelpers.addProduct(req.body, mainImage, detailedImages).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
@@ -100,10 +100,10 @@ router.post('/product', upload.fields([{ name: 'image', maxCount: 1 }, { name: '
 //delte product image
 router.delete('/products/image', ((req, res, next) => {
   const image = req.body.image
-  const productId= req.body.productId
-  console.log('image id in delet router:',image);
-  console.log('product id in delet router:',productId);
-  productUpdateHelpers.deleteAProductImage(image,productId).then((result) => {
+  const productId = req.body.productId
+  console.log('image id in delet router:', image);
+  console.log('product id in delet router:', productId);
+  productUpdateHelpers.deleteAProductImage(image, productId).then((result) => {
     if (result.status === 'deleted') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -114,8 +114,9 @@ router.delete('/products/image', ((req, res, next) => {
 
 //delete products
 router.patch('/products/dlt/:product_Id', ((req, res, next) => {
+  console.log("Entered in delete route")
   const productId = req.params.product_Id
-  productHelpers.deleteAProduct(productId).then((result) => {
+  productUpdateHelpers.deleteAProduct(productId).then((result) => {
     if (result.status === 'deleted') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -138,11 +139,10 @@ router.get('/products/:product_Id/edit', ((req, res, next) => {
 }))
 
 //edit products
-router.patch('/products/:product_Id/', upload.single('image'), function (req, res, next) {
+router.put('/products/:product_Id', function (req, res) {
   const productId = req.params.product_Id
-  console.log(req.body);
-  console.log(req.file);
-  productUpdateHelpers.editProduct(req.body, req.file, productId).then((result) => {
+  console.log("ssssssssss", req.body, productId)
+  productUpdateHelpers.editProduct(req.body, productId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {

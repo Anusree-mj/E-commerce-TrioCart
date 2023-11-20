@@ -4,19 +4,20 @@
     <div class="row align-items-center justify-content-center">
         <div class="addForm">
             <h2 class="head">Edit a Product</h2>
+            <!-- name -->
             <label class="label" for="name">Name</label>
             <input type="text" class="form-control" name="name" id="name" value="<%= productData.name%>">
-
+            <!-- description -->
             <label class="label" for="description">Description</label>
             <textarea class="form-control" id="description" rows="3"><%= productData.description %></textarea>
-            </textarea>
-
+            <!-- detailed description -->
             <label class="label" for="detailed_description">Detailed-Description</label>
             <textarea class="form-control" id="detailed_description" rows="3"><%= productData.detailed_description %>
             </textarea>
-
+            <!-- category -->
             <label class="label" for="category">Category</label>
             <input type="text" class="form-control" name="category" id="category" value="<%= productData.category%>">
+            <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" name="subCategory" id="subCategory"
                 value="<%= productData.subCategory%>">
@@ -59,10 +60,10 @@
                         id="curentImage" alt="Product Image" class="preview-image">
                     <button type="button" class="btn btn-light closebutton" id="closebutton"
                         onclick="changeImage()">Delete X</button>
-
                 </div>
-                <input type="file" class="form-control-file newImage" name="image" id="newImage" accept="image/*">
-
+                <input type="file" class="form-control-file newImage" name="image" id="image" accept="image/*">
+                <button type="button" class="btn btn-light closebutton" id="closebutton"
+                onclick="imageUpload()">Upload </button>
                 <!-- image preview -->
                 <div id="imageModal" class="modal">
                     <span class="close" onclick="closeImagePreview()">&times;</span>
@@ -76,16 +77,17 @@
                             onclick="openImagePreview('/<%= productData.detailedImages[i] %>')" id="curentImage"
                             alt="Product Image" class="preview-image">
                         <button type="button" class="btn btn-light closebutton" id="closebutton"
-                            onclick="deleteImage('<%= productData.detailedImages[i] %>','<%= productData._id %>')">Delete X</button>
+                            onclick="deleteImage('<%= productData.detailedImages[i] %>','<%= productData._id %>')">Delete
+                            X</button>
                         <% } %>
-                </div> 
+                </div>
                 <label class="label" for="image">Add Image</label>
-                <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
-
+                <input type="file" class="form-control-file" name="detailedImages" id="detailedimage" accept="image/*" multiple>
+                
                 <div class="button">
                     <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                         onclick="editProduct('<%= productData._id %>')">Edit</button>
                 </div>
-        </div>
+                       </div>
     </div>
     <script src="/javascripts/admin/adminUpdates.js"></script>

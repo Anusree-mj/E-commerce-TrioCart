@@ -60,11 +60,6 @@
 .preview-image {
     width: 1rem;
 }
-
-.newImage {
-    display: none;
-}
-
 .modal {
     position: fixed;
     z-index: 1;

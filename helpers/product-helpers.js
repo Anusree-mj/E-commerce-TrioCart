@@ -2,7 +2,7 @@ const collection = require('../routes/mongodb')
 const path = require('path');
 
 module.exports = {
-        getAllProducts: async () => {
+    getAllProducts: async () => {
         try {
             const products = await collection.productsCollection.find()
             return (products)
@@ -52,6 +52,15 @@ module.exports = {
             return { products, categories }
         }
         catch (err) {
+            console.log(err)
+        }
+    },
+
+    getAproduct: async (productId) => {
+        try {
+            const product = await collection.productsCollection.findOne({ _id: productId })
+            return product
+        } catch (err) {
             console.log(err)
         }
     }

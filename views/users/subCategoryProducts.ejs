@@ -1,34 +1,35 @@
 <link rel="stylesheet" href="/stylesheets/users/productList.css">
 <% if (user) { %>
     <%- include('../partials/homeHeader') %>
-  <%} else{ %>
-    <%- include('../partials/header') %>
-    <% } %>
-    <%- include('../partials/subHeader',allCategories) %>
-        <section class="productsSctn d-flex justify-content-between ">
-            <%- include('../partials/productsSidebar',categories) %>
+        <%} else{ %>
+            <%- include('../partials/header') %>
+                <% } %>
+                    <%- include('../partials/subHeader',allCategories) %>
+                        <section class="productsSctn d-flex justify-content-between ">
+                            <%- include('../partials/productsSidebar',categories) %>
 
-                <div class="cards-section">
-                    <% products.forEach(product=>{%>
+                                <div class="cards-section">
+                                    <% products.forEach(product=>{%>
 
-                        <div class="col-sm-3">
-                            <div class="card mycard" style="width: 80%;">
-                                <div class="text-center">
-                                    <img class="img-fluid img-thumbnail " src="/<%= product.image %>"
-                                        alt="Card image cap">
-
+                                        <div class="col-sm-3 mb-4">
+                                            <a href="/products/<%= product._id %>">
+                                                <div class="card mycard">
+                                                    <div>
+                                                        <img class="img-fluid img-thumbnail "
+                                                            src="/<%= product.image %>" alt="Card image cap">
+                                                    </div>
+                                                    <div class="card-body" style="width: 18rem;">
+                                                        <h5 class="card-title">
+                                                            <%=product.name %>
+                                                        </h5>
+                                                        <p class="card-text">
+                                                            <%= product.price %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <% }) %>
                                 </div>
-                                <div class="card-body" style="width: 18rem;">
-                                    <h5 class="card-title">
-                                        <%=product.name %>
-                                    </h5>
-                                    <p class="card-text">
-                                        <%= product.price %>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <% }) %>
-                </div>
-        </section>
-        <%- include('../partials/footer') %>
+                        </section>
+                        <%- include('../partials/footer') %>
