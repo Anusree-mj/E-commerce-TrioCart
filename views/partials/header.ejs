@@ -17,29 +17,31 @@
             <div class="dropdown nav_icons">
                 <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" src="/images/navbar/profile.png" alt="">
-                <p class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Profile</p>
+                <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Profile</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-item">
                         <p class="userWlcme">Hello User!</p>
                         <p class="loginTxt">To access your account please</p>
-                        <a href="/login" type="button" class="btn btn-info loginBttn">Login</a>
+                        <a href="/user/login" type="button" class="btn btn-info loginBttn">Login</a>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item signup_txt" href="/signup">New around here? Signup</a>
+                    <a class="dropdown-item signup_txt" href="/user/signup">New around here? Signup</a>
                 </div>
             </div>
             <div class="nav_icons nav_search">
                 <img class="search-icon nav_icon" src="/images/navbar/search.png" alt="">
                 <p class="nav_icon_text ">Search</p>
             </div>
+
             <div class="nav_icons">
                 <img class="nav_icon" src="/images/navbar/wishlist.png" alt="">
-                <p class="nav_icon_text ">Favourites</p>
+                <a href="/wishlist" class="nav_icon_text ">Favourites</a>
             </div>
+
             <div class="nav_icons">
                 <img class="nav_icon" src="/images/navbar/cart.png" alt="">
-                <p class="nav_icon_text">Shopping bag</p>
+                <a href="/cart" class="nav_icon_text">Shopping bag</a>
             </div>
         </div>
     </nav>

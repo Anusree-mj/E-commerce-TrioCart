@@ -110,7 +110,7 @@ function signup() {
             address: document.getElementById("address").value,
             password:document.getElementById("password").value
          }
-        fetch("http://localhost:3000/signup", {
+        fetch("http://localhost:3000/user/signup", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -119,7 +119,7 @@ function signup() {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/userVerify");
+                    window.location.replace("/user/verify");
                 } else {
                     alert("Email already exist");
                 }
@@ -133,7 +133,7 @@ function signup() {
 function verifyUser() {
     let otp = document.getElementById('otp').value;
 
-    fetch("http://localhost:3000/userVerify", {
+    fetch("http://localhost:3000/user/verify", {
         method: "POST",
         body: JSON.stringify({ otp }),
         headers: {

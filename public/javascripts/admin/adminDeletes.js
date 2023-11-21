@@ -13,10 +13,11 @@ function deleteProduct(product_id) {
 }
 
 // undo product delete
-function undoDelete(product_id, deleteStatus) {
+function undoProductDelete(product_id, deleteStatus) {
     console.log(deleteStatus, 'delete statys')
     console.log(product_id)
     console.log(typeof deleteStatus, 'typeeeee')
+
     if (deleteStatus === 'true') {
         fetch(`http://localhost:3000/admin/products/dlt/${product_id}/undo`, {
             method: "PATCH",
@@ -37,8 +38,10 @@ function undoDelete(product_id, deleteStatus) {
 }
 
 // undo subcategory delete
-function undoDelete(deleteStatus, subCategory) {
+function undoSubcategoryDelete(deleteStatus, subCategory) {
+    subCategory = subCategory.trim();
     let reqBody = { subCategory }
+    
     if (deleteStatus === 'true') {
         fetch('http://localhost:3000/admin/subcategory/undo', {
             method: "PATCH",
@@ -59,6 +62,7 @@ function undoDelete(deleteStatus, subCategory) {
         return
     }
 }
+
 //delete subcategory
 function deleteCategory(subCategory) {
     console.log('passing subcategory', subCategory)

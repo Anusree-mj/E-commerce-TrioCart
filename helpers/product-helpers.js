@@ -36,6 +36,7 @@ module.exports = {
 
     viewEachSubcategoryProducts: async (category, subcategory) => {
         try {
+            console.log(category,'category',subcategory,'sub')
             const categories = await collection.categoryCollection.findOne({ category: category })
             const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false })
             return { categories, products }

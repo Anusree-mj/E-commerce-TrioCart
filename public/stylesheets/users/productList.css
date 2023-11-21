@@ -73,7 +73,13 @@
         justify-content: space-around !important;
     }
 
-    .cards-section {
+    .col-sm-3 {
+        width: 50% !important;
         max-width: 80%;
+    }
+
+    .card {
+        width: 12rem !important;
+        max-width: 100%;
     }
 }

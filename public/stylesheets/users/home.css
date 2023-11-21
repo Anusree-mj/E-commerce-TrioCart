@@ -143,7 +143,8 @@
     left: 85%;
     width: 1.5rem;
 }
-.wishlist:hover{
+
+.wishlist:hover {
     content: url('/images/navbar/redheart.png');
 }
 
@@ -182,8 +183,19 @@
         left: 25%;
         top: 70%;
     }
-    .card{
-        width: 15rem;
+
+    .emptyHead {
+        font-size: 1.2rem;
+    }
+
+    .col-sm-3 {
+        width: 50% !important;
+        max-width: 80%;
+    }
+
+    .card {
+        width: 12rem !important;
+        max-width: 100%;
     }
 }
 

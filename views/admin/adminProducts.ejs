@@ -50,8 +50,8 @@
                                 </td>
                                 <td>
                                     <%= product.isDeleted%>
-                                        <a onclick="undoDelete('<%= product._id%>','<%= product.isDeleted%>')"><img
-                                                src="/images/navbar/undo.png" id="undo_<%= product._id %>" alt="edit"
+                                        <a onclick="undoProductDelete('<%= product._id%>','<%= product.isDeleted%>')"><img
+                                                src="/images/navbar/undo.png" alt="edit"
                                                 style="width: 1rem;"></a>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
