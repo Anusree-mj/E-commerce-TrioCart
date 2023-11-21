@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: #646363;
+}
+
+a {
+    color: #000;
+    font-size: 0.8rem;
+}
+
+a:hover {
+    color: #000;
+}
+
+.cartPage {
+    background-color: #faf9f8;
+}
+
+.cartsctn {
+    display: flex;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.emptyCart,
+.purchase {
+    background-color: white;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.emptyCart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.emptyImg {
+    width: 35rem;
+    max-width: 50%;
+}
+
+.emptydetails {
+    max-width: 50%;
+}
+
+.purchase-box {
+    width: 100%;
+}
+
+.shoopNow {
+    color: #000;
+    width: 1rem;
+}
+
+.shoopNow:hover {
+    color: #000;
+}
+
+.btns {
+    margin-top: 1rem;
+    display: flex;
+    max-width: 30%;
+}
+
+.purchase {
+    background-color: white;
+    width: 25rem;
+    max-width: 50%;
+    margin-top: 2rem;
+}
+
+.darkHeads {
+    font-weight: 600;
+    color: #000;
+    margin-top: 0.8rem;
+}
+
+.purchasebtn {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0.8rem;
+}
+
+.boldTxt {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000;
+}
+
+.paytxt {
+    font-weight: 400;
+    color: #000;
+}
+
+.viewProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 90%;
+}
+
+.cardHead {
+    margin-top: 6rem;
+    width: 74rem;
+    max-width: 90%;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 1rem;
+    color: black;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: black;
+}
+
+@media only screen and (max-width: 980px) {
+    .emptyHead {
+        font-size: 1.2rem;
+    }
+
+    .col-sm-3 {
+        width: 50% !important;
+        max-width: 80%;
+    }
+
+    .card {
+        width: 12rem !important;
+        max-width: 100%;
+    }
+
+    .cartsctn {
+        display: flex;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: 90%;
+    }
+
+    .emptyCart {
+        display: flex;
+        flex-direction: column;
+        margin-right: 0;
+    }
+
+    .emptyCart,
+    .purchase {
+        max-width: 100%;
+    }
+.cardHead{
+    margin-top: 1rem;
+}
+
+}

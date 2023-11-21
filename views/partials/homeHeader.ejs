@@ -16,8 +16,8 @@
             <div class="dropdown nav_icons">
                 <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" src="/images/navbar/profile.png" alt="">
-                <p class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Profile</p>
+                <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Profile</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <p class="welcomeTxt">Hello <%= user.name %> !</p>
                     <div class="dropdown-item">
@@ -54,11 +54,11 @@
             </div>
             <div class="nav_icons">
                 <img class="nav_icon" src="/images/navbar/wishlist.png" alt="">
-                <p class="nav_icon_text ">Favourites</p>
+                <a href="/wishlist" class="nav_icon_text ">Favourites</a>
             </div>
             <div class="nav_icons">
                 <img class="nav_icon" src="/images/navbar/cart.png" alt="">
-                <p class="nav_icon_text">Shopping bag</p>
+                <a href="/cart" class="nav_icon_text">Shopping bag</a>
             </div>
         </div>
     </nav>

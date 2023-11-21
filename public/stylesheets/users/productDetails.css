@@ -60,7 +60,12 @@
     text-align: start;
     max-width: 100%;
 }
-
+.viewProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .cards-section {
     display: flex;
     flex-wrap: wrap;
@@ -78,7 +83,29 @@
     color: black;
 }
 
+.cardHead {
+    margin-top: 6rem;
+    width: 74rem;
+    max-width: 90%;
+}
+
 .card-text {
     font-size: 1rem;
     color: black;
+}
+
+@media only screen and (max-width: 980px) {
+    .emptyHead {
+        font-size: 1.2rem;
+    }
+
+    .col-sm-3 {
+        width: 50% !important;
+        max-width: 80%;
+    }
+
+    .card {
+        width: 12rem !important;
+        max-width: 100%;
+    }
 }

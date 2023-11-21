@@ -26,7 +26,7 @@ function login() {
         document.getElementById('emailSpan').textContent = 'Fill this field'
     } else {
         let reqBody = { email, password }
-        fetch("http://localhost:3000/login", {
+        fetch("http://localhost:3000/user/login", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -62,7 +62,7 @@ function getOtp() {
         document.getElementById('emailSpan').textContent = "Enter your email"
     } else {
         let reqBody = { email }
-        fetch("http://localhost:3000/getOtp", {
+        fetch("http://localhost:3000/user/getOtp", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -87,7 +87,7 @@ function verifyOtp() {
     let otp = document.getElementById('otp').value;
     let email = document.getElementById('email').value
     let reqbody = { email, otp }
-    fetch("http://localhost:3000/verifyOtp", {
+    fetch("http://localhost:3000/user/verifyOtp", {
         method: "POST",
         body: JSON.stringify(reqbody),
         headers: {
@@ -116,8 +116,8 @@ function changePassword() {
     }
     else {
         let reqbody = { email, password }
-        fetch("http://localhost:3000/forgotPassword", {
-            method: "PATCH",
+        fetch("http://localhost:3000/user/forgotPassword", {
+            method: "PUT",
             body: JSON.stringify(reqbody),
             headers: {
                 "Content-Type": "application/json"
@@ -126,7 +126,7 @@ function changePassword() {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/login");
+                    window.location.replace("/user/login");
                 } else {
                     alert("OTP doesnt match");
                 }

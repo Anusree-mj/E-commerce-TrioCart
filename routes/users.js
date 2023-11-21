@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 var productHelpers = require('../helpers/product-helpers')
 var userHelpers = require('../helpers/user-helpers');
-const uuidv4 = require('uuid').v4
-const signupUtil = require('../utils/signupUtil');
-const productUpdateHelpers = require('../helpers/productUpdate-helpers');
 
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
@@ -23,186 +20,29 @@ router.get('/', async function (req, res, next) {
   });
 })
 
-// user logins //
-//get login page
-router.get('/login', function (req, res, next) {
-  res.render('users/logins/login', { layout: 'layout/layout' });
-});
-
-//loging in
-router.post('/login', function (req, res, next) {
-  userHelpers.dologin(req.body).then((result) => {
-    console.log('result in post ', result)
-    if (result.user) {
-      const sessionId = uuidv4();
-      const userId = result.user.email
-      userHelpers.saveSessions(sessionId, userId)
-      req.session.isAuthenticated = true;
-      res.cookie('session', sessionId);
-      res.status(200).json({ status: "ok" });
-    } else if (result.status === 'invalid') {
-      res.status(400).json({ status: "invalid" });
-    } else {
-      res.status(400).json({ status: "blocked" });
-    }
-  })
-});
-
-//get signup page
-router.get('/signup', function (req, res, next) {
-  res.render('users/logins/signup', { layout: 'layout/layout' });
-});
-
-//signup
-router.post('/signup', function (req, res, next) {
-  const otp = signupUtil.generateOTP();
-  userHelpers.doSignup(req.body, otp).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
-
-//get otp verification page
-router.get('/userVerify', function (req, res, next) {
-  res.render('users/logins/userVerify', { layout: 'layout/layout' });
-});
-
-//verify user
-router.post('/userVerify', function (req, res, next) {
-  userHelpers.doVerifyUser(req.body).then((user) => {
-    if (user) {
-      const sessionId = uuidv4();
-      const userId = user.email
-      userHelpers.saveSessions(sessionId, userId)
-      res.cookie('session', sessionId);
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
-
-//forgot password
-router.get('/forgotPassword', (req, res, nxt) => {
-  res.render('users/logins/changePassword', { layout: 'layout/layout' });
-})
-
-//forgot password checking for email
-router.post('/getOtp', (req, res, next) => {
-  let email = req.body.email;
-  const otp = signupUtil.generateOTP();
-  userHelpers.getOtp(email, otp).then(result => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
-
-//CHANGE PASSWORD
-router.patch('/forgotPassword', (req, res, nxt) => {
-  let email = req.body.email
-  let password = req.body.password
-  userHelpers.updatePassword(email, password).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
-
-//verify otp for changing password
-router.post('/verifyOtp', function (req, res, next) {
-  let email = req.body.email;
-  let otp = req.body.otp
-  userHelpers.verifyOtp(email, otp).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
-// user logins ends //
-
-// view products starts//
-// get all category products
-router.get('/products/:category/viewAll', async function (req, res, next) {
-  const category = req.params.category
+/* get cart. */
+router.get('/cart', async function (req, res, next) {
   let allCategories = await userHelpers.getCategoryDetails()
+  let category = 'Ladies'
+  let subCategory = 'Dresses'
 
-  productHelpers.viewAllProductsofEAchCAtegory(category).then((result) => {
-    let products = result.products;
-    let categories = result.categories;
-    let sessionId = req.cookies.session
+  productHelpers.viewEachSubcategoryProducts(category, subCategory).then(result => {
+    let viewMoreProducts = result.products;
 
-    userHelpers.checkSessions(sessionId).then((result) => {
-      const isAuthenticated = result.status === 'ok';
-      if (isAuthenticated) {
-        userHelpers.getUser(result.email).then((user) => {
-          res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user })
-        })
-      } else {
-        res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user: undefined })
-      }
-    })
-  })
-})
-
-//get each subcategory products
-router.get('/products/:category/:subcategory', async function (req, res, next) {
-  const category = req.params.category
-  const subCategory = req.params.subcategory
-  let allCategories = await userHelpers.getCategoryDetails()
-
-  productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
-    let categories = result.categories;
-    let products = result.products;
     let sessionId = req.cookies.session
     userHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
+        let cartproducts = {}
         userHelpers.getUser(result.email).then((user) => {
-          res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user })
+          res.render('users/cart', {
+            layout: 'layout/layout', cartproducts:undefined, allCategories, user: user, viewMoreProducts,
+          });
         })
       } else {
-        res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user: undefined })
-
+        res.redirect('/user/login')
       }
-    })
+    });
   })
-})
-
-// product details
-router.get('/products/:productId', async function (req, res, next) {
-  const productId = req.params.productId
-  let allCategories = await userHelpers.getCategoryDetails()
-
-  productHelpers.getAproduct(productId).then((result) => {
-    let product = result;
-    let category =result.category;
-    let subCategory= result.subCategory
-
-    productHelpers.viewEachSubcategoryProducts(category,subCategory).then(result =>{
-     let viewMoreProducts=result.products;   
-    let sessionId = req.cookies.session
-
-    userHelpers.checkSessions(sessionId).then((result) => {
-      if (result.status === 'ok') {
-        userHelpers.getUser(result.email).then((user) => {
-          res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user })
-        })
-      } else {
-        res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user: undefined })
-
-      }
-    })
-  })
-})
 })
 
 //logout

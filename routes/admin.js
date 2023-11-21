@@ -208,6 +208,7 @@ router.patch('/category', ((req, res, next) => {
 //undo subcategory delete
 router.patch('/subcategory/undo', ((req, res, next) => {
   const subCategory = req.body.subCategory
+  console.log(subCategory,"subbbcatgry")
   productUpdateHelpers.undoSubcategoryDelete(subCategory).then((result) => {
     if (result.status === 'undo delete') {
       res.status(200).json({ status: "ok" });

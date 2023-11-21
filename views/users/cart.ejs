@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="/stylesheets/users/cart.css">
+
+<% if (user) { %>
+    <%- include('../partials/homeHeader') %>
+        <%} else{ %>
+            <%- include('../partials/header') %>
+                <% } %>
+                    <%- include('../partials/subHeader',allCategories) %>
+                        <section class="cartPage">
+                            <% if (cartproducts) { %>
+
+                                <h3>Your Shopping Bag is empty dig in </h3>
+
+                                <%} else{ %>
+                                    <div class="d-flex justify-content-around cartsctn ">
+                                        <div class="emptyCart">
+                                            <img class="emptyImg" src="/images/home/emptyCart.svg" alt="">
+                                            <div class="emptydetails ml-4">
+                                                <h3 class="emptyHead">Your Shopping Bag is Empty</h3>
+                                                <a class="shoopNow" href="/products/Ladies/ViewAll">Shop Now</a>
+                                                <div class="btns">
+                                                    <button type="button" class="btn btn-dark ">Sign in</button>
+                                                    <button type="button"
+                                                        class="btn btn-outline-dark ml-2">Signup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="purchase">
+                                            <div class="purchase-box">
+                                                <div class="d-flex justify-content-between">
+                                                    <p>Discounts</p>
+                                                    <a href="">Apply discounts</a>
+                                                </div>
+                                                <p class="darkHeads">Log in to use your personal offers !</p>
+                                                <button type="button"
+                                                    class="btn btn-outline-dark ml-2 purchasebtn boldTxt">Login</button>
+                                                <hr>
+                                                <div class=" d-flex justify-content-between">
+                                                    <p class="boldTxt" >Total</p>
+                                                    <p class="boldTxt">Rs. 0.00</p>
+                                                </div>
+                                                <button type="button" class="btn btn-secondary purchasebtn" disabled> Continue to
+                                                    Checkout </button>
+                                                <p class="darkHeads">We accept</p>
+                                                <div class="d-flex justify-content-around align-items-center">
+                                                    <p class="paytxt">Cash On Delivery</p>
+                                                    <img src="/images/home/visa.png" alt="">
+                                                    <img src="/images/home/rupay.png" alt="">
+                                                    <p class="paytxt">EMI</p>
+                                                    <img src="/images/home/gpay.png" alt="">
+                                                </div>
+                                                <p class="mt-4">
+                                                    Prices and delivery costs are not confirmed until you've reached the
+                                                    checkout.</p>
+                                                <p>15 days free returns. Read more about return and refund policy.
+                                                    Customers would receive an SMS/WhatsApp notifications regarding
+                                                    deliveries on the registered phone number
+
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="viewProducts">
+                                            <div class="cardHead">
+                                                <h3>Others Also Bought</h3>
+                                            </div>
+                                            <div class="cards-section ">
+                                                <% viewMoreProducts.forEach(product=>{%>
+                                                    <div class="col-sm-3 mb-4">
+                                                        <a href="/products/<%= product._id %>">
+                                                            <div class="card" style="width: 15rem;">
+                                                                <div>
+                                                                    <img class="img-fluid img-thumbnail "
+                                                                        src="/<%= product.image %>"
+                                                                        alt="Card image cap">
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">
+                                                                        <%=product.name %>
+                                                                    </h5>
+                                                                    <p class="card-text">
+                                                                        <%= product.price %>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <% }) %>
+                                            </div>
+                                        </div>
+                        </section>
+                        <%- include('../partials/footer') %>
+                            <script>
+                                console.log('Number of products:', viewMoreProducts.length);
+                            </script>
