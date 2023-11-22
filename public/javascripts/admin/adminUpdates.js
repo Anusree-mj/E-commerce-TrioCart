@@ -19,9 +19,15 @@ function addProduct() {
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
     }
-    let detailedImageInput = document.getElementById('detailedimage');
+
+     let detailedImageInput = document.getElementById('detailedimage');
+    let imageInputs = document.querySelectorAll('.image-input');
+ console.log(detailedImageInput,imageInputs,'haiiiii')
     for (let i = 0; i < detailedImageInput.files.length; i++) {
-        formData.append('detailedImages', detailedImageInput.files[i]);
+        formData.append('detailedImages', {
+            image: detailedImageInput.files[i],
+            color: imageInputs[i].querySelector('input[name="color"]').value,
+        });
     }
 
     let sizeMap = {

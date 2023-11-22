@@ -23,6 +23,65 @@ a:hover {
     background-color: #faf9f8;
 }
 
+.cartProducts {
+    background-color: white;
+    width: 45rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.prodImg {
+    width: 10rem;
+    max-width: 100%;
+
+}
+
+.prodDetails {
+    width: 30rem;
+    max-width: 100%;
+    margin-left: 2rem;
+
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.remove {
+    width: 1.2rem;
+}
+
+.subDetails {
+    margin-top: 0.6rem;
+}
+.bttn{
+    margin-top: 1rem;
+}
+.bttn:hover {
+    color: #000 !important;
+    background-color: transparent !important;
+    border-color: #000
+}
+
+.wishlisht {
+    width: 1.5rem;
+}
+.wishlisht:hover {
+    content: url('/images/navbar/redheart.png');
+}
+.qnty {
+    border: none;
+    width: 2rem;
+    border: none; 
+    outline: none;
+}
+
 .cartsctn {
     display: flex;
     justify-content: center;
@@ -72,6 +131,22 @@ a:hover {
     margin-top: 1rem;
     display: flex;
     max-width: 30%;
+}
+.btn.btn-outline-dark:focus,
+.btn.btn-outline-dark:active,
+.btn.btn-outline-dark.bttn:focus,
+.btn.btn-outline-dark.bttn:active,
+.btn.btn-outline-dark.bttn input.qnty:focus,
+.btn.btn-outline-dark.bttn input.qnty:active {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Additional styling for the input field in the second button */
+.btn.btn-outline-dark.bttn input.qnty {
+    border: none; /* Remove the border from the input field */
+    outline: none; /* Remove the outline */
+    box-shadow: none; /* Remove the box shadow */
 }
 
 .purchase {
@@ -172,8 +247,12 @@ a:hover {
     .purchase {
         max-width: 100%;
     }
-.cardHead{
-    margin-top: 1rem;
-}
 
+    .cardHead {
+        margin-top: 1rem;
+    }
+
+    .prodDetails {
+        padding: 0.5rem;
+    }
 }

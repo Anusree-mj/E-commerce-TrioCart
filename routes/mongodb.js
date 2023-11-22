@@ -8,7 +8,7 @@ mongoose.connect("mongodb://localhost:27017/TrioCart")
     .catch(() => {
         console.log('failed to connect');
     });
-
+// products collection
 const ProductSchema = new mongoose.Schema(
     {
         name: {
@@ -43,10 +43,17 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        detailedImages: {
-            type: Array,
-            requires: true,
-        },
+        detailedImages: [
+            {
+                image: {
+                    type: String,
+                    required: true,
+                }, color: {
+                    type: String,
+                    required: true,
+                },
+            },
+        ],
         isDeleted: {
             type: Boolean,
             default: false,
@@ -58,6 +65,8 @@ const ProductSchema = new mongoose.Schema(
 );
 const productsCollection = new mongoose.model("products", ProductSchema);
 
+
+// users collection
 const UserSchema = new mongoose.Schema(
     {
         name: {
@@ -94,6 +103,8 @@ const UserSchema = new mongoose.Schema(
 );
 const usersCollection = new mongoose.model("users", UserSchema);
 
+
+// temporary users collection
 const TemporaryUserSchema = new mongoose.Schema(
     {
         name: {
@@ -130,10 +141,13 @@ const TemporaryUserSchema = new mongoose.Schema(
 );
 const tempUsersCollection = new mongoose.model("tempUsers", TemporaryUserSchema);
 
+
+// sessions collection
 const SessionSchema = new mongoose.Schema(
     {
         userId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users',
         },
         sessionId: {
             type: String,
@@ -145,6 +159,8 @@ const SessionSchema = new mongoose.Schema(
 );
 const sessionCollection = new mongoose.model("sessions", SessionSchema);
 
+
+// admin collection
 const AdminCollection = new mongoose.Schema({
     name: {
         type: String,
@@ -161,6 +177,8 @@ const AdminCollection = new mongoose.Schema({
 })
 const adminCollection = new mongoose.model("admins", AdminCollection)
 
+
+//admin session
 const AdminSessionSchema = new mongoose.Schema(
     {
         adminId: {
@@ -176,6 +194,8 @@ const AdminSessionSchema = new mongoose.Schema(
 );
 const adminSessionCollection = new mongoose.model("adminSessions", AdminSessionSchema);
 
+
+// category collection
 const CategorySchema = new mongoose.Schema(
     {
         category: {
@@ -199,6 +219,29 @@ const CategorySchema = new mongoose.Schema(
 );
 const categoryCollection = new mongoose.model("categories", CategorySchema);
 
+
+// carts collection
+const CartSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users',
+        },
+        products: [{
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products',
+            },
+            size: String,
+            color: String,
+        }]
+    },
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+const cartCollection = new mongoose.model("cartProducts", CartSchema);
+
 module.exports = {
     productsCollection,
     usersCollection,
@@ -207,4 +250,5 @@ module.exports = {
     sessionCollection,
     adminSessionCollection,
     categoryCollection,
+    cartCollection,
 };

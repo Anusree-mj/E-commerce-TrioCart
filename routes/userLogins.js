@@ -16,7 +16,7 @@ router.get('/login', function (req, res, next) {
       console.log('result in post ', result)
       if (result.user) {
         const sessionId = uuidv4();
-        const userId = result.user.email
+        const userId = result.user._id
         userHelpers.saveSessions(sessionId, userId)
         req.session.isAuthenticated = true;
         res.cookie('session', sessionId);

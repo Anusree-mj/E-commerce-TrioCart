@@ -16,9 +16,8 @@ router.get('/:category/viewAll', async function (req, res, next) {
       userHelpers.checkSessions(sessionId).then((result) => {
         const isAuthenticated = result.status === 'ok';
         if (isAuthenticated) {
-          userHelpers.getUser(result.email).then((user) => {
+          let user=result.user  
             res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user })
-          })
         } else {
           res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user: undefined })
         }
@@ -36,11 +35,11 @@ router.get('/:category/:subcategory', async function (req, res, next) {
       let categories = result.categories;
       let products = result.products;
       let sessionId = req.cookies.session
+
       userHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
-          userHelpers.getUser(result.email).then((user) => {
+          let user=result.user  
             res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user })
-          })
         } else {
           res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user: undefined })
   
@@ -65,9 +64,8 @@ router.get('/:productId', async function (req, res, next) {
   
       userHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
-          userHelpers.getUser(result.email).then((user) => {
+          let user=result.user  
             res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user })
-          })
         } else {
           res.render('users/productDetails', { layout: 'layout/layout',allCategories,viewMoreProducts, product, user: undefined })
   
