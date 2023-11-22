@@ -48,10 +48,9 @@ module.exports = {
             const user = await collection.usersCollection.findOne({ email: userData.email });
             if (user) {
                 const passwordMatch = await bcrypt.compare(userData.password, user.password);
-console.log("user being passed",user)
                 if (passwordMatch) {
                     if (!user.isBlocked) {
-                        return {user}; 
+                        return { user };
                     } else {
                         return { status: 'blocked' };
                     }
@@ -59,13 +58,14 @@ console.log("user being passed",user)
                     return { status: 'invalid' };
                 }
             } else {
-                return { status: 'invalid' }; 
+                return { status: 'invalid' };
             }
         } catch (err) {
             console.log(err);
-            return { status: 'error' }; 
+            return { status: 'error' };
         }
     },
+
     saveSessions: async (sessionId, userId) => {
         try {
             const data = {
@@ -79,19 +79,21 @@ console.log("user being passed",user)
             console.log(err, 'session storing failed')
         }
     },
+
     checkSessions: async (sessionId) => {
         try {
             const checkSession = await collection.sessionCollection.findOne({
                 sessionId: sessionId,
-            })
-            console.log("check seesssionnnn :", checkSession)
+            }).populate('userId');
+
             if (checkSession) {
-                let email = checkSession.userId;
-                console.log("userid in checksession", email)
-                const userValidity = await collection.usersCollection.findOne({ email: email });
-                if (!userValidity.isBlocked) {
-                    return { status: 'ok', email }
-                } else {
+                let user = checkSession.userId;
+                console.log("userid in checksession", user)
+
+                if (user && !user.isBlocked) {
+                    return { status: 'ok', user }
+                }
+                else {
                     console.log('user is blocked')
                     return { status: 'nok' }
                 }
@@ -113,6 +115,7 @@ console.log("user being passed",user)
             console.log(err)
         }
     },
+
     getUser: async (email) => {
         try {
             const user = await collection.usersCollection.findOne({ email: email })
@@ -122,6 +125,7 @@ console.log("user being passed",user)
             console.log(err)
         }
     },
+
     getOtp: async (email, otp) => {
         try {
             const user = await collection.tempUsersCollection.updateOne(
@@ -139,6 +143,7 @@ console.log("user being passed",user)
             console.log(err)
         }
     },
+
     verifyOtp: async (email, otp) => {
         try {
             const user = await collection.tempUsersCollection.findOne({ email: email, otp: otp });
@@ -152,6 +157,7 @@ console.log("user being passed",user)
             console.log(err)
         }
     },
+
     updatePassword: async (email, password) => {
         try {
             password = await bcrypt.hash(password, 10)
@@ -168,6 +174,7 @@ console.log("user being passed",user)
             console.log(err)
         }
     },
+
     getCategoryDetails: async () => {
         try {
             const allCategories = await collection.categoryCollection.find()
@@ -176,5 +183,65 @@ console.log("user being passed",user)
         catch (err) {
             console.log(err)
         }
+    },
+
+    addToCart: async (user, productId) => {
+        try {
+            console.log('user in add to cart', user, "product:", productId)
+            const updateData = await collection.cartCollection.updateOne(
+                { userId: user._id },
+                { $push: { products: productId } },
+                { upsert: true }
+            );
+            console.log(updateData, 'update');
+
+            if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
+                console.log('Data update success');
+            } else {
+                console.log('Data update failed');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }, getMyCartProducts: async (user) => {
+        try {
+            const cart = await collection.cartCollection.findOne({ userId: user._id })
+                .populate('products');
+    
+            if (cart && cart.products) {
+                let cartProducts = cart.products;
+                return { cartProducts };
+            } else {
+                return { status: "nok" };
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    removeCartProducts: async (productId, userId) => {
+        try {
+            const updateData = await collection.cartCollection.updateOne(
+                { userId: userId },
+                { $pull: { products: productId } }
+            );
+
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success');
+
+                const updatedCart = await collection.cartCollection.findOne({ userId: userId });
+                if (updatedCart.products.length < 1) {
+                    await collection.cartCollection.deleteOne({ userId: userId });
+                    console.log('Cart document deleted');
+                }
+
+                return { status: 'ok' };
+            } else {
+                return { status: 'nok' };
+            }
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
     }
+
 }

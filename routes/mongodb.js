@@ -43,10 +43,17 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        detailedImages: {
-            type: Array,
-            requires: true,
-        },
+        detailedImages: [
+            {
+                image: {
+                    type: String,
+                    required: true,
+                }, color: {
+                    type: String,
+                    required: true,
+                },
+            },
+        ],
         isDeleted: {
             type: Boolean,
             default: false,
@@ -221,11 +228,8 @@ const CartSchema = new mongoose.Schema(
             ref: 'users',
         },
         products: [{
-            product:{            
             type: mongoose.Schema.Types.ObjectId,
-            ref:'products',
-            },
-            size: String
+            ref: 'products',
         }]
     },
     {

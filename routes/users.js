@@ -8,6 +8,7 @@ router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
   let products = await productHelpers.getNewArrivalProducts();
   let allCategories = await userHelpers.getCategoryDetails()
+  
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user

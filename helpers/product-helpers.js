@@ -23,10 +23,10 @@ module.exports = {
 
     getNewArrivalProducts: async () => {
         try {
-            const category1 = await collection.productsCollection.find({ category: "Ladies", isDeleted: false }).limit(4);
-            const category2 = await collection.productsCollection.find({ category: "Mens", isDeleted: false }).limit(4);
-            const category3 = await collection.productsCollection.find({ category: "Kids", isDeleted: false }).limit(4);
-            const category4 = await collection.productsCollection.find({ category: "Girls", isDeleted: false }).limit(4);
+            const category1 = await collection.productsCollection.find({ category: "Ladies", isDeleted: false }).limit(4).sort({ createdAt: -1 });
+            const category2 = await collection.productsCollection.find({ category: "Mens", isDeleted: false }).limit(4).sort({ createdAt: -1 });
+            const category3 = await collection.productsCollection.find({ category: "Kids", isDeleted: false }).limit(4).sort({ createdAt: -1 });
+            const category4 = await collection.productsCollection.find({ category: "Girls", isDeleted: false }).limit(4).sort({ createdAt: -1 });
             return { category1, category2, category3, category4 }
         }
         catch (err) {
@@ -38,7 +38,7 @@ module.exports = {
         try {
             console.log(category,'category',subcategory,'sub')
             const categories = await collection.categoryCollection.findOne({ category: category })
-            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false })
+            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false }).sort({ createdAt: -1 });
             return { categories, products }
         }
         catch (err) {
@@ -48,7 +48,7 @@ module.exports = {
 
     viewAllProductsofEAchCAtegory: async (category) => {
         try {
-            const products = await collection.productsCollection.find({ category: category, isDeleted: false })
+            const products = await collection.productsCollection.find({ category: category, isDeleted: false }).sort({ createdAt: -1 });
             const categories = await collection.categoryCollection.findOne({ category: category })
             return { products, categories }
         }

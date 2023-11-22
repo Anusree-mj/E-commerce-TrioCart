@@ -38,69 +38,13 @@ function addProduct() {
         reader.readAsDataURL(file);
     }
 
-
-    function cropImage() {
-        // Calculate dimensions to maintain fixed aspect ratio
-        const canvasWidth = image.width;
-        const canvasHeight = image.width / aspectRatio;
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-
-        // Draw the image on the canvas
-        ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);
-
-        // Crop the image programmatically (example: cropping from top-left)
-        const cropX = 0;
-        const cropY = 0;
-        const cropWidth = canvasWidth;
-        const cropHeight = canvasWidth / aspectRatio;
-
-        // Create a new canvas for the cropped image
-        const croppedCanvas = document.createElement('canvas');
-        const croppedCtx = croppedCanvas.getContext('2d');
-        croppedCanvas.width = cropWidth;
-        croppedCanvas.height = cropHeight;
-
-        // Draw the cropped area onto the new canvas
-        croppedCtx.drawImage(
-            canvas,
-            cropX, cropY, cropWidth, cropHeight,
-            0, 0, cropWidth, cropHeight
-        );
-
-        // Get the cropped image data (base64 encoded)
-        const croppedImageData = croppedCanvas.toDataURL('image/jpeg');
-        console.log('Cropped Image Data:', croppedImageData);
-
-// Convert the base64-encoded data to a Blob
-const byteString = atob(croppedImageData.split(',')[1]);
-const mimeString = croppedImageData.split(',')[0].split(':')[1].split(';')[0];
-const ab = new ArrayBuffer(byteString.length);
-const ia = new Uint8Array(ab);
-
-for (let i = 0; i < byteString.length; i++) {
-  ia[i] = byteString.charCodeAt(i);
-}
-
-const blob = new Blob([ab], { type: mimeString });
-
-
-
-        if (imageInput.files.length > 0) {
-            formData.append('image', imageInput.files[0]);
-        }
-    
-        // You can send the croppedImageData to the server or perform further actions
-    }
-
-    
-    let detailedImageInput = document.getElementById('detailedimage');
+     let detailedImageInput = document.getElementById('detailedimage');
     let imageInputs = document.querySelectorAll('.image-input');
-    console.log(detailedImageInput, imageInputs, 'haiiiii')
+ console.log(detailedImageInput,imageInputs,'haiiiii')
     for (let i = 0; i < detailedImageInput.files.length; i++) {
         formData.append('detailedImages', {
-            image: detailedImageInput.files[i]
+            image: detailedImageInput.files[i],
+            color: imageInputs[i].querySelector('input[name="color"]').value,
         });
     }
 
