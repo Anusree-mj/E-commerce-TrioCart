@@ -6,30 +6,6 @@ module.exports = {
     addProduct: async (body, image, detailedImages) => {
         try {
             const imagePathWithoutPublic = path.relative('public', image.path);
-//rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-
-
-//rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
             const data = {
                 name: body.name,
@@ -49,6 +25,7 @@ module.exports = {
             return { status: 'nok' }
         }
     },
+    
     addSubCategory: async (body) => {
         try {
             await collection.categoryCollection.updateOne(

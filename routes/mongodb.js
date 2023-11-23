@@ -43,17 +43,10 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        detailedImages: [
-            {
-                image: {
-                    type: String,
-                    required: true,
-                }, color: {
-                    type: String,
-                    required: true,
-                },
-            },
-        ],
+        detailedImages: {
+            type: Array,
+            requires: true,
+        },
         isDeleted: {
             type: Boolean,
             default: false,

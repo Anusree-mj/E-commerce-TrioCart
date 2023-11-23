@@ -16,11 +16,7 @@
                 placeholder="Product detailed description"></textarea>
             <!-- category -->
             <label class="label" for="category">Category</label>
-            <select class="custom-select">
-                <option id="category" selected>Ladies</option>
-                <option value="1">Mens</option>
-                <option value="2">Kids</option>
-            </select>
+            <input type="text" class="form-control" name="category" id="category" placeholder="Product Category">
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" name="subCategory" id="subCategory"
@@ -47,7 +43,7 @@
                 <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5">
                 <label class="form-check-label" for="inlineCheckbox3">XXL</label>
             </div>
-            <label class="label" for="color">Color</label>
+            
             <!-- price -->
             <label class="label" for="price">Price</label>
             <input type="text" class="form-control" name="price" id="price" placeholder="Product price">
@@ -56,13 +52,8 @@
             <input type="file" class="form-control-file" name="image" id="image" accept="image/*">
             <!-- detailed images -->
             <label class="label" for="image">Detailed Image</label>
-            <div id="imageInputs">
-                <div class="image-input">
-                    <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
-                    <input type="color" name="color" value="#000000">
-                </div>
-            </div>
-            <canvas id="image-canvas"></canvas>
+            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
+
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                     onclick="addProduct()">Add</button>

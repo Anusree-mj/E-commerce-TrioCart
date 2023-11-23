@@ -60,25 +60,25 @@ a:hover {
 .subDetails {
     margin-top: 0.6rem;
 }
-.bttn{
+
+.cartbtn {
     margin-top: 1rem;
-}
-.bttn:hover {
-    color: #000 !important;
-    background-color: transparent !important;
-    border-color: #000
+    width: 15rem;
+    max-width: 50%;
 }
 
 .wishlisht {
     width: 1.5rem;
 }
+
 .wishlisht:hover {
     content: url('/images/navbar/redheart.png');
 }
+
 .qnty {
     border: none;
     width: 2rem;
-    border: none; 
+    border: none;
     outline: none;
 }
 
@@ -132,6 +132,7 @@ a:hover {
     display: flex;
     max-width: 30%;
 }
+
 .btn.btn-outline-dark:focus,
 .btn.btn-outline-dark:active,
 .btn.btn-outline-dark.bttn:focus,
@@ -144,9 +145,12 @@ a:hover {
 
 /* Additional styling for the input field in the second button */
 .btn.btn-outline-dark.bttn input.qnty {
-    border: none; /* Remove the border from the input field */
-    outline: none; /* Remove the outline */
-    box-shadow: none; /* Remove the box shadow */
+    border: none;
+    /* Remove the border from the input field */
+    outline: none;
+    /* Remove the outline */
+    box-shadow: none;
+    /* Remove the box shadow */
 }
 
 .purchase {
@@ -254,5 +258,9 @@ a:hover {
 
     .prodDetails {
         padding: 0.5rem;
+    }
+
+    .cartbtn {
+        max-width: 100%;
     }
 }
