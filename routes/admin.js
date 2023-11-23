@@ -6,6 +6,7 @@ var productHelpers = require('../helpers/product-helpers')
 const multer = require('multer');
 const adminHelpers = require('../helpers/admin-helpers');
 const productUpdateHelpers = require('../helpers/productUpdate-helpers');
+const userHelpers = require('../helpers/user-helpers');
 const uuidv4 = require('uuid').v4
 
 const storage = multer.diskStorage({
@@ -114,7 +115,7 @@ router.delete('/products/image', ((req, res, next) => {
 
 //delete products
 router.patch('/products/dlt/:product_Id', ((req, res, next) => {
-    const productId = req.params.product_Id
+  const productId = req.params.product_Id
   productUpdateHelpers.deleteAProduct(productId).then((result) => {
     if (result.status === 'deleted') {
       res.status(200).json({ status: "ok" });
@@ -128,7 +129,7 @@ router.patch('/products/dlt/:product_Id', ((req, res, next) => {
 router.patch('/products/dlt/:product_id/undo', ((req, res, next) => {
   console.log('entereddd')
   const productId = req.params.product_id
-   console.log(productId,"iddd")
+  console.log(productId, "iddd")
 
   productUpdateHelpers.undoProductDelete(productId).then((result) => {
     if (result.status === 'undo delete') {
@@ -181,7 +182,7 @@ router.get('/category', ((req, res, next) => {
 }))
 
 //add category page
-router.get('/addCategory', function (req, res, next) {
+router.get('/addCategory', async function (req, res, next) {
   let sessionId = req.cookies.adminSession
   adminHelpers.checkSessions(sessionId).then(result => {
     if (result.status === 'ok') {
@@ -208,7 +209,7 @@ router.patch('/category', ((req, res, next) => {
 //undo subcategory delete
 router.patch('/subcategory/undo', ((req, res, next) => {
   const subCategory = req.body.subCategory
-  console.log(subCategory,"subbbcatgry")
+  console.log(subCategory, "subbbcatgry")
   productUpdateHelpers.undoSubcategoryDelete(subCategory).then((result) => {
     if (result.status === 'undo delete') {
       res.status(200).json({ status: "ok" });

@@ -6,23 +6,88 @@
             <%- include('../partials/header') %>
                 <% } %>
                     <%- include('../partials/subHeader',allCategories) %>
+                        <!--  -->
                         <section class="cartPage">
-                            <% if (cartproducts) { %>
-
-                                <h3>Your Shopping Bag is empty dig in </h3>
-
-                                <%} else{ %>
-                                    <div class="d-flex justify-content-around cartsctn ">
+                            <!--  -->
+                            <% if (cartProducts) { %>
+                                <div class="d-flex justify-content-around cartsctn">
+                                    <div class="cartProducts">
+                                        <% cartProducts.forEach(product=> { %>
+                                            <div class="mt-4">
+                                                <div class="d-flex justify-content-around">
+                                                    <img class="prodImg" src="/<%= product.image %>" alt="">
+                                                    <div class="prodDetails">
+                                                        <div class="head">
+                                                            <%= product.name %>
+                                                                <img class="remove" src="/images/home/remove.png"
+                                                                    alt="remove"
+                                                                    onclick="removeProduct('<%= product._id %>','<%= user._id %>')">
+                                                        </div>
+                                                        <%= product.price %>
+                                                            <div class="subDetails">
+                                                                <p>Product.no.: <%= product._id %>
+                                                                </p>
+                                                                <p>Size: <%= product.size %>
+                                                                </p>
+                                                                <p>Colour.: <%= product.price %>
+                                                                </p>
+                                                                <p>Total: <%= product.price %>
+                                                                </p>
+                                                            </div>
+                                                            <button type="button" class="btn btn-outline-dark bttn"><img
+                                                                    class="wishlisht" src="/images/navbar/wishlist.png"
+                                                                    alt=""></button>
+                                                            <button type="button"
+                                                                class="btn btn-outline-dark bttn"><input class="qnty"
+                                                                    type="number" min="1" value="1"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                    </div>
+                                    <!-- purchase -->
+                                    <div class="purchase">
+                                        <div class="purchase-box">
+                                            <div class="d-flex justify-content-between">
+                                                <p>Discounts</p>
+                                                <a href="">Apply discounts</a>
+                                            </div>
+                                            <hr>
+                                            <div class=" d-flex justify-content-between">
+                                                <p class="boldTxt">Total</p>
+                                                <p class="boldTxt">Rs. 0.00</p>
+                                            </div>
+                                            <a href="/checkout" type="button" class="btn btn-secondary purchasebtn">
+                                                Continue to
+                                                Checkout </a>
+                                            <p class="darkHeads">We accept</p>
+                                            <div class="d-flex justify-content-around align-items-center">
+                                                <p class="paytxt">Cash On Delivery</p>
+                                                <img src="/images/home/visa.png" alt="">
+                                                <img src="/images/home/rupay.png" alt="">
+                                                <p class="paytxt">EMI</p>
+                                                <img src="/images/home/gpay.png" alt="">
+                                            </div>
+                                            <p class="mt-4">
+                                                Prices and delivery costs are not confirmed until you've reached the
+                                                checkout.</p>
+                                            <p>15 days free returns. Read more about return and refund policy.
+                                                Customers would receive an SMS/WhatsApp notifications regarding
+                                                deliveries on the registered phone number
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <% } else { %>
+                                    <div class="d-flex justify-content-around cartsctn">
                                         <div class="emptyCart">
                                             <img class="emptyImg" src="/images/home/emptyCart.svg" alt="">
                                             <div class="emptydetails ml-4">
                                                 <h3 class="emptyHead">Your Shopping Bag is Empty</h3>
-                                                <a class="shoopNow" href="/products/Ladies/ViewAll">Shop Now</a>
-                                                <div class="btns">
-                                                    <button type="button" class="btn btn-dark ">Sign in</button>
-                                                    <button type="button"
-                                                        class="btn btn-outline-dark ml-2">Signup</button>
-                                                </div>
+
+                                                <a href="/" type="button" class="btn btn-dark cartbtn">Continue Shopping</a>
+
                                             </div>
                                         </div>
                                         <div class="purchase">
@@ -30,16 +95,14 @@
                                                 <div class="d-flex justify-content-between">
                                                     <p>Discounts</p>
                                                     <a href="">Apply discounts</a>
-                                                </div>
-                                                <p class="darkHeads">Log in to use your personal offers !</p>
-                                                <button type="button"
-                                                    class="btn btn-outline-dark ml-2 purchasebtn boldTxt">Login</button>
+                                                </div>                                               
                                                 <hr>
                                                 <div class=" d-flex justify-content-between">
-                                                    <p class="boldTxt" >Total</p>
+                                                    <p class="boldTxt">Total</p>
                                                     <p class="boldTxt">Rs. 0.00</p>
                                                 </div>
-                                                <button type="button" class="btn btn-secondary purchasebtn" disabled> Continue to
+                                                <button type="button" class="btn btn-secondary purchasebtn" disabled>
+                                                    Continue to
                                                     Checkout </button>
                                                 <p class="darkHeads">We accept</p>
                                                 <div class="d-flex justify-content-around align-items-center">
@@ -55,14 +118,12 @@
                                                 <p>15 days free returns. Read more about return and refund policy.
                                                     Customers would receive an SMS/WhatsApp notifications regarding
                                                     deliveries on the registered phone number
-
-
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                     <% } %>
-
+                                        <!--  -->
                                         <div class="viewProducts">
                                             <div class="cardHead">
                                                 <h3>Others Also Bought</h3>
@@ -93,6 +154,4 @@
                                         </div>
                         </section>
                         <%- include('../partials/footer') %>
-                            <script>
-                                console.log('Number of products:', viewMoreProducts.length);
-                            </script>
+                            <script src="/javascripts/users/cart.js"></script>

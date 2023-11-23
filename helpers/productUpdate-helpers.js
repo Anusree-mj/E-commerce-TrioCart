@@ -1,5 +1,6 @@
 const collection = require('../routes/mongodb')
 const path = require('path');
+const gm = require('gm').subClass({ imageMagick: true });
 
 module.exports = {
     addProduct: async (body, image, detailedImages) => {
@@ -24,6 +25,7 @@ module.exports = {
             return { status: 'nok' }
         }
     },
+    
     addSubCategory: async (body) => {
         try {
             await collection.categoryCollection.updateOne(

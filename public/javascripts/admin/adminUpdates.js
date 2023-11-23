@@ -15,6 +15,38 @@ function addProduct() {
     formData.append('subCategory', subCategory);
     formData.append('price', price);
 
+    //     let imageInput = document.getElementById('image');
+    //     const canvas = document.getElementById('image-canvas');
+    //     const ctx = canvas.getContext('2d');
+    //     let image;
+
+    //     // Fixed aspect ratio (19:28)
+    //     const aspectRatio = 19 / 28;
+
+    //     const file = imageInput.files[0];
+
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             image = new Image();
+    //             image.src = e.target.result;
+    //             image.onload = function () {
+    //                 cropImage();
+    //             };
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+
+    //      let detailedImageInput = document.getElementById('detailedimage');
+    //     let imageInputs = document.querySelectorAll('.image-input');
+    //  console.log(detailedImageInput,imageInputs,'haiiiii')
+    //     for (let i = 0; i < detailedImageInput.files.length; i++) {
+    //         formData.append('detailedImages', {
+    //             image: detailedImageInput.files[i],
+    //             color: imageInputs[i].querySelector('input[name="color"]').value,
+    //         });
+    //     }
+
     let imageInput = document.getElementById('image');
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
@@ -23,7 +55,6 @@ function addProduct() {
     for (let i = 0; i < detailedImageInput.files.length; i++) {
         formData.append('detailedImages', detailedImageInput.files[i]);
     }
-
     let sizeMap = {
         'option1': 'S',
         'option2': 'M',
@@ -58,6 +89,9 @@ function addProduct() {
         })
         .catch(err => console.log(err));
 }
+
+
+
 
 //change main image
 function changeImage() {
@@ -112,7 +146,7 @@ function closeImagePreview() {
 
 let image = "";
 let detailedimages = document.getElementById('detailedImages');
-function imageUpload(){
+function imageUpload() {
     let formData = new FormData();
     let imageInput = document.getElementById('image');
     if (imageInput.files.length > 0) {
@@ -127,13 +161,13 @@ function imageUpload(){
         body: formData,
     }).then((res) => res.json())
         .then((data) => {
-            console.log('data:',data)
+            console.log('data:', data)
             if (data.status === "ok") {
 
-              image= data.imagePathWithoutPublic;
-            //   detailedimages=[...detailedimages,...data.detailedImagesPathsWithoutPublic]
-              console.log(image,"88888888888888888888")
-            
+                image = data.imagePathWithoutPublic;
+                //   detailedimages=[...detailedimages,...data.detailedImagesPathsWithoutPublic]
+                console.log(image, "88888888888888888888")
+
             } else {
                 alert("Adding product failed");
             }

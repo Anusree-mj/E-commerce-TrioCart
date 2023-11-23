@@ -51,14 +51,15 @@
                                     </p>
                                     <p class="subHead mt-2">colour</p>
                                     <p class="subHead">Sizes</p>
-                                    <% sizesArray=product.size[0].split(','); sizesArray.forEach(size=> { %>
-                                        <button type="button" class="btn btn-outline-dark">
+                                    <% sizesArray=product.size[0].split(','); sizesArray.forEach(size => { %>
+                                        <button type="button" class="btn btn-outline-dark" id="btn<%= size %>" onclick="selectedSize('<%= size %>')">
                                             <%= size.trim() %>
                                         </button>
-                                        <% }) %>
+                                    <% }) %>
+                                    
                                             <div class="mt-4">
-                                                <button type="button" class="btn btn-dark btns"><img class="cart"
-                                                        src="/images/navbar/addCart.png" alt="">Add</button>
+                                                <a href="/addtoCart/<%= product._id %>" type="button" class="btn btn-dark btns"><img class="cart"
+                                                        src="/images/navbar/addCart.png" alt="">Add</a>
                                                 <button type="button" class="btn btn-dark btns"><img class="cart"
                                                         src="/images/navbar/buy.png" alt="">Buy</button>
                                             </div>
@@ -100,9 +101,6 @@
                             </div>
                         </section>
                         <%- include('../partials/footer') %>
-                            <script>
-                                function openImagePreview(imageSrc) {
-                                    $('#previewedImg').attr('src', '/' + imageSrc);
-                                    $('#imagePreviewModal').modal('show');
-                                }
-                            </script>
+                        <script src="/javascripts/users/productDetails.js"></script>
+                           
+                             
