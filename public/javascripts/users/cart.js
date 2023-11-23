@@ -1,3 +1,4 @@
+
 function removeProduct(productId,userId){
     let reqBody={userId}
     fetch(`http://localhost:3000/cart/${productId}`, {

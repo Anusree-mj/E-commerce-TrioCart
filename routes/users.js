@@ -8,7 +8,7 @@ router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
   let products = await productHelpers.getNewArrivalProducts();
   let allCategories = await userHelpers.getCategoryDetails()
-  
+
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
@@ -33,14 +33,19 @@ router.get('/cart', async function (req, res, next) {
 
         userHelpers.getMyCartProducts(user).then((result) => {
           if (result.cartProducts) {
+            console.log('result in cart:', result)
             let cartProducts = result.cartProducts;
-            console.log(cartProducts, 'cart products')
+            let size = result.size
+            let count = result.count;
+
+            console.log('cartproducts in cart:', cartProducts)
             res.render('users/cart', {
               layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts
+              , size, count
             });
           } else {
             res.render('users/cart', {
-              layout: 'layout/layout', allCategories, viewMoreProducts, user,cartProducts:undefined
+              layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts: undefined, size: undefined, count: undefined
             });
           }
         })
@@ -52,15 +57,16 @@ router.get('/cart', async function (req, res, next) {
 })
 
 //add to cart
-router.get('/addtoCart/:product_id', async function (req, res, next) {
+router.post('/cart/:product_id', function (req, res, next) {
   let productId = req.params.product_id
+  let size = req.body.choosedSize
   let sessionId = req.cookies.session
 
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
       console.log(user, 'user in addto cart')
-      userHelpers.addToCart(user, productId).then(() => {
+      userHelpers.addToCart(user, productId, size).then(() => {
         res.redirect('back');
       })
     } else {
@@ -88,13 +94,55 @@ router.get('/checkout', function (req, res, next) {
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user;
-      res.render('users/cart', {
-        layout: 'layout/layout',user });
-    }else{
+
+      userHelpers.getMyCartProducts(user).then((result) => {
+        if (result.cartProducts) {
+          let cartProducts = result.cartProducts;
+          let size = result.size
+          let count = result.count;
+
+          res.render('users/checkout', {
+            layout: 'layout/layout', user, cartProducts
+            , size, count
+          })
+        }
+      });
+    } else {
       res.redirect('/user/login')
     }
   })
 })
+
+// save billing address to userCollection
+router.post('/checkout/user', function (req, res, next) {
+  let user = req.body
+  userHelpers.saveBillingAddress(user).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
+})
+
+// post order detais
+router.post('/checkout', function (req, res, next) {
+  let orderDetails = req.body
+  userHelpers.saveOrderDetails(orderDetails).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
+})
+
+router.get('/order/success', async function (req, res, next) {
+  
+      res.render('users/orderSuccess', { layout: 'layout/layout', products, allCategories, user: undefined });
+    
+})
+
 
 //logout
 router.get('/logout', function (req, res, next) {

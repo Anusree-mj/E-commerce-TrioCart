@@ -12,34 +12,37 @@
                             <% if (cartProducts) { %>
                                 <div class="d-flex justify-content-around cartsctn">
                                     <div class="cartProducts">
-                                        <% cartProducts.forEach(product=> { %>
+                                        <% cartProducts.forEach(cartProduct=> { %>
                                             <div class="mt-4">
                                                 <div class="d-flex justify-content-around">
-                                                    <img class="prodImg" src="/<%= product.image %>" alt="">
+                                                    <img class="prodImg" src="/<%= cartProduct.product.image %>" alt="">
                                                     <div class="prodDetails">
                                                         <div class="head">
-                                                            <%= product.name %>
+                                                            <%= cartProduct.product.name %>
                                                                 <img class="remove" src="/images/home/remove.png"
                                                                     alt="remove"
-                                                                    onclick="removeProduct('<%= product._id %>','<%= user._id %>')">
+                                                                    onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>')">
                                                         </div>
-                                                        <%= product.price %>
+                                                        <%= cartProduct.product.price %>
                                                             <div class="subDetails">
-                                                                <p>Product.no.: <%= product._id %>
+                                                                <p>Product.no.: <%= cartProduct.product._id %>
                                                                 </p>
-                                                                <p>Size: <%= product.size %>
+                                                                <p>Size: <%= size %>
                                                                 </p>
-                                                                <p>Colour.: <%= product.price %>
-                                                                </p>
-                                                                <p>Total: <%= product.price %>
+                                                                <p>Total: <%= cartProduct.product.price %>
                                                                 </p>
                                                             </div>
-                                                            <button type="button" class="btn btn-outline-dark bttn"><img
-                                                                    class="wishlisht" src="/images/navbar/wishlist.png"
-                                                                    alt=""></button>
-                                                            <button type="button"
-                                                                class="btn btn-outline-dark bttn"><input class="qnty"
-                                                                    type="number" min="1" value="1"></button>
+                                                            <div class="mt-4">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-dark bttn"><img
+                                                                        class="wishlisht"
+                                                                        src="/images/navbar/wishlist.png"
+                                                                        alt=""></button>
+                                                                <button type="button"
+                                                                    class="btn btn-outline-dark bttn"><input
+                                                                        class="qnty" type="number" min="1"
+                                                                        value="<%= count %>"></button>
+                                                            </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,7 +89,8 @@
                                             <div class="emptydetails ml-4">
                                                 <h3 class="emptyHead">Your Shopping Bag is Empty</h3>
 
-                                                <a href="/" type="button" class="btn btn-dark cartbtn">Continue Shopping</a>
+                                                <a href="/" type="button" class="btn btn-dark cartbtn">Continue
+                                                    Shopping</a>
 
                                             </div>
                                         </div>
@@ -95,7 +99,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <p>Discounts</p>
                                                     <a href="">Apply discounts</a>
-                                                </div>                                               
+                                                </div>
                                                 <hr>
                                                 <div class=" d-flex justify-content-between">
                                                     <p class="boldTxt">Total</p>

@@ -88,7 +88,34 @@ const UserSchema = new mongoose.Schema(
         isBlocked: {
             type: Boolean,
             default: false,
-        }
+        },
+        billingAddress:  [
+            {
+                name: {
+                    type: String,
+                    required: true,
+                }, phone: {
+                    type: Number,
+                    required: true,
+                },
+                address:{
+                    type: String,
+                    required: true,
+                },
+                town:{
+                    type: String,
+                    required: true, 
+                },
+                pincode:{
+                    type: Number,
+                    required: true,
+                },
+                state:{
+                    type: String,
+                    required: true,
+                }
+            },
+        ]
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps
@@ -221,8 +248,14 @@ const CartSchema = new mongoose.Schema(
             ref: 'users',
         },
         products: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'products',
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products',
+            },
+            Size: String,
+            Count: {
+                type: Number,
+            },
         }]
     },
     {
@@ -230,6 +263,65 @@ const CartSchema = new mongoose.Schema(
     }
 );
 const cartCollection = new mongoose.model("cartProducts", CartSchema);
+
+// order collection
+const OrderSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users',
+        },
+        billingAddress:  [
+            {
+                name: {
+                    type: String,
+                    required: true,
+                }, phone: {
+                    type: Number,
+                    required: true,
+                },
+                address:{
+                    type: String,
+                    required: true,
+                },
+                town:{
+                    type: String,
+                    required: true, 
+                },
+                pincode:{
+                    type: Number,
+                    required: true,
+                },
+                state:{
+                    type: String,
+                    required: true,
+                }
+            },
+        ],
+        products: [{
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products',
+            },
+            Size: String,
+            Count: {
+                type: Number,
+            },
+        }],
+        paymentMethod:{
+            type: String,
+            required: true,
+        },
+        orderStatus:{
+            type: String,
+            default: 'placed',
+        }
+    },
+    {
+        timestamps: true, // This option adds createdAt and updatedAt timestamps
+    }
+);
+const orderCollection = new mongoose.model("orders", OrderSchema);
 
 module.exports = {
     productsCollection,
@@ -240,4 +332,5 @@ module.exports = {
     adminSessionCollection,
     categoryCollection,
     cartCollection,
+    orderCollection,
 };
