@@ -20,8 +20,9 @@ a:hover {
 }
 
 .cartPage {
-    background-color: #faf9f8;
+    background-color:  #f5f3f1;
 }
+
 
 .cartProducts {
     background-color: white;
@@ -133,25 +134,23 @@ a:hover {
     max-width: 30%;
 }
 
-.btn.btn-outline-dark:focus,
-.btn.btn-outline-dark:active,
-.btn.btn-outline-dark.bttn:focus,
-.btn.btn-outline-dark.bttn:active,
-.btn.btn-outline-dark.bttn input.qnty:focus,
-.btn.btn-outline-dark.bttn input.qnty:active {
+/* Remove hovering effects */
+.btn-outline-dark:hover {
+    background-color: transparent;
+    color: #343a40; /* Set the desired text color */
+    border-color: #343a40; /* Set the desired border color */
+}
+
+/* Remove click effect */
+.btn-outline-dark:active,
+.btn-outline-dark:focus {
+    background-color: transparent; /* Set the desired background color */
+    color: #343a40; /* Set the desired text color */
+    border-color: #343a40; /* Set the desired border color */
     outline: none;
     box-shadow: none;
 }
 
-/* Additional styling for the input field in the second button */
-.btn.btn-outline-dark.bttn input.qnty {
-    border: none;
-    /* Remove the border from the input field */
-    outline: none;
-    /* Remove the outline */
-    box-shadow: none;
-    /* Remove the box shadow */
-}
 
 .purchase {
     background-color: white;

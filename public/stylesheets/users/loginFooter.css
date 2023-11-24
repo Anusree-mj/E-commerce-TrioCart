@@ -3,13 +3,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 1rem;
    }
    .line{
     width: 90%;
     margin-top: 3rem;
     box-shadow:  0 4px 8px rgba(0, 0, 0, 0.2);
    }
-  
+  .footerLink{
+    color: rgb(75, 74, 74);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .footerLink:hover{
+    color: rgb(100, 100, 100);
+  }
    .footer-ul{
     display: flex;
    justify-content: space-between;

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/users/productDetails.css">
 <% if (user) { %>
-    <%- include('../partials/homeHeader') %>
+    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
             <%- include('../partials/header') %>
                 <% } %>
@@ -49,19 +49,19 @@
                                     <p class="subHead">
                                         <%= product.price %>
                                     </p>
-                                    <p class="subHead mt-2">colour</p>
                                     <p class="subHead">Sizes</p>
-                                    <% sizesArray=product.size[0].split(','); sizesArray.forEach(size => { %>
-                                        <button type="button" class="btn btn-outline-dark" id="btn<%= size %>" onclick="selectedSize('<%= size %>')">
+                                    <% sizesArray=product.size[0].split(','); sizesArray.forEach(size=> { %>
+                                        <button type="button" class="btn btn-outline-dark" id="btn<%= size %>"
+                                            onclick="selectedSize('<%= size %>'); clearSpan('sizeSpan')">
                                             <%= size.trim() %>
                                         </button>
-                                    <% }) %>
-                                    
+                                        <% }) %>
+                                            <span id="sizeSpan" class="span"></span><br>
+                                            <span id="addCart" class="addCart"></span>
                                             <div class="mt-4">
-                                                <a href="/addtoCart/<%= product._id %>" type="button" class="btn btn-dark btns"><img class="cart"
-                                                        src="/images/navbar/addCart.png" alt="">Add</a>
-                                                <button type="button" class="btn btn-dark btns"><img class="cart"
-                                                        src="/images/navbar/buy.png" alt="">Buy</button>
+                                                <button onclick="addToCart('<%= product._id %>')" type="button"
+                                                    class="btn btn-dark btns"><img class="cart"
+                                                        src="/images/navbar/addCart.png" alt="">Add</button>
                                             </div>
                                             <div class="mt-4">
                                                 <p>Description & Fit</p>
@@ -101,6 +101,4 @@
                             </div>
                         </section>
                         <%- include('../partials/footer') %>
-                        <script src="/javascripts/users/productDetails.js"></script>
-                           
-                             
+                            <script src="/javascripts/users/productDetails.js"></script>

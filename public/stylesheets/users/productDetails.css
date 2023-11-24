@@ -21,6 +21,20 @@
     margin: 0.2rem 0;
 }
 
+.span {
+    height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.addCart {
+    height: 1rem;
+    color: green;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
 .modal-lg {
     max-width: 100%;
 }
@@ -60,12 +74,14 @@
     text-align: start;
     max-width: 100%;
 }
+
 .viewProducts {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 .cards-section {
     display: flex;
     flex-wrap: wrap;

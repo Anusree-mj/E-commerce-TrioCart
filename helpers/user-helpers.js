@@ -1,6 +1,9 @@
 const collection = require('../routes/mongodb')
 const bcrypt = require('bcrypt')
 const signupUtil = require('../utils/signupUtil');
+const delvryTimeUtil = require('../utils/delvryTymUtil');
+
+
 module.exports = {
     doSignup: async (userData, otp) => {
         try {
@@ -25,6 +28,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     doVerifyUser: async (data) => {
         try {
             const user = await collection.tempUsersCollection.findOne({ otp: data.otp });
@@ -43,6 +47,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     dologin: async (userData) => {
         try {
             const user = await collection.usersCollection.findOne({ email: userData.email });
@@ -88,7 +93,6 @@ module.exports = {
 
             if (checkSession) {
                 let user = checkSession.userId;
-                console.log("userid in checksession", user)
 
                 if (user && !user.isBlocked) {
                     return { status: 'ok', user }
@@ -106,6 +110,7 @@ module.exports = {
             return { status: 'nok' };
         }
     },
+
     deleteSessions: async (sessionId) => {
         try {
             await collection.sessionCollection.deleteOne({ sessionId: sessionId })
@@ -185,52 +190,90 @@ module.exports = {
         }
     },
 
-    addToCart: async (user, productId) => {
+    addToCart: async (user, productId, size) => {
         try {
-            console.log('user in add to cart', user, "product:", productId)
-            const updateData = await collection.cartCollection.updateOne(
-                { userId: user._id },
-                { $push: { products: productId } },
-                { upsert: true }
-            );
-            console.log(updateData, 'update');
+            const existingProduct = await collection.cartCollection.findOne({
+                userId: user._id,
+                'products.product': productId,
+                'products.Size': size,
+            });
 
-            if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
-                console.log('Data update success');
+            if (existingProduct) {
+                // If the product already exists, increment its count
+                await collection.cartCollection.updateOne(
+                    {
+                        userId: user._id,
+                        'products.product': productId,
+                        'products.Size': size,
+                    },
+                    { $inc: { 'products.$.Count': 1 } }
+                );
+                console.log('Product count incremented');
             } else {
-                console.log('Data update failed');
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, getMyCartProducts: async (user) => {
-        try {
-            const cart = await collection.cartCollection.findOne({ userId: user._id })
-                .populate('products');
-    
-            if (cart && cart.products) {
-                let cartProducts = cart.products;
-                return { cartProducts };
-            } else {
-                return { status: "nok" };
+                // If the product doesn't exist, add it to the cart with a count of 1
+                const updateData = await collection.cartCollection.updateOne(
+                    { userId: user._id },
+                    {
+                        $addToSet: {
+                            products: {
+                                product: productId,
+                                Size: size,
+                            },
+                        },
+                    },
+                    { upsert: true }
+                );
+
+                if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
+                    console.log('Data update success');
+                } else {
+                    console.log('Data update failed');
+                }
             }
         } catch (err) {
             console.log(err);
         }
     },
-    removeCartProducts: async (productId, userId) => {
+
+    getMyCartProducts: async (user) => {
         try {
+            const cart = await collection.cartCollection.findOne({ userId: user._id })
+                .populate('products.product');
+            
+            if (cart && cart.products) {
+
+                let cartProducts = cart.products;
+                totalCount = cart.products.length
+                console.log('total count', totalCount)
+ 
+                let totalprice = cartProducts.reduce((sum,item) =>{
+                 return sum + (item.product.price * item.Count)
+                },0)
+
+              
+                return { cartProducts, totalCount,totalprice };
+            } else {
+                return { totalCount: 0, totalPrice: 0 };
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    removeCartProducts: async (productId, body) => {
+        try {
+            console.log('body in removal',body)
             const updateData = await collection.cartCollection.updateOne(
-                { userId: userId },
-                { $pull: { products: productId } }
+                { userId:body. userId },
+                { $pull: { products: { product: productId , Size:body.size} } }
             );
 
             if (updateData.modifiedCount === 1) {
                 console.log('Data update success');
 
-                const updatedCart = await collection.cartCollection.findOne({ userId: userId });
+                const updatedCart = await collection.cartCollection.findOne({ userId: body. userId });
                 if (updatedCart.products.length < 1) {
-                    await collection.cartCollection.deleteOne({ userId: userId });
+                    await collection.cartCollection.deleteOne({ userId: body. userId });
                     console.log('Cart document deleted');
                 }
 
@@ -242,6 +285,104 @@ module.exports = {
             console.log(err);
             return { status: 'nok' };
         }
-    }
+    },
 
+    saveBillingAddress: async (billingAddress) => {
+        try {
+            const updateData = await collection.usersCollection.updateOne(
+                { _id: billingAddress.userId },
+                {
+                    $push: {
+                        billingAddress: {
+                            name: billingAddress.name,
+                            phone: billingAddress.phone,
+                            address: billingAddress.address,
+                            town: billingAddress.town,
+                            pincode: billingAddress.pincode,
+                            state: billingAddress.state,
+                        }
+                    }
+                })
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed')
+                return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    saveOrderDetails: async (orderDetails) => {
+        try {
+            const getBillingAddress = await collection.usersCollection.findOne({
+                _id: orderDetails.userId
+            })
+            const address = getBillingAddress.billingAddress[0];
+            console.log('address in orders', address)
+            // 
+            const getOrderedProducts = await collection.cartCollection.findOne({
+                userId: orderDetails.userId
+            })
+            const products = getOrderedProducts.products;
+
+
+            const orderPlacementDate = new Date();
+            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate)
+
+            const data = {
+                userId: orderDetails.userId,
+
+                billingAddress: [{
+                    name: address.name,
+                    phone: address.phone,
+                    address: address.address,
+                    town: address.town,
+                    pincode: address.pincode,
+                    state: address.state,
+                }],
+
+                products: products.map(product => ({
+                    product: product.product,
+                    Size: product.Size,
+                    Count: product.Count,
+                })),
+
+                paymentMethod: orderDetails.paymentMethod,
+                estimatedDelivery: deliveryTym
+            }
+            console.log('inserted data in orders ', data)
+
+            await collection.orderCollection.insertMany([data])
+            await collection.cartCollection.deleteOne({
+                userId: orderDetails.userId
+            })
+            return { status: 'ok' }
+
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    getOrderDetails: async (userId) => {
+        try {
+            const orderDetails = await collection.orderCollection.find({
+                userId: userId
+            }).sort({ createdAt: -1 });
+
+            const latestOrder = orderDetails[0];
+            const estimatedDelivery = latestOrder.estimatedDelivery;
+            console.log('order details', orderDetails)
+            return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
+
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    }
 }

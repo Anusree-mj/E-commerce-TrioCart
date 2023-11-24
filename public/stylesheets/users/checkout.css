@@ -1,0 +1,164 @@
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: #646363;
+}
+
+a {
+    color: #000;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #000;
+}
+
+.checkoutSctn {
+    background-color: #f5f3f1;
+}
+
+.headsctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkoutDetails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.billingAddress,
+.viewOrderDetails,
+.payment {
+    width: 50rem;
+    max-width: 90%;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    margin-top: 2rem;
+}
+
+.required {
+    color: red
+}
+
+.span {
+    height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.head {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.label {
+    font-size: 0.9rem;
+}
+
+.purchase {
+    background-color: white;
+    width: 25rem;
+    max-width: 50%;
+    margin-top: 2rem;
+    padding: 1rem;
+    height: 60vh;
+}
+
+.darkHeads {
+    font-weight: 600;
+    color: #000;
+    margin-top: 0.8rem;
+}
+
+.purchasebtn {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0.8rem;
+}
+
+.boldTxt {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000;
+}
+
+.paytxt {
+    font-weight: 400;
+    color: #000;
+}
+
+.save {
+    width: 20rem;
+    justify-content: center;
+    margin-top: 2rem;
+    max-width: 100%;
+}
+
+.viewOrder {
+    font-size: 1.5rem;
+}
+
+.prodImg {
+    width: 8rem;
+}
+
+.normalTxt {
+    margin: 0.2rem 0;
+    color: #000;
+    font-size: 0.85rem;
+}
+
+.parcelbox {
+    width: 2rem;
+}
+
+.delivery {
+    border: 1px solid #a19e9e;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.deliveryDetails {
+    margin-left: 2.3rem;
+}
+.checkoutBtn{
+    width: 25rem;
+    max-width: 100%;
+    background-color: #a7a7a7 ;
+    color: rgb(255, 255, 255) ;
+}
+
+@media only screen and (max-width: 980px) {
+    .checkout {
+        display: flex;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: 90%;
+    }
+
+    .billingAddress,
+    .viewOrderDetails,
+    .payment {
+        width: 20rem;
+        max-width: 100%;        
+    }
+    .purchase{
+        max-width: 90%;
+    }
+    .delivery{
+        max-width: 100%;
+    }
+    .prodImg{
+        width: 6rem;
+    }
+}

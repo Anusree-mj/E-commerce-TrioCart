@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/stylesheets/users/orderSuccess.css">
+
+<section class="successPage">
+    <%- include('../partials/loginHeader') %>
+        <div class="d-flex justify-content-center align-items-center succsBox mb-4">
+            <div class="success d-flex flex-column justify-content-center align-items-center">
+                <img src="/images/home/success.png" alt="">
+                <p class="successTxt mt-4">Hey <%= userName %>,</p>
+                <h2 class="mt-2 head"> Order Confirmed!</h2>
+                <p class="mt-3"> Your order has been placed succeddfully. <a href="/order/history" class="succslink">Order History</a></p>
+                <p class="mt-2">Get delivery by <u>
+                        <%= estimatedTym %>
+                    </u>
+                </p>
+                <a href="/order/details/<%= latestOrder._id %>" class="mt-2 succslink">Order Details</a>
+                <a href="/" type="button" class="btn btn-dark cartbtn mt-2">Continue
+                    Shopping</a>
+            </div>
+        </div>
+        
+        <%- include('../partials/loginsFooter') %>
+</section>
