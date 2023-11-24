@@ -1,6 +1,9 @@
 const collection = require('../routes/mongodb')
 const bcrypt = require('bcrypt')
 const signupUtil = require('../utils/signupUtil');
+const delvryTimeUtil = require('../utils/delvryTymUtil');
+
+
 module.exports = {
     doSignup: async (userData, otp) => {
         try {
@@ -25,6 +28,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     doVerifyUser: async (data) => {
         try {
             const user = await collection.tempUsersCollection.findOne({ otp: data.otp });
@@ -43,6 +47,7 @@ module.exports = {
             console.log(err)
         }
     },
+
     dologin: async (userData) => {
         try {
             const user = await collection.usersCollection.findOne({ email: userData.email });
@@ -105,6 +110,7 @@ module.exports = {
             return { status: 'nok' };
         }
     },
+
     deleteSessions: async (sessionId) => {
         try {
             await collection.sessionCollection.deleteOne({ sessionId: sessionId })
@@ -212,7 +218,6 @@ module.exports = {
                             products: {
                                 product: productId,
                                 Size: size,
-                                Count: 1,
                             },
                         },
                     },
@@ -229,43 +234,46 @@ module.exports = {
             console.log(err);
         }
     },
+
     getMyCartProducts: async (user) => {
         try {
             const cart = await collection.cartCollection.findOne({ userId: user._id })
                 .populate('products.product');
-
+            
             if (cart && cart.products) {
-                let cartProducts = cart.products;
 
-                let size;
-                cartProducts.forEach(product => {
-                    size = product.Size;
-                });
-                let count;
-                cartProducts.forEach(product => {
-                    count = product.Count;
-                });
-                return { cartProducts, size, count };
+                let cartProducts = cart.products;
+                totalCount = cart.products.length
+                console.log('total count', totalCount)
+ 
+                let totalprice = cartProducts.reduce((sum,item) =>{
+                 return sum + (item.product.price * item.Count)
+                },0)
+
+              
+                return { cartProducts, totalCount,totalprice };
             } else {
-                return { status: "nok" };
+                return { totalCount: 0, totalPrice: 0 };
             }
         } catch (err) {
             console.log(err);
         }
     },
-    removeCartProducts: async (productId, userId) => {
+
+    removeCartProducts: async (productId, body) => {
         try {
+            console.log('body in removal',body)
             const updateData = await collection.cartCollection.updateOne(
-                { userId: userId },
-                { $pull: { products: { product: productId } } }
+                { userId:body. userId },
+                { $pull: { products: { product: productId , Size:body.size} } }
             );
 
             if (updateData.modifiedCount === 1) {
                 console.log('Data update success');
 
-                const updatedCart = await collection.cartCollection.findOne({ userId: userId });
+                const updatedCart = await collection.cartCollection.findOne({ userId: body. userId });
                 if (updatedCart.products.length < 1) {
-                    await collection.cartCollection.deleteOne({ userId: userId });
+                    await collection.cartCollection.deleteOne({ userId: body. userId });
                     console.log('Cart document deleted');
                 }
 
@@ -278,6 +286,7 @@ module.exports = {
             return { status: 'nok' };
         }
     },
+
     saveBillingAddress: async (billingAddress) => {
         try {
             const updateData = await collection.usersCollection.updateOne(
@@ -307,24 +316,27 @@ module.exports = {
             return { status: 'nok' };
         }
     },
+
     saveOrderDetails: async (orderDetails) => {
         try {
             const getBillingAddress = await collection.usersCollection.findOne({
                 _id: orderDetails.userId
             })
-            const address = getBillingAddress.billingAddress;
-console.log('address in orders',address)
+            const address = getBillingAddress.billingAddress[0];
+            console.log('address in orders', address)
             // 
             const getOrderedProducts = await collection.cartCollection.findOne({
                 userId: orderDetails.userId
             })
             const products = getOrderedProducts.products;
-           
-            console.log('check in address',name)
-           console.log('products in orders',products)
+
+
+            const orderPlacementDate = new Date();
+            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate)
+
             const data = {
                 userId: orderDetails.userId,
-                  
+
                 billingAddress: [{
                     name: address.name,
                     phone: address.phone,
@@ -334,15 +346,17 @@ console.log('address in orders',address)
                     state: address.state,
                 }],
 
-                products: [{
-                    product: products.product,
-                    Size: products.Size,
-                    Count: products.Count,
-                }],
+                products: products.map(product => ({
+                    product: product.product,
+                    Size: product.Size,
+                    Count: product.Count,
+                })),
 
-                paymentMethod: orderDetails.paymentMethod
+                paymentMethod: orderDetails.paymentMethod,
+                estimatedDelivery: deliveryTym
             }
-            console.log('inserted data in orders ',data)
+            console.log('inserted data in orders ', data)
+
             await collection.orderCollection.insertMany([data])
             await collection.cartCollection.deleteOne({
                 userId: orderDetails.userId
@@ -353,6 +367,22 @@ console.log('address in orders',address)
             console.log(err);
             return { status: 'nok' };
         }
-    }
+    },
 
+    getOrderDetails: async (userId) => {
+        try {
+            const orderDetails = await collection.orderCollection.find({
+                userId: userId
+            }).sort({ createdAt: -1 });
+
+            const latestOrder = orderDetails[0];
+            const estimatedDelivery = latestOrder.estimatedDelivery;
+            console.log('order details', orderDetails)
+            return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
+
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    }
 }

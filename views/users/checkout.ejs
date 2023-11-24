@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/users/checkout.css">
+
+
 <section class="checkoutSctn">
     <div class="headsctn">
         <%- include('../partials/loginHeader') %>
@@ -132,11 +134,11 @@
                         <p class="darkHeads"><img class="parcelbox" src="/images/home/box.png" alt="parcel"> Parcel</p>
                         <p class="darkHeads">Shipped by TrioCart</p>
                     </div>
-                    <div>
+                    <div class="d-flex flex-wrap ">
                         <% cartProducts.forEach(cartProduct=> { %>
-                            <div class="mt-4">
+                            <div class="mt-4 ml-2">
                                 <img class="prodImg" src="/<%= cartProduct.product.image %>" alt="cartproduct">
-                                <p class="mt-2 darkHeads">Count : <%= count %>
+                                <p class="mt-2 darkHeads">Count : <%= cartProduct.Count %>
                                 </p>
                             </div>
                             <% }) %>
@@ -177,16 +179,16 @@
                 <p class="darkHeads">How would you like to pay?</p>
                 <hr>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="selectedPayment" id="selectedPayment"
-                        value="option1" onclick="paymentSelected()">
+                    <input class="form-check-input" type="radio" name="selectedPayment" id="cod"
+                        value="option1" onclick="paymentSelected('COD')">
                     <label class="form-check-label" for="exampleRadios1">
                         Cash On Delivery
                     </label>
                 </div>
                 <hr>
                 <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="selectedPayment" id="selectedPayment"
-                        value="option3" disabled onclick="paymentSelected()">
+                    <input class="form-check-input" type="radio" name="selectedPayment" id="onlinePayment"
+                        value="option2" disabled onclick="paymentSelected('onlinePayment')">
                     <div class="d-flex justify-content-between">
                         <label class="form-check-label" for="exampleRadios3">
                             Online Payments
@@ -219,7 +221,7 @@
                 <hr>
                 <div class=" d-flex justify-content-between">
                     <p class="boldTxt">Total</p>
-                    <p class="boldTxt">Rs. 0.00</p>
+                    <p class="boldTxt">₹ <%= totalprice %> /-</p>
                 </div>
 
                 <p class="mt-4">

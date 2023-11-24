@@ -1,0 +1,41 @@
+p {
+    margin: 0;
+    color: #646363;
+    font-size: 0.9rem;
+}
+.succslink {
+    color: #4A7705;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.succslink:hover {
+    color: #4A7705;
+
+}
+
+.successPage {
+       background-color: #f5f3f1; 
+}
+.succsBox{
+    margin-top: 4rem;
+}
+.success {
+    background-color: white;
+    width: 40rem;
+    max-width: 90%;
+    padding: 2rem 1rem;
+    box-shadow: 0px 0px 30px rgba(128, 128, 128, 0.404);
+    border-radius: 1rem; 
+}
+.btn-dark{
+    background-color: #4A7705 !important;
+    border: #4A7705 !important;
+}
+
+
+.head {
+    font-size: 2rem;
+    font-weight: 600;
+    color:#4A7705 ;
+}

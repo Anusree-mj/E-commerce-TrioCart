@@ -1,8 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../partials/homeHeader') %>
-        <%} else{ %>
+    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>        <%} else{ %>
             <%- include('../partials/header') %>
                 <% } %>
                     <%- include('../partials/subHeader',allCategories) %>
@@ -21,13 +20,13 @@
                                                             <%= cartProduct.product.name %>
                                                                 <img class="remove" src="/images/home/remove.png"
                                                                     alt="remove"
-                                                                    onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>')">
+                                                                    onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>','<%= cartProduct.Size %>')">
                                                         </div>
                                                         <%= cartProduct.product.price %>
                                                             <div class="subDetails">
                                                                 <p>Product.no.: <%= cartProduct.product._id %>
                                                                 </p>
-                                                                <p>Size: <%= size %>
+                                                                <p>Size: <%= cartProduct.Size %>
                                                                 </p>
                                                                 <p>Total: <%= cartProduct.product.price %>
                                                                 </p>
@@ -41,7 +40,7 @@
                                                                 <button type="button"
                                                                     class="btn btn-outline-dark bttn"><input
                                                                         class="qnty" type="number" min="1"
-                                                                        value="<%= count %>"></button>
+                                                                        value="<%= cartProduct.Count %>"></button>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -58,7 +57,7 @@
                                             <hr>
                                             <div class=" d-flex justify-content-between">
                                                 <p class="boldTxt">Total</p>
-                                                <p class="boldTxt">Rs. 0.00</p>
+                                                <p class="boldTxt">₹ <%= totalprice %> /-</p>
                                             </div>
                                             <a href="/checkout" type="button" class="btn btn-secondary purchasebtn">
                                                 Continue to

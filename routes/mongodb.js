@@ -32,7 +32,7 @@ const ProductSchema = new mongoose.Schema(
             required: true,
         },
         price: {
-            type: String,
+            type: Number,
             required: true,
         },
         size: {
@@ -255,6 +255,7 @@ const CartSchema = new mongoose.Schema(
             Size: String,
             Count: {
                 type: Number,
+                default:1,
             },
         }]
     },
@@ -310,6 +311,10 @@ const OrderSchema = new mongoose.Schema(
         }],
         paymentMethod:{
             type: String,
+            required: true,
+        },
+        estimatedDelivery: {
+            type: String, 
             required: true,
         },
         orderStatus:{

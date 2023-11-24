@@ -37,7 +37,10 @@ function addToCart(productId) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    location.reload();
+                    document.getElementById('addCart').textContent="Product Added to Cart"
+                    setTimeout(()=>{
+                        document.getElementById('addCart').textContent=""
+                    },3000)
                 } else {
                     console.log('product adding to cart failed')
                 }

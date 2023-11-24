@@ -39,8 +39,8 @@ function checkPincode() {
 
 // save billing address
 function saveBillingAddress(userId) {
-    console.log('userid',userId)
-   
+    console.log('userid', userId)
+
     const fields = ["name", "phone", "address", "town", "pincode", "state"];
 
     //checking for any empty fields
@@ -54,7 +54,8 @@ function saveBillingAddress(userId) {
     });
     // fetching data
     if (!isError) {
-        let reqBody = {userId,
+        let reqBody = {
+            userId,
             name: document.getElementById("name").value,
             phone: document.getElementById("phone").value,
             address: document.getElementById("address").value,
@@ -81,17 +82,21 @@ function saveBillingAddress(userId) {
 }
 
 // toggle checkout button
-function paymentSelected(){
-   let checkoutButtn= document.getElementById('checkoutBtn')   
-   checkoutButtn.classList.remove('checkoutBtn');
+let paymentMethod;
+function paymentSelected(method) {
+     paymentMethod=method;
+    let checkoutButtn = document.getElementById('checkoutBtn')
+    checkoutButtn.classList.remove('checkoutBtn');
     checkoutButtn.classList.add('btn-dark');
     checkoutButtn.disabled = false;
-    checkoutButtn.textContent='Continue Purchasing'
+    checkoutButtn.textContent = 'Continue Purchasing'
 }
 
-function purchase(userId){
-    let paymentMethod= document.getElementById('input[name="selectedPayment"]:checked').value;
-    let reqBody={userId,paymentMethod}
+function purchase(userId) {
+
+    console.log('paymentMethod', paymentMethod)
+
+    let reqBody = { userId, paymentMethod }
 
     fetch("http://localhost:3000/checkout", {
         method: "POST",

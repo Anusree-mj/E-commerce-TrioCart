@@ -28,6 +28,13 @@
     margin-left: 0.5rem;
 }
 
+.addCart {
+    height: 1rem;
+    color: green;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
 .modal-lg {
     max-width: 100%;
 }

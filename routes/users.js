@@ -12,8 +12,14 @@ router.get('/', async function (req, res, next) {
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
-      res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user });
+      let userId = result.user._id
 
+      userHelpers.getMyCartProducts(userId).then((result) => {
+        if (result) {
+          let totalCartProduct = result.totalCount;
+          res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user, totalCartProduct });
+        }
+      })
     } else {
       res.render('users/home', { layout: 'layout/layout', products, allCategories, user: undefined });
     }
@@ -32,20 +38,20 @@ router.get('/cart', async function (req, res, next) {
         let user = result.user
 
         userHelpers.getMyCartProducts(user).then((result) => {
-          if (result.cartProducts) {
-            console.log('result in cart:', result)
+          if (result) {
             let cartProducts = result.cartProducts;
-            let size = result.size
-            let count = result.count;
+            let totalprice = result.totalprice;
+            let totalCartProduct = result.totalCount;
 
             console.log('cartproducts in cart:', cartProducts)
             res.render('users/cart', {
-              layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts
-              , size, count
+              layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
+              totalCartProduct
             });
           } else {
             res.render('users/cart', {
-              layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts: undefined, size: undefined, count: undefined
+              layout: 'layout/layout', allCategories, viewMoreProducts, user,
+              cartProducts: undefined, totalCartProduct: undefined, totalPrice: undefined
             });
           }
         })
@@ -67,10 +73,10 @@ router.post('/cart/:product_id', function (req, res, next) {
       let user = result.user
       console.log(user, 'user in addto cart')
       userHelpers.addToCart(user, productId, size).then(() => {
-        res.redirect('back');
+        res.status(200).json({ status: "ok" });
       })
     } else {
-      res.redirect('/user/login')
+      res.status(400).json({ status: "nok" });
     }
   })
 })
@@ -78,8 +84,9 @@ router.post('/cart/:product_id', function (req, res, next) {
 //remove from cart
 router.put('/cart/:product_id', function (req, res, next) {
   let productId = req.params.product_id
-  let userId = req.body.userId
-  userHelpers.removeCartProducts(productId, userId).then(result => {
+  let body = req.body
+
+  userHelpers.removeCartProducts(productId, body).then(result => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -98,12 +105,12 @@ router.get('/checkout', function (req, res, next) {
       userHelpers.getMyCartProducts(user).then((result) => {
         if (result.cartProducts) {
           let cartProducts = result.cartProducts;
-          let size = result.size
-          let count = result.count;
+          let totalprice = result.totalprice;
+          let totalCartProduct = result.totalCount;
 
           res.render('users/checkout', {
             layout: 'layout/layout', user, cartProducts
-            , size, count
+            , totalCartProduct,totalprice
           })
         }
       });
@@ -137,12 +144,49 @@ router.post('/checkout', function (req, res, next) {
   })
 })
 
+// order success page
 router.get('/order/success', async function (req, res, next) {
-  
-      res.render('users/orderSuccess', { layout: 'layout/layout', products, allCategories, user: undefined });
-    
+  let sessionId = req.cookies.session
+  userHelpers.checkSessions(sessionId).then((result) => {
+    if (result.status === 'ok') {
+      let userId = result.user._id;
+      let userName = result.user.name
+
+      userHelpers.getOrderDetails(userId).then((result) => {
+        if (result.status === 'ok') {
+          let estimatedTym = result.estimatedDelivery;
+          let latestOrder = result.latestOrder
+
+          res.render('users/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
+        }
+      })
+    } else {
+      res.redirect('/user/login')
+    }
+  })
 })
 
+// get order history
+// order success page
+router.get('/order/history', async function (req, res, next) {
+  let sessionId = req.cookies.session
+  userHelpers.checkSessions(sessionId).then((result) => {
+    if (result.status === 'ok') {
+      let userId = result.user._id;
+
+      userHelpers.getOrderDetails(userId).then((result) => {
+        if (result.status === 'ok') {
+          let estimatedTym = result.estimatedDelivery;
+          let latestOrder = result.latestOrder
+
+          res.render('users/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
+        }
+      })
+    } else {
+      res.redirect('/user/login')
+    }
+  })
+})
 
 //logout
 router.get('/logout', function (req, res, next) {

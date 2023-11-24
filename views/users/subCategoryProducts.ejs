@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/users/productList.css">
 <% if (user) { %>
-    <%- include('../partials/homeHeader') %>
+    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
             <%- include('../partials/header') %>
                 <% } %>

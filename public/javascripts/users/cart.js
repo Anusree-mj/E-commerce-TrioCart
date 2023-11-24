@@ -1,6 +1,6 @@
 
-function removeProduct(productId,userId){
-    let reqBody={userId}
+function removeProduct(productId,userId,size){
+    let reqBody={userId,size}
     fetch(`http://localhost:3000/cart/${productId}`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
