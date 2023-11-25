@@ -22,8 +22,7 @@ function selectedSize(selctdSize) {
 }
 
 function addToCart(productId) {
-    console.log('haiii')
-    if (choosedSize==='' ) {
+       if (choosedSize==='' ) {
         document.getElementById('sizeSpan').textContent = 'Select a Size'
     } else {
         let reqBody = { choosedSize };

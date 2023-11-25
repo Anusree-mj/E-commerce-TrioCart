@@ -110,7 +110,7 @@ router.get('/checkout', function (req, res, next) {
 
           res.render('users/checkout', {
             layout: 'layout/layout', user, cartProducts
-            , totalCartProduct,totalprice
+            , totalCartProduct, totalprice
           })
         }
       });
@@ -152,7 +152,7 @@ router.get('/order/success', async function (req, res, next) {
       let userId = result.user._id;
       let userName = result.user.name
 
-      userHelpers.getOrderDetails(userId).then((result) => {
+      userHelpers.getAllOrderDetails(userId).then((result) => {
         if (result.status === 'ok') {
           let estimatedTym = result.estimatedDelivery;
           let latestOrder = result.latestOrder
@@ -167,19 +167,61 @@ router.get('/order/success', async function (req, res, next) {
 })
 
 // get order history
-// order success page
 router.get('/order/history', async function (req, res, next) {
   let sessionId = req.cookies.session
+  let allCategories = await userHelpers.getCategoryDetails()
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
+      let user = result.user
       let userId = result.user._id;
 
-      userHelpers.getOrderDetails(userId).then((result) => {
-        if (result.status === 'ok') {
-          let estimatedTym = result.estimatedDelivery;
-          let latestOrder = result.latestOrder
+      userHelpers.getMyCartProducts(userId).then((result) => {
+        if (result) {
+          let totalCartProduct = result.totalCount;
 
-          res.render('users/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
+          userHelpers.getAllOrderDetails(userId).then((result) => {
+            if (result.status === 'ok') {
+              let orderDetails = result.orderDetails
+              console.log('orderderails', orderDetails)
+              productHelpers.getNewArrivalProducts().then(result => {
+                let viewMoreProducts = [
+                  ...result.category1, ...result.category2, ...result.category3, ...result.category4];
+                res.render('users/orderHistory', { layout: 'layout/layout', user, allCategories, totalCartProduct, orderDetails, viewMoreProducts });
+              })
+            }
+          })
+        }
+      })
+    } else {
+      res.redirect('/user/login')
+    }
+  })
+})
+
+// order details page
+router.get('/order/details/:orderId', async function (req, res, next) {
+  let orderId = req.params.orderId;
+  let sessionId = req.cookies.session
+  let allCategories = await userHelpers.getCategoryDetails()
+
+  userHelpers.checkSessions(sessionId).then((result) => {
+    if (result.status === 'ok') {
+      let user = result.user
+      let userId = result.user._id;
+
+      userHelpers.getMyCartProducts(userId).then((result) => {
+        if (result) {
+          let totalCartProduct = result.totalCount;
+
+          userHelpers.getAnOrder(orderId).then((result) => {
+            let order = result.order
+            
+            productHelpers.getNewArrivalProducts().then(result => {
+              let viewMoreProducts = [
+                ...result.category1, ...result.category2, ...result.category3, ...result.category4];
+              res.render('users/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts });
+            })
+          })
         }
       })
     } else {

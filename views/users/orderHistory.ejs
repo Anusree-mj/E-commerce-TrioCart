@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="/stylesheets/users/orderHistory.css">
+
+
+<%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../partials/subHeader',allCategories) %>
+
+        <section class="orderpage">
+            <div class="pageHead">
+                <h2>Your Orders</h2>
+                <hr>
+            </div>
+
+            <div class="ordercontainer">
+                <div class="orderSctn">
+                    <% orderDetails.forEach(order=> { %>
+
+                        <div class="d-flex flex-column orders">
+                            <div class="d-flex justify-content-between orderHeadSctn">
+                                <div class="d-flex justify-content-around">
+                                    <div class="d-flex flex-column orderHeadSub">
+                                        <p class="subHead">Order Placed</p>
+                                        <p>
+                                            <%= new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' }) %>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex flex-column orderHeadSub">
+                                        <p class="subHead">Total</p>
+                                        <p>₹ <%= order.totalAmount %>/-</p>
+                                    </div>
+                                    <div class="d-flex flex-column orderHeadSub">
+                                        <p class="subHead">Ship To</p>
+                                        <p>
+                                            <%= order.billingAddress[0].name %>
+                                        </p>
+                                        <p>
+                                            <%= order.billingAddress[0].phone %>
+                                        </p>
+                                        <p>
+                                            <%= order.billingAddress[0].address %>
+                                        </p>
+                                        <p>
+                                            <%= order.billingAddress[0].town %> , <%= order.billingAddress[0].pincode %>
+                                        </p>
+                                        <p>
+                                            <%= order.billingAddress[0].state %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-flex flex-column">
+                                        <p class="subHead">ORDER
+                                        <p>#<%= order._id %>
+                                        </p>
+                                        </p>
+                                        <a href="/order/details/<%= order._id %>" class="viewDetails">View order
+                                            details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column prodctSctn ">
+                                <% order.products.forEach(product=> { %>
+                                    <div class="d-flex justify-content-between align-items-center mt-4">
+                                        <a href="/products/<%= product.product._id %>">
+                                            <img class="prodImg" src="/<%= product.product.image %>" alt="orderproduct">
+                                        </a>
+                                        <div>
+                                            <p class="prodName">
+                                                <%= product.product.name %>
+                                            </p>
+                                            <p class="prodName">
+                                                ₹ <%= product.product.price %>/-
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="prodName">Order Status</p>
+                                            <p>Order: <%= order.orderStatus %>
+                                            </p>
+                                            <% if (order.orderStatus==='placed' ) { %>
+                                                <p>Estimated delivery :
+                                                    <%= order.estimatedDelivery %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-dark mt-3 commntBtn">Leave your
+                                            Comment</button>
+                                    </div>
+
+                                    <% }); %>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+            </div>
+
+            <div class="viewProducts">
+                <div class="cardHead">
+                    <h3>Others Also Bought</h3>
+                </div>
+
+                <div class="cards-section ">
+                    <% viewMoreProducts.forEach(product=>{%>
+                        <div class="col-sm-3 mb-4">
+                            <a href="/products/<%= product._id %>">
+                                <div class="card" style="width: 15rem;">
+                                    <div>
+                                        <img class="img-fluid img-thumbnail " src="/<%= product.image %>"
+                                            alt="Card image cap">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%=product.name %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= product.price %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+
+        </section>
+        <%- include('../partials/footer') %>
