@@ -239,19 +239,18 @@ module.exports = {
         try {
             const cart = await collection.cartCollection.findOne({ userId: user._id })
                 .populate('products.product');
-            
+
             if (cart && cart.products) {
 
                 let cartProducts = cart.products;
                 totalCount = cart.products.length
-                console.log('total count', totalCount)
- 
-                let totalprice = cartProducts.reduce((sum,item) =>{
-                 return sum + (item.product.price * item.Count)
-                },0)
 
-              
-                return { cartProducts, totalCount,totalprice };
+                let totalprice = cartProducts.reduce((sum, item) => {
+                    return sum + (item.product.price * item.Count)
+                }, 0)
+
+
+                return { cartProducts, totalCount, totalprice };
             } else {
                 return { totalCount: 0, totalPrice: 0 };
             }
@@ -262,18 +261,18 @@ module.exports = {
 
     removeCartProducts: async (productId, body) => {
         try {
-            console.log('body in removal',body)
+            console.log('body in removal', body)
             const updateData = await collection.cartCollection.updateOne(
-                { userId:body. userId },
-                { $pull: { products: { product: productId , Size:body.size} } }
+                { userId: body.userId },
+                { $pull: { products: { product: productId, Size: body.size } } }
             );
 
             if (updateData.modifiedCount === 1) {
                 console.log('Data update success');
 
-                const updatedCart = await collection.cartCollection.findOne({ userId: body. userId });
+                const updatedCart = await collection.cartCollection.findOne({ userId: body.userId });
                 if (updatedCart.products.length < 1) {
-                    await collection.cartCollection.deleteOne({ userId: body. userId });
+                    await collection.cartCollection.deleteOne({ userId: body.userId });
                     console.log('Cart document deleted');
                 }
 
@@ -353,7 +352,8 @@ module.exports = {
                 })),
 
                 paymentMethod: orderDetails.paymentMethod,
-                estimatedDelivery: deliveryTym
+                estimatedDelivery: deliveryTym,
+                totalAmount: orderDetails.total,
             }
             console.log('inserted data in orders ', data)
 
@@ -369,17 +369,31 @@ module.exports = {
         }
     },
 
-    getOrderDetails: async (userId) => {
+    getAllOrderDetails: async (userId) => {
         try {
             const orderDetails = await collection.orderCollection.find({
                 userId: userId
-            }).sort({ createdAt: -1 });
-
+            }).sort({ createdAt: -1 }).populate('products.product');
+           
             const latestOrder = orderDetails[0];
             const estimatedDelivery = latestOrder.estimatedDelivery;
-            console.log('order details', orderDetails)
+
             return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
 
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    getAnOrder: async (orderId) => {
+        try {
+            const order = await collection.orderCollection.findOne({
+                _id: orderId
+            }).populate('products.product');
+            console.log('orderrrrrreeeee', order)
+            console.log('sfsdfsdfdsfsfsdfsfs', order.products)
+            return { order }
         } catch (err) {
             console.log(err);
             return { status: 'nok' };

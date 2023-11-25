@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <section>
+        <div class="container" >
+
+            <div class="table-responsive" style="margin-top: 2rem;">
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">User</th>
+                            <th scope="col" style="max-width: 100%; width: 12rem;">Products</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" style="text-align: center;">Edit</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.forEach(order=> { %>
+                            <tr>
+
+                                <td>
+                                    <%= order.userId.name%>
+                                </td>
+                                <td>
+                                    <% const productNames=order.products.map(product=> product.product.name).join(', ');
+                                        %>
+                                        <%= productNames %>
+                                </td>
+
+                                <td>
+                                    ₹ <%= order.totalAmount %>/-
+                                </td>
+                                <td>
+                                    <%= order.paymentMethod %>
+                                </td>
+                                <td>
+                                    <%= order.orderStatus%>
+                                </td>
+                                <td>
+                                    <div class="dropdown nav_icons">
+                                        <p class="nav_icon_text " type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
+                                            Status</p>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-item">
+                                                <a class="dropdown_text"
+                                                    onclick="editOrderStatus('placed','<%= order._id%>')">Placed</a>
+                                            </div>
+                                            <div class="dropdown-item">
+                                                <a class="dropdown_text"
+                                                    onclick="editOrderStatus('packed','<%= order._id%>')">Packed</a>
+                                            </div>
+                                            <div class="dropdown-item">
+                                                <a class="dropdown_text"
+                                                    onclick="editOrderStatus('shipped','<%= order._id%>')">Shipped</a>
+                                            </div>
+                                            <div class="dropdown-item">
+                                                <a class="dropdown_text"
+                                                    onclick="editOrderStatus('outfordelivery','<%= order._id%>')">Out
+                                                    for Delivery</a>
+                                            </div>
+                                            <div class="dropdown-item">
+                                                <a class="dropdown_text"
+                                                    onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="getMore" href="/admin/order/<%= order._id %>">Get More Details<a>
+                                </td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <script src="/javascripts/admin/adminOrders.js"></script>

@@ -259,6 +259,58 @@ router.patch('/users', function (req, res, next) {
   })
 })
 
+//get orders list
+router.get('/orders', function (req, res, next) {
+  let sessionId = req.cookies.adminSession
+  adminHelpers.checkSessions(sessionId).then(result => {
+    if (result.status === 'ok') {
+
+      adminHelpers.getAllOrders().then((results) => {
+        let orders = results.orders
+
+        res.render('admin/adminOrders', { layout: 'layout/layout', orders });
+      })
+    }
+    else {
+      res.redirect('/admin');
+    }
+  })
+});
+
+//edit order status
+router.put('/orders', function (req, res) {
+  let data = req.body
+  console.log("ssssssssss", data)
+
+  adminHelpers.updateOrderStatus(data).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+})
+
+// order details page
+router.get('/order/:orderId', async function (req, res, next) {
+  let orderId = req.params.orderId;
+  let sessionId = req.cookies.adminSession
+
+  adminHelpers.checkSessions(sessionId).then((result) => {
+    if (result.status === 'ok') {
+      adminHelpers.getAnOrder(orderId).then((result) => {
+        let order = result.order
+
+        res.render('admin/adminOrderDetails', { layout: 'layout/layout', order });
+      })
+    } else {
+      res.redirect('/admin/login')
+    }
+  })
+})
+
+
+
 
 //logout
 router.get('/logout', function (req, res, next) {

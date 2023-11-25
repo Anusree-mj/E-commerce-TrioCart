@@ -5,6 +5,7 @@
             <%- include('../partials/header') %>
                 <% } %>
                     <%- include('../partials/subHeader',allCategories) %>
+
                         <!--  -->
                         <section class="cartPage">
                             <!--  -->
@@ -14,7 +15,7 @@
                                         <% cartProducts.forEach(cartProduct=> { %>
                                             <div class="mt-4">
                                                 <div class="d-flex justify-content-around">
-                                                    <img class="prodImg" src="/<%= cartProduct.product.image %>" alt="">
+                                                    <a href="/products/<%= cartProduct.product._id %>"><img class="prodImg" src="/<%= cartProduct.product.image %>" alt="product"></a>
                                                     <div class="prodDetails">
                                                         <div class="head">
                                                             <%= cartProduct.product.name %>
@@ -126,6 +127,7 @@
                                         </div>
                                     </div>
                                     <% } %>
+                                    <br><br><br><br><br>
                                         <!--  -->
                                         <div class="viewProducts">
                                             <div class="cardHead">
@@ -156,5 +158,6 @@
                                             </div>
                                         </div>
                         </section>
+                        
                         <%- include('../partials/footer') %>
                             <script src="/javascripts/users/cart.js"></script>

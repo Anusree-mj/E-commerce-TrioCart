@@ -309,6 +309,10 @@ const OrderSchema = new mongoose.Schema(
                 type: Number,
             },
         }],
+        totalAmount:{
+            type: Number,
+            required: true,
+        },
         paymentMethod:{
             type: String,
             required: true,

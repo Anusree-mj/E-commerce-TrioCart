@@ -29,12 +29,14 @@
                                 <th scope="row">
                                     <%= index + 1 %>
                                 </th>
-                                <td><img style="width: 50px; height: 50px;" src="/<%= product.image %>" alt=""></td>
+                                <td><img style="width: 50px;" src="/<%= product.image %>" alt=""></td>
                                 <td>
                                     <%= product.name%>
                                 </td>
                                 <td>
+                                    <div class="description">
                                     <%= product.description%>
+                                </div>
                                 </td>
                                 <td>
                                     <%= product.category%>
@@ -55,7 +57,7 @@
                                                 style="width: 1rem;"></a>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
-                                            alt="edit"></a> </td>
+                                            alt="edit" style="width: 1.5rem;"></a> </td>
                                 <td> <a onclick="deleteProduct('<%= product._id %>')"><img style="width: 1.2rem;"
                                             src="/images/navbar/delete.png" alt="delete"></a></td>
                             </tr>

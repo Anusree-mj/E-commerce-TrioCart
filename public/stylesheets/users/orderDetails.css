@@ -1,0 +1,149 @@
+p {
+    margin: 0;
+    padding: 0.15rem;
+    color: #272727;
+    font-size: 0.9rem;
+}
+.headp{
+    padding: 0 !important;
+    margin: 0;
+}
+.orderpage {
+    background-color: #f5f3f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.horizontal-line {
+    border-left: 2px solid #000; 
+            height: 1rem;
+            margin: 0 20px; 
+}
+.pageHead {
+    width: 80rem;
+    padding: 2rem 3rem;
+    max-width: 90%;
+}
+
+.ordercontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+}
+
+.orderSctn {
+    width: 70rem;
+    max-width: 90%;
+}
+
+.orderHeadSctn {
+    background-color: #ffffff;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.order {
+    max-width: 100%;
+    margin-top: 1.5rem;
+}
+
+.orderHeadSub {
+    width: 10rem;
+    max-width: 90%;
+
+}
+
+.subHead {
+    color: #131313;
+    font-weight: 600;
+}
+
+.prodctSctn {
+    background-color: white;
+    padding: 1.5rem 2rem ;
+    border: 1px solid black;
+    border-radius: 1rem;
+    max-width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.prodImg {
+    width: 5rem;
+}
+
+.prodName {
+    color: black;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+}
+
+.viewDetails {
+    color: #131313;
+    text-decoration: underline;
+    margin-top: 0.6rem;
+}
+
+.viewProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardHead {
+    margin-top: 6rem;
+    width: 74rem;
+    max-width: 90%;
+}
+
+.cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 90%;
+}
+
+.commntBtn {
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 1rem;
+    color: black;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: black;
+}
+
+@media only screen and (max-width: 980px) {
+    .col-sm-3 {
+        width: 50% !important;
+        max-width: 80%;
+    }
+
+    .card {
+        width: 12rem !important;
+        max-width: 100%;
+    }
+
+    .cardHead {
+        margin-top: 1rem;
+    }
+
+}

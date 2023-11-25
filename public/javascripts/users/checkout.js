@@ -92,11 +92,11 @@ function paymentSelected(method) {
     checkoutButtn.textContent = 'Continue Purchasing'
 }
 
-function purchase(userId) {
+function purchase(userId,total) {
 
     console.log('paymentMethod', paymentMethod)
 
-    let reqBody = { userId, paymentMethod }
+    let reqBody = { userId, paymentMethod,total }
 
     fetch("http://localhost:3000/checkout", {
         method: "POST",

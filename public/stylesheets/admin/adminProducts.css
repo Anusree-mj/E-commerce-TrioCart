@@ -2,7 +2,23 @@
     max-width: 90% !important;
 
 }
-
+.description{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;  /* Show at least two lines */
+    line-height: 1.2em;     /* Adjust line height as needed */
+    max-height: 2.4em;      
+}
+.getMore{
+    color: #000000;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-decoration: underline;    
+}
+.getMore:hover{
+    color: #000000;
+}
 .subHead {
     margin-top: 1rem;
     display: flex;

@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     getAllProducts: async () => {
         try {
-            const products = await collection.productsCollection.find()
+            const products = await collection.productsCollection.find().sort({ createdAt: -1 });
             return (products)
         }
         catch (err) {
