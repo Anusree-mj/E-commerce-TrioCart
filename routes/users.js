@@ -6,6 +6,7 @@ var userHelpers = require('../helpers/user-helpers');
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
+  console.log('sessionId in homeeee',sessionId)
   let products = await productHelpers.getNewArrivalProducts();
   let allCategories = await userHelpers.getCategoryDetails()
 

@@ -16,13 +16,13 @@ module.exports = {
                     name: userData.name,
                     phone: userData.phone,
                     email: userData.email,
-                    address: userData.address,
-                    password: userData.password,
+                                       password: userData.password,
                     otp: otp
                 }
+                const email = userData.email
                 await collection.tempUsersCollection.insertMany([data])
                 await signupUtil.sendOtpByEmail(userData.email, otp);
-                return { status: 'ok' }
+                return { status: 'ok', email }
             }
         } catch (err) {
             console.log(err)
@@ -31,17 +31,23 @@ module.exports = {
 
     doVerifyUser: async (data) => {
         try {
-            const user = await collection.tempUsersCollection.findOne({ otp: data.otp });
-            if (user) {
-                const data = {
-                    name: user.name,
-                    phone: user.phone,
-                    email: user.email,
-                    address: user.address,
-                    password: user.password
+
+            const check = await collection.tempUsersCollection.findOne({ otp: data.otp });
+            if (check) {
+                const updateData = {
+                    name: check.name,
+                    phone: check.phone,
+                    email: check.email,
+                    password: check.password
                 }
-                await collection.usersCollection.insertMany([data])
-                return user
+                await collection.usersCollection.insertMany(updateData)
+                const user = await collection.usersCollection.findOne({ email: check.email });
+                if (user) {
+                    return { user }
+                }
+
+
+
             }
         } catch (err) {
             console.log(err)
@@ -87,13 +93,13 @@ module.exports = {
 
     checkSessions: async (sessionId) => {
         try {
+            console.log('sessghjfghfhfinId', sessionId)
             const checkSession = await collection.sessionCollection.findOne({
                 sessionId: sessionId,
             }).populate('userId');
 
             if (checkSession) {
                 let user = checkSession.userId;
-
                 if (user && !user.isBlocked) {
                     return { status: 'ok', user }
                 }
@@ -121,16 +127,6 @@ module.exports = {
         }
     },
 
-    getUser: async (email) => {
-        try {
-            const user = await collection.usersCollection.findOne({ email: email })
-            return user
-        }
-        catch (err) {
-            console.log(err)
-        }
-    },
-
     getOtp: async (email, otp) => {
         try {
             const user = await collection.tempUsersCollection.updateOne(
@@ -142,6 +138,22 @@ module.exports = {
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    deleteOtp: async (email) => {
+        try {
+            const user = await collection.tempUsersCollection.updateOne(
+                { email: email },
+                { $unset: { otp: 1 } }
+            )
+            if (user.modifiedCount === 1) {
+                console.log('otp delete success');
+            } else {
+                console.log('otp delete failed');
             }
         }
         catch (err) {
@@ -374,7 +386,7 @@ module.exports = {
             const orderDetails = await collection.orderCollection.find({
                 userId: userId
             }).sort({ createdAt: -1 }).populate('products.product');
-           
+
             const latestOrder = orderDetails[0];
             const estimatedDelivery = latestOrder.estimatedDelivery;
 

@@ -23,13 +23,13 @@
                                                                     alt="remove"
                                                                     onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>','<%= cartProduct.Size %>')">
                                                         </div>
-                                                        <%= cartProduct.product.price %>
+                                                        ₹ <%= cartProduct.product.price %>/-
                                                             <div class="subDetails">
                                                                 <p>Product.no.: <%= cartProduct.product._id %>
                                                                 </p>
                                                                 <p>Size: <%= cartProduct.Size %>
                                                                 </p>
-                                                                <p>Total: <%= cartProduct.product.price %>
+                                                                <p>Total: ₹ <%= cartProduct.product.price %>/-
                                                                 </p>
                                                             </div>
                                                             <div class="mt-4">
@@ -148,7 +148,7 @@
                                                                         <%=product.name %>
                                                                     </h5>
                                                                     <p class="card-text">
-                                                                        <%= product.price %>
+                                                                        ₹ <%= product.price %>/-
                                                                     </p>
                                                                 </div>
                                                             </div>

@@ -5,9 +5,10 @@
         <div class=" d-flex flex-column justify-content-center align-items-center ">
             <div class="login-form" onclick="clearSpan('commonSpan')">
                 <h2 class="head">Login</h2>
+                <span id="signupSpan" class="span" style="color: green !important;"></span><br>
                 <span id="commonSpan" class="span"></span><br>
                 <label class="label">
-                    Username
+                   EmailId
                 </label>
                 <input type="text" class=" form-control" id="my-email" aria-describedby="emailHelp"
                     placeholder=" Enter e-mailid" onclick="clearSpan('emailSpan')">
@@ -33,7 +34,7 @@
                     <button class="btn  btn-success btn-lg btn-block" type="button" id="signin_button"
                         onclick="login()">Login</button>
                     <hr class="dividngLine">
-                    <a class="dropdown-item signup-text  " href="/signup">New around here? Sign up</a>
+                    <a class="dropdown-item signup-text  " href="/user/signup">New around here? Sign up</a>
                 </div>
             </div>
 
