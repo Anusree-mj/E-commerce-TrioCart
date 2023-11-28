@@ -17,6 +17,25 @@ function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
 }
 
+// valid name
+let isValidName = true;
+function checkName() {
+    let name = document.getElementById('name').value;
+    if (/^\s+$/.test(name)) {
+        document.getElementById("nameSpan").textContent = "*Invalid Name. Name cannot consist of only spaces.";
+        return isValidName = false;
+    }
+    if (/\d/.test(name)) {
+        document.getElementById("nameSpan").textContent = "*Invalid Name. Name cannot contain numbers.";
+        return isValidName = false;
+    }
+    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    if (!nameRegex.test(name)) {
+        document.getElementById("nameSpan").textContent = "Invalid Name. Please enter a valid name containing only letters and optional spaces.";
+        return isValidName = false;
+    }
+}
+
 //checks password strength
 let isStrongPassword = true
 function isStrongPaswrd() {
@@ -54,27 +73,26 @@ function isStrongPaswrd() {
 }
 
 //checks email
-let isEmailValid = true;
+let isValidEmail = true;
 function checkEmail() {
     let email = document.getElementById("email").value;
 
-    isEmailValid = true;
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(email)) {
-        isEmailValid = false;
+        isValidEmail = false;
         document.getElementById("emailSpan").textContent = "*Invalid email";
     }
 }
 
 //checks phoneNumber
-let isPhoneValid = true;
+let isValidPhoneNumber = true;
 function checkPhone() {
     let phone = document.getElementById("phone").value;
 
-    isPhoneValid = true;
+    isValidPhoneNumber = true;
     const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(phone)) {
-        isPhoneValid = false;
+        isValidPhoneNumber = false;
         document.getElementById("phoneSpan").textContent = "*Invalid phone number";
     }
 }
@@ -82,7 +100,7 @@ function checkPhone() {
 //post signup user data and get otp
 function signup() {
     let isError = false
-    const fields = ["name", "email", "phone", "address", "password", "confrmPsswrd"];
+    const fields = ["name", "email", "phone", "password", "confrmPsswrd"];
 
     //checking for any empty fields
     fields.forEach(field => {
@@ -101,15 +119,17 @@ function signup() {
         isError = true
     }
 
+    if (!isError && (
+        isStrongPassword, isValidEmail,
+        isValidPhoneNumber,
+        isValidName)) {
 
-    if (!isError && (isStrongPassword, isEmailValid, isPhoneValid)) {
         let reqBody = {
             name: document.getElementById("name").value,
             email: document.getElementById("email").value,
             phone: document.getElementById("phone").value,
-            address: document.getElementById("address").value,
-            password:document.getElementById("password").value
-         }
+            password: document.getElementById("password").value
+        }
         fetch("http://localhost:3000/user/signup", {
             method: "POST",
             body: JSON.stringify(reqBody),
@@ -131,7 +151,14 @@ function signup() {
 
 //verifying otp and authenticating user
 function verifyUser() {
-    let otp = document.getElementById('otp').value;
+    let otp1 = document.getElementById('otp1').value;
+    let otp2 = document.getElementById('otp2').value;
+    let otp3 = document.getElementById('otp3').value;
+    let otp4 = document.getElementById('otp4').value;
+    let otp5 = document.getElementById('otp5').value;
+    let otp6 = document.getElementById('otp6').value;
+
+    let otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
 
     fetch("http://localhost:3000/user/verify", {
         method: "POST",

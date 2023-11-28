@@ -1,14 +1,11 @@
-function editUserStatus(userEmail, userStatus) {
-    userEmail = userEmail.trim();
-    console.log('email:', userEmail)
-    console.log('userStatus:', userStatus)
-    let userEdit = Boolean
-    userEdit = (userStatus === 'false') ? true : false;
-    console.log(userEdit)
+function blockUser(user,userName) {
+    let userId = user.trim();
+    const confirmation = window.confirm(`Are you sure you want to block the user "${userName}"?`);
 
-    let reqBody = { userEmail, userEdit }
+    if (confirmation) {
+    let reqBody = { userId }
     fetch('http://localhost:3000/admin/users', {
-        method: "PATCH",
+        method: "DELETE",
         body: JSON.stringify(reqBody),
         headers: {
             "Content-Type": "application/json"
@@ -22,4 +19,31 @@ function editUserStatus(userEmail, userStatus) {
             }
         })
         .catch(err => console.log(err));
+}
+}
+// undo product delete
+function unblockUser(user,userName) {
+    let userId = user.trim();
+    console.log('userid',userId)
+
+    const confirmation = window.confirm(`Are you sure you want to unblock the user "${userName}"?`);
+
+    if (confirmation) {
+    let reqBody = { userId }
+    fetch('http://localhost:3000/admin/users', {
+        method: "PUT",
+        body: JSON.stringify(reqBody),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                location.reload();
+            } else {
+                alert("Editing user status failed");
+            }
+        })
+        .catch(err => console.log(err));
+}
 }

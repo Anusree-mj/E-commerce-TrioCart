@@ -47,7 +47,7 @@
 
                                     <p class="subHead">MRP inclusive of all taxes :- </p>
                                     <p class="subHead">
-                                        <%= product.price %>
+                                        ₹ <%= product.price %>/-
                                     </p>
                                     <p class="subHead">Sizes</p>
                                     <% sizesArray=product.size[0].split(','); sizesArray.forEach(size=> { %>
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <p>Description & Fit</p>
-                                                <p class="description"><%=product.detailed_description %>
+                                                <p class="description"><%=product.description %>
                                                 </p>
                                             </div>
                                 </div>
@@ -89,7 +89,7 @@
                                                             <%=product.name %>
                                                         </h5>
                                                         <p class="card-text">
-                                                            <%= product.price %>
+                                                            ₹ <%= product.price %>/-
                                                         </p>
                                                     </div>
                                                 </div>

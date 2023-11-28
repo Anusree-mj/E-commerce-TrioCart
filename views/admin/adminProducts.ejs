@@ -35,8 +35,8 @@
                                 </td>
                                 <td>
                                     <div class="description">
-                                    <%= product.description%>
-                                </div>
+                                        <%= product.description%>
+                                    </div>
                                 </td>
                                 <td>
                                     <%= product.category%>
@@ -52,14 +52,18 @@
                                 </td>
                                 <td>
                                     <%= product.isDeleted%>
-                                        <a onclick="undoProductDelete('<%= product._id%>','<%= product.isDeleted%>')"><img
-                                                src="/images/navbar/undo.png" alt="edit"
-                                                style="width: 1rem;"></a>
+                                        <% if (product.isDeleted === true) { %>
+                                            <a
+                                                onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
+                                                    src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
+                                                    id="undoProductDlt"></a>
+                                            <% }; %>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1.5rem;"></a> </td>
-                                <td> <a onclick="deleteProduct('<%= product._id %>')"><img style="width: 1.2rem;"
-                                            src="/images/navbar/delete.png" alt="delete"></a></td>
+                                <td> <a onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
+                                            style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete"></a>
+                                </td>
                             </tr>
                             <% })%>
                     </tbody>

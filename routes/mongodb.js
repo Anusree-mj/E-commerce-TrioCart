@@ -19,10 +19,6 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        detailed_description: {
-            type: String,
-            required: true,
-        },
         category: {
             type: String,
             required: true,
@@ -74,10 +70,6 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        address: {
-            type: String,
-            required: true,
-        },
         password: {
             type: String,
             required: true,
@@ -89,7 +81,7 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        billingAddress:  [
+        billingAddress: [
             {
                 name: {
                     type: String,
@@ -98,19 +90,19 @@ const UserSchema = new mongoose.Schema(
                     type: Number,
                     required: true,
                 },
-                address:{
+                address: {
                     type: String,
                     required: true,
                 },
-                town:{
+                town: {
                     type: String,
-                    required: true, 
+                    required: true,
                 },
-                pincode:{
+                pincode: {
                     type: Number,
                     required: true,
                 },
-                state:{
+                state: {
                     type: String,
                     required: true,
                 }
@@ -136,10 +128,6 @@ const TemporaryUserSchema = new mongoose.Schema(
             required: true,
         },
         email: {
-            type: String,
-            required: true,
-        },
-        address: {
             type: String,
             required: true,
         },
@@ -255,7 +243,7 @@ const CartSchema = new mongoose.Schema(
             Size: String,
             Count: {
                 type: Number,
-                default:1,
+                default: 1,
             },
         }]
     },
@@ -272,7 +260,7 @@ const OrderSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'users',
         },
-        billingAddress:  [
+        billingAddress: [
             {
                 name: {
                     type: String,
@@ -281,19 +269,19 @@ const OrderSchema = new mongoose.Schema(
                     type: Number,
                     required: true,
                 },
-                address:{
+                address: {
                     type: String,
                     required: true,
                 },
-                town:{
+                town: {
                     type: String,
-                    required: true, 
+                    required: true,
                 },
-                pincode:{
+                pincode: {
                     type: Number,
                     required: true,
                 },
-                state:{
+                state: {
                     type: String,
                     required: true,
                 }
@@ -309,19 +297,19 @@ const OrderSchema = new mongoose.Schema(
                 type: Number,
             },
         }],
-        totalAmount:{
+        totalAmount: {
             type: Number,
             required: true,
         },
-        paymentMethod:{
+        paymentMethod: {
             type: String,
             required: true,
         },
         estimatedDelivery: {
-            type: String, 
+            type: String,
             required: true,
         },
-        orderStatus:{
+        orderStatus: {
             type: String,
             default: 'placed',
         }

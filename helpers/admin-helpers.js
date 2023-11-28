@@ -77,14 +77,35 @@ module.exports = {
         }
     },
 
-    blockOrUnblockUser: async (email, userStatus) => {
+    blockUser: async (userId) => {
         try {
             const user = await collection.usersCollection.updateOne(
-                { email: email },
+                { _id: userId },
                 {
-                    $set: { isBlocked: userStatus }
+                    $set: { isBlocked: true }
                 })
-            console.log(user)
+                console.log('Update Result:', user);
+            if (user.modifiedCount === 1) {
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log("error occured", err)
+            return { status: 'nok' }
+        }
+    },
+    unblockUser: async (userId) => {
+        try {
+            console.log('useridinunblick',userId)
+            const user = await collection.usersCollection.updateOne(
+                { _id: userId },
+                {
+                    $set: { isBlocked: false }
+                })
+                console.log('Update Result:', user);
             if (user.modifiedCount === 1) {
                 console.log('Data update success')
                 return { status: 'ok' }

@@ -7,7 +7,7 @@
                 <h2 class="head">Signup</h2>
                 <label class="label" for="name">Name</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name"
-                    onclick="clearSpan('nameSpan')">
+                    onclick="clearSpan('nameSpan')" onblur="checkName()">
                 <span id="nameSpan" class="span"></span><br>
 
                 <label class="label" for="email">Email</label>
@@ -19,11 +19,7 @@
                 <input type="text" class="form-control" name="phone" id="phone"
                     placeholder="Enter your contact number" onclick="clearSpan('phoneSpan')" onblur="checkPhone()">
                 <span id="phoneSpan" class="span"></span><br>
-
-                <label class="label" for="address">Adress</label>
-                <textarea class="form-control" id="address" rows="3" placeholder="Enter your address with pincode"
-                    onclick="clearSpan('addressSpan')"></textarea>
-                <span id="addressSpan" class="span"></span><br>
+                
                 <!-- change password -->
                 <div class="password-box">
                     <label class="label">

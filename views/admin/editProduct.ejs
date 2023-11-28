@@ -6,55 +6,68 @@
             <h2 class="head">Edit a Product</h2>
             <!-- name -->
             <label class="label" for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" value="<%= productData.name%>">
+            <input type="text" onclick="clearValidity('name');clearSpan('nameSpan')" onblur="isValidInput('name')"
+                class="form-control" name="name" id="name" value="<%= productData.name%>">
+            <span id="nameSpan" class="span"></span>
             <!-- description -->
             <label class="label" for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3"><%= productData.description %></textarea>
-            <!-- detailed description -->
-            <label class="label" for="detailed_description">Detailed-Description</label>
-            <textarea class="form-control" id="detailed_description" rows="3"><%= productData.detailed_description %>
+            <textarea class="form-control" id="detailed_description"
+                onclick="clearValidity('detailed_description');clearSpan('detailed_descriptionSpan')"
+                onblur="isValidInput('detailed_description')" rows="3"><%= productData.description %>
             </textarea>
+            <span id="detailed_descriptionSpan" class="span"></span>
+
             <!-- category -->
             <label class="label" for="category">Category</label>
-            <input type="text" class="form-control" name="category" id="category" value="<%= productData.category%>">
+            <input type="text" onclick="clearValidity('category');clearSpan('categorySpan')"
+                onblur="isValidInput('category')" class="form-control" name="category" id="category"
+                value="<%= productData.category%>">
+            <span id="categorySpan" class="span"></span>
+
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
-            <input type="text" class="form-control" name="subCategory" id="subCategory"
+            <input type="text" onclick="clearValidity('subCategory');clearSpan('subCategorySpan')"
+                onblur="isValidInput('subCategory')" class="form-control" name="subCategory" id="subCategory"
                 value="<%= productData.subCategory%>">
+            <span id="subCategorySpan" class="span"></span>
+
             <!-- sizes -->
             <% const storedSizes=productData.size[0].split(',') %>
                 <label class="label" for="size">Size</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1"
-                        <%=storedSizes.includes('S') ? 'checked' : '' %> >
+                    <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                        id="size-s" value="option1" <%=storedSizes.includes('S') ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1">S</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="size" type="checkbox" id="size-m" value="option2"
-                        <%=storedSizes.includes('M') ? 'checked' : '' %> >
+                    <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                        id="size-m" value="option2" <%=storedSizes.includes('M') ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox2">M</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="size" type="checkbox" id="size-l" value="option3"
-                        <%=storedSizes.includes('L') ? 'checked' : '' %> >
+                    <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                        id="size-l" value="option3" <%=storedSizes.includes('L') ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox3">L</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="size" type="checkbox" id="size-xl" value="option4"
-                        <%=storedSizes.includes('XL') ? 'checked' : '' %> >
+                    <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                        id="size-xl" value="option4" <%=storedSizes.includes('XL') ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox3">XL</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5"
-                        <%=storedSizes.includes('XXL') ? 'checked' : '' %> >
+                    <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                        id="size-xxl" value="option5" <%=storedSizes.includes('XXL') ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox3">XXL</label>
                 </div>
+                <span id="sizeSpan" class="span"></span>
 
                 <label class="label" for="price">Price</label>
-                <input type="text" class="form-control" name="price" id="price" value="<%= productData.price%>">
-
+                <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice()" type="text"
+                    class="form-control" name="price" id="price" value="<%= productData.price%>">
+                    <span id="priceSpan" class="span"></span>
+                    
                 <!-- curent image -->
-                <label class="label" for="image">Image</label>
+                <!-- <label class="label" for="image">Image</label>
                 <div class="image-preview">
                     <img src="/<%= productData.image %>" onclick="openImagePreview('/<%= productData.image %>')"
                         id="curentImage" alt="Product Image" class="preview-image">
@@ -62,15 +75,15 @@
                         onclick="changeImage()">Delete X</button>
                 </div>
                 <input type="file" class="form-control-file newImage" name="image" id="image" accept="image/*">
-                <button type="button" class="btn btn-light closebutton" id="closebutton"
-                onclick="imageUpload()">Upload </button>
+                <button type="button" class="btn btn-light closebutton" id="closebutton" onclick="imageUpload()">Upload
+                </button> -->
                 <!-- image preview -->
-                <div id="imageModal" class="modal">
+                <!-- <div id="imageModal" class="modal">
                     <span class="close" onclick="closeImagePreview()">&times;</span>
                     <img id="modalImage" class="modal-content">
-                </div>
+                </div> -->
                 <!-- detailed images -->
-                <label class="label" for="image">Detailed Image</label>
+                <!-- <label class="label" for="image">Detailed Image</label>
                 <div class="image-preview">
                     <% for (let i=0; i < productData.detailedImages.length; i++) { %>
                         <img src="/<%= productData.detailedImages[i] %>"
@@ -82,12 +95,13 @@
                         <% } %>
                 </div>
                 <label class="label" for="image">Add Image</label>
-                <input type="file" class="form-control-file" name="detailedImages" id="detailedimage" accept="image/*" multiple>
-                
+                <input type="file" class="form-control-file" name="detailedImages" id="detailedimage" accept="image/*"
+                    multiple> -->
+
                 <div class="button">
                     <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                         onclick="editProduct('<%= productData._id %>')">Edit</button>
                 </div>
-                       </div>
+        </div>
     </div>
     <script src="/javascripts/admin/adminUpdates.js"></script>

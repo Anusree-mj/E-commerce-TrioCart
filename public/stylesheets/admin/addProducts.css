@@ -41,6 +41,16 @@
 
 }
 
+.required {
+    color: red
+}
+.span {
+    height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
 .dividngLine {
     width: 100%;
     border: 1.5px solid rgba(0, 0, 0, .1);

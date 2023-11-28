@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/stylesheets/users/login.css">
+
 <section>
     <%- include('../../partials/loginHeader') %>
 
@@ -10,15 +11,54 @@
                 <label class="label">
                     Enter OTP
                 </label>
-                <input type="text" class=" form-control" id="otp" aria-describedby="emailHelp" placeholder=" otp">
-
-                <div class="coloumn">
-                    <button class="btn  btn-success btn-lg btn-block" type="button" id="signin_button"
+                <div class="otp-container d-flex justify-content-center align-items-center">
+                    <input type="text" id="otp1" class="ml-4 otpLine" name="digit1" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                    <input type="text" id="otp2" class="ml-4 otpLine" name="digit2" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                    <input type="text" id="otp3" class="ml-4 otpLine" name="digit3" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                    <input type="text" id="otp4" class="ml-4 otpLine" name="digit4" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                    <input type="text" id="otp5" class="ml-4 otpLine" name="digit5" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                    <input type="text" id="otp6" class="ml-4 otpLine" name="digit6" maxlength="1" pattern="\d" title="Please enter a digit" required>
+                </div>
+                <div class="resnd mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
+                
+                <hr class="dividngLine">
+                <a href="/user/resend/otp" class="resndTxt" id="resentTxt">resend OTP</a>
+                <div class="coloumn mt-2">                   
+                    <button class="btn  btn-success btn-lg btn-block mt-4" type="button" id="signin_button"
                         onclick="verifyUser()">Login</button>
-                    <hr class="dividngLine">
+                    
                 </div>
             </div>
         </div>
         <%- include('../../partials/loginsFooter') %>
 </section>
+<script>
+    let timerOn = true;
+
+function timer(remaining) {
+  var m = Math.floor(remaining / 60);
+  var s = remaining % 60;
+  
+  m = m < 10 ? '0' + m : m;
+  s = s < 10 ? '0' + s : s;
+  document.getElementById('timer').innerHTML = m + ':' + s;
+  remaining -= 1;
+  
+  if(remaining >= 0 && timerOn) {
+    setTimeout(function() {
+        timer(remaining);
+    }, 1000);
+    return;
+  }
+ document.getElementById('resndTimer').textContent=""
+ document.getElementById('resentTxt').style.display="inline";
+ var otpFields = document.querySelectorAll('.otpLine');
+            otpFields.forEach( (field) =>{
+                field.disabled = true;
+
+})
+}
+
+timer(60);
+</script>
 <script src="/javascripts/users/signup.js"></script>

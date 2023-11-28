@@ -4,10 +4,12 @@ p {
     color: #272727;
     font-size: 0.9rem;
 }
-.headp{
+
+.headp {
     padding: 0 !important;
     margin: 0;
 }
+
 .orderpage {
     background-color: #f5f3f1;
     display: flex;
@@ -15,11 +17,13 @@ p {
     justify-content: center;
     align-items: center;
 }
+
 .horizontal-line {
-    border-left: 2px solid #000; 
-            height: 1rem;
-            margin: 0 20px; 
+    border-left: 2px solid #000;
+    height: 1rem;
+    margin: 0 20px;
 }
+
 .pageHead {
     width: 80rem;
     padding: 2rem 3rem;
@@ -66,7 +70,7 @@ p {
 
 .prodctSctn {
     background-color: white;
-    padding: 1.5rem 2rem ;
+    padding: 1.5rem 2rem;
     border: 1px solid black;
     border-radius: 1rem;
     max-width: 100%;

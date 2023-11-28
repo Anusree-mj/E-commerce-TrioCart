@@ -5,54 +5,74 @@
         <div class="addForm">
             <h2 class="head">Add a Product</h2>
             <!-- name -->
-            <label class="label" for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Product Name">
+            <label class="label" for="name">Name<span class="required">*</span></label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Product Name"
+                onclick="clearValidity('name');clearSpan('nameSpan')" onblur="isValidInput('name')">
+            <span id="nameSpan" class="span"></span>
+
             <!-- description -->
-            <label class="label" for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3" placeholder="Product description"></textarea>
-            <!-- detailed description -->
-            <label class="label" for="detailed_description">Detailed-Description</label>
-            <textarea class="form-control" id="detailed_description" rows="3"
-                placeholder="Product detailed description"></textarea>
+            <label class="label" for="description">Description<span class="required">*</span></label>
+            <textarea class="form-control" id="detailed_description" rows="3" placeholder="Product detailed description"
+                onclick="clearValidity('detailed_description');clearSpan('detailed_descriptionSpan')" onblur="isValidInput('detailed_description')"></textarea>
+            <span id="detailed_descriptionSpan" class="span"></span>
+
             <!-- category -->
-            <label class="label" for="category">Category</label>
-            <input type="text" class="form-control" name="category" id="category" placeholder="Product Category">
+            <label class="label" for="category">Category<span class="required">*</span></label>
+            <input onclick="clearValidity('category');clearSpan('categorySpan')" onblur="isValidInput('category')" type="text" class="form-control" name="category" id="category"
+                placeholder="Product Category">
+            <span id="categorySpan" class="span"></span>
+
             <!-- subcategory -->
-            <label class="label" for="subCategory">SubCategory</label>
-            <input type="text" class="form-control" name="subCategory" id="subCategory"
-                placeholder="Product subCategory">
+            <label class="label" for="subCategory">SubCategory<span class="required">*</span></label>
+            <input onclick="clearValidity('subCategory');clearSpan('subCategorySpan')" onblur="isValidInput('subCategory')" type="text" class="form-control" name="subCategory"
+                id="subCategory" placeholder="Product subCategory">
+            <span id="subCategorySpan" class="span"></span>
+
             <!-- size -->
-            <label class="label" for="size">Size</label>
+            <label class="label" for="size">Size<span class="required">*</span></label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-s" value="option1">
+                <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox" id="size-s"
+                    value="option1">
                 <label class="form-check-label" for="inlineCheckbox1">S</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-m" value="option2">
+                <input onclick="clearSpan('sizeSpan')"  class="form-check-input" name="size" type="checkbox" id="size-m"
+                    value="option2">
                 <label class="form-check-label" for="inlineCheckbox2">M</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-l" value="option3">
+                <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox" id="size-l"
+                    value="option3">
                 <label class="form-check-label" for="inlineCheckbox3">L</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-xl" value="option4">
+                <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox" id="size-xl"
+                    value="option4">
                 <label class="form-check-label" for="inlineCheckbox3">XL</label>
             </div>
+
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="size" type="checkbox" id="size-xxl" value="option5">
+                <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
+                    id="size-xxl" value="option5">
                 <label class="form-check-label" for="inlineCheckbox3">XXL</label>
             </div>
-            
+            <span id="sizeSpan" class="span"></span>
+
             <!-- price -->
-            <label class="label" for="price">Price</label>
-            <input type="text" class="form-control" name="price" id="price" placeholder="Product price">
+            <label class="label" for="price">Price<span class="required">*</span></label>
+            <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice()" type="text" class="form-control" name="price" id="price" placeholder="Product price">
+            <span id="priceSpan" class="span"></span>
+
             <!-- image -->
-            <label class="label" for="image">Image</label>
-            <input type="file" class="form-control-file" name="image" id="image" accept="image/*">
+            <!-- <label class="label" for="image">Image<span
+                class="required">*</span></label>
+            <input type="file" class="form-control-file" name="image" id="image" accept="image/*"> -->
             <!-- detailed images -->
-            <label class="label" for="image">Detailed Image</label>
-            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple>
+            <!-- <label class="label" for="image">Detailed Image</label>
+            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple> -->
 
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"

@@ -11,8 +11,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone number</th>
-                            <th scope="col">Address</th>
+                            <th scope="col">Phone number</th>                           
                             <th scope="col">Is Blocked</th>
                             <th scope="col">Edit</th>
                         </tr>
@@ -32,15 +31,19 @@
                                 <td>
                                     <%= user.phone%>
                                 </td>
-                                <td>
-                                    <%= user.address%>
-                                </td>
+                                
                                 <td>
                                     <%= user.isBlocked %>
+                                    <% if (user.isBlocked) { %>
+                                        <a
+                                            onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img
+                                                src="/images/navbar/undo.png" 
+                                                alt="edit" style="width: 1rem;"></a>
+                                                <% }%>
                                 </td>
                                 <td>
-                                    <a onclick="editUserStatus(' <%= user.email%>', '<%= user.isBlocked %>')"><img src="/images/navbar/edit.png"
-                                            alt="edit"></a>
+                                    <a onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/home/block.png"
+                                            alt="edit" style="width: 1.5rem;"></a>
                                 </td>
                             </tr>
                             <% })%>
