@@ -34,10 +34,12 @@
                                             </td>
                                             <td>
                                                 <%= subcategory.isDeleted %>
+                                                <% if (subcategory.isDeleted) { %>
                                                     <a
                                                         onclick="undoSubcategoryDelete('<%= subcategory.isDeleted%>',' <%= subcategory.name %>')"><img
                                                             src="/images/navbar/undo.png" 
                                                             alt="edit" style="width: 1rem;"></a>
+                                                            <% }%>
                                             </td>
                                             <td> <a onclick="deleteCategory('<%= subcategory.name %>')"><img
                                                         style="width: 1.2rem;" src="/images/navbar/delete.png"

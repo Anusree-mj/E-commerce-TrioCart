@@ -40,10 +40,11 @@
                                 <p class="darkHeads">Enter your billing address</p>
                                 <div>
                                     <label class="mt-3 label" for="name">Name <span class="required">*</span></label>
-                                    <input onclick="clearValidity('name')" type="text" id="name" class="form-control"
-                                        name="'name" aria-describedby="addressHelpBlock">
+                                    <input onclick="clearSpan('nameSpan');clearValidity('name')" onblur="ifValid('name')"
+                                        type="text" id="name" class="form-control" name="'name"
+                                        aria-describedby="addressHelpBlock">
                                     <span id="nameSpan" class="span"></span><br>
-
+                                    <!--  -->
                                     <label class="label" for="phone">Phone number <span
                                             class="required">*</span></label>
                                     <input type="text" class="form-control" name="phone" id="phone"
@@ -51,28 +52,36 @@
                                     <span id="phoneSpan" class="span"></span><br>
                                     <!--  -->
                                     <label class="label" for="address">Address <span class="required">*</span></label>
-                                    <input onclick="clearValidity('address')" type="text" id="address"
+                                    <input  onclick="clearSpan('addressSpan');clearValidity('address')" onblur="checkAddress()" type="text" id="address"
                                         class="form-control" name="address" aria-describedby="addressHelpBlock">
-                                    <small id="addressSpan" class="form-text text-muted">
-                                        Street address
-                                    </small>
+                                        <div class="d-flex flex-column">
+                                            <small class="form-text text-muted">
+                                                Street address
+                                            </small>
+                                            <span id="addressSpan" class="span"></span>
+                                        </div>
+                                   
 
                                     <!--  -->
                                     <label class="mt-3 label" for="town">Town/City <span
                                             class="required">*</span></label>
-                                    <input onclick="clearValidity('town')" type="text" id="town" class="form-control"
+                                    <input onclick="clearSpan('townSpan');clearValidity('town')" onblur="ifValid('town')" type="text" id="town" class="form-control"
                                         name="town" aria-describedby="passwordHelpBlock">
-                                    <small id="townSpan" class="form-text text-muted">
-                                        Enter a town/city
-                                    </small>
+                                       <div class="d-flex flex-column">                                        
+                                        <small  class="form-text text-muted">
+                                            Enter a town/city
+                                        </small>
+                                        <span id="townSpan" class="span"></span>
+                                       </div>
+                                      
 
                                     <!--  -->
                                     <label class="mt-3 label" for="pincode">Pincode <span
                                             class="required">*</span></label>
-                                    <input onclick="clearValidity('pincode')" type="number" id="pincode"
-                                        class="form-control" name="pincode" aria-describedby="pincodeHelpBlock"
-                                        onclick="togglePincodeSpan('pincodeSpan')" onblur="checkPincode()">
-                                    <div class="d-flex ">
+                                    <input onclick="clearSpan('pincodeSpan');clearValidity('pincode')" onblur="checkPincode()" type="text" id="pincode"
+                                        class="form-control" name="pincode" aria-describedby="passwordHelpBlock">
+
+                                    <div class="d-flex flex-column">
                                         <small id="pincodeMute" class="form-text text-muted">
                                             Please enter a pincode (400070)
                                         </small>
@@ -143,6 +152,7 @@
                             </div>
                             <% }) %>
                     </div>
+
                     <div class="delivery">
                         <div class="d-flex justify-content-between">
                             <p class="darkHeads"><img src="/images/home/home.png" alt="Home"> Standard Delivery</p>
@@ -174,13 +184,14 @@
                     </div>
                 </div>
             </div>
+
             <div class="payment">
                 <p class="boldTxt">Payment</p>
                 <p class="darkHeads">How would you like to pay?</p>
                 <hr>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="selectedPayment" id="cod"
-                        value="option1" onclick="paymentSelected('COD')">
+                    <input class="form-check-input" type="radio" name="selectedPayment" id="cod" value="option1"
+                        onclick="paymentSelected('COD')">
                     <label class="form-check-label" for="exampleRadios1">
                         Cash On Delivery
                     </label>
@@ -202,6 +213,7 @@
                 </div>
             </div>
         </div>
+
         <!-- purchase -->
         <div class="purchase">
             <div class="purchase-box">
@@ -232,13 +244,15 @@
                 </p>
                 <div class="d-flex justify-content-center mt-4">
                     <button type="button" class="btn checkoutBtn" id="checkoutBtn" disabled
-                        style="width: 25rem;max-width: 100%;" onclick="purchase('<%= user._id %>','<%= totalprice %>')">Almost Done</button>
+                        style="width: 25rem;max-width: 100%;"
+                        onclick="purchase('<%= user._id %>','<%= totalprice %>')">Almost Done</button>
                 </div>
                 <p class="mt-3">Need help? Please contact <a href="">Customer Service</a>
                     .
                 </p>
             </div>
         </div>
+
     </div>
     <br><br><br>
 </section>

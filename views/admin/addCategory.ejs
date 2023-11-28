@@ -16,12 +16,12 @@
 
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" name="subCategory" id="subCategory"
-                placeholder="Product subCategory">
-
+                placeholder="Product subCategory" onclick="clearSpan('subCategorySpan')">
+                <span id="subCategorySpan" class="span"></span>
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                     onclick="addCategory()">Add</button>
             </div>
         </div>
     </div>
-    <script src="/javascripts/admin/adminUpdates.js"></script>
+    <script src="/javascripts/admin/adminCategory.js"></script>

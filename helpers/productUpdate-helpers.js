@@ -3,20 +3,19 @@ const path = require('path');
 const gm = require('gm').subClass({ imageMagick: true });
 
 module.exports = {
-    addProduct: async (body, image, detailedImages) => {
+    addProduct: async (body) => {
         try {
-            const imagePathWithoutPublic = path.relative('public', image.path);
-            const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
+            // const imagePathWithoutPublic = path.relative('public', image.path);
+            // const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
             const data = {
                 name: body.name,
-                description: body.description,
-                detailed_description: body.detailed_description,
+                description: body.detailed_description,
                 category: body.category,
                 subCategory: body.subCategory,
                 price: body.price,
                 size: body.size,
-                image: imagePathWithoutPublic,
-                detailedImages: detailedImagesPathsWithoutPublic
+                // image: imagePathWithoutPublic,
+                // detailedImages: detailedImagesPathsWithoutPublic
             };
             await collection.productsCollection.insertMany([data]);
             return { status: 'ok' }
@@ -25,7 +24,7 @@ module.exports = {
             return { status: 'nok' }
         }
     },
-    
+
     addSubCategory: async (body) => {
         try {
             await collection.categoryCollection.updateOne(
@@ -48,7 +47,7 @@ module.exports = {
         try {
             await collection.productsCollection.updateOne(
                 { _id: productId },
-                { $set: { isDeleted: true }}
+                { $set: { isDeleted: true } }
             );
             return { status: 'deleted' }
         }
@@ -58,11 +57,11 @@ module.exports = {
         }
     },
 
-    undoProductDelete : async (productId)=>{
+    undoProductDelete: async (productId) => {
         try {
             await collection.productsCollection.updateOne(
                 { _id: productId },
-                { $set: { isDeleted: false }}
+                { $set: { isDeleted: false } }
             );
             return { status: 'undo delete' }
         }
@@ -143,9 +142,9 @@ module.exports = {
 
     editProduct: async (body, productId) => {
         try {
-            const product = await collection.productsCollection.findOne({_id: productId})
-            console.log('product found:',product)
-                const updateData = await collection.productsCollection.updateOne(
+            const product = await collection.productsCollection.findOne({ _id: productId })
+            console.log('product found:', product)
+            const updateData = await collection.productsCollection.updateOne(
                 { _id: productId },
                 {
                     $set: {
@@ -159,7 +158,7 @@ module.exports = {
                         isDeleted: body.isDeleted,
                     }
                 });
-                console.log('updated data is :::',updateData)
+            console.log('updated data is :::', updateData)
             if (updateData.modifiedCount === 1) {
                 console.log('modified count', updateData.modifiedCount);
                 console.log('Data update success')

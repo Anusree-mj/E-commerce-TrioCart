@@ -85,11 +85,9 @@ router.get('/addProduct', function (req, res, next) {
 })
 
 //add products
-router.post('/product', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'detailedImages', maxCount: 5 }
-]), function (req, res, next) {
-  const mainImage = req.files['image'] ? req.files['image'][0] : null;
-  const detailedImages = req.files['detailedImages'] || [];
-  productUpdateHelpers.addProduct(req.body, mainImage, detailedImages).then((result) => {
+router.post('/product', function (req, res, next) {
+  
+  productUpdateHelpers.addProduct(req.body).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -114,7 +112,7 @@ router.delete('/products/image', ((req, res, next) => {
 }))
 
 //delete products
-router.patch('/products/dlt/:product_Id', ((req, res, next) => {
+router.delete('/products/dlt/:product_Id', ((req, res, next) => {
   const productId = req.params.product_Id
   productUpdateHelpers.deleteAProduct(productId).then((result) => {
     if (result.status === 'deleted') {
@@ -126,7 +124,7 @@ router.patch('/products/dlt/:product_Id', ((req, res, next) => {
 }))
 
 //undo product delete
-router.patch('/products/dlt/:product_id/undo', ((req, res, next) => {
+router.put('/products/dlt/:product_id', ((req, res, next) => {
   console.log('entereddd')
   const productId = req.params.product_id
   console.log(productId, "iddd")
@@ -246,11 +244,25 @@ router.get('/users', function (req, res, next) {
   })
 });
 
-//block or unblock users
-router.patch('/users', function (req, res, next) {
-  const email = req.body.userEmail
-  const userStatus = req.body.userEdit
-  adminHelpers.blockOrUnblockUser(email, userStatus).then((result) => {
+//block users
+router.delete('/users', function (req, res, next) {
+  const userId = req.body.userId
+ 
+  adminHelpers.blockUser(userId).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+})
+
+//unblock users
+router.put('/users', function (req, res, next) {
+  const userId = req.body.userId
+  console.log('userId',userId)
+
+  adminHelpers.unblockUser(userId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {

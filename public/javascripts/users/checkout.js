@@ -5,17 +5,51 @@ function clearValidity(field) {
     document.getElementById(field).style.boxShadow = '';
 }
 
-function togglePincodeSpan(spanId) {
-    document.getElementById(spanId).textContent = "";
-    document.getElementById('pincodeMute').textContent = " Please enter a pincode (400070)";
-}
+
 //clearing span
 function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
 }
 
-//checks phoneNumber
+
 let isError = false;
+// check for name and town
+function ifValid(field) {
+    let data = document.getElementById(field).value;
+    if (/^\s+$/.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. ${field} cannot consist of only spaces.`;
+        return isError = true;
+    }
+    if (/\d/.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. ${field} cannot contain numbers.`;
+        return isError = true;
+    }
+    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    if (!nameRegex.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. Please enter a valid ${field} containing only letters and optional spaces.`;
+        return isError = true;
+    }
+}
+
+// check address
+function checkAddress() {
+    let data = document.getElementById('address').value;
+
+    // Check if the address is only spaces
+    if (/^\s*$/.test(data)) {
+        document.getElementById('addressSpan').textContent = `*Invalid address. Address cannot consist of only spaces.`;
+        return isError = true;
+    }
+    const addressRegex = /^[0-9A-Za-z.,]+(?: [0-9A-Za-z.,]+)*$/;
+    if (!addressRegex.test(data)) {
+        document.getElementById('addressSpan').textContent = `*Invalid address.Unwanted spaces`;
+        return isError = true;
+    }    
+    return isError = false;
+}
+
+
+// check phone number
 function checkPhone() {
     let phone = document.getElementById("phone").value;
 
@@ -33,7 +67,6 @@ function checkPincode() {
     if (!pincode || regex.test(pincode) == false) {
         isError = true;
         document.getElementById('pincodeSpan').textContent = "*Invalid pincode"
-        document.getElementById('pincodeMute').textContent = "";
     }
 }
 
@@ -84,7 +117,7 @@ function saveBillingAddress(userId) {
 // toggle checkout button
 let paymentMethod;
 function paymentSelected(method) {
-     paymentMethod=method;
+    paymentMethod = method;
     let checkoutButtn = document.getElementById('checkoutBtn')
     checkoutButtn.classList.remove('checkoutBtn');
     checkoutButtn.classList.add('btn-dark');
@@ -92,11 +125,11 @@ function paymentSelected(method) {
     checkoutButtn.textContent = 'Continue Purchasing'
 }
 
-function purchase(userId,total) {
+function purchase(userId, total) {
 
     console.log('paymentMethod', paymentMethod)
 
-    let reqBody = { userId, paymentMethod,total }
+    let reqBody = { userId, paymentMethod, total }
 
     fetch("http://localhost:3000/checkout", {
         method: "POST",

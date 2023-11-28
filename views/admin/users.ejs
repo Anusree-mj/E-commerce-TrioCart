@@ -34,10 +34,16 @@
                                 
                                 <td>
                                     <%= user.isBlocked %>
+                                    <% if (user.isBlocked) { %>
+                                        <a
+                                            onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img
+                                                src="/images/navbar/undo.png" 
+                                                alt="edit" style="width: 1rem;"></a>
+                                                <% }%>
                                 </td>
                                 <td>
-                                    <a onclick="editUserStatus(' <%= user.email%>', '<%= user.isBlocked %>')"><img src="/images/navbar/edit.png"
-                                            alt="edit"></a>
+                                    <a onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/home/block.png"
+                                            alt="edit" style="width: 1.5rem;"></a>
                                 </td>
                             </tr>
                             <% })%>

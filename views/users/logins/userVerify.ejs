@@ -52,7 +52,11 @@ function timer(remaining) {
   }
  document.getElementById('resndTimer').textContent=""
  document.getElementById('resentTxt').style.display="inline";
+ var otpFields = document.querySelectorAll('.otpLine');
+            otpFields.forEach( (field) =>{
+                field.disabled = true;
 
+})
 }
 
 timer(60);
