@@ -1,12 +1,10 @@
 const collection = require('../routes/mongodb')
 const path = require('path');
-const gm = require('gm').subClass({ imageMagick: true });
+
 
 module.exports = {
     addProduct: async (body) => {
-        try {
-            // const imagePathWithoutPublic = path.relative('public', image.path);
-            // const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
+        try {           
             const data = {
                 name: body.name,
                 description: body.detailed_description,
@@ -14,7 +12,7 @@ module.exports = {
                 subCategory: body.subCategory,
                 price: body.price,
                 size: body.size,
-                // image: imagePathWithoutPublic,
+                image: body.imagePath,
                 // detailedImages: detailedImagesPathsWithoutPublic
             };
             await collection.productsCollection.insertMany([data]);
