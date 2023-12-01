@@ -1,3 +1,4 @@
+// upload images
 let croppedImageUrl; // Variable to store the cropped image URL
 let isNewFileChosen = false; // Flag to track if a new file is chosen
 let cropper; // Variable to store the Cropper instance
@@ -111,6 +112,7 @@ function resetChosenImage() {
 }
 
 let imagePath = '';
+let detailedImagePath = [];
 let imageUploaded = false;
 
 function uploadImage() {
@@ -134,19 +136,25 @@ function uploadImage() {
                     .then((data) => {
                         console.log('data:', data)
                         if (data.status === "ok") {
-                            imagePath = data.imagePathWithoutPublic;
-                            console.log(imagePath)
+                            if (!imagePath) {
+                                imagePath = data.imagePathWithoutPublic;
+                            } else {
+                                detailedImagePath.push(data.imagePathWithoutPublic);
+                            }
 
                             document.getElementById('croppedImageContainer').style.display = 'none';
                             // added image preview
                             var previewContainer = document.getElementById('addedImagesPreview');
                             var previewImage = document.createElement('img');
-                            previewImage.src = '/' + imagePath;
+                            previewImage.src = '/' + data.imagePathWithoutPublic;
                             previewImage.style.width = '2rem';
+                            previewImage.style.marginRight = '1.5rem';
+
                             previewContainer.appendChild(previewImage);
 
                             imageUploaded = true;
-                            return imagePath;
+                            console.log('image:', imagePath, "detailedImages:", detailedImagePath)
+                            return imagePath, detailedImagePath;
                         } else {
                             alert("Uploading Image Failed");
                         }
@@ -159,7 +167,7 @@ function uploadImage() {
     }
 }
 
-
+// validation
 
 function clearValidity(field) {
     document.getElementById(field).style.border = '1px solid black';
@@ -172,25 +180,26 @@ function clearSpan(spanId) {
 let inputValidity = true;
 function isValidInput(field) {
     let data = document.getElementById(field).value;
-    const pattern = /^[A-Za-z0-9]+(?: [A-Za-z0-9]+)*$/;
+    const pattern = /^(?=.*[A-Za-z0-9])[A-Za-z0-9\s.,!@#$%^&*()_+={}\[\]:;<>,.?~\\/-]+$/;
     if (!pattern.test(data)) {
         document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
         return inputValidity = false;
     }
 }
+
 let priceValidity = true;
-function isValidPrice() {
-    let data = document.getElementById('price').value;
+function isValidPrice(field) {
+    let data = document.getElementById(field).value;
     const pattern = /^\d+$/;
     if (!pattern.test(data)) {
-        document.getElementById('priceSpan').textContent = `*Invalid price`;
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
         return priceValidity = false;
     }
 }
 
 //add product
 function addProduct() {
-    const fields = ["name", "detailed_description", "category", "subCategory", "price"];
+    const fields = ["name", "detailed_description", "category", "subCategory", "price","stock"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -214,6 +223,7 @@ function addProduct() {
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
     let price = document.getElementById('price').value;
+    let stock = document.getElementById('stock').value;
 
 
     let sizeMap = {
@@ -237,7 +247,11 @@ function addProduct() {
         document.getElementById('imageSpan').textContent = '*Please upload at least one image.';
     }
     if (!isError && isValidPrice && isValidInput && imageUploaded) {
-        let reqBody = { name, detailed_description, category, subCategory, price, size, imagePath }
+        let reqBody =
+        {
+            name, detailed_description, category, subCategory, price,
+            size,stock, imagePath, detailedImagePath
+        }
 
         console.log(reqBody);
 

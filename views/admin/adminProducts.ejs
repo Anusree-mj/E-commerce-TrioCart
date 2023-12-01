@@ -18,6 +18,7 @@
                             <th scope="col">SubCategory</th>
                             <th scope="col">Size</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Stock</th>
                             <th scope="col">IsDeleted</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
@@ -51,6 +52,11 @@
                                     <%= product.price%>
                                 </td>
                                 <td>
+                                    <%= product.stock%>
+                                    <a href="/admin/products/<%= product._id %>/stock"><img src="/images/navbar/edit.png"
+                                        alt="edit" style="width: 1rem;"></a>
+                                </td>
+                                <td>
                                     <%= product.isDeleted%>
                                         <% if (product.isDeleted === true) { %>
                                             <a
@@ -59,8 +65,8 @@
                                                     id="undoProductDlt"></a>
                                             <% }; %>
                                 </td>
-                                <td><a href="/admin/products/<%= product._id %>/edit"><img src="/images/navbar/edit.png"
-                                            alt="edit" style="width: 1.5rem;"></a> </td>
+                                <td><a href="/admin/products/<%= product._id %>"><img src="/images/navbar/edit.png"
+                                            alt="edit" style="width: 1rem;"></a> </td>
                                 <td> <a onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
                                             style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete"></a>
                                 </td>
@@ -71,4 +77,5 @@
             </div>
         </div>
     </section>
+    <%- include('../partials/loginsFooter') %>
     <script src="/javascripts/admin/adminDeletes.js"></script>

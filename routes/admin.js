@@ -139,7 +139,7 @@ router.put('/products/dlt/:product_id', ((req, res, next) => {
 }))
 
 //get edit product page
-router.get('/products/:product_Id/edit', ((req, res, next) => {
+router.get('/products/:product_Id', ((req, res, next) => {
   const productId = req.params.product_Id
   console.log('Product ID:', productId);
   productUpdateHelpers.getProductForEditing(productId).then((productData) => {
@@ -156,6 +156,31 @@ router.put('/products/:product_Id', function (req, res) {
   const productId = req.params.product_Id
   console.log("ssssssssss", req.body, productId)
   productUpdateHelpers.editProduct(req.body, productId).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+})
+
+//get edit stockproduct  page
+router.get('/products/:product_Id/stock', ((req, res, next) => {
+  const productId = req.params.product_Id
+  console.log('Product ID:', productId);
+  productUpdateHelpers.getProductForEditing(productId).then((productData) => {
+    if (productData) {
+      res.render('admin/editStockProduct', { productData })
+    } else {
+      res.redirect('/products');
+    }
+  })
+}))
+
+//edit products stock
+router.put('/products/:product_Id/stock', function (req, res) {
+  const productId = req.params.product_Id
+    productUpdateHelpers.editStock(req.body, productId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {

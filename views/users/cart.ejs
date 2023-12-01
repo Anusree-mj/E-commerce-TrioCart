@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>        <%} else{ %>
+    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+        <%} else{ %>
             <%- include('../partials/header') %>
                 <% } %>
                     <%- include('../partials/subHeader',allCategories) %>
@@ -15,13 +16,15 @@
                                         <% cartProducts.forEach(cartProduct=> { %>
                                             <div class="mt-4">
                                                 <div class="d-flex justify-content-around">
-                                                    <a href="/products/<%= cartProduct.product._id %>"><img class="prodImg" src="/<%= cartProduct.product.image %>" alt="product"></a>
+                                                    <a href="/products/<%= cartProduct.product._id %>"><img
+                                                            class="prodImg" src="/<%= cartProduct.product.image %>"
+                                                            alt="product"></a>
                                                     <div class="prodDetails">
                                                         <div class="head">
                                                             <%= cartProduct.product.name %>
                                                                 <img class="remove" src="/images/home/remove.png"
                                                                     alt="remove"
-                                                                    onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>','<%= cartProduct.Size %>')">
+                                                                    onclick="removeProduct('<%= cartProduct.product._id %>','<%= user._id %>','<%= cartProduct.Size %>','<%= cartProduct.Count %>')">
                                                         </div>
                                                         ₹ <%= cartProduct.product.price %>/-
                                                             <div class="subDetails">
@@ -32,16 +35,25 @@
                                                                 <p>Total: ₹ <%= cartProduct.product.price %>/-
                                                                 </p>
                                                             </div>
-                                                            <div class="mt-4">
+                                                            <div class="mt-4 d-flex">
                                                                 <button type="button"
                                                                     class="btn btn-outline-dark bttn"><img
                                                                         class="wishlisht"
                                                                         src="/images/navbar/wishlist.png"
                                                                         alt=""></button>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-dark bttn"><input
-                                                                        class="qnty" type="number" min="1"
-                                                                        value="<%= cartProduct.Count %>"></button>
+                                                                <div class="counter-btn ml-4">
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-dark bttn"
+                                                                        onclick="decrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">-</button>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-dark bttn count"
+                                                                        disabled>
+                                                                        <%= cartProduct.Count %>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-dark bttn"
+                                                                        onclick="incrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">+</button>
+                                                                </div>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -127,7 +139,7 @@
                                         </div>
                                     </div>
                                     <% } %>
-                                    <br><br><br><br><br>
+                                        <br><br><br><br><br>
                                         <!--  -->
                                         <div class="viewProducts">
                                             <div class="cardHead">
@@ -158,6 +170,6 @@
                                             </div>
                                         </div>
                         </section>
-                        
+
                         <%- include('../partials/footer') %>
                             <script src="/javascripts/users/cart.js"></script>

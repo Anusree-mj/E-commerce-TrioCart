@@ -8,6 +8,7 @@
                 <table class="table table-striped" id="productsTable">
                     <thead>
                         <tr>
+                            <th scope="col">No</th>
                             <th scope="col">User</th>
                             <th scope="col" style="max-width: 100%; width: 12rem;">Products</th>
                             <th scope="col">Total</th>
@@ -18,16 +19,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% var slNo = 1; %>
                         <% orders.forEach(order=> { %>
                             <tr>
-
+                                <th scope="row" rowspan="<%= order.length %>">
+                                    <%= slNo %>
+                                </th>
                                 <td>
                                     <%= order.userId.name%>
                                 </td>
                                 <td>
-                                    <% const productNames=order.products.map(product=> product.product.name).join(', ');
-                                        %>
-                                        <%= productNames %>
+                                    <% const productNames = order.products.map(product => product.product ? product.product.name : '').join(', '); %>
+                                    <%= productNames %>
+                                
                                 </td>
 
                                 <td>
@@ -74,10 +78,12 @@
                                     <a class="getMore" href="/admin/order/<%= order._id %>">Get More Details<a>
                                 </td>
                             </tr>
+                            <% slNo++; %>
                             <% })%>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
+    <%- include('../partials/loginsFooter') %>
     <script src="/javascripts/admin/adminOrders.js"></script>

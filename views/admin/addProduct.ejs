@@ -19,10 +19,14 @@
             <span id="detailed_descriptionSpan" class="span"></span>
 
             <!-- category -->
-            <label class="label" for="category">Category<span class="required">*</span></label>
-            <input onclick="clearValidity('category');clearSpan('categorySpan')" onblur="isValidInput('category')"
-                type="text" class="form-control" name="category" id="category" placeholder="Product Category">
-            <span id="categorySpan" class="span"></span>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Category<span class="required">*</span></label>
+                <select class="form-control" id="category">
+                    <option>Ladies</option>
+                    <option>Mens</option>
+                    <option>Kids</option>
+                </select>
+            </div>
 
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory<span class="required">*</span></label>
@@ -66,15 +70,19 @@
 
             <!-- price -->
             <label class="label" for="price">Price<span class="required">*</span></label>
-            <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice()" type="text"
+            <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice('price')" type="text"
                 class="form-control" name="price" id="price" placeholder="Product price">
             <span id="priceSpan" class="span"></span>
+            <!-- stock -->
+            <label class="label" for="stock">Stock<span class="required">*</span></label>
+            <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')" type="text"
+                class="form-control" name="stock" id="stock" placeholder="Product stock">
+            <span id="stockSpan" class="span"></span>
 
             <!-- preview added img -->
-            <div id="addedImagesPreview" class="mt-3">            
-            </div>
+            <div id="addedImagesPreview" class="mt-3 ml-3"></div>
             <!-- image -->
-            <label class="label" for="price">Image<span class="required">*</span></label>
+            <label class="label" for="image">Image<span class="required">*</span></label>
             <input type="file" id="inputImage" accept="image/*" onchange="handleImageChange()"
                 onclick="resetChosenImage();; clearSpan('imageSpan')">
 
@@ -103,6 +111,7 @@
             </div>
         </div>
     </div>
+    <%- include('../partials/loginsFooter') %>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

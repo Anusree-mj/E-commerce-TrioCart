@@ -63,7 +63,11 @@ a:hover {
 .label {
     font-size: 0.9rem;
 }
+.addAddress{
+    font-size: 0.9rem;
+    color: #000;
 
+}
 .purchase {
     background-color: white;
     width: 25rem;

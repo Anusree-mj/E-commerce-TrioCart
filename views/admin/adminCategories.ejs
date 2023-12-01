@@ -8,7 +8,7 @@
                         style="width: 7.5rem;">Add Category</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped" id="productsTable">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
@@ -19,38 +19,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% var slNo=1; %>
-                                <% categories.forEach((category)=>{ %>
-                                    <% category.subCategory.forEach((subcategory)=> { %>
-                                        <tr>
-                                            <th scope="row">
+                            <% var slNo = 1; %>
+                            <% categories.forEach((category) => { %>
+                                <% category.subCategory.forEach((subcategory, index) => { %>
+                                    <tr>
+                                        <% if (index === 0) { %>
+                                            <!-- Display Category only in the first row of each category -->
+                                            <th scope="row" rowspan="<%= category.subCategory.length %>">
                                                 <%= slNo %>
                                             </th>
-                                            <td>
+                                            <td rowspan="<%= category.subCategory.length %>">
                                                 <%= category.category %>
                                             </td>
-                                            <td>
-                                                <%= subcategory.name %>
-                                            </td>
-                                            <td>
-                                                <%= subcategory.isDeleted %>
-                                                <% if (subcategory.isDeleted) { %>
-                                                    <a
-                                                        onclick="undoSubcategoryDelete('<%= subcategory.isDeleted%>',' <%= subcategory.name %>')"><img
-                                                            src="/images/navbar/undo.png" 
-                                                            alt="edit" style="width: 1rem;"></a>
-                                                            <% }%>
-                                            </td>
-                                            <td> <a onclick="deleteCategory('<%= subcategory.name %>')"><img
-                                                        style="width: 1.2rem;" src="/images/navbar/delete.png"
-                                                        alt="delete"></a></td>
-                                        </tr>
-                                        <% slNo++; %>
-                                            <% }); %>
-                                                <% }); %>
+                                        <% } %>
+                                        <td>
+                                            <%= subcategory.name %>
+                                        </td>
+                                        <td>
+                                            <%= subcategory.isDeleted %>
+                                            <% if (subcategory.isDeleted) { %>
+                                                <a onclick="undoSubcategoryDelete('<%= subcategory.isDeleted%>',' <%= subcategory.name %>')">
+                                                    <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;">
+                                                </a>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <a onclick="deleteCategory('<%= subcategory.name %>')">
+                                                <img style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete">
+                                            </a>
+                                        </td>
+                                    </tr>                                   
+                                <% }); %>
+                                <% slNo++; %>
+                            <% }); %>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
+        <%- include('../partials/loginsFooter') %>
         <script src="/javascripts/admin/adminDeletes.js"></script>

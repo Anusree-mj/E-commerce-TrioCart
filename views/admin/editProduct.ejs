@@ -1,16 +1,16 @@
 <link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
 <%- include('../partials/adminHeaders') %>
 
-    <div class="row align-items-center justify-content-center">
+    <div class="row align-items-center justify-content-center ">
         <div class="addForm">
             <h2 class="head">Edit a Product</h2>
             <!-- name -->
-            <label class="label" for="name">Name</label>
+            <label class="label" for="name">Name<span class="required">*</span></label>
             <input type="text" onclick="clearValidity('name');clearSpan('nameSpan')" onblur="isValidInput('name')"
                 class="form-control" name="name" id="name" value="<%= productData.name%>">
             <span id="nameSpan" class="span"></span>
             <!-- description -->
-            <label class="label" for="description">Description</label>
+            <label class="label" for="description">Description<span class="required">*</span></label>
             <textarea class="form-control" id="detailed_description"
                 onclick="clearValidity('detailed_description');clearSpan('detailed_descriptionSpan')"
                 onblur="isValidInput('detailed_description')" rows="3"><%= productData.description %>
@@ -18,14 +18,14 @@
             <span id="detailed_descriptionSpan" class="span"></span>
 
             <!-- category -->
-            <label class="label" for="category">Category</label>
+            <label class="label" for="category">Category<span class="required">*</span></label>
             <input type="text" onclick="clearValidity('category');clearSpan('categorySpan')"
                 onblur="isValidInput('category')" class="form-control" name="category" id="category"
                 value="<%= productData.category%>">
             <span id="categorySpan" class="span"></span>
 
             <!-- subcategory -->
-            <label class="label" for="subCategory">SubCategory</label>
+            <label class="label" for="subCategory">SubCategory<span class="required">*</span></label>
             <input type="text" onclick="clearValidity('subCategory');clearSpan('subCategorySpan')"
                 onblur="isValidInput('subCategory')" class="form-control" name="subCategory" id="subCategory"
                 value="<%= productData.subCategory%>">
@@ -33,7 +33,7 @@
 
             <!-- sizes -->
             <% const storedSizes=productData.size[0].split(',') %>
-                <label class="label" for="size">Size</label>
+                <label class="label" for="size">Size<span class="required">*</span></label>
                 <div class="form-check form-check-inline">
                     <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox"
                         id="size-s" value="option1" <%=storedSizes.includes('S') ? 'checked' : '' %> >
@@ -61,11 +61,16 @@
                 </div>
                 <span id="sizeSpan" class="span"></span>
 
-                <label class="label" for="price">Price</label>
-                <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice()" type="text"
-                    class="form-control" name="price" id="price" value="<%= productData.price%>">
-                    <span id="priceSpan" class="span"></span>
-                    
+                <label class="label" for="price">Price<span class="required">*</span></label>
+                <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice('price')"
+                    type="text" class="form-control" name="price" id="price" value="<%= productData.price%>">
+                <span id="priceSpan" class="span"></span>
+
+                <label class="label" for="stock">Stock<span class="required">*</span></label>
+                <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')"
+                    type="text" class="form-control" name="stock" id="stock" placeholder="Product stock" value="<%= productData.stock%>">
+                <span id="stockSpan" class="span"></span>
+
                 <!-- curent image -->
                 <!-- <label class="label" for="image">Image</label>
                 <div class="image-preview">
@@ -104,4 +109,5 @@
                 </div>
         </div>
     </div>
-    <script src="/javascripts/admin/adminUpdates.js"></script>
+    <%- include('../partials/loginsFooter') %>
+    <script src="/javascripts/admin/editProduct.js"></script>

@@ -43,6 +43,10 @@ const ProductSchema = new mongoose.Schema(
             type: Array,
             requires: true,
         },
+        stock: {
+            type: Number,
+            requires: true,
+        },
         isDeleted: {
             type: Boolean,
             default: false,
@@ -82,6 +86,33 @@ const UserSchema = new mongoose.Schema(
             default: false,
         },
         billingAddress: [
+            {
+                name: {
+                    type: String,
+                    required: true,
+                }, phone: {
+                    type: Number,
+                    required: true,
+                },
+                address: {
+                    type: String,
+                    required: true,
+                },
+                town: {
+                    type: String,
+                    required: true,
+                },
+                pincode: {
+                    type: Number,
+                    required: true,
+                },
+                state: {
+                    type: String,
+                    required: true,
+                }
+            },
+        ],
+        orderAddress: [
             {
                 name: {
                     type: String,

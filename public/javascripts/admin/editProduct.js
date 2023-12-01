@@ -1,4 +1,28 @@
 
+// edit stock
+function editStock(productId){
+    let stock=document.getElementById('stock').value;
+    let reqBody = { stock }
+
+    console.log(reqBody);
+fetch(`http://localhost:3000/admin/products/${productId}/stock`, {
+    method: "PUT",
+    body: JSON.stringify(reqBody),
+    headers: {
+        'Content-Type': 'application/json',
+    },
+}).then((res) => res.json())
+    .then((data) => {
+        if (data.status === "ok") {
+            window.location.replace("/admin/products");
+        } else {
+            alert("Editing stock failed");
+        }
+    })
+    .catch(err => console.log(err));
+}
+
+
 // delete detailed image
 function deleteImage(image, productId) {
     let reqBody = { image, productId }
@@ -75,10 +99,40 @@ function imageUpload() {
         .catch(err => console.log(err));
 }
 
+// validation
+function clearValidity(field) {
+    document.getElementById(field).style.border = '1px solid black';
+    document.getElementById(field).style.boxShadow = '';
+}
+function clearSpan(spanId) {
+    document.getElementById(spanId).textContent = "";
+}
+
+let inputValidity = true;
+function isValidInput(field) {
+    let data = document.getElementById(field).value;
+    const pattern = /^(?=.*[A-Za-z0-9])[A-Za-z0-9\s.,!@#$%^&*()_+={}\[\]:;<>,.?~\\/-]+$/;
+    if (!pattern.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
+        return inputValidity = false;
+    }
+}
+
+let priceValidity = true;
+function isValidPrice(field) {
+    let data = document.getElementById(field).value;
+    const pattern = /^\d+$/;
+    if (!pattern.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
+        return priceValidity = false;
+    }
+}
+
+
 // edit product
 function editProduct(product_id) {
 
-    const fields = ["name", "detailed_description", "category", "subCategory", "price"];
+    const fields = ["name", "detailed_description", "category", "subCategory", "price","stock"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -102,7 +156,7 @@ function editProduct(product_id) {
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
     let price = document.getElementById('price').value;
-
+    let stock=document.getElementById('stock').value;
 
     let sizeMap = {
         'option1': 'S',
@@ -122,7 +176,7 @@ function editProduct(product_id) {
     });
     let size = selectedSizes.join(',')
     if (!isError && isValidPrice && isValidInput) {
-        let reqBody = { name, detailed_description, category, subCategory, price, size }
+        let reqBody = { name, detailed_description, category, subCategory, price, size,stock }
 
         console.log(reqBody);
     fetch(`http://localhost:3000/admin/products/${product_id}`, {
