@@ -16,13 +16,33 @@ module.exports = {
                     name: userData.name,
                     phone: userData.phone,
                     email: userData.email,
-                                       password: userData.password,
+                    password: userData.password,
                     otp: otp
                 }
                 const email = userData.email
                 await collection.tempUsersCollection.insertMany([data])
                 await signupUtil.sendOtpByEmail(userData.email, otp);
                 return { status: 'ok', email }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    updateUser: async (userId, data) => {
+        try {
+            const user = await collection.usersCollection.updateOne(
+                { _id: userId },
+                {
+                    name: data.name,
+                    phone: data.phone,
+                    email: data.email
+                }
+            )
+            if (user.modifiedCount === 1) {
+                console.log('user data updated');
+                return { status: 'ok' }
+            } else {
+                console.log('user data update failed');
             }
         } catch (err) {
             console.log(err)
@@ -202,8 +222,62 @@ module.exports = {
         }
     },
 
+    productAdded: async (productId, size) => {
+        try {
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $inc: { stock: -1 } }
+            )
+            const updateData = await collection.cartCollection.updateOne(
+                {
+                    'products.product': productId,
+                    'products.Size': size,
+                },
+                { $inc: { 'products.$.Count': 1 } }
+            );
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success');
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed');
+                return { status: 'nok' }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    productDecreased: async (productId, size) => {
+        try {
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $inc: { stock: +1 } }
+            )
+            const updateData = await collection.cartCollection.updateOne(
+                {
+                    'products.product': productId,
+                    'products.Size': size,
+                },
+                { $inc: { 'products.$.Count': -1 } }
+            );
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success');
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed');
+                return { status: 'nok' }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
     addToCart: async (user, productId, size) => {
         try {
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $inc: { stock: -1 } }
+            )
             const existingProduct = await collection.cartCollection.findOne({
                 userId: user._id,
                 'products.product': productId,
@@ -273,6 +347,10 @@ module.exports = {
 
     removeCartProducts: async (productId, body) => {
         try {
+            await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $inc: { stock: body.count } }
+            )
             console.log('body in removal', body)
             const updateData = await collection.cartCollection.updateOne(
                 { userId: body.userId },
@@ -328,12 +406,110 @@ module.exports = {
         }
     },
 
+    getBillingAddress: async (addressId) => {
+        try {
+            const address = await collection.usersCollection.findOne(
+                { 'billingAddress._id': addressId },
+                { 'billingAddress.$': 1 }
+            );
+            console.log('adress', address)
+            return { address }
+        }
+        catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    deleteBillingAddress: async (addressId) => {
+        try {
+            const updateData = await collection.usersCollection.updateOne(
+                {},
+                { $pull: { billingAddress: { _id: addressId } } }
+
+            ); if (updateData.modifiedCount === 1) {
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed')
+                return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    updateBillingAddress: async (billingAddress) => {
+        try {
+            console.log('editingid', billingAddress.editedAddressId)
+            const updateData = await collection.usersCollection.updateOne(
+                { 'billingAddress._id': billingAddress.editedAddressId },
+                {
+                    $set: {
+                        'billingAddress.$': {
+                            name: billingAddress.name,
+                            phone: billingAddress.phone,
+                            address: billingAddress.address,
+                            town: billingAddress.town,
+                            pincode: billingAddress.pincode,
+                            state: billingAddress.state,
+                        }
+                    }
+                }
+            );
+            
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed')
+                return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    saveOrderAddress: async (userId, billingAddress) => {
+        try {
+            const updateData = await collection.usersCollection.updateOne(
+                { _id: userId },
+                {
+                    $set: {
+                        orderAddress: {
+                            name: billingAddress.name,
+                            phone: billingAddress.phone,
+                            address: billingAddress.address,
+                            town: billingAddress.town,
+                            pincode: billingAddress.pincode,
+                            state: billingAddress.state,
+                        }
+                    }
+                })
+            if (updateData.modifiedCount === 1) {
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                console.log('Data update failed')
+                return { status: 'nok' }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
     saveOrderDetails: async (orderDetails) => {
         try {
             const getBillingAddress = await collection.usersCollection.findOne({
                 _id: orderDetails.userId
             })
-            const address = getBillingAddress.billingAddress[0];
+            const address = getBillingAddress.orderAddress[0];
             console.log('address in orders', address)
             // 
             const getOrderedProducts = await collection.cartCollection.findOne({

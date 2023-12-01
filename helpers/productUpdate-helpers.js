@@ -1,12 +1,10 @@
 const collection = require('../routes/mongodb')
 const path = require('path');
-const gm = require('gm').subClass({ imageMagick: true });
+
 
 module.exports = {
     addProduct: async (body) => {
-        try {
-            // const imagePathWithoutPublic = path.relative('public', image.path);
-            // const detailedImagesPathsWithoutPublic = detailedImages.map(image => path.relative('public', image.path));
+        try {           
             const data = {
                 name: body.name,
                 description: body.detailed_description,
@@ -14,8 +12,9 @@ module.exports = {
                 subCategory: body.subCategory,
                 price: body.price,
                 size: body.size,
-                // image: imagePathWithoutPublic,
-                // detailedImages: detailedImagesPathsWithoutPublic
+                stock:body.stock,
+                image: body.imagePath,
+                detailedImages: body.detailedImagePath
             };
             await collection.productsCollection.insertMany([data]);
             return { status: 'ok' }
@@ -155,6 +154,7 @@ module.exports = {
                         subCategory: body.subCategory,
                         price: body.price,
                         size: body.size,
+                        stock:body.stock,
                         isDeleted: body.isDeleted,
                     }
                 });
@@ -171,5 +171,29 @@ module.exports = {
             return { status: 'nok' }
         }
 
+    },
+    editStock: async (body, productId) => {
+        try {
+            const product = await collection.productsCollection.findOne({ _id: productId })
+           
+            const updateData = await collection.productsCollection.updateOne(
+                { _id: productId },
+                {
+                    $set: {                        
+                        stock:body.stock,                        
+                    }
+                });
+            console.log('updated data is :::', updateData)
+            if (updateData.modifiedCount === 1) {
+                console.log('modified count', updateData.modifiedCount);
+                console.log('Data update success')
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
+        } catch (err) {
+            console.log("error occured", err)
+            return { status: 'nok' }
+        }
     },
 }

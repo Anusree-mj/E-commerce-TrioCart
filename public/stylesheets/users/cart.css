@@ -20,7 +20,7 @@ a:hover {
 }
 
 .cartPage {
-    background-color:  #f5f3f1;
+    background-color: #f5f3f1;
 }
 
 
@@ -58,6 +58,30 @@ a:hover {
     width: 1.2rem;
 }
 
+.counter-btn {
+    display: flex;
+    border: 1px solid #6c757d;
+    /* Add your desired border color */
+    border-radius: 0.25rem;
+    /* Add your desired border radius */
+    overflow: hidden;
+}
+
+.btn-outline-dark {
+    border-color: #6c757d;
+    /* Add your desired border color */
+}
+
+.counter-btn button {
+    width: 33.33%;
+    border: none;
+    padding: 0.5rem;
+    text-align: center;
+}
+.count{
+    color: #000 !important;
+    font-weight: 600;
+}
 .subDetails {
     margin-top: 0.6rem;
 }
@@ -137,16 +161,21 @@ a:hover {
 /* Remove hovering effects */
 .btn-outline-dark:hover {
     background-color: transparent;
-    color: #343a40; /* Set the desired text color */
-    border-color: #343a40; /* Set the desired border color */
+    color: #343a40;
+    /* Set the desired text color */
+    border-color: #343a40;
+    /* Set the desired border color */
 }
 
 /* Remove click effect */
 .btn-outline-dark:active,
 .btn-outline-dark:focus {
-    background-color: transparent; /* Set the desired background color */
-    color: #343a40; /* Set the desired text color */
-    border-color: #343a40; /* Set the desired border color */
+    background-color: transparent;
+    /* Set the desired background color */
+    color: #343a40;
+    /* Set the desired text color */
+    border-color: #343a40;
+    /* Set the desired border color */
     outline: none;
     box-shadow: none;
 }

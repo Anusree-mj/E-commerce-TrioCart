@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<link rel="stylesheet" href="/cropperjs/cropper.css">
 <%- include('../partials/adminHeaders') %>
 
     <div class="row align-items-center justify-content-center">
@@ -13,18 +14,24 @@
             <!-- description -->
             <label class="label" for="description">Description<span class="required">*</span></label>
             <textarea class="form-control" id="detailed_description" rows="3" placeholder="Product detailed description"
-                onclick="clearValidity('detailed_description');clearSpan('detailed_descriptionSpan')" onblur="isValidInput('detailed_description')"></textarea>
+                onclick="clearValidity('detailed_description');clearSpan('detailed_descriptionSpan')"
+                onblur="isValidInput('detailed_description')"></textarea>
             <span id="detailed_descriptionSpan" class="span"></span>
 
             <!-- category -->
-            <label class="label" for="category">Category<span class="required">*</span></label>
-            <input onclick="clearValidity('category');clearSpan('categorySpan')" onblur="isValidInput('category')" type="text" class="form-control" name="category" id="category"
-                placeholder="Product Category">
-            <span id="categorySpan" class="span"></span>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Category<span class="required">*</span></label>
+                <select class="form-control" id="category">
+                    <option>Ladies</option>
+                    <option>Mens</option>
+                    <option>Kids</option>
+                </select>
+            </div>
 
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory<span class="required">*</span></label>
-            <input onclick="clearValidity('subCategory');clearSpan('subCategorySpan')" onblur="isValidInput('subCategory')" type="text" class="form-control" name="subCategory"
+            <input onclick="clearValidity('subCategory');clearSpan('subCategorySpan')"
+                onblur="isValidInput('subCategory')" type="text" class="form-control" name="subCategory"
                 id="subCategory" placeholder="Product subCategory">
             <span id="subCategorySpan" class="span"></span>
 
@@ -37,7 +44,7 @@
             </div>
 
             <div class="form-check form-check-inline">
-                <input onclick="clearSpan('sizeSpan')"  class="form-check-input" name="size" type="checkbox" id="size-m"
+                <input onclick="clearSpan('sizeSpan')" class="form-check-input" name="size" type="checkbox" id="size-m"
                     value="option2">
                 <label class="form-check-label" for="inlineCheckbox2">M</label>
             </div>
@@ -63,21 +70,50 @@
 
             <!-- price -->
             <label class="label" for="price">Price<span class="required">*</span></label>
-            <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice()" type="text" class="form-control" name="price" id="price" placeholder="Product price">
+            <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice('price')" type="text"
+                class="form-control" name="price" id="price" placeholder="Product price">
             <span id="priceSpan" class="span"></span>
+            <!-- stock -->
+            <label class="label" for="stock">Stock<span class="required">*</span></label>
+            <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')" type="text"
+                class="form-control" name="stock" id="stock" placeholder="Product stock">
+            <span id="stockSpan" class="span"></span>
 
+            <!-- preview added img -->
+            <div id="addedImagesPreview" class="mt-3 ml-3"></div>
             <!-- image -->
-            <!-- <label class="label" for="image">Image<span
-                class="required">*</span></label>
-            <input type="file" class="form-control-file" name="image" id="image" accept="image/*"> -->
-            <!-- detailed images -->
-            <!-- <label class="label" for="image">Detailed Image</label>
-            <input type="file" class="form-control-file" name="image" id="detailedimage" accept="image/*" multiple> -->
+            <label class="label" for="image">Image<span class="required">*</span></label>
+            <input type="file" id="inputImage" accept="image/*" onchange="handleImageChange()"
+                onclick="resetChosenImage();; clearSpan('imageSpan')">
 
+            <span id="croppedImageContainer" class="mt-3" style="display: none;">
+
+                <img id="croppedImage" alt="Cropped Image" style="width: 2rem;">
+                <img src="/images/home/upload.png" style="width: 2rem; border: 1px solid black;" alt=""
+                    onclick="uploadImage()">
+            </span>
+
+            <span id="imageSpan" class="span"></span>
+            <div id="imageModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <div id="cropperContainer">
+                        <img id="modalImage" src="#" alt="Chosen Image">
+                    </div>
+                    <button onclick="cropImage()">Crop Image</button>
+                </div>
+            </div>
+           
+            <!--  -->
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
                     onclick="addProduct()">Add</button>
             </div>
         </div>
     </div>
-    <script src="/javascripts/admin/adminUpdates.js"></script>
+    <%- include('../partials/loginsFooter') %>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/cropperjs/cropper.js"></script>
+    <script src="/javascripts/admin/addProduct.js"></script>

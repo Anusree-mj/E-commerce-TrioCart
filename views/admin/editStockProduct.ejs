@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="addForm">
+            <h2 class="head">Edit a Product</h2>
+            <!-- name -->
+            <label class="label" for="name">Name</label>
+            <input type="text" class="form-control"  value="<%= productData.name%>" disabled>
+            <span id="nameSpan" class="span"></span>
+            
+            <!-- category -->
+            <label class="label" for="category">Category</label>
+            <input type="text" class="form-control" value="<%= productData.category%>" disabled>
+            <span id="categorySpan" class="span"></span>
+
+            <!-- subcategory -->
+            <label class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" value="<%= productData.subCategory%>" disabled>
+            
+            <label class="label" for="stock">Stock<span class="required">*</span></label>
+            <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')" type="text"
+                class="form-control" name="stock" id="stock" placeholder="Product stock" value="<%= productData.stock%>" >
+            <span id="stockSpan" class="span"></span>
+               
+
+                <div class="button">
+                    <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                        onclick="editStock('<%= productData._id %>')">Edit</button>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/loginsFooter') %>
+    <script src="/javascripts/admin/editProduct.js"></script>
