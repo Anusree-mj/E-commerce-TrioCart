@@ -18,7 +18,15 @@
 
 .sidebar-sctn {
     padding: 0 !important;
-    background-color: #f5f3f1;;
+    background-color: #f5f3f1;
+    ;
+}
+
+.filterSortSctn {
+    background-color: #f5f3f1;
+    ;
+    padding: 0.5rem 0;
+    max-width: 100%;
 }
 
 .sideBar {
@@ -28,6 +36,12 @@
 .sideBar-head {
     margin: 1rem 0 0.2rem 0;
     font-weight: 700;
+}
+
+.addFilter {
+    margin-top: 1rem;
+    width: 20rem;
+    max-width: 70%;
 }
 
 .sublist:hover {

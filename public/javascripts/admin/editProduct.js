@@ -1,33 +1,124 @@
+// upload images
+let croppedImageUrl; // Variable to store the cropped image URL
+let isNewFileChosen = false; // Flag to track if a new file is chosen
+let cropper; // Variable to store the Cropper instance
 
-// edit stock
-function editStock(productId){
-    let stock=document.getElementById('stock').value;
-    let reqBody = { stock }
+function handleImageChange() {
+    var input = document.getElementById('inputImage');
+    var modal = document.getElementById('imageModal');
+    var modalImage = document.getElementById('modalImage');
 
-    console.log(reqBody);
-fetch(`http://localhost:3000/admin/products/${productId}/stock`, {
-    method: "PUT",
-    body: JSON.stringify(reqBody),
-    headers: {
-        'Content-Type': 'application/json',
-    },
-}).then((res) => res.json())
-    .then((data) => {
-        if (data.status === "ok") {
-            window.location.replace("/admin/products");
-        } else {
-            alert("Editing stock failed");
-        }
-    })
-    .catch(err => console.log(err));
+    var file = input.files[0];
+
+    // Reset state if a new file is chosen
+    if (isNewFileChosen) {
+        isNewFileChosen = false;
+        closeModal();
+
+        // Destroy the Cropper instance if it exists
+        destroyCropper();
+
+        // Reset the modal image source
+        modalImage.src = '#';
+
+        // Hide the cropped image container
+        document.getElementById('croppedImageContainer').style.display = 'none';
+    }
+
+    // Display the selected image in the modal
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        modalImage.src = e.target.result;
+
+        // Show the modal
+        modal.style.display = 'block';
+
+        // Initialize Cropper.js
+        cropper = new Cropper(modalImage, {
+            aspectRatio: 19 / 28,
+            viewMode: 1,
+        });
+    };
+
+    if (file) {
+        isNewFileChosen = true;
+        reader.readAsDataURL(file);
+    }
 }
 
+function destroyCropper() {
+    // Destroy the Cropper instance if it exists
+    if (cropper) {
+        cropper.destroy();
+    }
+}
 
-// delete detailed image
-function deleteImage(image, productId) {
-    let reqBody = { image, productId }
-    console.log(reqBody)
-    fetch('http://localhost:3000/admin/products/image', {
+function cropImage() {
+    var modal = document.getElementById('imageModal');
+    var modalImage = document.getElementById('modalImage');
+
+    // Get the cropped data
+    var croppedCanvas = cropper.getCroppedCanvas();
+
+    // Convert the cropped canvas to a data URL
+    croppedImageUrl = croppedCanvas.toDataURL();
+
+    // Display the cropped image
+    document.getElementById('croppedImage').src = croppedImageUrl;
+    document.getElementById('croppedImageContainer').style.display = 'block';
+
+    // Hide the modal
+    modal.style.display = 'none';
+
+    // Reset the modal image source
+    modalImage.src = '#';
+
+    // Update the input field with the cropped image data
+    document.getElementById('inputImage').value = croppedImageUrl;
+}
+
+function closeModal() {
+    var modal = document.getElementById('imageModal');
+    var modalImage = document.getElementById('modalImage');
+
+    // Destroy the Cropper instance
+    destroyCropper();
+
+    // Clear the selected file
+    document.getElementById('inputImage').value = '';
+
+    // Hide the modal
+    modal.style.display = 'none';
+
+    // Reset the modal image source
+    modalImage.src = '#';
+}
+
+function resetChosenImage() {
+    // Reset the value of the file input
+    document.getElementById('inputImage').value = '';
+
+    // Reset the modal image source
+    document.getElementById('modalImage').src = '#';
+
+    // Hide the cropped image container
+    document.getElementById('croppedImageContainer').style.display = 'none';
+
+    // Destroy the Cropper instance
+    destroyCropper();
+
+    // Reset the isNewFileChosen flag
+    isNewFileChosen = false;
+}
+
+let imageUploaded = true;
+let imagePath = document.getElementById('curentImage').value;
+console.log('imagepathexistingvalue', imagePath)
+function changeMainImage(productId) {
+
+    let reqBody = { productId };
+
+    fetch('http://localhost:3000/admin/products/mainImage', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +129,12 @@ function deleteImage(image, productId) {
         .then(data => {
             if (data.status === 'ok') {
                 console.log('Image deleted successfully');
-                location.reload()
+                document.getElementById('curentImage').remove();
+                document.getElementById('mainImageDlt').remove();
+                document.getElementById('image').remove();
+
+                imagePath = '';
+                return imageUploaded = false;
             } else {
                 console.error('Image deletion failed');
             }
@@ -46,66 +142,62 @@ function deleteImage(image, productId) {
         .catch(error => {
             console.error('Error deleting image:', error);
         });
+
 }
 
-function openImagePreview(imagePath) {
-    // Get the modal and modal image elements
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
 
-    // Set the image source in the modal
-    modalImg.src = imagePath;
+let detailedImagePath = [];
 
-    // Display the modal
-    modal.style.display = 'block';
-}
+function uploadImage() {
+    if (croppedImageUrl) {
+        imageUploaded = false;
 
-function closeImagePreview() {
-    // Get the modal
-    const modal = document.getElementById('imageModal');
+        // Convert the base64 data URL to a Blob
+        fetch(croppedImageUrl)
+            .then(res => res.blob())
+            .then(blob => {
+                // Create a FormData object and append the blob
+                var formData = new FormData();
+                formData.append('image', blob, 'cropped_image.png');
 
-    // Hide the modal
-    modal.style.display = 'none';
-}
+                // Fetch API request
+                fetch('http://localhost:3000/image', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then((data) => {
+                        console.log('data:', data)
+                        if (data.status === "ok") {
+                            if (imagePath === '') {
+                                imagePath = data.imagePathWithoutPublic;
+                            } else {
+                                detailedImagePath.push(data.imagePathWithoutPublic);
+                            }
 
-let image = "";
-let detailedimages = document.getElementById('detailedImages');
-function imageUpload() {
-    let formData = new FormData();
-    let imageInput = document.getElementById('image');
-    if (imageInput.files.length > 0) {
-        formData.append('image', imageInput.files[0]);
+                            document.getElementById('croppedImageContainer').style.display = 'none';
+                            // added image preview
+                            var previewContainer = document.getElementById('addedImagesPreview');
+                            var previewImage = document.createElement('img');
+                            previewImage.src = '/' + data.imagePathWithoutPublic;
+                            previewImage.style.width = '2rem';
+                            previewImage.style.marginRight = '1.5rem';
+
+                            previewContainer.appendChild(previewImage);
+
+                            imageUploaded = true;
+                            console.log('image:', imagePath, "detailedImages:", detailedImagePath)
+                            return imagePath, detailedImagePath;
+                        } else {
+                            alert("Uploading Image Failed");
+                        }
+                    })
+                    .catch(error => {
+                        // Handle any errors during the fetch
+                        console.error('Error:', error);
+                    });
+            });
     }
-    let detailedImageInput = document.getElementById('detailedimage');
-    for (let i = 0; i < detailedImageInput.files.length; i++) {
-        formData.append('detailedImages', detailedImageInput.files[i]);
-    }
-    fetch("http://localhost:3000/image", {
-        method: "POST",
-        body: formData,
-    }).then((res) => res.json())
-        .then((data) => {
-            console.log('data:', data)
-            if (data.status === "ok") {
-
-                image = data.imagePathWithoutPublic;
-                //   detailedimages=[...detailedimages,...data.detailedImagesPathsWithoutPublic]
-                console.log(image, "88888888888888888888")
-
-            } else {
-                alert("Adding product failed");
-            }
-        })
-        .catch(err => console.log(err));
-}
-
-// validation
-function clearValidity(field) {
-    document.getElementById(field).style.border = '1px solid black';
-    document.getElementById(field).style.boxShadow = '';
-}
-function clearSpan(spanId) {
-    document.getElementById(spanId).textContent = "";
 }
 
 let inputValidity = true;
@@ -128,11 +220,10 @@ function isValidPrice(field) {
     }
 }
 
-
 // edit product
 function editProduct(product_id) {
 
-    const fields = ["name", "detailed_description", "category", "subCategory", "price","stock"];
+    const fields = ["name", "detailed_description", "category", "subCategory", "price", "stock"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -156,7 +247,7 @@ function editProduct(product_id) {
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
     let price = document.getElementById('price').value;
-    let stock=document.getElementById('stock').value;
+    let stock = document.getElementById('stock').value;
 
     let sizeMap = {
         'option1': 'S',
@@ -175,24 +266,45 @@ function editProduct(product_id) {
         }
     });
     let size = selectedSizes.join(',')
-    if (!isError && isValidPrice && isValidInput) {
-        let reqBody = { name, detailed_description, category, subCategory, price, size,stock }
+
+    let detailedImageElements = document.querySelectorAll('.preview-image');
+
+    let detailedImages = Array.from(detailedImageElements).map(element => {
+        return element.src.replace(window.location.origin + '/', '');
+    });
+    console.log(detailedImages);
+
+    let detailedImagePaths = [...detailedImagePath, ...detailedImages];
+
+
+    if (!imageUploaded) {
+        document.getElementById('imageSpan').textContent = '*Please upload a main image.';
+    }
+    if (!isError && isValidPrice && isValidInput && imageUploaded) {
+        let reqBody =
+        {
+            name, detailed_description, category,
+            subCategory, price, size, stock, imagePath, detailedImagePaths
+        }
 
         console.log(reqBody);
-    fetch(`http://localhost:3000/admin/products/${product_id}`, {
-        method: "PUT",
-        body: JSON.stringify(reqBody),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then((res) => res.json())
-        .then((data) => {
-            if (data.status === "ok") {
-                window.location.replace("/admin/products");
-            } else {
-                alert("Editing product failed");
-            }
-        })
-        .catch(err => console.log(err));
+        fetch(`http://localhost:3000/admin/products/${product_id}`, {
+            method: "PUT",
+            body: JSON.stringify(reqBody),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    window.location.replace("/admin/products");
+                } else {
+                    alert("Editing product failed");
+                }
+            })
+            .catch(err => console.log(err));
+    }
 }
-}
+
+
+

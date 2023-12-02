@@ -19,9 +19,13 @@
         </div>
         <% }) %>
 
-            <div class="search-wrapper ">
-                <img class="search-icon" src="/images/navbar/search.png" alt="">
-                <input class="search" type="search" id="search" placeholder="Search products...">
+            <div class="search-wrapper">
+                <div class="input-container">
+                    <input class="search" type="search" id="search" placeholder="Search products...">
+                    <div class="vertical-line"></div>
+                    <img class="search-icon" src="/images/navbar/search.png" alt='search' onclick="search()">
+                </div>
                 <hr class="search-line" style="margin-top: 0 !important;" />
             </div>
 </div>
+<script src="/javascripts/users/search.js"></script>

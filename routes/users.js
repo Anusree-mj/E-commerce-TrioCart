@@ -6,7 +6,7 @@ var userHelpers = require('../helpers/user-helpers');
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
-  console.log('sessionId in homeeee', sessionId)
+
   let products = await productHelpers.getNewArrivalProducts();
   let allCategories = await userHelpers.getCategoryDetails()
 
@@ -35,7 +35,7 @@ router.get('/profile', async function (req, res, next) {
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
-      console.log('userrerae', user)
+     
       let userId = result.user._id
       userHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
@@ -62,6 +62,18 @@ router.put('/profile/:userId', function (req, res, next) {
   })
 });
 
+//change password
+router.put('/password', function (req, res, next) {
+ 
+  userHelpers.changePassword(req.body).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
+});
+
 /* get cart. */
 router.get('/cart', async function (req, res, next) {
   let allCategories = await userHelpers.getCategoryDetails()
@@ -79,7 +91,7 @@ router.get('/cart', async function (req, res, next) {
             let totalprice = result.totalprice;
             let totalCartProduct = result.totalCount;
 
-            console.log('cartproducts in cart:', cartProducts)
+           
             res.render('users/cart', {
               layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
               totalCartProduct
@@ -107,7 +119,7 @@ router.post('/cart/:product_id', function (req, res, next) {
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
-      console.log(user, 'user in addto cart')
+    
       userHelpers.addToCart(user, productId, size).then(() => {
         res.status(200).json({ status: "ok" });
       })
@@ -198,13 +210,13 @@ router.post('/checkout/user', function (req, res, next) {
 router.get('/billingAddress/:adressId', function (req, res, next) {
   let addressId = req.params.adressId;
   let sessionId = req.cookies.session
-  console.log('addressid', addressId)
+ 
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       userHelpers.getBillingAddress(addressId).then(result => {
         if (result.address) {
           let address = result.address
-          console.log('adress', address)
+        
           res.status(200).json({ status: "ok", address });
         } else {
           res.status(400).json({ status: "nok" });
@@ -220,7 +232,7 @@ router.get('/billingAddress/:adressId', function (req, res, next) {
 router.delete('/billingAddress/:adressId', function (req, res, next) {
   let addressId = req.params.adressId;
   let sessionId = req.cookies.session
-  console.log('addressid', addressId)
+
   userHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
 
@@ -329,7 +341,7 @@ router.get('/order/history', async function (req, res, next) {
           userHelpers.getAllOrderDetails(userId).then((result) => {
             if (result.status === 'ok') {
               let orderDetails = result.orderDetails
-              console.log('orderderails', orderDetails)
+            
               productHelpers.getNewArrivalProducts().then(result => {
                 let viewMoreProducts = [
                   ...result.category1, ...result.category2, ...result.category3, ...result.category4];

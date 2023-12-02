@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<link rel="stylesheet" href="/cropperjs/cropper.css">
+
 <%- include('../partials/adminHeaders') %>
 
     <div class="row align-items-center justify-content-center ">
@@ -68,40 +70,56 @@
 
                 <label class="label" for="stock">Stock<span class="required">*</span></label>
                 <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')"
-                    type="text" class="form-control" name="stock" id="stock" placeholder="Product stock" value="<%= productData.stock%>">
+                    type="text" class="form-control" name="stock" id="stock" placeholder="Product stock"
+                    value="<%= productData.stock%>">
                 <span id="stockSpan" class="span"></span>
 
                 <!-- curent image -->
-                <!-- <label class="label" for="image">Image</label>
+                <label class="label" id="image" for="image">Image</label>
                 <div class="image-preview">
-                    <img src="/<%= productData.image %>" onclick="openImagePreview('/<%= productData.image %>')"
-                        id="curentImage" alt="Product Image" class="preview-image">
-                    <button type="button" class="btn btn-light closebutton" id="closebutton"
-                        onclick="changeImage()">Delete X</button>
+                    <img src="/<%= productData.image %>" id="curentImage" alt="Product Image" style="width: 2rem;">
+                    <button type="button" class="btn btn-light closebutton" id="mainImageDlt"
+                        onclick="changeMainImage('<%= productData._id %>')">Delete X</button>
                 </div>
-                <input type="file" class="form-control-file newImage" name="image" id="image" accept="image/*">
-                <button type="button" class="btn btn-light closebutton" id="closebutton" onclick="imageUpload()">Upload
-                </button> -->
-                <!-- image preview -->
-                <!-- <div id="imageModal" class="modal">
-                    <span class="close" onclick="closeImagePreview()">&times;</span>
-                    <img id="modalImage" class="modal-content">
-                </div> -->
+
+                <!-- add new main image -->
+                <label class="label" for="image">Add Image</label>
+                <div class="editableMainImage">
+                    <input type="file" id="inputImage" accept="image/*" onchange="handleImageChange()"
+                        onclick="resetChosenImage(); clearSpan('imageSpan')">
+
+                    <span id="croppedImageContainer" class="mt-3" style="display: none;">
+                        <img id="croppedImage" alt="Cropped Image" style="width: 2rem;">
+                        <img src="/images/home/upload.png" style="width: 2rem; border: 1px solid black;" alt=""
+                            onclick="uploadImage()">
+                    </span>
+
+                    <span id="imageSpan" class="span"></span>
+                    <div id="imageModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <div id="cropperContainer">
+                                <img id="modalImage" src="#" alt="Chosen Image">
+                            </div>
+                            <button onclick="cropImage()">Crop Image</button>
+                        </div>
+                    </div>
+                </div>
                 <!-- detailed images -->
-                <!-- <label class="label" for="image">Detailed Image</label>
+                <label class="label" for="image">Detailed Image</label>
                 <div class="image-preview">
                     <% for (let i=0; i < productData.detailedImages.length; i++) { %>
                         <img src="/<%= productData.detailedImages[i] %>"
-                            onclick="openImagePreview('/<%= productData.detailedImages[i] %>')" id="curentImage"
+                            onclick="openImagePreview('/<%= productData.detailedImages[i] %>')" id="detailedImages"
                             alt="Product Image" class="preview-image">
                         <button type="button" class="btn btn-light closebutton" id="closebutton"
                             onclick="deleteImage('<%= productData.detailedImages[i] %>','<%= productData._id %>')">Delete
                             X</button>
                         <% } %>
                 </div>
-                <label class="label" for="image">Add Image</label>
-                <input type="file" class="form-control-file" name="detailedImages" id="detailedimage" accept="image/*"
-                    multiple> -->
+                <div id="addedImagesPreview" class="mt-3 ml-3">
+                    <p style="margin: 0 !important;">Added Image</p>
+                </div>
 
                 <div class="button">
                     <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
@@ -110,4 +128,9 @@
         </div>
     </div>
     <%- include('../partials/loginsFooter') %>
-    <script src="/javascripts/admin/editProduct.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/cropperjs/cropper.js"></script>
+        <script src="/javascripts/admin/editStockImage.js"></script>
+        <script src="/javascripts/admin/editProduct.js"></script>

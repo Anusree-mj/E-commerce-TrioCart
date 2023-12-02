@@ -7,10 +7,12 @@ var userHelpers = require('../helpers/user-helpers');
 router.get('/:category/viewAll', async function (req, res, next) {
   const category = req.params.category
   let allCategories = await userHelpers.getCategoryDetails()
-
-  productHelpers.viewAllProductsofEAchCAtegory(category).then((result) => {
+  let query = req.query.q;
+//need to pass sort filter 
+  productHelpers.viewAllProductsofEAchCAtegory(category,query).then((result) => {
     let products = result.products;
     let categories = result.categories;
+    let searchProducts=result.searchProducts;
     let sessionId = req.cookies.session
 
     userHelpers.checkSessions(sessionId).then((result) => {
@@ -22,11 +24,13 @@ router.get('/:category/viewAll', async function (req, res, next) {
         userHelpers.getMyCartProducts(userId).then((result) => {
           if (result) {
             let totalCartProduct = result.totalCount
-            res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user, totalCartProduct })
+            res.render('users/categoryProducts', { layout: 'layout/layout', allCategories,category,
+            searchProducts, products, categories, user, totalCartProduct })
           }
         })
       } else {
-        res.render('users/categoryProducts', { layout: 'layout/layout', allCategories, products, categories, user: undefined })
+        res.render('users/categoryProducts', { layout: 'layout/layout', allCategories,category,
+        searchProducts, products, categories, user: undefined })
       }
     })
   })
@@ -36,9 +40,13 @@ router.get('/:category/viewAll', async function (req, res, next) {
 router.get('/:category/:subcategory', async function (req, res, next) {
   const category = req.params.category
   const subCategory = req.params.subcategory
+  let query = req.query.q;
+  let size=req.query.size;
+  let price = req.query.price;
+
   let allCategories = await userHelpers.getCategoryDetails()
 
-  productHelpers.viewEachSubcategoryProducts(category, subCategory).then((result) => {
+  productHelpers.viewEachSubcategoryProducts(category, subCategory,query,size,price).then((result) => {
     let categories = result.categories;
     let products = result.products;
     let sessionId = req.cookies.session
@@ -51,11 +59,11 @@ router.get('/:category/:subcategory', async function (req, res, next) {
         userHelpers.getMyCartProducts(userId).then((result) => {
           if (result) {
             let totalCartProduct = result.totalCount
-            res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user, totalCartProduct })
+            res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories,category, subCategory, categories, products, user, totalCartProduct })
           }
         })
       } else {
-        res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, categories, products, user: undefined })
+        res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories,category, subCategory, categories, products, user: undefined })
 
       }
     })

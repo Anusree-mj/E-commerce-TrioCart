@@ -48,6 +48,25 @@ module.exports = {
             console.log(err)
         }
     },
+    changePassword: async (data) => {
+        try {
+            const user = await collection.usersCollection.findOne({ _id: data.userId });
+            const passwordMatch = await bcrypt.compare(data.currentPassword, user.password);
+
+            if (passwordMatch) {
+                password = await bcrypt.hash(data.password, 10)
+                await collection.usersCollection.updateOne(
+                    { _id: data.userId },
+                    { $set: { password: password } })
+                    return{status:'ok'}
+            }else{
+                return{status:'nok'}
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
 
     doVerifyUser: async (data) => {
         try {
@@ -112,8 +131,7 @@ module.exports = {
     },
 
     checkSessions: async (sessionId) => {
-        try {
-            console.log('sessghjfghfhfinId', sessionId)
+        try {           
             const checkSession = await collection.sessionCollection.findOne({
                 sessionId: sessionId,
             }).populate('userId');
@@ -459,7 +477,7 @@ module.exports = {
                     }
                 }
             );
-            
+
             if (updateData.modifiedCount === 1) {
                 console.log('Data update success')
                 return { status: 'ok' }
