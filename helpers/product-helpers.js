@@ -34,22 +34,121 @@ module.exports = {
         }
     },
 
-    viewEachSubcategoryProducts: async (category, subcategory) => {
+    viewEachSubcategoryProducts: async (category, subcategory, query, size, price) => {
         try {
-            console.log(category,'category',subcategory,'sub')
-            const categories = await collection.categoryCollection.findOne({ category: category })
-            const products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false }).sort({ createdAt: -1 });
-            return { categories, products }
+            let categories;
+            let products;
+            if (!query && !size && !price) {
+                categories = await collection.categoryCollection.findOne({ category: category })
+                products = await collection.productsCollection.find({ category: category, subCategory: subcategory, isDeleted: false }).sort({ createdAt: -1 });
+                return { categories, products }
+
+            } else if (query && query === 'lowestToHighest' && !size && !price) {
+                categories = await collection.categoryCollection.findOne({
+                    category: category
+                })
+
+                products = await collection.productsCollection.find({
+                    category: category, subCategory: subcategory, isDeleted: false
+                }).sort({ price: 1 });
+
+                return { categories, products }
+
+            } else if (query && query === 'highestToLowest' && !size && !price) {
+                categories = await collection.categoryCollection.findOne({
+                    category: category
+                })
+
+                products = await collection.productsCollection.find({
+                    category: category, subCategory: subcategory, isDeleted: false
+                }).sort({ price: -1 });
+
+                return { categories, products }
+            }
+            else if (size && !query && !price) {
+                categories = await collection.categoryCollection.findOne({
+                    category: category
+                })
+
+                products = await collection.productsCollection.find(
+                    {
+                        category: category,
+                        subCategory: subcategory,
+                        isDeleted: false,
+                        size: { $in: [size] }
+
+                    }).sort({ createdAt: -1 });
+
+                return { categories, products }
+            } else if (!size && !query && price) {
+                categories = await collection.categoryCollection.findOne({
+                    category: category
+                })
+
+                products = await collection.productsCollection.find(
+                    {
+                        category: category,
+                        subCategory: subcategory,
+                        isDeleted: false,
+                        price: { $lte: price }
+
+                    }).sort({ createdAt: -1 });
+
+                return { categories, products }
+            } else if (size && price && !query) {
+                console.log('size price', size, price)
+                categories = await collection.categoryCollection.findOne({
+                    category: category
+                })
+
+                products = await collection.productsCollection.find(
+                    {
+                        category: category,
+                        subCategory: subcategory,
+                        isDeleted: false,
+                        size: { $in: [size] },
+                        price: { $lte: price }
+
+                    }).sort({ createdAt: -1 });
+                console.log('productssss', products)
+                return { categories, products }
+            }
+
         }
         catch (err) {
             console.log(err)
         }
     },
 
-    viewAllProductsofEAchCAtegory: async (category) => {
+    viewAllProductsofEAchCAtegory: async (category, query) => {
         try {
-            const products = await collection.productsCollection.find({ category: category, isDeleted: false }).sort({ createdAt: -1 });
-            const categories = await collection.categoryCollection.findOne({ category: category })
+            console.log('queryinfnct', query)
+            let products;
+            let categories;
+
+            if (!query) {
+                products = await collection.productsCollection.find(
+                    { category: category, isDeleted: false }).sort({ createdAt: -1 });
+
+                categories = await collection.categoryCollection.findOne({ category: category })
+                return { products, categories }
+
+            } else if (query && query === 'lowestToHighest') {
+                products = await collection.productsCollection.find(
+                    { category: category, isDeleted: false }).sort({ price: 1 });
+
+                categories = await collection.categoryCollection.findOne({ category: category })
+                return { products, categories }
+
+            } else if (query && query === 'highestToLowest') {
+                products = await collection.productsCollection.find(
+                    { category: category, isDeleted: false }).sort({ price: -1 });
+
+                categories = await collection.categoryCollection.findOne({ category: category })
+                return { products, categories }
+
+            }
+
             return { products, categories }
         }
         catch (err) {
@@ -64,7 +163,62 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
-    }
+    },
+    getSearchProduct: async (query) => {
+        try {
+            console.log('queryInsearchfnctn', query)
+            const searchProducts = await collection.productsCollection.find({
+                $or: [
+                    { name: { $regex: new RegExp(query, 'i') } },
+                    { category: { $regex: new RegExp(query, 'i') } },
+                    { subCategory: { $regex: new RegExp(query, 'i') } },
+                ],
+            });
+
+            if (searchProducts) {
+                return { status: 'ok', searchProducts }
+            } else {
+                return { status: 'nok' }
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    getSortedProductinAscending: async () => {
+        try {
+            const searchProducts = await collection.productsCollection.aggregate([
+                { $sort: { price: 1 } }
+            ]);
+
+            if (searchProducts.length > 0) {
+                return { status: 'ok', searchProducts };
+            } else {
+                return { status: 'nok' };
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    getSortedProductinDescending: async (query) => {
+        try {
+            console.log('queryInsortfnctn', query)
+            const searchProducts = await collection.productsCollection.aggregate([
+                { $sort: { price: -1 } }
+            ]);
+
+            if (searchProducts.length > 0) {
+                return { status: 'ok', searchProducts };
+            } else {
+                return { status: 'nok' };
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }
 
 

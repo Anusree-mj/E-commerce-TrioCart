@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/stylesheets/users/productList.css">
+<link rel="stylesheet" href="/stylesheets/users/cart.css">
+
+<% if (user) { %>
+    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+        <%} else{ %>
+            <%- include('../partials/header') %>
+                <% } %>
+                    <%- include('../partials/subHeader',allCategories) %>
+                        <section class="productsSctn d-flex justify-content-between ">
+                            <%- include('../partials/searchSideBar') %>                        
+
+                            <% if (searchProducts && searchProducts.length > 0) { %>
+                            <div class="cards-section">
+                                <% searchProducts.forEach(product=>{%>
+                                    <div class="col-sm-3 mb-4">
+                                        <a href="/products/<%= product._id %>">
+                                            <div class="card mycard">
+                                                <div>
+                                                    <img class="img-fluid img-thumbnail " src="/<%= product.image %>"
+                                                        alt="Card image cap">
+                                                </div>
+                                                <div class="card-body" style="width: 18rem;">
+                                                    <h5 class="card-title">
+                                                        <%=product.name %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        ₹ <%= product.price %>/-
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <%} else{ %>
+                                <div class="emptyCart">
+                                    <img class="emptyImg" src="/images/home/emptyCart.svg" alt="">
+                                    <div class="d-flex flex-column justify-content-center align-items-center ">
+                                        <h3 class="emptyHead">Product not found</h3>
+
+                                        <a href="/" type="button" class="btn btn-dark cartbtn" style="width: 20rem;">Continue
+                                            Shopping</a>
+
+                                    </div>
+                                    <% } %>
+                               
+                                </section>
+                        <%- include('../partials/footer') %>

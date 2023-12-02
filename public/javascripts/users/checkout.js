@@ -149,17 +149,18 @@ let validNameAndTown = true;
 // check for name and town
 function ifValid(field) {
     let data = document.getElementById(field).value;
+    const displayName = field.replace('_edit', '');
     if (/^\s+$/.test(data)) {
-        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. ${field} cannot consist of only spaces.`;
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${displayName}. ${displayName} cannot consist of only spaces.`;
         return validNameAndTown = false;
     }
     if (/\d/.test(data)) {
-        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. ${field} cannot contain numbers.`;
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${displayName}. ${displayName} cannot contain numbers.`;
         return validNameAndTown = false;
     }
     const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
     if (!nameRegex.test(data)) {
-        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}. Please enter a valid ${field} containing only letters and optional spaces.`;
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${displayName}. Please enter a valid ${displayName} containing only letters and optional spaces.`;
         return validNameAndTown = false;
     }
 }
@@ -167,16 +168,18 @@ function ifValid(field) {
 let validAddress = true;
 // check address
 function checkAddress() {
-    let data = document.getElementById('address').value;
+    console.log("Checking address validation");
+    let data = document.getElementById('address_edit').value;
 
     // Check if the address is only spaces
     if (/^\s*$/.test(data)) {
-        document.getElementById('addressSpan').textContent = `*Invalid address. Address cannot consist of only spaces.`;
+        document.getElementById('address_editSpan').textContent = `*Invalid address. Address cannot consist of only spaces.`;
         return validAddress = false;
     }
     const addressRegex = /^[0-9A-Za-z.,]+(?: [0-9A-Za-z.,]+)*$/;
     if (!addressRegex.test(data)) {
-        document.getElementById('addressSpan').textContent = `*Invalid address.Unwanted spaces`;
+        console.log("Address is valid");
+        document.getElementById('address_editSpan').textContent = `*Invalid address.Unwanted spaces`;
         return validAddress = false;
     }
 }
@@ -184,11 +187,11 @@ function checkAddress() {
 let validPhone=true;
 // check phone number
 function checkPhone() {
-    let phone = document.getElementById("phone").value;
+    let phone = document.getElementById("phone_edit").value;
 
     const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(phone)) {        
-        document.getElementById("phoneSpan").textContent = "*Invalid phone number";
+        document.getElementById("phone_editSpan").textContent = "*Invalid phone number";
         return validPhone = false;
     }
 }
@@ -196,10 +199,10 @@ function checkPhone() {
 let validPincode=true;
 // check pincode
 function checkPincode() {
-    let pincode = document.getElementById('pincode').value;
+    let pincode = document.getElementById('pincode_edit').value;
     let regex = new RegExp(/^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/);
     if (!pincode || regex.test(pincode) == false) {
-             document.getElementById('pincodeSpan').textContent = "*Invalid pincode"
+             document.getElementById('pincode_editSpan').textContent = "*Invalid pincode"
              return validPincode=false;
     }
 }
@@ -210,7 +213,7 @@ function saveBillingAddress(userId) {
 
     let isError = false;  // Declare isError within the function scope
 
-    const fields = ["name", "phone", "address", "town", "pincode", "state"];
+    const fields = ["name_edit", "phone_edit", "address_edit", "town_edit", "pincode_edit", "state_edit"];
 
     //checking for any empty fields
     fields.forEach(field => {

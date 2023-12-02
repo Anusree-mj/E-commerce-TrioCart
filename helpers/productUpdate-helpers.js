@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
     addProduct: async (body) => {
-        try {           
+        try {
             const data = {
                 name: body.name,
                 description: body.detailed_description,
@@ -12,7 +12,7 @@ module.exports = {
                 subCategory: body.subCategory,
                 price: body.price,
                 size: body.size,
-                stock:body.stock,
+                stock: body.stock,
                 image: body.imagePath,
                 detailedImages: body.detailedImagePath
             };
@@ -70,6 +70,24 @@ module.exports = {
         }
     },
 
+    deleteMainImage: async (productId) => {
+        try {
+            const result = await collection.productsCollection.updateOne(
+                { _id: productId },
+                { $unset: { image: '' } }
+            );
+
+            if (result.modifiedCount > 0) {
+                return { status: 'deleted' };
+            } else {
+                return { status: 'not found' };
+            }
+        }
+        catch (err) {
+            console.log(err)
+            return { status: "error" }
+        }
+    },
     deleteAProductImage: async (image, productId) => {
         try {
             const result = await collection.productsCollection.updateOne(
@@ -154,8 +172,9 @@ module.exports = {
                         subCategory: body.subCategory,
                         price: body.price,
                         size: body.size,
-                        stock:body.stock,
-                        isDeleted: body.isDeleted,
+                        stock: body.stock,
+                        image: body.imagePath,
+                        detailedImages: body.detailedImagePaths
                     }
                 });
             console.log('updated data is :::', updateData)
@@ -175,12 +194,12 @@ module.exports = {
     editStock: async (body, productId) => {
         try {
             const product = await collection.productsCollection.findOne({ _id: productId })
-           
+
             const updateData = await collection.productsCollection.updateOne(
                 { _id: productId },
                 {
-                    $set: {                        
-                        stock:body.stock,                        
+                    $set: {
+                        stock: body.stock,
                     }
                 });
             console.log('updated data is :::', updateData)

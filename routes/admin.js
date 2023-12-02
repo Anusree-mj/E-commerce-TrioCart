@@ -96,7 +96,20 @@ router.post('/product', function (req, res, next) {
   })
 })
 
-//delte product image
+//delte product main image
+router.delete('/products/mainImage', ((req, res, next) => {
+   const productId = req.body.productId
+ 
+  productUpdateHelpers.deleteMainImage(productId).then((result) => {
+    if (result.status === 'deleted') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(500).json({ status: "nok" });
+    }
+  })
+}))
+
+//delte product detailed image
 router.delete('/products/image', ((req, res, next) => {
   const image = req.body.image
   const productId = req.body.productId

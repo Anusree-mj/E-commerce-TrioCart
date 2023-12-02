@@ -177,29 +177,29 @@ function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
 }
 
-let inputValidity = true;
+let validInput = true;
 function isValidInput(field) {
     let data = document.getElementById(field).value;
     const pattern = /^(?=.*[A-Za-z0-9])[A-Za-z0-9\s.,!@#$%^&*()_+={}\[\]:;<>,.?~\\/-]+$/;
     if (!pattern.test(data)) {
         document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
-        return inputValidity = false;
+        return validInput = false;
     }
 }
 
-let priceValidity = true;
+let validPrice = true;
 function isValidPrice(field) {
     let data = document.getElementById(field).value;
     const pattern = /^\d+$/;
     if (!pattern.test(data)) {
         document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
-        return priceValidity = false;
+        return validPrice = false;
     }
 }
 
 //add product
 function addProduct() {
-    const fields = ["name", "detailed_description", "category", "subCategory", "price","stock"];
+    const fields = ["name", "detailed_description", "category", "subCategory", "price", "stock"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -250,7 +250,7 @@ function addProduct() {
         let reqBody =
         {
             name, detailed_description, category, subCategory, price,
-            size,stock, imagePath, detailedImagePath
+            size, stock, imagePath, detailedImagePath
         }
 
         console.log(reqBody);
