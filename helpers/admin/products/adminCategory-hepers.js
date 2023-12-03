@@ -1,4 +1,4 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../../models')
 const path = require('path');
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
             return { status: 'nok' }
         }
     },
-    
+
     deleteSubcategory: async (subcategory) => {
         try {
             console.log('Subcategory:', subcategory);

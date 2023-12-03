@@ -1,5 +1,5 @@
 // products collection
-const { mongoosedb } = require('./mongodb');
+const mongoosedb = require('./mongodb');
 const ProductSchema = new mongoosedb.Schema(
     {
         name: {

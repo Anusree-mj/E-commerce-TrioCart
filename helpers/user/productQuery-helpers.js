@@ -1,7 +1,7 @@
-const collection = require('../../models/mongodb')
+const collection = require('../../models')
 
 module.exports = {
-     
+
     getSearchProduct: async (query) => {
         try {
             console.log('queryInsearchfnctn', query)
@@ -23,5 +23,5 @@ module.exports = {
             console.log(err)
         }
     },
-  
+
 }

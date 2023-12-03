@@ -1,8 +1,8 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../../models')
 const path = require('path');
 
-module.exports = { 
-    
+module.exports = {
+
     deleteMainImage: async (productId) => {
         try {
             const result = await collection.productsCollection.updateOne(
@@ -40,10 +40,10 @@ module.exports = {
             return { status: "error" }
         }
     },
-  
+
     editStock: async (body, productId) => {
         try {
-            console.log('bodystock', body.stock, "typeof:", typeof(body.stock));
+            console.log('bodystock', body.stock, "typeof:", typeof (body.stock));
 
             if (body.stock === '0') {
                 await collection.productsCollection.updateOne(

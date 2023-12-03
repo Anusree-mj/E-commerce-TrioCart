@@ -1,27 +1,28 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../../models')
 
-module.exports = {   
-    getAllOrders : async ()=>{
+module.exports = {
+    getAllOrders: async () => {
         try {
+            console.log('entered in order fnctn')
             const orders = await collection.orderCollection
-            .find()
-            .populate('userId')
-            .populate('products.product');           
+                .find()
+                .populate('userId')
+                .populate('products.product');
 
-            console.log('orders::',orders)
+            console.log('orders::', orders)
 
-            return {orders}
+            return { orders }
         }
         catch (err) {
             console.log(err)
         }
     },
-    updateOrderStatus : async (data)=>{
+    updateOrderStatus: async (data) => {
         try {
             const updateData = await collection.orderCollection.updateOne(
-                { _id:data.orderId},
-               { $set: {  orderStatus: data.status }}
-                )                      
+                { _id: data.orderId },
+                { $set: { orderStatus: data.status } }
+            )
 
             if (updateData.modifiedCount === 1) {
                 console.log('order update success')
@@ -39,8 +40,8 @@ module.exports = {
             const order = await collection.orderCollection.findOne({
                 _id: orderId
             }).populate('userId')
-            .populate('products.product');
-            
+                .populate('products.product');
+
             return { order }
         } catch (err) {
             console.log(err);

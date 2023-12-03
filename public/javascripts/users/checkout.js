@@ -117,6 +117,8 @@ function selectedAddress(userId, name, phone,
     }).then((res) => res.json())
         .then((data) => {
             if (data.status === "ok") {
+                const payment = document.querySelector('.payment');
+                payment.style.display= 'block';
                 const deliveryDiv = document.querySelector('.delivery');
                 deliveryDiv.style.display = 'block';
 
@@ -215,6 +217,7 @@ function saveBillingAddress(userId) {
 
     //checking for any empty fields
     fields.forEach(field => {
+        console.log('checking empty fields')
         const value = document.getElementById(field).value;
         if (!value) {
             isError = true;
@@ -224,6 +227,7 @@ function saveBillingAddress(userId) {
     });
     // fetching data
     if (!isError && validAddress && validPhone && validPincode && validNameAndTown) {
+        console.log('entered in if')
         let reqBody = {
             userId,
             name: document.getElementById("name").value,

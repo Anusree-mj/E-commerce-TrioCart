@@ -1,4 +1,4 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../../models')
 
 module.exports = {
     getUsers: async () => {
@@ -18,7 +18,7 @@ module.exports = {
                 {
                     $set: { isBlocked: true }
                 })
-                console.log('Update Result:', user);
+            console.log('Update Result:', user);
             if (user.modifiedCount === 1) {
                 console.log('Data update success')
                 return { status: 'ok' }
@@ -33,13 +33,13 @@ module.exports = {
     },
     unblockUser: async (userId) => {
         try {
-            console.log('useridinunblick',userId)
+            console.log('useridinunblick', userId)
             const user = await collection.usersCollection.updateOne(
                 { _id: userId },
                 {
                     $set: { isBlocked: false }
                 })
-                console.log('Update Result:', user);
+            console.log('Update Result:', user);
             if (user.modifiedCount === 1) {
                 console.log('Data update success')
                 return { status: 'ok' }
@@ -52,5 +52,5 @@ module.exports = {
             return { status: 'nok' }
         }
     },
-   
+
 }

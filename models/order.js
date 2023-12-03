@@ -1,5 +1,5 @@
 
-const {mongoosedb} = require('./mongodb');
+const mongoosedb = require('./mongodb');
 
 // order collection
 const OrderSchema = new mongoosedb.Schema(
