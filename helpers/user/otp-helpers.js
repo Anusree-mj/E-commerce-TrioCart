@@ -1,6 +1,6 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../models/mongodb')
 const bcrypt = require('bcrypt')
-const signupUtil = require('../../../utils/signupUtil');
+const signupUtil = require('../../utils/signupUtil');
 
 module.exports = {
 getOtp: async (email, otp) => {

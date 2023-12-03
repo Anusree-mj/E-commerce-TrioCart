@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const categoryHelpers = require('../helpers/user/category/category-helpers');
-const sessionHelpers = require('../helpers/user/session/session-helpers');
+const categoryHelpers = require('../helpers/user/category-helpers');
+const sessionHelpers = require('../helpers/user/session-helpers');
 const userHelpers = require('../helpers/user/user-helpers');
-const productQueryHelpers = require('../helpers/user/productquery/productQuery-helpers')
-const cartHelpers = require('../helpers/user/cart/cart-helpers');
+const productQueryHelpers = require('../helpers/user/productQuery-helpers')
+const cartHelpers = require('../helpers/user/cart-helpers');
 
 // get search page
 router.get('/', async function (req, res, next) {

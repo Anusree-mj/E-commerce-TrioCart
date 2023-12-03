@@ -3,13 +3,13 @@ const { route } = require('./users');
 var router = express.Router();
 var path = require('path');
 
-const productHelpers = require('../helpers/user/products/product-helpers')
+const productHelpers = require('../helpers/user/product-helpers')
 
 const adminOrderHelpers = require('../helpers/admin/orders/adminOrder-helpers');
 const adminLoginHelpers = require('../helpers/admin/login/adminLogin-helpers');
 const adminUserHelpers = require('../helpers/admin/manageUser/adminUser-helpers');
 const adminImgStockHelpers = require('../helpers/admin/products/adminImgStock-helpers');
-const categoryHelpers = require('../helpers/user/category/category-helpers');
+const categoryHelpers = require('../helpers/user/category-helpers');
 const adminProductHelpers=require('../helpers/admin/products/adminProduct-helpers');
 const adminCategoryHelpers=require('../helpers/admin/products/adminCategory-hepers');
 

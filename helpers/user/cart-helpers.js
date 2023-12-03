@@ -1,4 +1,5 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../models')
+
 
 module.exports = {
     cartProductIncrement: async (productId, size) => {

@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-const productHelpers = require('../helpers/user/products/product-helpers')
+const productHelpers = require('../helpers/user/product-helpers')
 const userHelpers = require('../helpers/user/user-helpers');
-const userUpdateHelpers = require('../helpers/user/userUpdates/userUpdate-helpers');
-const sessionHelpers = require('../helpers/user/session/session-helpers');
-const categoryHelpers = require('../helpers/user/category/category-helpers');
-const cartHelpers = require('../helpers/user/cart/cart-helpers');
-const billingAddressHelpers = require('../helpers/user/billingAddress/billingAddress-helpers');
+const userUpdateHelpers = require('../helpers/user/userUpdate-helpers');
+const sessionHelpers = require('../helpers/user/session-helpers');
+const categoryHelpers = require('../helpers/user/category-helpers');
+const cartHelpers = require('../helpers/user/cart-helpers');
+const billingAddressHelpers = require('../helpers/user/billingAddress-helpers');
+const orderHelpers = require('../helpers/user/orderHelpers');
 
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
@@ -265,7 +266,7 @@ router.put('/orderAddress/:userId', function (req, res, next) {
   sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
 
-      userHelpers.saveOrderAddress(userId, req.body).then(result => {
+      orderHelpers.saveOrderAddress(userId, req.body).then(result => {
         if (result.status === 'ok') {
           res.status(200).json({ status: "ok" });
         } else {
@@ -302,7 +303,7 @@ router.put('/billingAddress', function (req, res, next) {
 // post order detais
 router.post('/checkout', function (req, res, next) {
   let orderDetails = req.body
-  userHelpers.saveOrderDetails(orderDetails).then((result) => {
+  orderHelpers.saveOrderDetails(orderDetails).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -319,7 +320,7 @@ router.get('/order/success', async function (req, res, next) {
       let userId = result.user._id;
       let userName = result.user.name
 
-      userHelpers.getAllOrderDetails(userId).then((result) => {
+      orderHelpers.getAllOrderDetails(userId).then((result) => {
         if (result.status === 'ok') {
           let estimatedTym = result.estimatedDelivery;
           let latestOrder = result.latestOrder
@@ -346,7 +347,7 @@ router.get('/order/history', async function (req, res, next) {
         if (result) {
           let totalCartProduct = result.totalCount;
 
-          userHelpers.getAllOrderDetails(userId).then((result) => {
+          orderHelpers.getAllOrderDetails(userId).then((result) => {
             if (result.status === 'ok') {
               let orderDetails = result.orderDetails
             
@@ -380,7 +381,7 @@ router.get('/order/details/:orderId', async function (req, res, next) {
         if (result) {
           let totalCartProduct = result.totalCount;
 
-          userHelpers.getAnOrder(orderId).then((result) => {
+          orderHelpers.getAnOrder(orderId).then((result) => {
             let order = result.order
 
             productHelpers.getNewArrivalProducts().then(result => {

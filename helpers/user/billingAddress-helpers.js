@@ -1,4 +1,4 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../models/mongodb')
 
 module.exports = {    
     saveBillingAddress: async (billingAddress) => {

@@ -1,158 +1,24 @@
-const { Admin } = require('mongodb');
-const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost:27017/TrioCart")
+const mongoosedb = require('mongoose');
+
+mongoosedb.connect("mongodb://localhost:27017/TrioCart")
     .then(() => {
         console.log("mongodb connected");
     })
     .catch(() => {
         console.log('failed to connect');
     });
-// products collection
-const ProductSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        category: {
-            type: String,
-            required: true,
-        },
-        subCategory: {
-            type: String,
-            required: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        size: {
-            type: Array,
-            required: true,
-        },
-        color: {
-            type: Array,
-            required: true,
-        },
-        image: {
-            type: String,
-            required: true,
-        },
-        detailedImages: {
-            type: Array,
-            requires: true,
-        },
-        stock: {
-            type: Number,
-            requires: true,
-        },
-        isDeleted: {
-            type: Boolean,
-            default: false,
-        }
-    },
-    {
-        timestamps: true, // This option adds createdAt and updatedAt timestamps
-    }
-);
-const productsCollection = new mongoose.model("products", ProductSchema);
 
 
-// users collection
-const UserSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
-        phone: {
-            type: Number,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        otp: {
-            type: String,
-        },
-        isBlocked: {
-            type: Boolean,
-            default: false,
-        },
-        billingAddress: [
-            {
-                name: {
-                    type: String,
-                    required: true,
-                }, phone: {
-                    type: Number,
-                    required: true,
-                },
-                address: {
-                    type: String,
-                    required: true,
-                },
-                town: {
-                    type: String,
-                    required: true,
-                },
-                pincode: {
-                    type: Number,
-                    required: true,
-                },
-                state: {
-                    type: String,
-                    required: true,
-                }
-            },
-        ],
-        orderAddress: [
-            {
-                name: {
-                    type: String,
-                    required: true,
-                }, phone: {
-                    type: Number,
-                    required: true,
-                },
-                address: {
-                    type: String,
-                    required: true,
-                },
-                town: {
-                    type: String,
-                    required: true,
-                },
-                pincode: {
-                    type: Number,
-                    required: true,
-                },
-                state: {
-                    type: String,
-                    required: true,
-                }
-            },
-        ]
-    },
-    {
-        timestamps: true, // This option adds createdAt and updatedAt timestamps
-    }
-);
-const usersCollection = new mongoose.model("users", UserSchema);
+
+
+
+
+
 
 
 // temporary users collection
-const TemporaryUserSchema = new mongoose.Schema(
+const TemporaryUserSchema = new mongoosedb.Schema(
     {
         name: {
             type: String,
@@ -182,14 +48,14 @@ const TemporaryUserSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-const tempUsersCollection = new mongoose.model("tempUsers", TemporaryUserSchema);
+const tempUsersCollection = new mongoosedb.model("tempUsers", TemporaryUserSchema);
 
 
 // sessions collection
-const SessionSchema = new mongoose.Schema(
+const SessionSchema = new mongoosedb.Schema(
     {
         userId: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoosedb.Schema.Types.ObjectId,
             ref: 'users',
         },
         sessionId: {
@@ -200,11 +66,11 @@ const SessionSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-const sessionCollection = new mongoose.model("sessions", SessionSchema);
+const sessionCollection = new mongoosedb.model("sessions", SessionSchema);
 
 
 // admin collection
-const AdminCollection = new mongoose.Schema({
+const AdminCollection = new mongoosedb.Schema({
     name: {
         type: String,
         required: true
@@ -218,11 +84,11 @@ const AdminCollection = new mongoose.Schema({
         required: true
     }
 })
-const adminCollection = new mongoose.model("admins", AdminCollection)
+const adminCollection = new mongoosedb.model("admins", AdminCollection)
 
 
 //admin session
-const AdminSessionSchema = new mongoose.Schema(
+const AdminSessionSchema = new mongoosedb.Schema(
     {
         adminId: {
             type: String,
@@ -235,134 +101,24 @@ const AdminSessionSchema = new mongoose.Schema(
         timestamps: true, // This option adds createdAt and updatedAt timestamps
     }
 );
-const adminSessionCollection = new mongoose.model("adminSessions", AdminSessionSchema);
+const adminSessionCollection = new mongoosedb.model("adminSessions", AdminSessionSchema);
 
 
-// category collection
-const CategorySchema = new mongoose.Schema(
-    {
-        category: {
-            type: String,
-        },
-        subCategory: [
-            {
-                name: {
-                    type: String,
-                    required: true,
-                }, isDeleted: {
-                    type: Boolean,
-                    default: false,
-                },
-            },
-        ],
-    },
-    {
-        timestamps: true, // This option adds createdAt and updatedAt timestamps
-    }
-);
-const categoryCollection = new mongoose.model("categories", CategorySchema);
 
 
-// carts collection
-const CartSchema = new mongoose.Schema(
-    {
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'users',
-        },
-        products: [{
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'products',
-            },
-            Size: String,
-            Count: {
-                type: Number,
-                default: 1,
-            },
-        }]
-    },
-    {
-        timestamps: true, // This option adds createdAt and updatedAt timestamps
-    }
-);
-const cartCollection = new mongoose.model("cartProducts", CartSchema);
 
-// order collection
-const OrderSchema = new mongoose.Schema(
-    {
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'users',
-        },
-        billingAddress: [
-            {
-                name: {
-                    type: String,
-                    required: true,
-                }, phone: {
-                    type: Number,
-                    required: true,
-                },
-                address: {
-                    type: String,
-                    required: true,
-                },
-                town: {
-                    type: String,
-                    required: true,
-                },
-                pincode: {
-                    type: Number,
-                    required: true,
-                },
-                state: {
-                    type: String,
-                    required: true,
-                }
-            },
-        ],
-        products: [{
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'products',
-            },
-            Size: String,
-            Count: {
-                type: Number,
-            },
-        }],
-        totalAmount: {
-            type: Number,
-            required: true,
-        },
-        paymentMethod: {
-            type: String,
-            required: true,
-        },
-        estimatedDelivery: {
-            type: String,
-            required: true,
-        },
-        orderStatus: {
-            type: String,
-            default: 'placed',
-        }
-    },
-    {
-        timestamps: true, // This option adds createdAt and updatedAt timestamps
-    }
-);
-const orderCollection = new mongoose.model("orders", OrderSchema);
+
+
 
 module.exports = {
-    productsCollection,
-    usersCollection,
+    // productsCollection,
+    // usersCollection,
     tempUsersCollection,
     adminCollection,
     sessionCollection,
     adminSessionCollection,
-    categoryCollection,
-    cartCollection,
-    orderCollection,
+
+    // cartCollection,
+    mongoosedb
 };
+// module.exports = mongoosedb

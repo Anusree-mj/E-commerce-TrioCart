@@ -1,8 +1,6 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../models')
 
 module.exports = {
-
-
     getCategoryDetails: async () => {
         try {
             const allCategories = await collection.categoryCollection.find()
