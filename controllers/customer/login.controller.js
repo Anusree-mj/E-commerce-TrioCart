@@ -1,0 +1,29 @@
+const userHelpers = require('../../helpers/user/user-helpers');
+const sessionHelpers = require('../../helpers/user/session-helpers'); 
+const uuidv4 = require('uuid').v4
+
+const getLoginPage =  (req, res, next) => {
+    res.render('users/logins/login', { layout: 'layout/layout' });
+}
+
+const sendUserLoginRequest =  (req, res, next) => {
+    userHelpers.dologin(req.body).then((result) => {
+        console.log('result in post ', result)
+        if (result.user) {
+          const sessionId = uuidv4();
+          const userId = result.user._id
+          sessionHelpers.saveSessions(sessionId, userId)
+          res.cookie('session', sessionId);
+          res.status(200).json({ status: "ok" });
+        } else if (result.status === 'invalid') {
+          res.status(400).json({ status: "invalid" });
+        } else {
+          res.status(400).json({ status: "blocked" });
+        }
+      })
+}
+
+module.exports = {
+    getLoginPage,
+    sendUserLoginRequest
+}
