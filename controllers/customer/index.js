@@ -1,12 +1,22 @@
-const productController= require('./products.controller')
-const categoryController= require('./category.controller')
-const subcategoryController= require('./subcategory.controller')
-const searchController=require('./search.controller')
+const productController = require('./products.controller')
+const categoryController = require('./category.controller')
+const subcategoryController = require('./subcategory.controller')
+const searchController = require('./search.controller')
+const loginController = require('./login.controller')
+const signupController = require('./signup.controller')
+const otpController = require('./otp.controller')
+const passwordController = require('./password.controller')
 
 
-module.exports={
+
+module.exports = {
     productController,
     categoryController,
     subcategoryController,
     searchController,
+    loginController,
+    signupController,
+    otpController,
+    passwordController,
+
 }
