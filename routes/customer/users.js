@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-const productHelpers = require('../helpers/user/product-helpers')
-const userHelpers = require('../helpers/user/user-helpers');
-const userUpdateHelpers = require('../helpers/user/userUpdate-helpers');
-const sessionHelpers = require('../helpers/user/session-helpers');
-const categoryHelpers = require('../helpers/user/category-helpers');
-const cartHelpers = require('../helpers/user/cart-helpers');
-const billingAddressHelpers = require('../helpers/user/billingAddress-helpers');
-const orderHelpers = require('../helpers/user/orderHelpers');
+const productHelpers = require('../../helpers/user/product-helpers')
+const userHelpers = require('../../helpers/user/user-helpers');
+const userUpdateHelpers = require('../../helpers/user/userUpdate-helpers');
+const sessionHelpers = require('../../helpers/user/session-helpers');
+const categoryHelpers = require('../../helpers/user/category-helpers');
+const cartHelpers = require('../../helpers/user/cart-helpers');
+const billingAddressHelpers = require('../../helpers/user/billingAddress-helpers');
+const orderHelpers = require('../../helpers/user/orderHelpers');
 
 /* GET  home page. */
 router.get('/', async function (req, res, next) {

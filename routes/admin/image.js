@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 const multer = require('multer');
+const controller = require("../../controllers")
 
 const storage = multer.diskStorage({
     destination: ((req, file, cb) => {
@@ -19,18 +20,6 @@ const upload = multer({
     },
 });
 
-router.post('/', upload.single('image'), (req, res) => {
-    try {
-        if (!req.file) {          
-            throw new Error('No file uploaded');
-        }       
-        const imagePathWithoutPublic = path.relative('public', req.file.path);
-
-        res.status(200).json({ imagePathWithoutPublic, status: 'ok' });
-    } catch (error) {        
-        console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
+router.post('/', upload.single('image'), controller.adminControllers.imageController)
 
 module.exports = router;
