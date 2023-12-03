@@ -1,20 +1,7 @@
-var express = require('express');
-const { route } = require('../customer/users');
-var router = express.Router();
-var path = require('path');
+const express = require('express');
+const router = express.Router();
 const controller = require("../../controllers")
 
-const productHelpers = require('../../helpers/user/product-helpers')
-const adminOrderHelpers = require('../../helpers/admin/orders/adminOrder-helpers');
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const adminUserHelpers = require('../../helpers/admin/manageUser/adminUser-helpers');
-const adminImgStockHelpers = require('../../helpers/admin/products/adminImgStock-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const adminProductHelpers = require('../../helpers/admin/products/adminProduct-helpers');
-const adminCategoryHelpers = require('../../helpers/admin/products/adminCategory-hepers');
-
-
-const uuidv4 = require('uuid').v4
 
 //admin page
 router.get('/', controller.adminControllers.dashboardController.getDashboardPage);
@@ -83,68 +70,14 @@ router.delete('/users', controller.adminControllers.userManagementController.sof
 router.put('/users', controller.adminControllers.userManagementController.undoSoftDeleteUser)
 
 //get orders list
-router.get('/orders', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-
-      adminOrderHelpers.getAllOrders().then((results) => {
-        let orders = results.orders
-
-        res.render('admin/adminOrders', { layout: 'layout/layout', orders });
-      })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-});
+router.get('/orders', controller.adminControllers.orderManagementController.getOrderPage);
 
 //edit order status
-router.put('/orders', function (req, res) {
-  let data = req.body
-  console.log("ssssssssss", data)
-
-  adminOrderHelpers.updateOrderStatus(data).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.put('/orders', controller.adminControllers.orderManagementController.editOrderStatus)
 
 // order details page
-router.get('/order/:orderId', async function (req, res, next) {
-  let orderId = req.params.orderId;
-  let sessionId = req.cookies.adminSession
-
-  adminLoginHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      adminOrderHelpers.getAnOrder(orderId).then((result) => {
-        let order = result.order
-
-        res.render('admin/adminOrderDetails', { layout: 'layout/layout', order });
-      })
-    } else {
-      res.redirect('/admin/login')
-    }
-  })
-})
-
-
-
+router.get('/order/:orderId', controller.adminControllers.orderManagementController.getOrderDetailPage )
 
 //logout
-router.get('/logout', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.deleteSessions(sessionId).then((result) => {
-    if (result) {
-      req.session.destroy(function (err) {
-        res.clearCookie('connect.sid');
-        res.redirect('/admin');
-      })
-    }
-  })
-})
+router.get('/logout', controller.adminControllers.loginController.logout)
 module.exports = router;
