@@ -5,8 +5,8 @@ function addFilter(category, subCategory) {
     const selectedPrice = document.querySelector('input[name="price"]:checked');
     const price = selectedPrice ? selectedPrice.value : null;
 
-    const encodedSize = size ? encodeURIComponent(size) : '';
-    const encodedPrice = price ? encodeURIComponent(price) : '';
+    const encodedSize = size ? encodeURIComponent(size) : undefined;
+    const encodedPrice = price ? encodeURIComponent(price) : undefined;
 
     // Construct the URL with size and price parameters
     const url = `http://localhost:3000/products/${category}/${subCategory}?size=${encodedSize}&price=${encodedPrice}`;

@@ -1,29 +1,35 @@
 var express = require('express');
 var router = express.Router();
-var productHelpers = require('../helpers/product-helpers')
-var userHelpers = require('../helpers/user-helpers');
+
+const productHelpers = require('../helpers/user/products/product-helpers')
+const userHelpers = require('../helpers/user/user-helpers');
+const categoryHelpers = require('../helpers/user/category/category-helpers');
+const sessionHelpers = require('../helpers/user/session/session-helpers');
+const cartHelpers = require('../helpers/user/cart/cart-helpers');
 
 // get all category products
 router.get('/:category/viewAll', async function (req, res, next) {
   const category = req.params.category
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
   let query = req.query.q;
-//need to pass sort filter 
-  productHelpers.viewAllProductsofEAchCAtegory(category,query).then((result) => {
+  let size=req.query.size;
+  let price = req.query.price;
+ 
+  categoryHelpers.viewAllProductsofEAchCAtegory(category,query,size,price).then((result) => {
     let products = result.products;
     let categories = result.categories;
     let searchProducts=result.searchProducts;
     let sessionId = req.cookies.session
-
-    userHelpers.checkSessions(sessionId).then((result) => {
+ 
+    sessionHelpers.checkSessions(sessionId).then((result) => {
       const isAuthenticated = result.status === 'ok';
       if (isAuthenticated) {
         let user = result.user
-        let userId = result.user._id
+        let userId = result.user._id 
 
-        userHelpers.getMyCartProducts(userId).then((result) => {
+        cartHelpers.getMyCartProducts(userId).then((result) => {
           if (result) {
-            let totalCartProduct = result.totalCount
+            let totalCartProduct = result.totalCount 
             res.render('users/categoryProducts', { layout: 'layout/layout', allCategories,category,
             searchProducts, products, categories, user, totalCartProduct })
           }
@@ -44,19 +50,19 @@ router.get('/:category/:subcategory', async function (req, res, next) {
   let size=req.query.size;
   let price = req.query.price;
 
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
 
-  productHelpers.viewEachSubcategoryProducts(category, subCategory,query,size,price).then((result) => {
+  categoryHelpers.viewEachSubcategoryProducts(category, subCategory,query,size,price).then((result) => {
     let categories = result.categories;
     let products = result.products;
     let sessionId = req.cookies.session
 
-    userHelpers.checkSessions(sessionId).then((result) => {
+    sessionHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
         let user = result.user
         let userId = result.user._id
 
-        userHelpers.getMyCartProducts(userId).then((result) => {
+        cartHelpers.getMyCartProducts(userId).then((result) => {
           if (result) {
             let totalCartProduct = result.totalCount
             res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories,category, subCategory, categories, products, user, totalCartProduct })
@@ -73,23 +79,23 @@ router.get('/:category/:subcategory', async function (req, res, next) {
 // product details
 router.get('/:productId', async function (req, res, next) {
   const productId = req.params.productId
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
 
   productHelpers.getAproduct(productId).then((result) => {
     let product = result;
     let category = result.category;
     let subCategory = result.subCategory
 
-    productHelpers.viewEachSubcategoryProducts(category, subCategory).then(result => {
+    categoryHelpers.viewEachSubcategoryProducts(category, subCategory).then(result => {
       let viewMoreProducts = result.products;
       let sessionId = req.cookies.session
 
-      userHelpers.checkSessions(sessionId).then((result) => {
+      sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
           let user = result.user
           let userId = result.user._id
 
-          userHelpers.getMyCartProducts(userId).then((result) => {
+          cartHelpers.getMyCartProducts(userId).then((result) => {
             if (result) {
               let totalCartProduct = result.totalCount
               res.render('users/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user, totalCartProduct })
