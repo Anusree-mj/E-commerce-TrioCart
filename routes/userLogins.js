@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var userHelpers = require('../helpers/user-helpers');
+
+const userHelpers = require('../helpers/user/user-helpers');
+const sessionHelpers = require('../helpers/user/session-helpers');
+const userUpdateHelpers = require('../helpers/user/userUpdate-helpers');
+const otpHelpers = require('../helpers/user/otp-helpers');
+
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../utils/signupUtil');
 
@@ -17,7 +22,7 @@ router.post('/login', function (req, res, next) {
     if (result.user) {
       const sessionId = uuidv4();
       const userId = result.user._id
-      userHelpers.saveSessions(sessionId, userId)
+      sessionHelpers.saveSessions(sessionId, userId)
       res.cookie('session', sessionId);
       res.status(200).json({ status: "ok" });
     } else if (result.status === 'invalid') {
@@ -54,10 +59,9 @@ router.get('/verify', function (req, res, next) {
 
 //resend otp 
 router.get('/resend/otp', async function (req, res, next) {
-  let emailId = req.cookies.Useremail
-   await userHelpers.deleteOtp(emailId);
+  let emailId = req.cookies.Useremail  
   const otp = signupUtil.generateOTP();
-  userHelpers.getOtp(emailId, otp).then(result => {
+  otpHelpers.getOtp(emailId, otp).then(result => {
     if (result.status === 'ok') {
       res.redirect('/user/verify');
     } else {
@@ -74,7 +78,7 @@ router.post('/verify', function (req, res, next) {
       const userId = result.user._id;
 
       console.log('dfsdjfdsjfsdhkj', userId)
-      userHelpers.saveSessions(sessionId, userId)
+      sessionHelpers.saveSessions(sessionId, userId)
       res.cookie('session', sessionId);
       res.status(200).json({ status: "ok" });
     } else {
@@ -92,7 +96,7 @@ router.get('/forgotPassword', (req, res, nxt) => {
 router.post('/getOtp', (req, res, next) => {
   let email = req.body.email;
   const otp = signupUtil.generateOTP();
-  userHelpers.getOtp(email, otp).then(result => {
+  otpHelpers.getOtp(email, otp).then(result => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -105,7 +109,7 @@ router.post('/getOtp', (req, res, next) => {
 router.put('/forgotPassword', (req, res, nxt) => {
   let email = req.body.email
   let password = req.body.password
-  userHelpers.updatePassword(email, password).then((result) => {
+  userUpdateHelpers.updatePassword(email, password).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -118,7 +122,7 @@ router.put('/forgotPassword', (req, res, nxt) => {
 router.post('/verifyOtp', function (req, res, next) {
   let email = req.body.email;
   let otp = req.body.otp
-  userHelpers.verifyOtp(email, otp).then((result) => {
+  otpHelpers.verifyOtp(email, otp).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {

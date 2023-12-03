@@ -1,6 +1,18 @@
+let isStockValid=true;
+function isValidPrice(field) {
+    isStockValid=true;
+    let data = document.getElementById(field).value;
+    const pattern = /^\d+$/;
+    if (!pattern.test(data)) {
+        document.getElementById(`${field}Span`).textContent = `*Invalid ${field}`;
+        return isStockValid = false;
+    }
+}
+
 // edit stock
 function editStock(productId){
     let stock=document.getElementById('stock').value;
+    if(stock && isStockValid){
     let reqBody = { stock }
 
     console.log(reqBody);
@@ -19,6 +31,7 @@ fetch(`http://localhost:3000/admin/products/${productId}/stock`, {
         }
     })
     .catch(err => console.log(err));
+}
 }
 
 // delete detailed image

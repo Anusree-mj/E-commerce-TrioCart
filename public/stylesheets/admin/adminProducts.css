@@ -2,23 +2,32 @@
     max-width: 90% !important;
 
 }
-.description{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    -webkit-line-clamp: 2;  /* Show at least two lines */
-    line-height: 1.2em;     /* Adjust line height as needed */
-    max-height: 2.4em;      
+
+.tno {
+    width: 0.6rem;
 }
-.getMore{
+
+.thead {
+    width: 3rem;
+    margin: 0 0.5rem;
+}
+
+.ttitle {
+    width: 4rem;
+    margin: 0 0.5rem;
+}
+
+.getMore {
     color: #000000;
     font-weight: 600;
     font-size: 0.8rem;
-    text-decoration: underline;    
+    text-decoration: underline;
 }
-.getMore:hover{
+
+.getMore:hover {
     color: #000000;
 }
+
 .subHead {
     margin-top: 1rem;
     display: flex;
@@ -36,7 +45,7 @@
 .addButton {
     width: 6rem;
     height: 2rem;
-    padding: 0.2rem 0.2rem 0  0.2rem;
+    padding: 0.2rem 0.2rem 0 0.2rem;
     font-size: 1rem;
 }
 

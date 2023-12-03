@@ -1,21 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var productHelpers = require('../helpers/product-helpers')
-var userHelpers = require('../helpers/user-helpers');
+
+const productHelpers = require('../helpers/user/product-helpers')
+const userHelpers = require('../helpers/user/user-helpers');
+const userUpdateHelpers = require('../helpers/user/userUpdate-helpers');
+const sessionHelpers = require('../helpers/user/session-helpers');
+const categoryHelpers = require('../helpers/user/category-helpers');
+const cartHelpers = require('../helpers/user/cart-helpers');
+const billingAddressHelpers = require('../helpers/user/billingAddress-helpers');
+const orderHelpers = require('../helpers/user/orderHelpers');
 
 /* GET  home page. */
 router.get('/', async function (req, res, next) {
   let sessionId = req.cookies.session
 
   let products = await productHelpers.getNewArrivalProducts();
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
       let userId = result.user._id
 
-      userHelpers.getMyCartProducts(userId).then((result) => {
+      cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
           res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user, totalCartProduct });
@@ -30,14 +37,14 @@ router.get('/', async function (req, res, next) {
 // get profile page
 router.get('/profile', async function (req, res, next) {
   let sessionId = req.cookies.session
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
      
       let userId = result.user._id
-      userHelpers.getMyCartProducts(userId).then((result) => {
+      cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
           res.render('users/profile', { layout: 'layout/layout', allCategories, user: user, totalCartProduct });
@@ -53,7 +60,7 @@ router.get('/profile', async function (req, res, next) {
 router.put('/profile/:userId', function (req, res, next) {
   let userId = req.params.userId;
 
-  userHelpers.updateUser(userId, req.body).then((result) => {
+  userUpdateHelpers.updateUser(userId, req.body).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -65,7 +72,7 @@ router.put('/profile/:userId', function (req, res, next) {
 //change password
 router.put('/password', function (req, res, next) {
  
-  userHelpers.changePassword(req.body).then((result) => {
+  userUpdateHelpers.changePassword(req.body).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -76,16 +83,16 @@ router.put('/password', function (req, res, next) {
 
 /* get cart. */
 router.get('/cart', async function (req, res, next) {
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
   productHelpers.getNewArrivalProducts().then(result => {
     let viewMoreProducts = [...result.category1, ...result.category2, ...result.category3, ...result.category4];
 
     let sessionId = req.cookies.session
-    userHelpers.checkSessions(sessionId).then((result) => {
+    sessionHelpers.checkSessions(sessionId).then((result) => {
       if (result.status === 'ok') {
         let user = result.user
 
-        userHelpers.getMyCartProducts(user).then((result) => {
+        cartHelpers.getMyCartProducts(user).then((result) => {
           if (result) {
             let cartProducts = result.cartProducts;
             let totalprice = result.totalprice;
@@ -116,11 +123,11 @@ router.post('/cart/:product_id', function (req, res, next) {
   let size = req.body.choosedSize
   let sessionId = req.cookies.session
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
     
-      userHelpers.addToCart(user, productId, size).then(() => {
+      cartHelpers.addToCart(user, productId, size).then(() => {
         res.status(200).json({ status: "ok" });
       })
     } else {
@@ -134,7 +141,7 @@ router.put('/cart/:product_id', function (req, res, next) {
   let productId = req.params.product_id
   let body = req.body
 
-  userHelpers.removeCartProducts(productId, body).then(result => {
+  cartHelpers.removeCartProducts(productId, body).then(result => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -147,7 +154,7 @@ router.put('/cart/:product_id', function (req, res, next) {
 router.put('/:product_id/add', function (req, res, next) {
   let productId = req.params.product_id
   let size = req.body.size
-  userHelpers.productAdded(productId, size).then(result => {
+  cartHelpers.cartProductIncrement(productId, size).then(result => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -160,7 +167,7 @@ router.put('/:product_id/add', function (req, res, next) {
 router.put('/:product_id/cancel', function (req, res, next) {
   let productId = req.params.product_id
   let size = req.body.size
-  userHelpers.productDecreased(productId, size).then(result => {
+  cartHelpers.cartProductDecremnt(productId, size).then(result => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -172,11 +179,11 @@ router.put('/:product_id/cancel', function (req, res, next) {
 //get checkout page
 router.get('/checkout', function (req, res, next) {
   let sessionId = req.cookies.session
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user;
 
-      userHelpers.getMyCartProducts(user).then((result) => {
+      cartHelpers.getMyCartProducts(user).then((result) => {
         if (result.cartProducts) {
           let cartProducts = result.cartProducts;
           let totalprice = result.totalprice;
@@ -197,7 +204,7 @@ router.get('/checkout', function (req, res, next) {
 // save billing address to userCollection
 router.post('/checkout/user', function (req, res, next) {
   let user = req.body
-  userHelpers.saveBillingAddress(user).then((result) => {
+  billingAddressHelpers.saveBillingAddress(user).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -211,9 +218,9 @@ router.get('/billingAddress/:adressId', function (req, res, next) {
   let addressId = req.params.adressId;
   let sessionId = req.cookies.session
  
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
-      userHelpers.getBillingAddress(addressId).then(result => {
+      billingAddressHelpers.getBillingAddress(addressId).then(result => {
         if (result.address) {
           let address = result.address
         
@@ -232,11 +239,13 @@ router.get('/billingAddress/:adressId', function (req, res, next) {
 router.delete('/billingAddress/:adressId', function (req, res, next) {
   let addressId = req.params.adressId;
   let sessionId = req.cookies.session
+console.log('addressid',addressId)
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
-
-      userHelpers.deleteBillingAddress(addressId).then(result => {
+      let userId= result.user._id      
+      
+      billingAddressHelpers.deleteBillingAddress(addressId,userId).then(result => {
         if (result.status === 'ok') {
           res.status(200).json({ status: "ok" });
         } else {
@@ -254,10 +263,10 @@ router.put('/orderAddress/:userId', function (req, res, next) {
   let userId = req.params.userId;
   let sessionId = req.cookies.session
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
 
-      userHelpers.saveOrderAddress(userId, req.body).then(result => {
+      orderHelpers.saveOrderAddress(userId, req.body).then(result => {
         if (result.status === 'ok') {
           res.status(200).json({ status: "ok" });
         } else {
@@ -275,9 +284,9 @@ router.put('/billingAddress', function (req, res, next) {
   let billingAddress = req.body;
 
   let sessionId = req.cookies.session
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
-      userHelpers.updateBillingAddress(billingAddress).then(result => {
+      billingAddressHelpers.updateBillingAddress(billingAddress).then(result => {
         if (result.status === 'ok') {
           res.status(200).json({ status: "ok" });
         } else {
@@ -294,7 +303,7 @@ router.put('/billingAddress', function (req, res, next) {
 // post order detais
 router.post('/checkout', function (req, res, next) {
   let orderDetails = req.body
-  userHelpers.saveOrderDetails(orderDetails).then((result) => {
+  orderHelpers.saveOrderDetails(orderDetails).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -306,12 +315,12 @@ router.post('/checkout', function (req, res, next) {
 // order success page
 router.get('/order/success', async function (req, res, next) {
   let sessionId = req.cookies.session
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let userId = result.user._id;
       let userName = result.user.name
 
-      userHelpers.getAllOrderDetails(userId).then((result) => {
+      orderHelpers.getAllOrderDetails(userId).then((result) => {
         if (result.status === 'ok') {
           let estimatedTym = result.estimatedDelivery;
           let latestOrder = result.latestOrder
@@ -328,17 +337,17 @@ router.get('/order/success', async function (req, res, next) {
 // get order history
 router.get('/order/history', async function (req, res, next) {
   let sessionId = req.cookies.session
-  let allCategories = await userHelpers.getCategoryDetails()
-  userHelpers.checkSessions(sessionId).then((result) => {
+  let allCategories = await   categoryHelpers.getCategoryDetails()
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
       let userId = result.user._id;
 
-      userHelpers.getMyCartProducts(userId).then((result) => {
+      cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
 
-          userHelpers.getAllOrderDetails(userId).then((result) => {
+          orderHelpers.getAllOrderDetails(userId).then((result) => {
             if (result.status === 'ok') {
               let orderDetails = result.orderDetails
             
@@ -361,18 +370,18 @@ router.get('/order/history', async function (req, res, next) {
 router.get('/order/details/:orderId', async function (req, res, next) {
   let orderId = req.params.orderId;
   let sessionId = req.cookies.session
-  let allCategories = await userHelpers.getCategoryDetails()
+  let allCategories = await   categoryHelpers.getCategoryDetails()
 
-  userHelpers.checkSessions(sessionId).then((result) => {
+  sessionHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
       let user = result.user
       let userId = result.user._id;
 
-      userHelpers.getMyCartProducts(userId).then((result) => {
+      cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
 
-          userHelpers.getAnOrder(orderId).then((result) => {
+          orderHelpers.getAnOrder(orderId).then((result) => {
             let order = result.order
 
             productHelpers.getNewArrivalProducts().then(result => {
@@ -392,7 +401,7 @@ router.get('/order/details/:orderId', async function (req, res, next) {
 //logout
 router.get('/logout', function (req, res, next) {
   let sessionId = req.cookies.session
-  userHelpers.deleteSessions(sessionId).then((result) => {
+  sessionHelpers.deleteSessions(sessionId).then((result) => {
     if (result) {
       req.session.isAuthenticated = false;
       req.session.destroy(function (err) {

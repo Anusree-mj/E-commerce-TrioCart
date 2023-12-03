@@ -1,26 +1,30 @@
 var express = require('express');
 var router = express.Router();
-var productHelpers = require('../helpers/product-helpers')
-var userHelpers = require('../helpers/user-helpers');
+
+const categoryHelpers = require('../helpers/user/category-helpers');
+const sessionHelpers = require('../helpers/user/session-helpers');
+const userHelpers = require('../helpers/user/user-helpers');
+const productQueryHelpers = require('../helpers/user/productQuery-helpers')
+const cartHelpers = require('../helpers/user/cart-helpers');
 
 // get search page
 router.get('/', async function (req, res, next) {
-    let allCategories = await userHelpers.getCategoryDetails();
+    let allCategories = await   categoryHelpers.getCategoryDetails()
     let query = req.query.q
     console.log("queryyyyyyy", query)
     let sessionId = req.cookies.session
 
-    userHelpers.checkSessions(sessionId).then((result) => {
+    sessionHelpers.checkSessions(sessionId).then((result) => {
         const isAuthenticated = result.status === 'ok';
         if (isAuthenticated) {
             let user = result.user
             let userId = result.user._id
 
-            productHelpers.getSearchProduct(query).then(result => {
+            productQueryHelpers.getSearchProduct(query).then(result => {
                 if (result.status === 'ok') {
                     let searchProducts = result.searchProducts;
 
-                    userHelpers.getMyCartProducts(userId).then((result) => {
+                    cartHelpers.getMyCartProducts(userId).then((result) => {
                         if (result) {
                             let totalCartProduct = result.totalCount
                             res.render('users/search', {

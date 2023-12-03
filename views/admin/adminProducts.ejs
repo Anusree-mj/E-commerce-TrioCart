@@ -10,18 +10,17 @@
                 <table class="table table-striped" id="productsTable">
                     <thead>
                         <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Tittle</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">SubCategory</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">IsDeleted</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col" class="tno">No</th>
+                            <th scope="col" class="thead">Image</th>
+                            <th scope="col" class="ttitle" >Tittle</th>
+                            <th scope="col" class="thead">Category</th>
+                            <th scope="col" class="thead" >SubCategory</th>
+                            <th scope="col" class="thead" >Size</th>
+                            <th scope="col" class="thead">Price</th>
+                            <th scope="col" class="thead">Stock</th>
+                            <th scope="col" class="thead">Status</th>
+                            <th scope="col" class="thead">Edit</th>
+                            <th scope="col" class="thead">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,11 +32,6 @@
                                 <td><img style="width: 50px;" src="/<%= product.image %>" alt=""></td>
                                 <td>
                                     <%= product.name%>
-                                </td>
-                                <td>
-                                    <div class="description">
-                                        <%= product.description%>
-                                    </div>
                                 </td>
                                 <td>
                                     <%= product.category%>
@@ -53,17 +47,18 @@
                                 </td>
                                 <td>
                                     <%= product.stock%>
-                                    <a href="/admin/products/<%= product._id %>/stock"><img src="/images/navbar/edit.png"
-                                        alt="edit" style="width: 1rem;"></a>
+                                        <a href="/admin/products/<%= product._id %>/stock"><img
+                                                src="/images/navbar/edit.png" alt="edit" style="width: 1rem;"></a>
                                 </td>
                                 <td>
-                                    <%= product.isDeleted%>
-                                        <% if (product.isDeleted === true) { %>
-                                            <a
-                                                onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
-                                                    src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
-                                                    id="undoProductDlt"></a>
-                                            <% }; %>
+                                    <% if (product.isDeleted===true) { %>
+                                       <p>Deleted<a
+                                            onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
+                                                src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
+                                                id="undoProductDlt"></a></p>
+                                                <%} else{ %>
+                                                    <p>Available</p>
+                                                    <% } %>
                                 </td>
                                 <td><a href="/admin/products/<%= product._id %>"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1rem;"></a> </td>
@@ -78,4 +73,4 @@
         </div>
     </section>
     <%- include('../partials/loginsFooter') %>
-    <script src="/javascripts/admin/adminDeletes.js"></script>
+        <script src="/javascripts/admin/productDlt.js"></script>

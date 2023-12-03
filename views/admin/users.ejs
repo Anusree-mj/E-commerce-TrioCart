@@ -11,9 +11,9 @@
                             <th scope="col">No</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone number</th>                           
-                            <th scope="col">Is Blocked</th>
-                            <th scope="col">Edit</th>
+                            <th scope="col">Phone number</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Block</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,19 +31,18 @@
                                 <td>
                                     <%= user.phone%>
                                 </td>
-                                
+
                                 <td>
-                                    <%= user.isBlocked %>
                                     <% if (user.isBlocked) { %>
-                                        <a
-                                            onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img
-                                                src="/images/navbar/undo.png" 
-                                                alt="edit" style="width: 1rem;"></a>
-                                                <% }%>
+                                        <p>Blocked<a onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"></a></p>
+                                     <% } else { %>
+                                        <p>Active</p>
+                                     <% } %>
+                                     
                                 </td>
                                 <td>
-                                    <a onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/home/block.png"
-                                            alt="edit" style="width: 1.5rem;"></a>
+                                    <a onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img
+                                            src="/images/home/block.png" alt="edit" style="width: 1.5rem;"></a>
                                 </td>
                             </tr>
                             <% })%>
