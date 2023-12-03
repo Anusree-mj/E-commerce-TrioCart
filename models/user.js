@@ -1,4 +1,4 @@
-const {mongoosedb} = require('./mongodb');
+const mongoosedb = require('./mongodb');
 // users collection
 const UserSchema = new mongoosedb.Schema(
     {

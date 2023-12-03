@@ -1,4 +1,4 @@
-const collection = require('../../models/mongodb')
+const collection = require('../../models')
 const bcrypt = require('bcrypt')
 const signupUtil = require('../../utils/signupUtil');
 
@@ -26,7 +26,7 @@ module.exports = {
             console.log(err)
         }
     },
-   
+
     doVerifyUser: async (data) => {
         try {
 

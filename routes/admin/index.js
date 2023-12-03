@@ -1,56 +1,29 @@
 var express = require('express');
-const { route } = require('./users');
+const { route } = require('../customer/users');
 var router = express.Router();
 var path = require('path');
+const controller = require("../../controllers")
 
-const productHelpers = require('../helpers/user/product-helpers')
-
-const adminOrderHelpers = require('../helpers/admin/orders/adminOrder-helpers');
-const adminLoginHelpers = require('../helpers/admin/login/adminLogin-helpers');
-const adminUserHelpers = require('../helpers/admin/manageUser/adminUser-helpers');
-const adminImgStockHelpers = require('../helpers/admin/products/adminImgStock-helpers');
-const categoryHelpers = require('../helpers/user/category-helpers');
-const adminProductHelpers=require('../helpers/admin/products/adminProduct-helpers');
-const adminCategoryHelpers=require('../helpers/admin/products/adminCategory-hepers');
+const productHelpers = require('../../helpers/user/product-helpers')
+const adminOrderHelpers = require('../../helpers/admin/orders/adminOrder-helpers');
+const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
+const adminUserHelpers = require('../../helpers/admin/manageUser/adminUser-helpers');
+const adminImgStockHelpers = require('../../helpers/admin/products/adminImgStock-helpers');
+const categoryHelpers = require('../../helpers/user/category-helpers');
+const adminProductHelpers = require('../../helpers/admin/products/adminProduct-helpers');
+const adminCategoryHelpers = require('../../helpers/admin/products/adminCategory-hepers');
 
 
 const uuidv4 = require('uuid').v4
 
 //admin page
-router.get('/', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  console.log('session id of admin: ', sessionId)
-  adminLoginHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      adminLoginHelpers.getAdmin(result.adminId).then((admin) => {
-        res.render('admin/adminDashboard', { layout: 'layout/layout', admin });
-      })
-    }
-    else {
-      res.redirect('/admin/login');
-    }
-  });
-});
+router.get('/', controller.adminControllers.dashboardController.getDashboardPage);
 
 //get adminlogin page
-router.get('/login', function (req, res, next) {
-  res.render('admin/adminLogin', { layout: 'layout/layout' });
-});
+router.get('/login', controller.adminControllers.loginController.getLoginPage);
 
 //admin loging in
-router.post('/adminLogin', function (req, res, next) {
-  adminLoginHelpers.dologin(req.body).then((admin) => {
-    if (admin) {
-      const sessionId = uuidv4();
-      const adminId = admin.email
-      adminLoginHelpers.saveSessions(sessionId, adminId)
-      res.cookie('adminSession', sessionId);
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.post('/adminLogin', controller.adminControllers.loginController.sendAdminLoginRequest)
 
 //get products list
 router.get('/products', function (req, res, next) {
@@ -82,7 +55,7 @@ router.get('/addProduct', function (req, res, next) {
 
 //add products
 router.post('/product', function (req, res, next) {
-  
+
   adminProductHelpers.addProduct(req.body).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
@@ -94,9 +67,9 @@ router.post('/product', function (req, res, next) {
 
 //delte product main image
 router.delete('/products/mainImage', ((req, res, next) => {
-   const productId = req.body.productId
- 
-   adminImgStockHelpers.deleteMainImage(productId).then((result) => {
+  const productId = req.body.productId
+
+  adminImgStockHelpers.deleteMainImage(productId).then((result) => {
     if (result.status === 'deleted') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -189,7 +162,7 @@ router.get('/products/:product_Id/stock', ((req, res, next) => {
 //edit products stock
 router.put('/products/:product_Id/stock', function (req, res) {
   const productId = req.params.product_Id
-    adminImgStockHelpers.editStock(req.body, productId).then((result) => {
+  adminImgStockHelpers.editStock(req.body, productId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -281,7 +254,7 @@ router.get('/users', function (req, res, next) {
 //block users
 router.delete('/users', function (req, res, next) {
   const userId = req.body.userId
- 
+
   adminUserHelpers.blockUser(userId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
@@ -294,7 +267,7 @@ router.delete('/users', function (req, res, next) {
 //unblock users
 router.put('/users', function (req, res, next) {
   const userId = req.body.userId
-  console.log('userId',userId)
+  console.log('userId', userId)
 
   adminUserHelpers.unblockUser(userId).then((result) => {
     if (result.status === 'ok') {

@@ -1,4 +1,4 @@
-const collection = require('../../../models/mongodb')
+const collection = require('../../../models')
 const path = require('path');
 
 module.exports = {

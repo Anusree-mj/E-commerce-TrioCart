@@ -1,4 +1,4 @@
-const collection = require('../../models/mongodb')
+const collection = require('../../models')
 
 module.exports = {
 
@@ -18,7 +18,7 @@ module.exports = {
     },
 
     checkSessions: async (sessionId) => {
-        try {           
+        try {
             const checkSession = await collection.sessionCollection.findOne({
                 sessionId: sessionId,
             }).populate('userId');

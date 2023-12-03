@@ -1,4 +1,4 @@
-const collection = require('../../models/mongodb')
+const collection = require('../../models')
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
         try {
             const user = await collection.usersCollection.updateOne(
                 { _id: userId },
-                {
+                { 
                     name: data.name,
                     phone: data.phone,
                     email: data.email
@@ -32,9 +32,9 @@ module.exports = {
                 await collection.usersCollection.updateOne(
                     { _id: data.userId },
                     { $set: { password: password } })
-                    return{status:'ok'}
-            }else{
-                return{status:'nok'}
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
             }
         }
         catch (err) {

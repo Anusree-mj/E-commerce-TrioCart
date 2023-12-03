@@ -1,5 +1,5 @@
 
-const {mongoosedb} = require('./mongodb');
+const mongoosedb = require('./mongodb');
 
 // carts collection
 const CartSchema = new mongoosedb.Schema(

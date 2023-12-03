@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const productHelpers = require('../helpers/user/product-helpers')
-const userHelpers = require('../helpers/user/user-helpers');
-const categoryHelpers = require('../helpers/user/category-helpers');
-const sessionHelpers = require('../helpers/user/session-helpers');
-const cartHelpers = require('../helpers/user/cart-helpers');
+const productHelpers = require('../../helpers/user/product-helpers')
+const userHelpers = require('../../helpers/user/user-helpers');
+const categoryHelpers = require('../../helpers/user/category-helpers');
+const sessionHelpers = require('../../helpers/user/session-helpers');
+const cartHelpers = require('../../helpers/user/cart-helpers');
 
 // get all category products
 router.get('/:category/viewAll', async function (req, res, next) {
