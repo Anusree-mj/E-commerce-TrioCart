@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 });
 
 
-var usersRouter = require('./routes/customer/users');
+var usersRouter = require('./routes/customer');
 var adminRouter = require('./routes/admin');
 var imageRouter = require('./routes/admin/image');
 var productRouter = require('./routes/customer/products');
