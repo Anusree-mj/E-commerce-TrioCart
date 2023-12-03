@@ -47,74 +47,40 @@ router.delete('/products/dlt/:product_Id', controller.adminControllers.productMa
 router.put('/products/dlt/:product_id', controller.adminControllers.productManagementController.undoSoftDeleteProduct)
 
 //get edit product page
-router.get('/products/:product_Id',controller.adminControllers.productManagementController.getEditProductPage )
+router.get('/products/:product_Id', controller.adminControllers.productManagementController.getEditProductPage)
 
 //edit products
 router.put('/products/:product_Id', controller.adminControllers.productManagementController.editProduct)
 
 //get edit stockproduct  page
-router.get('/products/:product_Id/stock',controller.adminControllers.productManagementController.getEditProductStockPage )
+router.get('/products/:product_Id/stock', controller.adminControllers.productManagementController.getEditProductStockPage)
 
 //edit products stock
-router.put('/products/:product_Id/stock',controller.adminControllers.productManagementController.editProductStock )
+router.put('/products/:product_Id/stock', controller.adminControllers.productManagementController.editProductStock)
 
 //get category page
-router.get('/category',controller.adminControllers.categoryManagementController.getCategoryPage)
+router.get('/category', controller.adminControllers.categoryManagementController.getCategoryPage)
 
 //add category page
-router.get('/addCategory',controller.adminControllers.categoryManagementController.getAddCategoryPage)
+router.get('/addCategory', controller.adminControllers.categoryManagementController.getAddCategoryPage)
 
 //delete subcategory
-router.patch('/category',controller.adminControllers.categoryManagementController.softDeleteSubcategory)
+router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory)
 
 //undo subcategory delete
-router.patch('/subcategory/undo',controller.adminControllers.categoryManagementController.undoSoftDeleteSubcategory)
+router.patch('/subcategory/undo', controller.adminControllers.categoryManagementController.undoSoftDeleteSubcategory)
 
 //add subcategory
-router.post('/category',controller.adminControllers.categoryManagementController.addSubcategory)
+router.post('/category', controller.adminControllers.categoryManagementController.addSubcategory)
 
 //get users list
-router.get('/users', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-      adminUserHelpers.getUsers().then((users) => {
-        console.log(users)
-        res.render('admin/users', { layout: 'layout/layout', users });
-      })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-});
+router.get('/users', controller.adminControllers.userManagementController.getUserPage);
 
 //block users
-router.delete('/users', function (req, res, next) {
-  const userId = req.body.userId
-
-  adminUserHelpers.blockUser(userId).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.delete('/users', controller.adminControllers.userManagementController.softDeleteUser)
 
 //unblock users
-router.put('/users', function (req, res, next) {
-  const userId = req.body.userId
-  console.log('userId', userId)
-
-  adminUserHelpers.unblockUser(userId).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.put('/users', controller.adminControllers.userManagementController.undoSoftDeleteUser)
 
 //get orders list
 router.get('/orders', function (req, res, next) {
