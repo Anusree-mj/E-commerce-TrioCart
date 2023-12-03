@@ -26,214 +26,52 @@ router.get('/login', controller.adminControllers.loginController.getLoginPage);
 router.post('/adminLogin', controller.adminControllers.loginController.sendAdminLoginRequest)
 
 //get products list
-router.get('/products', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-      productHelpers.getAllProducts().then((products) => {
-        res.render('admin/adminProducts', { layout: 'layout/layout', products });
-      })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-});
+router.get('/products', controller.adminControllers.productManagementController.getProductPage);
 
 //add product page
-router.get('/addProduct', function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-      res.render('admin/addProduct', { layout: 'layout/layout' })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-})
+router.get('/addProduct', controller.adminControllers.productManagementController.getAddProductPage)
 
 //add products
-router.post('/product', function (req, res, next) {
-
-  adminProductHelpers.addProduct(req.body).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.post('/product', controller.adminControllers.productManagementController.addProduct)
 
 //delte product main image
-router.delete('/products/mainImage', ((req, res, next) => {
-  const productId = req.body.productId
-
-  adminImgStockHelpers.deleteMainImage(productId).then((result) => {
-    if (result.status === 'deleted') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.delete('/products/mainImage', controller.adminControllers.productManagementController.softDeleteProductMainImage)
 
 //delte product detailed image
-router.delete('/products/image', ((req, res, next) => {
-  const image = req.body.image
-  const productId = req.body.productId
-  console.log('image id in delet router:', image);
-  console.log('product id in delet router:', productId);
-  adminImgStockHelpers.deleteAProductImage(image, productId).then((result) => {
-    if (result.status === 'deleted') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.delete('/products/image', controller.adminControllers.productManagementController.softDeleteProductDetailedImage)
 
 //delete products
-router.delete('/products/dlt/:product_Id', ((req, res, next) => {
-  const productId = req.params.product_Id
-  adminProductHelpers.deleteAProduct(productId).then((result) => {
-    if (result.status === 'deleted') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.delete('/products/dlt/:product_Id', controller.adminControllers.productManagementController.softDeleteProduct)
 
 //undo product delete
-router.put('/products/dlt/:product_id', ((req, res, next) => {
-  console.log('entereddd')
-  const productId = req.params.product_id
-  console.log(productId, "iddd")
-
-  adminProductHelpers.undoProductDelete(productId).then((result) => {
-    if (result.status === 'undo delete') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.put('/products/dlt/:product_id', controller.adminControllers.productManagementController.undoSoftDeleteProduct)
 
 //get edit product page
-router.get('/products/:product_Id', ((req, res, next) => {
-  const productId = req.params.product_Id
-  console.log('Product ID:', productId);
-  adminProductHelpers.getProductForEditing(productId).then((productData) => {
-    if (productData) {
-      res.render('admin/editProduct', { productData })
-    } else {
-      res.redirect('/products');
-    }
-  })
-}))
+router.get('/products/:product_Id',controller.adminControllers.productManagementController.getEditProductPage )
 
 //edit products
-router.put('/products/:product_Id', function (req, res) {
-  const productId = req.params.product_Id
-  console.log("ssssssssss", req.body, productId)
-  adminProductHelpers.editProduct(req.body, productId).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.put('/products/:product_Id', controller.adminControllers.productManagementController.editProduct)
 
 //get edit stockproduct  page
-router.get('/products/:product_Id/stock', ((req, res, next) => {
-  const productId = req.params.product_Id
-  console.log('Product ID:', productId);
-  adminProductHelpers.getProductForEditing(productId).then((productData) => {
-    if (productData) {
-      res.render('admin/editStockProduct', { productData })
-    } else {
-      res.redirect('/products');
-    }
-  })
-}))
+router.get('/products/:product_Id/stock',controller.adminControllers.productManagementController.getEditProductStockPage )
 
 //edit products stock
-router.put('/products/:product_Id/stock', function (req, res) {
-  const productId = req.params.product_Id
-  adminImgStockHelpers.editStock(req.body, productId).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-})
+router.put('/products/:product_Id/stock',controller.adminControllers.productManagementController.editProductStock )
 
 //get category page
-router.get('/category', ((req, res, next) => {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-      categoryHelpers.getCategoryDetails().then((categories) => {
-        res.render('admin/adminCategories', { layout: 'layout/layout', categories });
-      })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-}))
+router.get('/category',controller.adminControllers.categoryManagementController.getCategoryPage)
 
 //add category page
-router.get('/addCategory', async function (req, res, next) {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.checkSessions(sessionId).then(result => {
-    if (result.status === 'ok') {
-      res.render('admin/addCategory', { layout: 'layout/layout' })
-    }
-    else {
-      res.redirect('/admin');
-    }
-  })
-})
+router.get('/addCategory',controller.adminControllers.categoryManagementController.getAddCategoryPage)
 
 //delete subcategory
-router.patch('/category', ((req, res, next) => {
-  const subCategory = req.body.subCategory
-  adminCategoryHelpers.deleteSubcategory(subCategory).then((result) => {
-    if (result.status === 'deleted') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.patch('/category',controller.adminControllers.categoryManagementController.softDeleteSubcategory)
 
 //undo subcategory delete
-router.patch('/subcategory/undo', ((req, res, next) => {
-  const subCategory = req.body.subCategory
-  console.log(subCategory, "subbbcatgry")
-  adminCategoryHelpers.undoSubcategoryDelete(subCategory).then((result) => {
-    if (result.status === 'undo delete') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.patch('/subcategory/undo',controller.adminControllers.categoryManagementController.undoSoftDeleteSubcategory)
 
 //add subcategory
-router.post('/category', ((req, res, next) => {
-  adminCategoryHelpers.addSubCategory(req.body).then((result) => {
-    if (result.status === 'added') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(500).json({ status: "nok" });
-    }
-  })
-}))
+router.post('/category',controller.adminControllers.categoryManagementController.addSubcategory)
 
 //get users list
 router.get('/users', function (req, res, next) {
