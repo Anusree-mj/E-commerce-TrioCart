@@ -6,7 +6,7 @@ const controller = require("../../controllers")
 router.get('/:category/viewAll', controller.customerControllers.categoryController.getCategoryProductsPage)
 
 //get each subcategory products
-router.get('/:category/:subcategory',controller.customerControllers.subcategoryController.getsubcategoryProductsPage )
+router.get('/:category/:subcategory', controller.customerControllers.subcategoryController.getsubcategoryProductsPage)
 
 // product details
 router.get('/:productId', controller.customerControllers.productController.getProductDetailPage)
