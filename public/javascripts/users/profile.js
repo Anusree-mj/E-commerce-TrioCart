@@ -7,68 +7,73 @@ function editMyDetails() {
 
 }
 
-// validation of my details
-let isValidName = true;
-function checkName() {
-    let name = document.getElementById('name').value;
-    if (/^\s+$/.test(name)) {
-        document.getElementById("nameSpan").textContent = "*Invalid Name. Name cannot consist of only spaces.";
-        return isValidName = false;
-    }
-    if (/\d/.test(name)) {
-        document.getElementById("nameSpan").textContent = "*Invalid Name. Name cannot contain numbers.";
-        return isValidName = false;
-    }
-    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
-    if (!nameRegex.test(name)) {
-        document.getElementById("nameSpan").textContent = "Invalid Name. Please enter a valid name containing only letters and optional spaces.";
-        return isValidName = false;
-    }
+//clearing span
+function clearSpan(spanId) {
+    document.getElementById(spanId).textContent = "";
 }
 
 //checks email
 let isValidEmail = true;
 function checkEmail() {
-    let email = document.getElementById("email").value;
+    let email = document.getElementById("email_profile").value;
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(email)) {
         isValidEmail = false;
-        document.getElementById("emailSpan").textContent = "*Invalid email";
+        document.getElementById("email_profileSpan").textContent = "*Invalid email";
     }
 }
 
 //checks phoneNumber
 let isValidPhoneNumber = true;
-function checkPhone() {
-    let phone = document.getElementById("phone").value;
+function checkValidPhone() {
+    let phone = document.getElementById("phone__profile").value;
 
     isValidPhoneNumber = true;
     const phonePattern = /^\d{10}$/;
     if (!phonePattern.test(phone)) {
         isValidPhoneNumber = false;
-        document.getElementById("phoneSpan").textContent = "*Invalid phone number";
+        document.getElementById("phone_profileSpan").textContent = "*Invalid phone number";
+    }
+}
+
+// valid name
+let isValidName = true;
+function checkName() {
+    let name = document.getElementById('name_profile').value;
+    if (/^\s+$/.test(name)) {
+        document.getElementById("name_profileSpan").textContent = "*Invalid Name. Name cannot consist of only spaces.";
+        return isValidName = false;
+    }
+    if (/\d/.test(name)) {
+        document.getElementById("name_profileSpan").textContent = "*Invalid Name. Name cannot contain numbers.";
+        return isValidName = false;
+    }
+    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    if (!nameRegex.test(name)) {
+        document.getElementById("name_profileSpan").textContent = "Invalid Name. Please enter a valid name containing only letters and optional spaces.";
+        return isValidName = false;
     }
 }
 
 // update details
 function updateMyDetails(userId) {
-
     let isError = false
-    const fields = ["name", "email", "phone"];
+    const fields = ['name_profile', 'email_profile', 'phone__profile'];
 
-    //checking for any empty fields
+    // checking for any empty fields
     fields.forEach(field => {
         const value = document.getElementById(field).value;
         if (!value) {
             isError = true;
-            document.getElementById(`${field}Span`).textContent = `*This field is required`;
+            document.getElementById(field).style.border = '1px solid red';
+            document.getElementById(field).style.boxShadow = '0 0 5px red';
         }
     });
 
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let phone = document.getElementById('phone').value;
+    let name = document.getElementById('name_profile').value;
+    let email = document.getElementById('email_profile').value;
+    let phone = document.getElementById('phone__profile').value;
     let reqBody = { name, email, phone }
     if (!isError && (
         isValidEmail,
@@ -127,6 +132,17 @@ function isStrongPaswrd() {
     }
 }
 
+// add address
+function addAddress() {
+    const readonlyElements = Array.from(document.getElementsByClassName('readonly'));
+    const addElements = Array.from(document.getElementsByClassName('addAddress'));
+
+    readonlyElements.forEach(element => element.style.display = 'none');
+    addElements.forEach(element => element.style.display = 'block');
+    document.getElementById('add').style.display = 'none'
+}
+
+
 //password toggling
 function togglePassword(field) {
     let password = document.getElementById(field);
@@ -183,9 +199,9 @@ function changePassword(userId) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                   location.reload();
+                    location.reload();
                 } else {
-                    document.getElementById("currntPasswordSpan").textContent="*Invalid password. Please enter you current password."
+                    document.getElementById("currntPasswordSpan").textContent = "*Invalid password. Please enter you current password."
                 }
             })
             .catch(err => console.log(err));

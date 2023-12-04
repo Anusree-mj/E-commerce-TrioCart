@@ -33,20 +33,22 @@
                     <div class="editableDetails" style="display: none;">
                         <p class="subHeadEdit">Edit your Details</p>
                         <label class="label mt-3" for="name">Name<span class="required">*</span></label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name"
-                            onclick="clearSpan('nameSpan')" onblur="checkName()" value="<%= user.name %>">
-                        <span id="nameSpan" class="span"></span><br>
+                        <input type="text" class="form-control" name="name" id="name_profile"
+                            placeholder="Enter your name" onclick="clearSpan('name_profileSpan')" onblur="checkName()"
+                            value="<%= user.name %>">
+                        <span id="name_profileSpan" class="span"></span><br>
 
                         <label class="label" for="email">Email<span class="required">*</span></label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter you email"
-                            onclick="clearSpan('emailSpan')" onblur="checkEmail()" value=" <%= user.email %>">
-                        <span id="emailSpan" class="span"></span><br>
+                        <input type="email" class="form-control" name="email" id="email_profile"
+                            placeholder="Enter you email" onclick="clearSpan('email_profileSpan')" onblur="checkEmail()"
+                            value=" <%= user.email %>">
+                        <span id="email_profileSpan" class="span"></span><br>
 
                         <label class="label" for="phone">Phone number<span class="required">*</span></label>
-                        <input type="text" class="form-control" name="phone" id="phone"
-                            placeholder="Enter your contact number" onclick="clearSpan('phoneSpan')"
-                            onblur="checkPhone()" value="<%= user.phone %>">
-                        <span id="phoneSpan" class="span"></span><br>
+                        <input type="text" class="form-control" name="phone" id="phone__profile"
+                            placeholder="Enter your contact number" onclick="clearSpan('phone_profileSpan')"
+                            onblur="checkValidPhone()" value="<%= user.phone %>">
+                        <span id="phone_profileSpan" class="span"></span><br>
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <button type="button" class="btn btn-dark save "
                                 onclick="updateMyDetails('<%= user._id %>')">Save</button>
@@ -56,6 +58,7 @@
 
                 </div>
             </div>
+            <!-- address book -->
             <div class="profilecontainer mt-4">
                 <div class="mydetailSctn">
                     <p class="subHead">Address Book</p>
@@ -68,8 +71,9 @@
                                             Name: <%= address.name %>
                                         </p>
                                         <div>
-                                            <img src="/images/navbar/edit.png" style="width: 1rem;" alt="edit"
-                                                onclick="editBillingAdress('<%= address._id %>')">
+                                            <img src="/images/navbar/edit.png" style="width: 1rem;" alt="edit" onclick="editBillingAdress('<%= address._id %>','name_addressEdit',
+                                                'phone_addressEdit','address_addressEdit','town_addressEdit',
+                                                'pincode_addressEdit','state_addressEdit')">
                                             <img src="/images/navbar/delete.png" style="width: 1rem;" alt="edit"
                                                 class="ml-4" onclick="deleteBillingAdress('<%= address._id %>')">
                                         </div>
@@ -87,121 +91,219 @@
                                 </div>
                             </div>
                             <% }) %>
-                    </div>  <hr><br>                  
-
-                  <!-- edit billingaddress -->
-                  <div class="editable" style="display: none;">
-                    <p class="darkHeads">Enter your billing address</p>
-                    <div>
-                        <label class="mt-3 label" for="name">Name <span
-                                class="required">*</span></label>
-                        <input onclick="clearSpan('name_editSpan');clearValidity('name_edit')"
-                            onblur="ifValid('name_edit')" type="text" id="name_edit" class="form-control"
-                            name="'name" aria-describedby="addressHelpBlock">
-                        <span id="name_editSpan" class="span"></span><br>
-
-                        <!-- phone -->
-                        <label class="label" for="phone">Phone number <span
-                                class="required">*</span></label>
-                        <input type="text" class="form-control" name="phone" id="phone_edit"
-                            onclick="clearSpan('phone_editSpan');clearValidity('phone_edit')"
-                            onblur="checkPhone()">
-                        <span id="phone_editSpan" class="span"></span><br>
-
-                        <!-- address -->
-                        <label class="label" for="address">Address <span
-                                class="required">*</span></label>
-                        <input onclick="clearSpan('address_editSpan');clearValidity('address_edit')"
-                            onblur="checkAddress()" type="text" id="address_edit"
-                            class="form-control" name="address" aria-describedby="addressHelpBlock">
-                        <div class="d-flex flex-column">
-                            <small class="form-text text-muted">
-                                Street address
-                            </small>
-                            <span id="address_editSpan" class="span"></span>
-                        </div>
-
-                        <!-- town/city -->
-                        <label class="mt-3 label" for="town">Town/City <span
-                                class="required">*</span></label>
-                        <input onclick="clearSpan('town_editSpan');clearValidity('town_edit')"
-                            onblur="ifValid('town_edit')" type="text" id="town_edit" class="form-control"
-                            name="town" aria-describedby="passwordHelpBlock">
-                        <div class="d-flex flex-column">
-                            <small class="form-text text-muted">
-                                Enter a town/city
-                            </small>
-                            <span id="town_editSpan" class="span"></span>
-                        </div>
-
-
-                        <!-- pincode -->
-                        <label class="mt-3 label" for="pincode">Pincode <span
-                                class="required">*</span></label>
-                        <input onclick="clearSpan('pincode_editSpan');clearValidity('pincode_edit')"
-                            onblur="checkPincode()" type="text" id="pincode_edit"
-                            class="form-control" name="pincode"
-                            aria-describedby="passwordHelpBlock">
-
-                        <div class="d-flex flex-column">
-                            <small id="pincodeMute" class="form-text text-muted">
-                                Please enter a pincode (400070)
-                            </small>
-                            <span id="pincode_editSpan" class="span"></span>
-                        </div>
-                        <!--  -->
-                        <label class="mt-3 label" for="state">State <span
-                                class="required">*</span></label>
-                        <select name="state" id="state_edit" class="form-control" value>
-                            <option value="Andhra Pradesh">Andhra Pradesh</option>
-                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands
-                            </option>
-                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                            <option value="Assam">Assam</option>
-                            <option value="Bihar">Bihar</option>
-                            <option value="Chandigarh">Chandigarh</option>
-                            <option value="Chhattisgarh">Chhattisgarh</option>
-                            <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                            <option value="Daman and Diu">Daman and Diu</option>
-                            <option value="Delhi">Delhi</option>
-                            <option value="Lakshadweep">Lakshadweep</option>
-                            <option value="Puducherry">Puducherry</option>
-                            <option value="Goa">Goa</option>
-                            <option value="Gujarat">Gujarat</option>
-                            <option value="Haryana">Haryana</option>
-                            <option value="Himachal Pradesh">Himachal Pradesh</option>
-                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                            <option value="Jharkhand">Jharkhand</option>
-                            <option value="Karnataka">Karnataka</option>
-                            <option value="Kerala">Kerala</option>
-                            <option value="Madhya Pradesh">Madhya Pradesh</option>
-                            <option value="Maharashtra">Maharashtra</option>
-                            <option value="Manipur">Manipur</option>
-                            <option value="Meghalaya">Meghalaya</option>
-                            <option value="Mizoram">Mizoram</option>
-                            <option value="Nagaland">Nagaland</option>
-                            <option value="Odisha">Odisha</option>
-                            <option value="Punjab">Punjab</option>
-                            <option value="Rajasthan">Rajasthan</option>
-                            <option value="Sikkim">Sikkim</option>
-                            <option value="Tamil Nadu">Tamil Nadu</option>
-                            <option value="Telangana">Telangana</option>
-                            <option value="Tripura">Tripura</option>
-                            <option value="Uttar Pradesh">Uttar Pradesh</option>
-                            <option value="Uttarakhand">Uttarakhand</option>
-                            <option value="West Bengal">West Bengal</option>
-                        </select>
                     </div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <button type="button" class="btn btn-dark save"
-                            onclick="updateBillingAddress()">Save</button>
+                    <hr>
+                    <!-- add address -->
+                    <p class="addAddress" id="add" onclick="addAddress()">+ Add address</p>
+                    <div class="addAddress" style="display: none;">
+                        <div>
+                            <label class="mt-3 label" for="name">Name <span class="required">*</span></label>
+                            <input onclick="clearSpan('name_addressAddSpan');clearValidity('name_addressAdd')"
+                                onblur="ifValidField('name_addressAdd','name')" type="text" id="name_addressAdd"
+                                class="form-control" name="'name" aria-describedby="addressHelpBlock">
+                            <span id="name_addressAddSpan" class="span"></span><br>
+                            <!--  -->
+                            <label class="label" for="phone">Phone number <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="phone" id="phone_addressAdd"
+                                onclick="clearSpan('phone_addressAddSpan');clearValidity('phone_addressAdd')"
+                                onblur="checkPhone('phone_addressAdd','phone number')">
+                            <span id="phone_addressAddSpan" class="span"></span><br>
+                            <!--  -->
+                            <label class="label" for="address">Address <span class="required">*</span></label>
+                            <input onclick="clearSpan('address_addressAddSpan');clearValidity('address_addressAdd')"
+                                onblur="checkAddress('address_addressAdd','address')" type="text"
+                                id="address_addressAdd" class="form-control" name="address"
+                                aria-describedby="addressHelpBlock">
+                            <div class="d-flex flex-column">
+                                <small class="form-text text-muted">
+                                    Street address
+                                </small>
+                                <span id="address_addressAddSpan" class="span"></span>
+                            </div>
+
+
+                            <!--  -->
+                            <label class="mt-3 label" for="town">Town/City <span class="required">*</span></label>
+                            <input onclick="clearSpan('town_addressAddSpan');clearValidity('town_addressAdd')"
+                                onblur="ifValidField('town_addressAdd','town/city')" type="text" id="town_addressAdd"
+                                class="form-control" name="town" aria-describedby="passwordHelpBlock">
+                            <div class="d-flex flex-column">
+                                <small class="form-text text-muted">
+                                    Enter a town/city
+                                </small>
+                                <span id="town_addressAddSpan" class="span"></span>
+                            </div>
+
+
+                            <!--  -->
+                            <label class="mt-3 label" for="pincode">Pincode <span class="required">*</span></label>
+                            <input onclick="clearSpan('pincode_addressAddSpan');clearValidity('pincode_addressAdd')"
+                                onblur="checkPincode('pincode_addressAdd','pincode')" type="text"
+                                id="pincode_addressAdd" class="form-control" name="pincode"
+                                aria-describedby="passwordHelpBlock">
+
+                            <div class="d-flex flex-column">
+                                <small id="pincodeMute" class="form-text text-muted">
+                                    Please enter a pincode (400070)
+                                </small>
+                                <span id="pincode_addressAddSpan" class="span"></span>
+                            </div>
+                            <!--  -->
+                            <label class="mt-3 label" for="state">State <span class="required">*</span></label>
+                            <select name="state" id="state_addressAdd" class="form-control">
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands
+                                </option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                <option value="Daman and Diu">Daman and Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Puducherry">Puducherry</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <button type="button" class="btn btn-dark save"
+                                onclick="saveBillingAddress('<%= user._id %>','name_addressAdd','phone_addressAdd',
+                                'address_addressAdd','town_addressAdd','pincode_addressAdd','state_addressAdd')">Save</button>
                             <a href="/checkout" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
+                        </div>
                     </div>
-                </div>
 
+                    <!-- edit billingaddress -->
+                    <div class="editable" style="display: none;">
+                        <p class="darkHeads">Enter your billing address</p>
+                        <div>
+                            <label class="mt-3 label" for="name">Name <span class="required">*</span></label>
+                            <input onclick="clearSpan('name_addressEditSpan');clearValidity('name_addressEdit')"
+                                onblur="ifValidField('name_addressEdit','name')" type="text" id="name_addressEdit"
+                                class="form-control" name="'name" aria-describedby="addressHelpBlock">
+                            <span id="name_addressEditSpan" class="span"></span><br>
+
+                            <!-- phone -->
+                            <label class="label" for="phone">Phone number <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="phone" id="phone_addressEdit"
+                                onclick="clearSpan('phone_addressEditSpan');clearValidity('phone_addressEdit')"
+                                onblur="checkPhone('phone_addressEdit','phone')">
+                            <span id="phone_addressEditSpan" class="span"></span><br>
+
+                            <!-- address -->
+                            <label class="label" for="address">Address <span class="required">*</span></label>
+                            <input onclick="clearSpan('address_addressEditSpan');clearValidity('address_addressEdit')"
+                                onblur="checkAddress('address_addressEdit','address')" type="text" id="address_addressEdit" class="form-control"
+                                name="address" aria-describedby="addressHelpBlock">
+                            <div class="d-flex flex-column">
+                                <small class="form-text text-muted">
+                                    Street address
+                                </small>
+                                <span id="address_addressEditSpan" class="span"></span>
+                            </div>
+
+                            <!-- town/city -->
+                            <label class="mt-3 label" for="town">Town/City <span class="required">*</span></label>
+                            <input onclick="clearSpan('town_addressEditSpan');clearValidity('town_addressEdit')"
+                                onblur="ifValidField('town_addressEdit','town/city')" type="text" id="town_addressEdit"
+                                class="form-control" name="town" aria-describedby="passwordHelpBlock">
+                            <div class="d-flex flex-column">
+                                <small class="form-text text-muted">
+                                    Enter a town/city
+                                </small>
+                                <span id="town_addressEditSpan" class="span"></span>
+                            </div>
+
+
+                            <!-- pincode -->
+                            <label class="mt-3 label" for="pincode">Pincode <span class="required">*</span></label>
+                            <input onclick="clearSpan('pincode_addressEditSpan');clearValidity('pincode_addressEdit')"
+                                onblur="checkPincode('pincode_addressEdit','pincode')" type="text" id="pincode_addressEdit" class="form-control"
+                                name="pincode" aria-describedby="passwordHelpBlock">
+
+                            <div class="d-flex flex-column">
+                                <small id="pincodeMute" class="form-text text-muted">
+                                    Please enter a pincode (400070)
+                                </small>
+                                <span id="pincode_addressEditSpan" class="span"></span>
+                            </div>
+                            <!--  -->
+                            <label class="mt-3 label" for="state">State <span class="required">*</span></label>
+                            <select name="state" id="state_addressEdit" class="form-control" value>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands
+                                </option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                <option value="Daman and Diu">Daman and Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Puducherry">Puducherry</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <button type="button" class="btn btn-dark save mt-4"
+                                onclick="updateBillingAddress('name_addressEdit','phone_addressEdit','address_addressEdit','town_addressEdit','pincode_addressEdit','state_addressEdit')">Save</button>
+                            <a href="/checkout" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- password section -->
             <div class="profilecontainer mt-4">
                 <div class="mydetailSctn">
                     <p class="subHead">Privacy</p>
@@ -241,7 +343,8 @@
                         <span id="confrmPsswrdSpan" class="span"></span>
 
                         <div class="d-flex flex-column justify-content-center align-items-center">
-                            <button type="button" class="btn btn-dark save" onclick="changePassword(' <%= user._id %>')">Change</button>
+                            <button type="button" class="btn btn-dark save"
+                                onclick="changePassword(' <%= user._id %>')">Change</button>
                             <a href="/profile" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
                         </div>
                     </div>
@@ -251,5 +354,5 @@
             <br><br><br><br>
         </section>
         <%- include('../partials/footer') %>
+            <script src="/javascripts/users/billingAddress.js"></script>
             <script src="/javascripts/users/profile.js"></script>
-            <script src="/javascripts/users/checkout.js"></script>
