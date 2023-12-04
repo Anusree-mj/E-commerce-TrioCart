@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const controller = require("../../controllers")
 
 const productHelpers = require('../../helpers/user/product-helpers')
 const userHelpers = require('../../helpers/user/user-helpers');
@@ -35,146 +36,28 @@ router.get('/', async function (req, res, next) {
 })
 
 // get profile page
-router.get('/profile', async function (req, res, next) {
-  let sessionId = req.cookies.session
-  let allCategories = await categoryHelpers.getCategoryDetails()
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user
-
-      let userId = result.user._id
-      cartHelpers.getMyCartProducts(userId).then((result) => {
-        if (result) {
-          let totalCartProduct = result.totalCount;
-          res.render('users/profile', { layout: 'layout/layout', allCategories, user: user, totalCartProduct });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  });
-})
+router.get('/profile', controller.customerControllers.profileController.getProfilePage)
 
 //update profile
-router.put('/profile/:userId', function (req, res, next) {
-  let userId = req.params.userId;
-
-  userUpdateHelpers.updateUser(userId, req.body).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
+router.put('/profile/:userId',controller.customerControllers.profileController.updateProfile );
 
 //change password
-router.put('/password', function (req, res, next) {
-
-  userUpdateHelpers.changePassword(req.body).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-});
+router.put('/password', controller.customerControllers.profileController.changePassword);
 
 /* get cart. */
-router.get('/cart', async function (req, res, next) {
-  let allCategories = await categoryHelpers.getCategoryDetails()
-  productHelpers.getNewArrivalProducts().then(result => {
-    let viewMoreProducts = [...result.category1, ...result.category2, ...result.category3, ...result.category4];
-
-    let sessionId = req.cookies.session
-    sessionHelpers.checkSessions(sessionId).then((result) => {
-      if (result.status === 'ok') {
-        let user = result.user
-
-        cartHelpers.getMyCartProducts(user).then((result) => {
-          if (result) {
-            let cartProducts = result.cartProducts;
-            let totalprice = result.totalprice;
-            let totalCartProduct = result.totalCount;
-
-
-            res.render('users/cart', {
-              layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
-              totalCartProduct
-            });
-          } else {
-            res.render('users/cart', {
-              layout: 'layout/layout', allCategories, viewMoreProducts, user,
-              cartProducts: undefined, totalCartProduct: undefined, totalPrice: undefined
-            });
-          }
-        })
-      } else {
-        res.redirect('/user/login')
-      }
-    });
-  })
-})
+router.get('/cart', controller.customerControllers.cartController.getCartPage);
 
 //add to cart
-router.post('/cart/:product_id', function (req, res, next) {
-  let productId = req.params.product_id
-  let size = req.body.choosedSize
-  let sessionId = req.cookies.session
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user
-
-      cartHelpers.addToCart(user, productId, size).then(() => {
-        res.status(200).json({ status: "ok" });
-      })
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.post('/cart/:product_id', controller.customerControllers.cartController.addProductToCart)
 
 //remove from cart
-router.put('/cart/:product_id', function (req, res, next) {
-  let productId = req.params.product_id
-  let body = req.body
-
-  cartHelpers.removeCartProducts(productId, body).then(result => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.put('/cart/:product_id', controller.customerControllers.cartController.removeProductFromCart)
 
 //productcount increase 
-router.put('/:product_id/add', function (req, res, next) {
-  let productId = req.params.product_id
-  let size = req.body.size
-  cartHelpers.cartProductIncrement(productId, size).then(result => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.put('/:product_id/add', controller.customerControllers.cartController.addProductCount)
 
 //productcount decrease 
-router.put('/:product_id/cancel', function (req, res, next) {
-  let productId = req.params.product_id
-  let size = req.body.size
-  cartHelpers.cartProductDecremnt(productId, size).then(result => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.put('/:product_id/cancel', controller.customerControllers.cartController.decreaseProductCount)
 
 //get checkout page
 router.get('/checkout', function (req, res, next) {

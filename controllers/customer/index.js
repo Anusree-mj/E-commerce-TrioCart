@@ -6,7 +6,8 @@ const loginController = require('./login.controller')
 const signupController = require('./signup.controller')
 const otpController = require('./otp.controller')
 const passwordController = require('./password.controller')
-
+const profileController = require('./profile.controller')
+const cartController = require('./cart.controller')
 
 
 module.exports = {
@@ -18,5 +19,6 @@ module.exports = {
     signupController,
     otpController,
     passwordController,
-
+    profileController,
+    cartController,
 }
