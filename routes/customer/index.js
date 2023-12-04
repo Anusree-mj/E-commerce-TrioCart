@@ -60,140 +60,26 @@ router.put('/:product_id/add', controller.customerControllers.cartController.add
 router.put('/:product_id/cancel', controller.customerControllers.cartController.decreaseProductCount)
 
 //get checkout page
-router.get('/checkout', function (req, res, next) {
-  let sessionId = req.cookies.session
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user;
-
-      cartHelpers.getMyCartProducts(user).then((result) => {
-        if (result.cartProducts) {
-          let cartProducts = result.cartProducts;
-          let totalprice = result.totalprice;
-          let totalCartProduct = result.totalCount;
-
-          res.render('users/checkout', {
-            layout: 'layout/layout', user, cartProducts
-            , totalCartProduct, totalprice
-          })
-        }
-      });
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.get('/checkout', controller.customerControllers.checkoutController.getCheckoutPage)
 
 // save billing address to userCollection
-router.post('/checkout/user', function (req, res, next) {
-  let user = req.body
-  billingAddressHelpers.saveBillingAddress(user).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+router.post('/checkout/user', controller.customerControllers.billingAddressController.saveBillingAddress)
 
 // getbilling address for editing
-router.get('/billingAddress/:adressId', function (req, res, next) {
-  let addressId = req.params.adressId;
-  let sessionId = req.cookies.session
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      billingAddressHelpers.getBillingAddress(addressId).then(result => {
-        if (result.address) {
-          let address = result.address
-
-          res.status(200).json({ status: "ok", address });
-        } else {
-          res.status(400).json({ status: "nok" });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.get('/billingAddress/:adressId',controller.customerControllers.billingAddressController.getEditBillingAddressDiv)
 
 // delete billing address 
-router.delete('/billingAddress/:adressId', function (req, res, next) {
-  let addressId = req.params.adressId;
-  let sessionId = req.cookies.session
-  console.log('addressid', addressId)
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let userId = result.user._id
-
-      billingAddressHelpers.deleteBillingAddress(addressId, userId).then(result => {
-        if (result.status === 'ok') {
-          res.status(200).json({ status: "ok" });
-        } else {
-          res.status(400).json({ status: "nok" });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.delete('/billingAddress/:adressId', controller.customerControllers.billingAddressController.deletBillingAddress)
 
 //save user choosed order address
-router.put('/orderAddress/:userId', function (req, res, next) {
-  let userId = req.params.userId;
-  let sessionId = req.cookies.session
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-
-      orderHelpers.saveOrderAddress(userId, req.body).then(result => {
-        if (result.status === 'ok') {
-          res.status(200).json({ status: "ok" });
-        } else {
-          res.status(400).json({ status: "nok" });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.put('/orderAddress/:userId', controller.customerControllers.checkoutController.saveOrderAddress)
 
 // update billing address 
-router.put('/billingAddress', function (req, res, next) {
-  let billingAddress = req.body;
-
-  let sessionId = req.cookies.session
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      billingAddressHelpers.updateBillingAddress(billingAddress).then(result => {
-        if (result.status === 'ok') {
-          res.status(200).json({ status: "ok" });
-        } else {
-          res.status(400).json({ status: "nok" });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.put('/billingAddress', controller.customerControllers.billingAddressController.updateBillingAddress)
 
 
-// post order detais
-router.post('/checkout', function (req, res, next) {
-  let orderDetails = req.body
-  orderHelpers.saveOrderDetails(orderDetails).then((result) => {
-    if (result.status === 'ok') {
-      res.status(200).json({ status: "ok" });
-    } else {
-      res.status(400).json({ status: "nok" });
-    }
-  })
-})
+// post checkout detais
+router.post('/checkout', controller.customerControllers.checkoutController.submitCheckoutPageDetails)
 
 // order success page
 router.get('/order/success', async function (req, res, next) {

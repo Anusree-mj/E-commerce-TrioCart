@@ -8,6 +8,9 @@ const otpController = require('./otp.controller')
 const passwordController = require('./password.controller')
 const profileController = require('./profile.controller')
 const cartController = require('./cart.controller')
+const checkoutController = require('./checkout.controller')
+const billingAddressController = require('./billingAddress.controller')
+
 
 
 module.exports = {
@@ -21,4 +24,6 @@ module.exports = {
     passwordController,
     profileController,
     cartController,
+    checkoutController,
+    billingAddressController,
 }
