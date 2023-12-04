@@ -2,44 +2,14 @@ var express = require('express');
 var router = express.Router();
 const controller = require("../../controllers")
 
-const productHelpers = require('../../helpers/user/product-helpers')
-const userHelpers = require('../../helpers/user/user-helpers');
-const userUpdateHelpers = require('../../helpers/user/userUpdate-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
-const billingAddressHelpers = require('../../helpers/user/billingAddress-helpers');
-const orderHelpers = require('../../helpers/user/orderHelpers');
-
 /* GET  home page. */
-router.get('/', async function (req, res, next) {
-  let sessionId = req.cookies.session
-
-  let products = await productHelpers.getNewArrivalProducts();
-  let allCategories = await categoryHelpers.getCategoryDetails()
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user
-      let userId = result.user._id
-
-      cartHelpers.getMyCartProducts(userId).then((result) => {
-        if (result) {
-          let totalCartProduct = result.totalCount;
-          res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user, totalCartProduct });
-        }
-      })
-    } else {
-      res.render('users/home', { layout: 'layout/layout', products, allCategories, user: undefined });
-    }
-  });
-})
+router.get('/', controller.customerControllers.homeController.getHomePage)
 
 // get profile page
 router.get('/profile', controller.customerControllers.profileController.getProfilePage)
 
 //update profile
-router.put('/profile/:userId',controller.customerControllers.profileController.updateProfile );
+router.put('/profile/:userId', controller.customerControllers.profileController.updateProfile);
 
 //change password
 router.put('/password', controller.customerControllers.profileController.changePassword);
@@ -66,7 +36,7 @@ router.get('/checkout', controller.customerControllers.checkoutController.getChe
 router.post('/checkout/user', controller.customerControllers.billingAddressController.saveBillingAddress)
 
 // getbilling address for editing
-router.get('/billingAddress/:adressId',controller.customerControllers.billingAddressController.getEditBillingAddressDiv)
+router.get('/billingAddress/:adressId', controller.customerControllers.billingAddressController.getEditBillingAddressDiv)
 
 // delete billing address 
 router.delete('/billingAddress/:adressId', controller.customerControllers.billingAddressController.deletBillingAddress)
@@ -82,104 +52,15 @@ router.put('/billingAddress', controller.customerControllers.billingAddressContr
 router.post('/checkout', controller.customerControllers.checkoutController.submitCheckoutPageDetails)
 
 // order success page
-router.get('/order/success', async function (req, res, next) {
-  let sessionId = req.cookies.session
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let userId = result.user._id;
-      let userName = result.user.name
-
-      orderHelpers.getAllOrderDetails(userId).then((result) => {
-        if (result.status === 'ok') {
-          let estimatedTym = result.estimatedDelivery;
-          let latestOrder = result.latestOrder
-
-          res.render('users/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.get('/order/success', controller.customerControllers.orderController.getOrderSuccessPage)
 
 // get order history
-router.get('/order/history', async function (req, res, next) {
-  let sessionId = req.cookies.session
-  let allCategories = await categoryHelpers.getCategoryDetails()
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user
-      let userId = result.user._id;
-
-      cartHelpers.getMyCartProducts(userId).then((result) => {
-        if (result) {
-          let totalCartProduct = result.totalCount;
-
-          orderHelpers.getAllOrderDetails(userId).then((result) => {
-            if (result.status === 'ok') {
-              let orderDetails = result.orderDetails
-
-              productHelpers.getNewArrivalProducts().then(result => {
-                let viewMoreProducts = [
-                  ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-                res.render('users/orderHistory', { layout: 'layout/layout', user, allCategories, totalCartProduct, orderDetails, viewMoreProducts });
-              })
-            }
-          })
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.get('/order/history', controller.customerControllers.orderController.getOrderHistoryPage)
 
 // order details page
-router.get('/order/details/:orderId', async function (req, res, next) {
-  let orderId = req.params.orderId;
-  let sessionId = req.cookies.session
-  let allCategories = await categoryHelpers.getCategoryDetails()
-
-  sessionHelpers.checkSessions(sessionId).then((result) => {
-    if (result.status === 'ok') {
-      let user = result.user
-      let userId = result.user._id;
-
-      cartHelpers.getMyCartProducts(userId).then((result) => {
-        if (result) {
-          let totalCartProduct = result.totalCount;
-
-          orderHelpers.getAnOrder(orderId).then((result) => {
-            let order = result.order
-
-            productHelpers.getNewArrivalProducts().then(result => {
-              let viewMoreProducts = [
-                ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-              res.render('users/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts });
-            })
-          })
-        }
-      })
-    } else {
-      res.redirect('/user/login')
-    }
-  })
-})
+router.get('/order/details/:orderId', controller.customerControllers.orderController.getOrderDetailPage)
 
 //logout
-router.get('/logout', function (req, res, next) {
-  let sessionId = req.cookies.session
-  sessionHelpers.deleteSessions(sessionId).then((result) => {
-    if (result) {
-      req.session.isAuthenticated = false;
-      req.session.destroy(function (err) {
-        res.clearCookie('session');
-        res.redirect('/');
-      })
-    }
-  })
-
-})
+router.get('/logout', controller.customerControllers.loginController.logout)
 
 module.exports = router;

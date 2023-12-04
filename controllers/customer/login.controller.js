@@ -23,7 +23,21 @@ const sendUserLoginRequest =  (req, res, next) => {
       })
 }
 
+const logout =  (req, res, next) => {
+  let sessionId = req.cookies.session
+  sessionHelpers.deleteSessions(sessionId).then((result) => {
+    if (result) {
+      req.session.isAuthenticated = false;
+      req.session.destroy(function (err) {
+        res.clearCookie('session');
+        res.redirect('/');
+      })
+    }
+  })
+}
+
 module.exports = {
     getLoginPage,
-    sendUserLoginRequest
+    sendUserLoginRequest,
+    logout
 }
