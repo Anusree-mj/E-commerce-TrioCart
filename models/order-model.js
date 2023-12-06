@@ -59,6 +59,12 @@ const OrderSchema = new mongoosedb.Schema(
         deliveredDate: {
             type: String,
         },
+        returnDate: {
+            type: String,
+        },
+        returnStatus: {
+            type: Boolean,
+        },
         orderStatus: {
             type: String,
             default: 'placed',

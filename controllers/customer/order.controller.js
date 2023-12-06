@@ -93,7 +93,7 @@ const cancelOrder = (req, res, next) => {
     let sessionId = req.cookies.session;
     sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
-            orderHelpers.getAnOrder(orderId).then((result) => {
+            orderHelpers.cancelAnOrder(orderId).then((result) => {
                 if (result.status === 'ok') {
                     res.status(200).json({ status: "ok" });
                 } else {

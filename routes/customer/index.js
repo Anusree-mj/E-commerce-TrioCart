@@ -63,7 +63,7 @@ router.get('/order/history', controller.customerControllers.orderController.getO
 router.get('/order/details/:orderId', controller.customerControllers.orderController.getOrderDetailPage)
 
 // cancel order 
-router.post('/order/:orderId/cancel', controller.customerControllers.orderController.cancelOrder)
+router.put('/order/:orderId/cancel', controller.customerControllers.orderController.cancelOrder)
 
 //logout
 router.get('/logout', controller.customerControllers.loginController.logout)

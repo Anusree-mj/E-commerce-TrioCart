@@ -17,11 +17,11 @@ const getHomePage = async (req, res, next) => {
             cartHelpers.getMyCartProducts(userId).then((result) => {
                 if (result) {
                     let totalCartProduct = result.totalCount;
-                    res.render('customer/home/home', { layout: 'layout/layout', products, allCategories, user: user, totalCartProduct });
+                    res.render('users/home', { layout: 'layout/layout', products, allCategories, user: user, totalCartProduct });
                 }
             })
         } else {
-            res.render('customer/home/home', { layout: 'layout/layout', products, allCategories, user: undefined });
+            res.render('users/home', { layout: 'layout/layout', products, allCategories, user: undefined });
         }
     });
 }

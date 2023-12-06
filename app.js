@@ -7,6 +7,10 @@ const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
 const session = require('express-session')
 const Razorpay = require('razorpay');
+const adminOrderHelpers = require ('./helpers/admin/orders/adminOrder-helpers')
+
+// calling scheduleReturnStatusUpdate
+adminOrderHelpers.scheduleReturnStatusUpdate();
 
 //multer
 const storage = multer.diskStorage({
