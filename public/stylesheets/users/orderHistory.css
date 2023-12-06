@@ -80,7 +80,10 @@ p {
     font-weight: 600;
 
 }
-
+.returnTxt{
+    color: red;    
+    font-size: 0.8rem;
+}
 .viewDetails {
     color: #131313;
     text-decoration: underline;

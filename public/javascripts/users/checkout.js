@@ -40,7 +40,7 @@ function selectedAddress(userId, name, phone,
 
 // toggle checkout button
 let paymentMethod;
-function paymentSelected(method) {
+function paymentSelected(method) {   
     paymentMethod = method;
     let checkoutButtn = document.getElementById('checkoutBtn')
     checkoutButtn.classList.remove('checkoutBtn');
