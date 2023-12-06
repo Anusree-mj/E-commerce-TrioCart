@@ -55,7 +55,9 @@ const OrderSchema = new mongoosedb.Schema(
         },
         estimatedDelivery: {
             type: String,
-            required: true,
+        },
+        deliveredDate: {
+            type: String,
         },
         orderStatus: {
             type: String,

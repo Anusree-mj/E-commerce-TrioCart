@@ -1,16 +1,26 @@
 function addFilter(category, subCategory) {
     const selectedSize = document.querySelector('input[name="size"]:checked');
-    const size = selectedSize ? selectedSize.value : null;
+    const size = selectedSize? selectedSize.value : '';
 
     const selectedPrice = document.querySelector('input[name="price"]:checked');
-    const price = selectedPrice ? selectedPrice.value : null;
+    const price = selectedPrice? selectedPrice.value : '';
 
-    const encodedSize = size ? encodeURIComponent(size) : undefined;
-    const encodedPrice = price ? encodeURIComponent(price) : undefined;
-
-    // Construct the URL with size and price parameters
-    const url = `http://localhost:3000/products/${category}/${subCategory}?size=${encodedSize}&price=${encodedPrice}`;
-
-    window.location.replace(url)
+    if (size !=="" && price==="") {
+         
+        const encodedSize = encodeURIComponent(size);
+        const url = `http://localhost:3000/products/${category}/${subCategory}?size=${encodedSize}`;
+        window.location.replace(url)
+    }
+    else if (size==="" && price!=="") {
+        const encodedPrice = encodeURIComponent(price);
+        const url = `http://localhost:3000/products/${category}/${subCategory}?price=${encodedPrice}`;
+        window.location.replace(url)
+    }
+     else if (size!=="" && price!=="") {
+        const encodedSize = encodeURIComponent(size);
+        const encodedPrice = encodeURIComponent(price);
+        const url = `http://localhost:3000/products/${category}/${subCategory}?size=${encodedSize}&price=${encodedPrice}`;
+        window.location.replace(url)
+    }
 }
 

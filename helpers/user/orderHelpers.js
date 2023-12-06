@@ -1,6 +1,7 @@
-const collection = require('../../models')
+const collection = require('../../models/index-model')
 
 const delvryTimeUtil = require('../../utils/delvryTymUtil');
+const userReadableIdUtil = require('../../utils/userReadableId');
 
 module.exports = {
     saveOrderAddress: async (userId, billingAddress) => {
@@ -39,16 +40,15 @@ module.exports = {
                 _id: orderDetails.userId
             })
             const address = getBillingAddress.orderAddress[0];
-            console.log('address in orders', address)
-            // 
+
             const getOrderedProducts = await collection.cartCollection.findOne({
                 userId: orderDetails.userId
             })
+
             const products = getOrderedProducts.products;
-
-
             const orderPlacementDate = new Date();
-            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate)
+            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(
+                orderPlacementDate, 'placed')
 
             const data = {
                 userId: orderDetails.userId,
@@ -71,14 +71,24 @@ module.exports = {
                 paymentMethod: orderDetails.paymentMethod,
                 estimatedDelivery: deliveryTym,
                 totalAmount: orderDetails.total,
+                orderStatus: (orderDetails.paymentMethod === 'onlinePayment' ? 'pending' : "placed")
             }
             console.log('inserted data in orders ', data)
 
-            await collection.orderCollection.insertMany([data])
-            await collection.cartCollection.deleteOne({
-                userId: orderDetails.userId
-            })
-            return { status: 'ok' }
+            const orderDocument = new collection.orderCollection(data);
+            // Save the order to the database
+            await orderDocument.save();
+            // Retrieve the inserted order ID
+            const orderId = orderDocument._id;
+            console.log('orderId', orderId);
+
+            const totalAmount = orderDetails.total;
+            if (orderDetails.paymentMethod !== 'onlinePayment') {
+                await collection.cartCollection.deleteOne({
+                    userId: orderDetails.userId
+                })
+            }
+            return { status: 'ok', orderId, totalAmount }
 
         } catch (err) {
             console.log(err);
@@ -105,13 +115,35 @@ module.exports = {
 
     getAnOrder: async (orderId) => {
         try {
+            const userReadableOrderId = await userReadableIdUtil.generateUserReadableId(orderId)
+
             const order = await collection.orderCollection.findOne({
                 _id: orderId
             }).populate('products.product');
-            return { order }
+            return { order, userReadableOrderId }
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    cancelAnOrder: async (orderId) => {
+        try {
+            const updateData = await collection.orderCollection.updateOne(
+                { _id: orderId },
+                { $set: { orderStatus: 'Cancelled by User' } }
+            )
+            if (updateData.modifiedCount === 1) {
+                console.log('order update success')
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
         } catch (err) {
             console.log(err);
             return { status: 'nok' };
         }
     }
+
 }
+

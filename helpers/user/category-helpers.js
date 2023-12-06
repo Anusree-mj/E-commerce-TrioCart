@@ -1,4 +1,4 @@
-const collection = require('../../models')
+const collection = require('../../models/index-model')
 
 module.exports = {
     getCategoryDetails: async () => {
@@ -21,7 +21,7 @@ viewEachSubcategoryProducts: async (category, subcategory, query, size, price) =
             return { categories, products }
 
         } else if (query && query === 'lowestToHighest' && !size && !price) {
-            categories = await collection.categoryCollection.findOne({
+                        categories = await collection.categoryCollection.findOne({
                 category: category
             })
 
@@ -46,16 +46,15 @@ viewEachSubcategoryProducts: async (category, subcategory, query, size, price) =
             categories = await collection.categoryCollection.findOne({
                 category: category
             })
-
+           console.log('categories',category,subcategory,size)
             products = await collection.productsCollection.find(
                 {
                     category: category,
                     subCategory: subcategory,
                     isDeleted: false,
-                    size: { $in: [size] }
-
-                }).sort({ createdAt: -1 });
-
+                    size: { $regex: new RegExp(size, 'i') }
+                })
+console.log('products312321',products)
             return { categories, products }
         } else if (!size && !query && price) {
             categories = await collection.categoryCollection.findOne({
@@ -83,7 +82,7 @@ viewEachSubcategoryProducts: async (category, subcategory, query, size, price) =
                     category: category,
                     subCategory: subcategory,
                     isDeleted: false,
-                    size: { $in: [size] },
+                    size: { $regex: new RegExp(size, 'i') },
                     price: { $lte: price }
 
                 }).sort({ createdAt: -1 });

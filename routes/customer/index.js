@@ -47,9 +47,11 @@ router.put('/orderAddress/:userId', controller.customerControllers.checkoutContr
 // update billing address 
 router.put('/billingAddress', controller.customerControllers.billingAddressController.updateBillingAddress)
 
-
 // post checkout detais
 router.post('/checkout', controller.customerControllers.checkoutController.submitCheckoutPageDetails)
+
+// verify payment 
+router.post('/verifyPayment', controller.customerControllers.checkoutController.verifyPayment)
 
 // order success page
 router.get('/order/success', controller.customerControllers.orderController.getOrderSuccessPage)
@@ -59,6 +61,9 @@ router.get('/order/history', controller.customerControllers.orderController.getO
 
 // order details page
 router.get('/order/details/:orderId', controller.customerControllers.orderController.getOrderDetailPage)
+
+// cancel order 
+router.post('/order/:orderId/cancel', controller.customerControllers.orderController.cancelOrder)
 
 //logout
 router.get('/logout', controller.customerControllers.loginController.logout)

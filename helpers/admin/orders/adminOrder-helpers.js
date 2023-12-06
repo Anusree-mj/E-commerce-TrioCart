@@ -1,4 +1,5 @@
-const collection = require('../../../models')
+const collection = require('../../../models/index-model')
+const delvryTimeUtil = require('../../../utils/delvryTymUtil');
 
 module.exports = {
     getAllOrders: async () => {
@@ -19,9 +20,13 @@ module.exports = {
     },
     updateOrderStatus: async (data) => {
         try {
+            if(data.status!=='delivered' && data.status!=='cancelled by seller'){
+            const orderPlacementDate = new Date();
+            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate,data.status)
+
             const updateData = await collection.orderCollection.updateOne(
                 { _id: data.orderId },
-                { $set: { orderStatus: data.status } }
+                { $set: { orderStatus: data.status, estimatedDelivery: deliveryTym, } }
             )
 
             if (updateData.modifiedCount === 1) {
@@ -30,6 +35,35 @@ module.exports = {
             } else {
                 return { status: 'nok' }
             }
+        }else if(data.status==='delivered'){
+            const orderPlacementDate = new Date();
+            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate,data.status)
+
+            const updateData = await collection.orderCollection.updateOne(
+                { _id: data.orderId },
+                { $set: { orderStatus: data.status, deliveredDate: deliveryTym, } }
+            )
+
+            if (updateData.modifiedCount === 1) {
+                console.log('order update success')
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
+        }else{
+          
+            const updateData = await collection.orderCollection.updateOne(
+                { _id: data.orderId },
+                { $set: { orderStatus: data.status} }
+            )
+
+            if (updateData.modifiedCount === 1) {
+                console.log('order update success')
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }  
+        }
         }
         catch (err) {
             console.log(err)
