@@ -1,4 +1,4 @@
-const collection = require('../../models')
+const collection = require('../../models/index-model')
 const bcrypt = require('bcrypt')
 const signupUtil = require('../../utils/signupUtil');
 

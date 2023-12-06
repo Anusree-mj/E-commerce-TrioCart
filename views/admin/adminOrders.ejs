@@ -48,7 +48,7 @@
                                         <p class="nav_icon_text " type="button" id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
                                             Status</p>
-
+                                            <% if (order.orderStatus !== 'Cancelled by User') { %>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-item">
                                                 <a class="dropdown_text"
@@ -72,6 +72,13 @@
                                                     onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</a>
                                             </div>
                                         </div>
+                                        <% } else { %>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" disabled>
+                                                <div class="dropdown-item">
+                                                    <span class="dropdown_text disabled">Cancelled by User</span>
+                                                </div>
+                                            </div>
+                                        <% } %>
                                     </div>
                                 </td>
                                 <td>

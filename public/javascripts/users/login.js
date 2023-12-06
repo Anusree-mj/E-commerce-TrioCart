@@ -55,6 +55,33 @@ function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
 }
 
+let resendTimer;
+let countdown = 60;
+
+function startResendTimer() {
+    document.getElementById('resndTimer').style.display = 'block';
+
+    
+    resendTimer = setInterval(() => {
+        countdown--;
+        document.getElementById('timer').textContent = countdown;
+
+        if (countdown <= 0) {
+            clearInterval(resendTimer);
+            document.getElementById('resndTimer').style.display = 'none';
+            document.getElementById('resentTxt').style.display = 'block';
+           
+        }
+    }, 1000);
+}
+
+function stopResendTimer() {
+    clearInterval(resendTimer);
+    document.getElementById('resndTimer').style.display = 'none';
+    document.getElementById('resentTxt').style.display = 'block';
+    document.getElementById('otp').disabled = false;
+}
+
 //get otp
 function getOtp() {
     let email = document.getElementById('email').value
@@ -73,6 +100,7 @@ function getOtp() {
                 if (data.status === "ok") {
                     document.getElementById('getOtp').disabled = true
                     document.getElementById('verifyOtp').disabled = false
+                    startResendTimer();
                 } else {
                     alert("Email doesnt match");
 
@@ -99,6 +127,7 @@ function verifyOtp() {
             if (data.status === "ok") {
                 document.getElementById('verifyOtp').disabled = true
                 document.getElementById('chngePsswrd').disabled = false
+                stopResendTimer();
             } else {
                 alert("OTP doesnt match");
             }

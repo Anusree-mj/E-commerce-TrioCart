@@ -1,12 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var expressLayouts = require('express-ejs-layouts');
-var multer = require('multer');
-var session = require('express-session')
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const expressLayouts = require('express-ejs-layouts');
+const multer = require('multer');
+const session = require('express-session')
+const Razorpay = require('razorpay');
+const adminOrderHelpers = require ('./helpers/admin/orders/adminOrder-helpers')
 
+// calling scheduleReturnStatusUpdate
+adminOrderHelpers.scheduleReturnStatusUpdate();
 
 //multer
 const storage = multer.diskStorage({
@@ -18,15 +22,20 @@ const storage = multer.diskStorage({
   }
 });
 
+// razorpay
+const instance = new Razorpay({
+  key_id: 'rzp_test_mj8FaMjD2VYPW4',
+  key_secret: 'bJeiO2GMbp3vvqfvPzwNQUaC',
+});
 
-var usersRouter = require('./routes/customer');
-var adminRouter = require('./routes/admin');
-var imageRouter = require('./routes/admin/image');
-var productRouter = require('./routes/customer/products');
-var userLoginRouter= require('./routes/customer/userLogins');
-var searchRouter= require('./routes/customer/search');
+const usersRouter = require('./routes/customer');
+const adminRouter = require('./routes/admin');
+const imageRouter = require('./routes/admin/image');
+const productRouter = require('./routes/customer/products');
+const userLoginRouter = require('./routes/customer/userLogins');
+const searchRouter = require('./routes/customer/search');
 
-var app = express();
+const app = express();
 
 const upload = multer({ storage: storage });
 

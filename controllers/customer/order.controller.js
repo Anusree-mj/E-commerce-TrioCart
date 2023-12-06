@@ -73,11 +73,11 @@ const getOrderDetailPage = async (req, res, next) => {
 
                     orderHelpers.getAnOrder(orderId).then((result) => {
                         let order = result.order
-
+                        let userReadableId = result.userReadableOrderId
                         productHelpers.getNewArrivalProducts().then(result => {
                             let viewMoreProducts = [
                                 ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-                            res.render('users/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts });
+                            res.render('users/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts, userReadableId });
                         })
                     })
                 }
@@ -88,8 +88,25 @@ const getOrderDetailPage = async (req, res, next) => {
     })
 }
 
+const cancelOrder = (req, res, next) => {
+    let orderId = req.params.orderId;
+    let sessionId = req.cookies.session;
+    sessionHelpers.checkSessions(sessionId).then((result) => {
+        if (result.status === 'ok') {
+            orderHelpers.cancelAnOrder(orderId).then((result) => {
+                if (result.status === 'ok') {
+                    res.status(200).json({ status: "ok" });
+                } else {
+                    res.status(400).json({ status: "nok" });
+                }
+            })
+        } 
+    })
+}
+
 module.exports = {
     getOrderSuccessPage,
     getOrderHistoryPage,
-    getOrderDetailPage
+    getOrderDetailPage,
+    cancelOrder
 }

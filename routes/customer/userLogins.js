@@ -34,4 +34,8 @@ router.put('/forgotPassword', controller.customerControllers.passwordController.
 //verify otp for changing password
 router.post('/verifyOtp', controller.customerControllers.otpController.verifyOTP);
 
+// resend otp forgot password
+router.post('/verifyOtp', controller.customerControllers.otpController.verifyOTP);
+
+
 module.exports = router;
