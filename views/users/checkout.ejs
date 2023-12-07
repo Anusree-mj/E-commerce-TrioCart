@@ -329,13 +329,18 @@
                     </label>
                 </div>
                 <hr>
-                <div class="form-check disabled">
+                <div class="form-check">
                     <input class="form-check-input" type="radio" name="selectedPayment" id="onlinePayment"
                         value="option2" onclick="paymentSelected('onlinePayment')">
                     <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column">
                         <label class="form-check-label" for="exampleRadios3">
                             Online Payments
                         </label>
+                        <small class="form-text text-muted" style="font-weight: 600;">
+                            No cancel option is available for online payment.
+                        </small>
+                    </div>
                         <div>
                             <img src="/images/home/visa.png" alt="visa">
                             <img src="/images/home/rupay.png" alt="rupay">

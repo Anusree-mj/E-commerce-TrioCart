@@ -40,16 +40,13 @@ module.exports = {
         else if(data.status==='delivered'){
             const orderPlacementDate = new Date();
             const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate,data.status)
-
-            const returnDate = new Date(deliveryTym);
-            returnDate.setDate(returnDate.getDate() + 3);        
-
+           
             const updateData = await collection.orderCollection.updateOne(
                 { _id: data.orderId },
                 { $set: { 
                     orderStatus: data.status, 
-                    deliveredDate: deliveryTym,
-                    returnDate: returnDate,  
+                    deliveredDate: deliveryTym.deliveryDateString,
+                    returnDate: deliveryTym.returnDateString,  
                     returnStatus: true,               
                  } 
                 }

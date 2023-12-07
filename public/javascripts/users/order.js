@@ -14,3 +14,14 @@ function cancelOrder(orderId){
         })
         .catch(err => console.log(err));
 }
+// let returningProductId;
+function triggerReturn(productId){
+    console.log('productId in triggering ',productId)
+
+    // returningProductId=productId;
+    document.querySelector('.returnDetails').style.display = 'block';
+    
+}
+function returnProduct(productId){
+    console.log('productId in submit',productId)
+}
