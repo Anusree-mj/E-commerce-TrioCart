@@ -104,9 +104,23 @@ const cancelOrder = (req, res, next) => {
     })
 }
 
+const returnProduct = (req, res, next) => {
+    let productId = req.params.productId; 
+    let returnDetails = req.body  
+            orderHelpers.returnProduct(productId,returnDetails).then((result) => {
+                if (result.status === 'ok') {
+                    console.log('return data added to db')
+                    res.status(200).json({ status: "ok" });
+                } else {
+                    res.status(400).json({ status: "nok" });
+                }
+            })     
+   }
+
 module.exports = {
     getOrderSuccessPage,
     getOrderHistoryPage,
     getOrderDetailPage,
-    cancelOrder
+    cancelOrder,
+    returnProduct
 }

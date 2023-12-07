@@ -40,10 +40,16 @@ const OrderSchema = new mongoosedb.Schema(
                 type: mongoosedb.Schema.Types.ObjectId,
                 ref: 'products',
             },
-            Size: String,
+            Size: {
+                type: String,
+            },
             Count: {
                 type: Number,
             },
+            isReturned:{
+                type: Boolean,
+                default:false,
+            }
         }],
         totalAmount: {
             type: Number,
@@ -62,7 +68,7 @@ const OrderSchema = new mongoosedb.Schema(
         returnDate: {
             type: String,
         },
-        returnStatus: {
+        returnValid: {
             type: Boolean,
         },
         orderStatus: {

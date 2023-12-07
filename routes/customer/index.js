@@ -65,6 +65,9 @@ router.get('/order/details/:orderId', controller.customerControllers.orderContro
 // cancel order 
 router.put('/order/:orderId/cancel', controller.customerControllers.orderController.cancelOrder)
 
+// return product 
+router.post('/order/:productId/return', controller.customerControllers.orderController.returnProduct)
+
 //logout
 router.get('/logout', controller.customerControllers.loginController.logout)
 
