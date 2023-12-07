@@ -22,27 +22,31 @@ function triggerReturn(productId) {
     }
 }
 
-function returnProduct(productId,price,size,count,orderId) {
+// return product
+function returnProduct(productId, price, size, count, orderId) {
     const selectedRadio = document.querySelector('input[name="selectedReason"]:checked');
-if (!selectedRadio){
-    document.getElementById('returnSpan').textContent='*Feedback is required!';
-}else{
-    const reason = selectedRadio.value;
-  let reqBody= {reason,price,size,count,orderId}
-    fetch(`http://localhost:3000/order/${productId}/return`, {
-        method: "POST",
-        body: JSON.stringify(reqBody),
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }).then((res) => res.json())
-        .then((data) => {
-            if (data.status === "ok") {
-                location.reload();
-            } else {
-                console.log('product return failed')
-            }
-        })
-        .catch(err => console.log(err));
-}
+
+    if (!selectedRadio) {
+        document.getElementById('returnSpan').textContent = '*Feedback is required!';
+    }
+    else {
+        const reason = selectedRadio.value;
+        let reqBody = { reason, price, size, count, orderId }
+
+        fetch(`http://localhost:3000/order/${productId}/return`, {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    location.reload();
+                } else {
+                    console.log('product return failed')
+                }
+            })
+            .catch(err => console.log(err));
+    }
 }  

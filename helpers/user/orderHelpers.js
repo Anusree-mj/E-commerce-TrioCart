@@ -144,13 +144,16 @@ module.exports = {
             return { status: 'nok' };
         }
     }
-,  returnProduct: async (productId,details) => {
+,  returnProduct: async (productId,details,userID) => {
     try {
         let amount=details.count * details.price;        
         const data = {
+            orderId:details.orderId,
+            userId: userID,
             productId: productId,
             totalAmount: amount,
             size: details.size,
+            returnReason:details.reason,
             returnStatus: 'placed'           
         }      
         await collection.productReturnCollection.insertMany([data]) 

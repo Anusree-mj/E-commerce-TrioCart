@@ -2,7 +2,15 @@ const mongoosedb = require('./mongodb');
 
 // product return collection
 const productReturnSchema = new mongoosedb.Schema(
-    {
+    { 
+        orderId: {
+            type: mongoosedb.Schema.Types.ObjectId,
+            ref: 'orders',
+        },
+        userId: {
+        type: mongoosedb.Schema.Types.ObjectId,
+        ref: 'users',
+    },
         productId: {
             type: mongoosedb.Schema.Types.ObjectId,
             ref: 'products',
@@ -12,6 +20,10 @@ const productReturnSchema = new mongoosedb.Schema(
             required: true,
         },
         size: {
+            type: String,
+            required: true,
+        },
+        returnReason: {
             type: String,
             required: true,
         },

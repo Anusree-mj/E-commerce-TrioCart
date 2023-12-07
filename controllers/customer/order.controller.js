@@ -100,22 +100,28 @@ const cancelOrder = (req, res, next) => {
                     res.status(400).json({ status: "nok" });
                 }
             })
-        } 
+        }
     })
 }
 
 const returnProduct = (req, res, next) => {
-    let productId = req.params.productId; 
-    let returnDetails = req.body  
-            orderHelpers.returnProduct(productId,returnDetails).then((result) => {
+    let productId = req.params.productId;
+    let returnDetails = req.body
+    let sessionId = req.cookies.session;
+    sessionHelpers.checkSessions(sessionId).then((result) => {
+        if (result.status === 'ok') {
+            let userId=result.user
+            orderHelpers.returnProduct(productId, returnDetails,userId).then((result) => {
                 if (result.status === 'ok') {
                     console.log('return data added to db')
                     res.status(200).json({ status: "ok" });
                 } else {
                     res.status(400).json({ status: "nok" });
                 }
-            })     
-   }
+            })
+        }
+    })
+}
 
 module.exports = {
     getOrderSuccessPage,

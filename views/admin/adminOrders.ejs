@@ -45,14 +45,16 @@
                                 </td>
                                 <td>
                                     <div class="dropdown nav_icons">                                        
-                                            <% if (order.orderStatus !== 'Cancelled by User') { %>
-                                                <p class="nav_icon_text " type="button" id="dropdownMenuButton"
+                                            <% if (order.orderStatus !== 'Cancelled by User' && 
+                                            order.orderStatus !== 'pending' &&
+                                            order.orderStatus !== 'delivered') { %>
+                                                <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
                                             Status</p>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-item">
                                                 <a class="dropdown_text"
-                                                    onclick="editOrderStatus('placed','<%= order._id%>')">Placed</a>
+                                                    onclick="editOrderStatus('cancelled by seller','<%= order._id%>')">Cancel</a>
                                             </div>
                                             <div class="dropdown-item">
                                                 <a class="dropdown_text"
@@ -73,14 +75,13 @@
                                             </div>
                                         </div>
                                         <% } else { %>                                          
-                                                <p class="nav_icon_text " type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Edit
+                                                <p class=" disabledTxt ">Edit
                                                 Status</p>                                            
                                         <% } %>
                                     </div>
                                 </td>
                                 <td>
-                                    <a class="getMore" href="/admin/order/<%= order._id %>">Get More Details<a>
+                                    <a class="updateTxt" href="/admin/order/<%= order._id %>">Get More Details<a>
                                 </td>
                             </tr>
                             <% slNo++; %>
