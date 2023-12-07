@@ -78,6 +78,13 @@ router.put('/orders', controller.adminControllers.orderManagementController.edit
 // order details page
 router.get('/order/:orderId', controller.adminControllers.orderManagementController.getOrderDetailPage )
 
+// returns page
+router.get('/returns', controller.adminControllers.returnController.getReturnsPage )
+
+//edit return status
+router.put('/return', controller.adminControllers.returnController.editReturnStatus)
+
 //logout
 router.get('/logout', controller.adminControllers.loginController.logout)
+
 module.exports = router;

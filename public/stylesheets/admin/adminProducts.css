@@ -6,7 +6,10 @@
 .tno {
     width: 0.6rem;
 }
-
+.returnHead{
+    max-width: 4rem;
+    text-align: center;
+}
 .thead {
     width: 3rem;
     margin: 0 0.5rem;
@@ -17,11 +20,28 @@
     margin: 0 0.5rem;
 }
 
-.getMore {
+.updateTxt {
     color: #000000;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.edittxt {
+    color: #000000;
+    font-size: 0.1rem !important;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.disabledTxt {
+    color: #505050;
+    cursor: not-allowed
+}
+
+.disabledTxt:hover {
+    text-decoration: none !important;
 }
 
 .getMore:hover {

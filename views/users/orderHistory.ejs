@@ -81,17 +81,18 @@
                                                 <p class="prodName">Order Status</p>
                                                 <% if (order.orderStatus==='Cancelled by User' ){ %>
                                                     <p>Order: cancelled
-                                                    </p>
-                                                    <% }else { %>
+                                                    </p>                                                    
+                                                        <% } else { %>
                                                         <p>Order: <%= order.orderStatus %>
                                                         </p>
                                                         <% } %>
 
-                                                            <% if (order.orderStatus!=='delivered' ) { %>
+                                                            <% if (order.orderStatus!=='delivered' && order.orderStatus !=='Cancelled by User' 
+                                                            && order.orderStatus !=='returned' ) { %>
                                                                 <p>Estimated delivery :
                                                                     <%= order.estimatedDelivery %>
                                                                 </p>
-                                                                <% }else{ %>
+                                                                <% }else if(order.orderStatus==='delivered'){ %>
                                                                     <p> Delivered on :
                                                                         <%= order.deliveredDate %>
                                                                     </p>
@@ -107,7 +108,7 @@
                                                     </div>
                                                     <button type="button" class="btn btn-dark mt-3 commntBtn"
                                                         onclick="triggerReturn('<%= product.product._id %>')">Return</button>
-                                                    <% } else if ( product.isReturned)
+                                                    <% } else if ( product.isReturned && order.orderStatus !=='returned')
                                                         { %>
                                                         <p class="returnTxt">Your product will be collected within 2
                                                             days.</p>

@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<%- include('../partials/adminHeaders') %>
+
+    <section>
+        <div class="container">
+
+            <div class="table-responsive" style="margin-top: 2rem;">
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col" class="returnHead">Product</th>
+                            <th scope="col" class="returnHead">Name</th>
+                            <th scope="col" class="returnHead">Size</th>
+                            <th scope="col" class="returnHead">Feedback</th>
+                            <th scope="col" class="returnHead">User</th>
+                            <th scope="col" class="returnHead">Email</th>
+                            <th scope="col" class="returnHead">Amount</th>
+                            <th scope="col" class="returnHead">Status</th>
+                            <th scope="col" class="returnHead">Edit</th>
+                            <th scope="col" class="returnHead">Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% var slNo=1; %>
+                            <% returnDetails.forEach(returnDetail=> { %>
+                                <tr>
+                                    <th scope="row" rowspan="<%= returnDetail.length %>">
+                                        <%= slNo %>
+                                    </th>
+                                    <td>
+                                        <img style="width: 50px;" src="/<%= returnDetail.productId.image %>" alt="product">
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.productId.name %>
+                                    </td>                                    
+                                    <td>
+                                        <%= returnDetail.size %>
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.returnReason %>
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.userId.name %>
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.userId.email %>
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.totalAmount %>
+                                    </td>
+                                    <td>
+                                        <%= returnDetail.returnStatus %>
+                                    </td>
+                                    <td>
+                                        <% if (returnDetail.returnStatus !== 'confirmed') { %>
+                                        <div class="dropdown nav_icons">
+                                            <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
+                                                Status</p>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-item">
+                                                    <a class="dropdown_text"
+                                                        onclick="editReturnStatus(' <%= returnDetail._id %>',' <%= returnDetail.orderId._id %>')">Confirmed</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>                                          
+                                            <p class=" disabledTxt ">Edit
+                                            Status</p>                                            
+                                    <% } %>
+                                    </td>
+                                    <td>
+                                        <a class="updateTxt" >Refund<a>
+                                    </td>
+                                </tr>
+                                <% slNo++; %>
+                                    <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <%- include('../partials/loginsFooter') %>
+        <script src="/javascripts/admin/adminOrders.js"></script>
