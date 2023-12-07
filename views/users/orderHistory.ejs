@@ -62,13 +62,20 @@
                                                 <img class="prodImg" src="/<%= product.product.image %>"
                                                     alt="orderproduct">
                                             </a>
-                                            <div>
+
+                                            <div class="">
                                                 <p class="prodName">
                                                     <%= product.product.name %>
                                                 </p>
                                                 <p class="prodName">
                                                     ₹ <%= product.product.price %>/-
                                                 </p>
+                                                <p class="prodName">Size:
+                                                    <%= product.Size %>,
+                                                </p>
+                                                <p class="prodName"> Count : <%= product.Count %>
+                                                </p>
+
                                             </div>
                                             <div>
                                                 <p class="prodName">Order Status</p>
@@ -91,78 +98,86 @@
                                                                     <% } %>
                                             </div>
                                             <div class="d-flex flex-column">
-                                                <% if (order.orderStatus==='placed' || order.orderStatus==='packed' &&
-                                                    order.paymentMethod==='COD' ) { %>
+                                                <% if (order.orderStatus==='delivered' && order.returnValid &&
+                                                    !product.isReturned) { %>
+                                                    <div class="d-flex flex-wrap" style="max-width: 13rem;">
+                                                        <p class="returnTxt">Return requests accepted until: <%=
+                                                                order.returnDate %>
+                                                        </p>
+                                                    </div>
                                                     <button type="button" class="btn btn-dark mt-3 commntBtn"
-                                                        onclick="cancelOrder('<%= order._id %>')">Cancel Order</button>
-                                                    <% }else if(order.orderStatus==='delivered' && order.returnStatus){
-                                                        %>
-                                                        <div class="d-flex flex-wrap" style="max-width: 13rem;">
-                                                            <p class="returnTxt">Return requests accepted until : <%=
-                                                                    order.returnDate %>
-                                                            </p>
-                                                        </div>
-                                                        <button type="button" class="btn btn-dark mt-3 commntBtn"
-                                                            onclick="triggerReturn()">Return</button>
+                                                        onclick="triggerReturn('<%= product.product._id %>')">Return</button>
+                                                    <% } else if ( product.isReturned)
+                                                        { %>
+                                                        <p class="returnTxt">Your product will be collected within 2
+                                                            days.</p>
                                                         <% } %>
-                                                            <% if (order.orderStatus!=='Cancelled by User' ){ %>
+
+                                                            <% if (order.orderStatus !=='Cancelled by User' ) { %>
                                                                 <button type="button"
                                                                     class="btn btn-outline-dark mt-3 commntBtn">Leave
-                                                                    your
-                                                                    Comment</button>
+                                                                    your Comment</button>
                                                                 <% } %>
-
                                             </div>
                                         </div>
-                                        <div class="returnDetails" style="display: none;">                                           
+
+                                        <div id="returnDetails_<%= product.product._id %>" style="display: none;">
                                             <p class="subHead mt-4">Tell us why you're returning. We value your
                                                 feedback!</p>
                                             <div class="form-check mt-4">
-                                                <input class="form-check-input" type="radio" name="selectedPayment"
-                                                    id="" value="option1">
+                                                <input class="form-check-input" type="radio" name="selectedReason"
+                                                    value="Product defect or damage">
                                                 <label class="form-check-label" for="exampleRadios1">
                                                     Product has defects or damage upon arrival
                                                 </label>
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedPayment"
-                                                    id="onlinePayment" value="option2">
+                                                <input class="form-check-input" type="radio" name="selectedReason"
+                                                    id="onlinePayment" value="Recieved wrong item">
                                                 <label class="form-check-label" for="exampleRadios3">
                                                     Received the wrong item
                                                 </label>
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedPayment"
-                                                    id="" value="option1">
+                                                <input class="form-check-input" type="radio" name="selectedReason"
+                                                    value="Size/fitness issue">
                                                 <label class="form-check-label" for="exampleRadios1">
                                                     Size or fit issues with the product
                                                 </label>
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedPayment"
-                                                    id="onlinePayment" value="option2">
+                                                <input class="form-check-input" type="radio" name="selectedReason"
+                                                    value="Dissatified / changed mind">
                                                 <label class="form-check-label" for="exampleRadios3">
                                                     Changed mind or dissatisfied with the product
                                                 </label>
                                             </div>
                                             <hr>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedPayment"
-                                                    id="" value="option1">
+                                                <input class="form-check-input" type="radio" name="selectedReason"
+                                                    value="Late delivery">
                                                 <label class="form-check-label" for="exampleRadios1">
-                                                    Late delivery or unmet expectations
+                                                    Late delivery
                                                 </label>
                                             </div>
                                             <hr>
+                                            <span id="returnSpan" class="span"></span><br>
                                             <button type="button" class="btn btn-dark mt-2 commntBtn"
-                                                onclick="returnProduct('<%= product.product._id %>')">Submit</button>
+                                                onclick="returnProduct('<%= product.product._id %>','<%= product.product.price %>',
+                                                ' <%= product.Size %>','<%= product.Count %>','<%= order._id %>')">Submit</button>
                                             <hr>
                                         </div>
                                         <% }); %>
-
+                                            <div>
+                                                <% if (order.orderStatus==='placed' || order.orderStatus==='packed' &&
+                                                    order.paymentMethod==='COD' ) { %>
+                                                    <button type="button" class="btn btn-dark mt-4 commntBtn"
+                                                        onclick="cancelOrder('<%= order._id %>')">Cancel Order</button>
+                                                    <% } %>
+                                            </div>
                                 </div>
                             </div>
                             <% } %>

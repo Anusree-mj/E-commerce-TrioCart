@@ -144,6 +144,34 @@ module.exports = {
             return { status: 'nok' };
         }
     }
+,  returnProduct: async (productId,details) => {
+    try {
+        let amount=details.count * details.price;        
+        const data = {
+            productId: productId,
+            totalAmount: amount,
+            size: details.size,
+            returnStatus: 'placed'           
+        }      
+        await collection.productReturnCollection.insertMany([data]) 
+        await collection.orderCollection.updateOne(
+            {
+                _id: details.orderId,
+                'products.product': productId,
+            },
+            {
+                $set:{
+                    'products.$.isReturned': true,
+                }
+            }
+            )
+        
+        return { status: 'ok'}
+    } catch (err) {
+        console.log(err);
+        return { status: 'nok' };
+    }
+}
 
 }
 

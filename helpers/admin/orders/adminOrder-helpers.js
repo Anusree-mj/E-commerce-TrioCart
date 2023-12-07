@@ -47,7 +47,7 @@ module.exports = {
                     orderStatus: data.status, 
                     deliveredDate: deliveryTym.deliveryDateString,
                     returnDate: deliveryTym.returnDateString,  
-                    returnStatus: true,               
+                    returnValid: true,               
                  } 
                 }
             )
@@ -92,7 +92,7 @@ module.exports = {
         }
     },
 // for expiring return status
-    scheduleReturnStatusUpdate: () => {
+    scheduleReturnValidUpdate: () => {
         const rule = new schedule.RecurrenceRule();
         rule.hour = 0; // Run daily at midnight
         rule.minute = 0;
@@ -102,17 +102,17 @@ module.exports = {
                 const currentDate = new Date();
                 const updateResult = await collection.orderCollection.updateMany(
                     {
-                        returnStatus: true,
+                        returnValid: true,
                         returnDate: { $lt: currentDate },
                     },
                     {
-                        $set: { returnStatus: false },
+                        $set: { returnValid: false },
                     }
                 );
 
-                console.log(`${updateResult.modifiedCount} orders' returnStatus updated`);
+                console.log(`${updateResult.modifiedCount} orders' returnValid updated`);
             } catch (error) {
-                console.error('Error updating returnStatus:', error);
+                console.error('Error updating returnValid:', error);
             }
         });
     },

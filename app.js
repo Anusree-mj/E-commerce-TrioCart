@@ -10,10 +10,10 @@ const Razorpay = require('razorpay');
 const adminOrderHelpers = require ('./helpers/admin/orders/adminOrder-helpers')
 
 // calling scheduleReturnStatusUpdate
-adminOrderHelpers.scheduleReturnStatusUpdate();
+adminOrderHelpers.scheduleReturnValidUpdate();
 
 //multer
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({ 
   destination: ((req, file, cb) => {
     cb(null, './public/images/products');
   }),
