@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../../controllers")
+//admin page
+router.get('/test', (req, res, next) => {
+    res.render('admin/test', 
+       );
+});
 
 
 //admin page
 router.get('/', controller.adminControllers.dashboardController.getDashboardPage);
+
+//dashboard graph page
+router.get('/dashboard', controller.adminControllers.dashboardController.getOrderGraph);
 
 //get adminlogin page
 router.get('/login', controller.adminControllers.loginController.getLoginPage);

@@ -1,7 +1,14 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminDashboard.css">
 <div>
     <%- include('../partials/adminHeaders') %>
-    <h1 class="head">Welcome <%= admin.name %></h1>
-    <p class="subhead">( This page shows the sales report )</p>
+        <h1 class="head">Welcome <%= admin.name %>
+        </h1>
+        <div class="d-flex justify-content-center mt-4">
+            <canvas id="myChart" class="graph"></canvas>
+          </div>
+           
 </div>
 <%- include('../partials/loginsFooter') %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/javascripts/admin/adminDashboard/dashboard.js"></script>
+  
