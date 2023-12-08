@@ -50,3 +50,4 @@ function deleteCategory(subCategory) {
             .catch(err => console.log(err));
     }
 }
+

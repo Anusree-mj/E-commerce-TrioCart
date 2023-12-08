@@ -51,6 +51,12 @@ router.get('/category', controller.adminControllers.categoryManagementController
 //add category page
 router.get('/addCategory', controller.adminControllers.categoryManagementController.getAddCategoryPage)
 
+//get edit category  page
+router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage)
+
+//edit subcategory
+router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
+
 //delete subcategory
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory)
 

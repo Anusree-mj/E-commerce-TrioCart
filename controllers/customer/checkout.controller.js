@@ -61,7 +61,7 @@ const submitCheckoutPageDetails = (req, res, next) => {
                 if (result.status === 'ok') {
                     if (orderDetails.paymentMethod === 'onlinePayment') {
                         let orderId = result.orderId
-                        let totalAmount = result.totalAmount * 100
+                        let totalAmount = result.totalAmount 
                         const order = await razorpayUtil.createRazorpayOrder(orderId, totalAmount);
                         console.log('order in route', order)
                         res.status(200).json({ status: "ok", order, user });

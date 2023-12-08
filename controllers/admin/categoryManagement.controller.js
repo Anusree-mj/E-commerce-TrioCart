@@ -60,12 +60,37 @@ const addSubcategory = (req, res, next) => {
     })
 }
 
+const getEditCategoryPage = (req, res, next) => {
+    let category = req.params.category
+    let subCategory = req.params.subcategory
+    let sessionId = req.cookies.adminSession
+    adminLoginHelpers.checkSessions(sessionId).then(result => {
+        if (result.status === 'ok') {
+            res.render('admin/editCategory', { layout: 'layout/layout',category,subCategory })
+        }
+        else {
+            res.redirect('/admin');
+        }
+    })
+}
+
+const editSubcategory = (req, res, next) => {
+    adminCategoryHelpers.editSubCategory(req.body).then((result) => {
+        if (result.status === 'added') {
+            res.status(200).json({ status: "ok" });
+        } else {
+            res.status(500).json({ status: "nok" });
+        }
+    })
+}
+
+
 module.exports = {
     getCategoryPage,
     getAddCategoryPage,
     softDeleteSubcategory,
     undoSoftDeleteSubcategory,
     addSubcategory,
-
-
+    getEditCategoryPage,
+    editSubcategory
 }
