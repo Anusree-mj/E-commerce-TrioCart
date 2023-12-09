@@ -14,7 +14,6 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">SubCategory</th>
-                                <th scope="col">Edit</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -24,7 +23,8 @@
                             <% categories.forEach((category) => { %>
                                 <% category.subCategory.forEach((subcategory, index) => { %>
                                     <tr>
-                                        <% if (index === 0) { %>                                            
+                                        <% if (index === 0) { %>
+                                            <!-- Display Category only in the first row of each category -->
                                             <th scope="row" rowspan="<%= category.subCategory.length %>">
                                                 <%= slNo %>
                                             </th>
@@ -43,11 +43,6 @@
                                             <% }else{ %>
                                                 <p>Available</p>
                                                 <% } %>%>
-                                        </td>
-                                        <td>
-                                            <a href="/admin/<%= category.category %>/<%= subcategory.name %>">
-                                                <img style="width: 1.2rem;" src="/images/navbar/edit.png" alt="edit">
-                                            </a>
                                         </td>
                                         <td>
                                             <a onclick="deleteCategory('<%= subcategory.name %>')">

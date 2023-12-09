@@ -1,14 +1,73 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminDashboard.css">
-<div>
-    <%- include('../partials/adminHeaders') %>
+<%- include('../partials/adminHeaders') %>
+<section >
+    <div class="welcomeTxt">
         <h1 class="head">Welcome <%= admin.name %>
         </h1>
-        <div class="d-flex justify-content-center mt-4">
-            <canvas id="myChart" class="graph"></canvas>
-          </div>
-           
-</div>
+    </div>
+    <div class="contents">
+        
+        <div class="cards" >
+            <!-- ordersRecieved -->
+            <div class="orderCard">
+                <div class="orderCount">
+                    <%= totalOrders %>
+                </div>
+                <div class="orderTitle">Orders Placed</div>
+                <svg class="svgIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+
+            <!--orders yet to be shipped -->
+            <div class="orderCard mt-3" style="background: linear-gradient(to right, #FF7E7E, #FF0000);">
+                <div class="orderCount">
+                    <%= ordersYetToBeShipped %>
+                </div>
+                <div class="orderTitle">Orders to be Shipped</div>
+                <svg class="svgIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="absolute right-0 bottom-0 h-32 w-32 -mr-8 -mb-8 text-red-700 opacity-50">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+
+            <!-- orders delivered -->
+            <div class="orderCard mt-3" style="background: linear-gradient(to right, #FFEB3B, #FFC107);">
+                <div class="orderCount">
+                    <%= ordersDelivered %>
+                </div>
+                <div class="orderTitle">Orders Delivered</div>
+                <svg class="svgIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="absolute right-0 bottom-0 h-32 w-32 -mr-8 -mb-8 text-green-600 opacity-50">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+
+            <!-- total users -->
+            <div class="orderCard mt-3" style="background: linear-gradient(to right, #4A90E2, #0066CC);">
+                <div class="orderCount">
+                    <%= totalUsers %>
+                </div>
+                <div class="orderTitle">Total Customers</div>
+                <svg class="svgIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="absolute right-0 bottom-0 h-32 w-32 -mr-8 -mb-8 text-blue-700 opacity-50">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="graphs">
+            <canvas id="ordersPerDay" class="lineGraph"></canvas>
+            <canvas id="ordersTotalAmount" class="pieGraph ml-4"></canvas>
+        </div> 
+    </div>
+    
+</section>
 <%- include('../partials/loginsFooter') %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/javascripts/admin/adminDashboard/dashboard.js"></script>
-  
