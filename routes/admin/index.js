@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require("../../controllers")
 
-
 //admin page
 router.get('/', controller.adminControllers.dashboardController.getDashboardPage);
+
+//dashboard graph page
+router.get('/dashboard', controller.adminControllers.dashboardController.getOrderGraph);
 
 //get adminlogin page
 router.get('/login', controller.adminControllers.loginController.getLoginPage);
@@ -51,6 +53,12 @@ router.get('/category', controller.adminControllers.categoryManagementController
 //add category page
 router.get('/addCategory', controller.adminControllers.categoryManagementController.getAddCategoryPage)
 
+//get edit category  page
+router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage)
+
+//edit subcategory
+router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
+
 //delete subcategory
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory)
 
@@ -83,6 +91,10 @@ router.get('/returns', controller.adminControllers.returnController.getReturnsPa
 
 //edit return status
 router.put('/return', controller.adminControllers.returnController.editReturnStatus)
+
+// sales page
+router.get('/sales', controller.adminControllers.salesController.getSalesPage)
+
 
 //logout
 router.get('/logout', controller.adminControllers.loginController.logout)

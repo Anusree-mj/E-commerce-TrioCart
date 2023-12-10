@@ -19,59 +19,135 @@ module.exports = {
             console.log(err)
         }
     },
+    getAllOrdersGraph: async () => {
+        try {
+            const orders = await collection.orderCollection.aggregate([
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                            day: { $dayOfMonth: "$createdAt" }
+                        },
+                        totalCount: { $sum: 1 },
+                        totalPrice: { $sum: "$totalAmount" }
+                    }
+                }
+            ]);
+            console.log('orders::', orders)
+
+            return { orders }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+
+    getTotalCounts: async () => {
+        try {
+            const userCounts = await collection.usersCollection.countDocuments();
+            const totalOrders = await collection.orderCollection.countDocuments();
+
+            const orderCountsCursor = await collection.orderCollection.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        shippedCount: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$orderStatus", "shipped"] }, then: 1, else: 0
+                                }
+                            }
+                        },
+                        deliveredCount: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$orderStatus", "delivered"] }, then: 1, else: 0
+                                }
+                            }
+                        },
+                        placedCount: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$orderStatus", "placed"] }, then: 1, else: 0
+                                }
+                            }
+                        }
+                    }
+                }
+            ])
+
+            if (orderCountsCursor.length > 0) {
+                const { shippedCount, deliveredCount, placedCount } = orderCountsCursor[0];
+
+                const yetToBeShippedCount = placedCount-shippedCount;
+
+                return { yetToBeShippedCount, deliveredCount, totalOrders,userCounts };
+            }
+             else {
+                console.log("No results found");
+                return { shippedCount: 0, deliveredCount: 0, placedCount: 0,userCounts };
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     updateOrderStatus: async (data) => {
         try {
-            if(data.status!=='delivered' && data.status!=='cancelled by seller'){
-            const orderPlacementDate = new Date();
-            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate,data.status)
+            if (data.status !== 'delivered' && data.status !== 'cancelled by seller') {
+                const orderPlacementDate = new Date();
+                const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate, data.status)
 
-            const updateData = await collection.orderCollection.updateOne(
-                { _id: data.orderId },
-                { $set: { orderStatus: data.status, estimatedDelivery: deliveryTym, } }
-            )
+                const updateData = await collection.orderCollection.updateOne(
+                    { _id: data.orderId },
+                    { $set: { orderStatus: data.status, estimatedDelivery: deliveryTym, } }
+                )
 
-            if (updateData.modifiedCount === 1) {
-                console.log('order update success')
-                return { status: 'ok' }
-            } else {
-                return { status: 'nok' }
-            }
-        }
-        else if(data.status==='delivered'){
-            const orderPlacementDate = new Date();
-            const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate,data.status)
-           
-            const updateData = await collection.orderCollection.updateOne(
-                { _id: data.orderId },
-                { $set: { 
-                    orderStatus: data.status, 
-                    deliveredDate: deliveryTym.deliveryDateString,
-                    returnDate: deliveryTym.returnDateString,  
-                    returnValid: true,               
-                 } 
+                if (updateData.modifiedCount === 1) {
+                    console.log('order update success')
+                    return { status: 'ok' }
+                } else {
+                    return { status: 'nok' }
                 }
-            )
-
-            if (updateData.modifiedCount === 1) {
-                console.log('order update success')
-                return { status: 'ok' }
-            } else {
-                return { status: 'nok' }
             }
-        }else{
-          
-            const updateData = await collection.orderCollection.updateOne(
-                { _id: data.orderId },
-                { $set: { orderStatus: data.status} }
-            )
+            else if (data.status === 'delivered') {
+                const orderPlacementDate = new Date();
+                const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(orderPlacementDate, data.status)
 
-            if (updateData.modifiedCount === 1) {
-                console.log('order update success')
-                return { status: 'ok' }
+                const updateData = await collection.orderCollection.updateOne(
+                    { _id: data.orderId },
+                    {
+                        $set: {
+                            orderStatus: data.status,
+                            deliveredDate: deliveryTym.deliveryDateString,
+                            returnDate: deliveryTym.returnDateString,
+                            returnValid: true,
+                        }
+                    }
+                )
+
+                if (updateData.modifiedCount === 1) {
+                    console.log('order update success')
+                    return { status: 'ok' }
+                } else {
+                    return { status: 'nok' }
+                }
             } else {
-                return { status: 'nok' }
-            }  
-        }
+
+                const updateData = await collection.orderCollection.updateOne(
+                    { _id: data.orderId },
+                    { $set: { orderStatus: data.status } }
+                )
+
+                if (updateData.modifiedCount === 1) {
+                    console.log('order update success')
+                    return { status: 'ok' }
+                } else {
+                    return { status: 'nok' }
+                }
+            }
         }
         catch (err) {
             console.log(err)
@@ -91,7 +167,8 @@ module.exports = {
             return { status: 'nok' };
         }
     },
-// for expiring return status
+
+    // for expiring return status
     scheduleReturnValidUpdate: () => {
         const rule = new schedule.RecurrenceRule();
         rule.hour = 0; // Run daily at midnight

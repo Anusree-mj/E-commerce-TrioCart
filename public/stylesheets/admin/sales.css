@@ -1,0 +1,47 @@
+/* Initially hide all dropdowns */
+/* #dailyDropdown .dropdown-menu,
+#weeklyDropdown .dropdown-menu,
+#yearlyDropdown .dropdown-menu {
+    display: none;
+} */
+
+/* Display the dropdown when the parent is hovered */
+/* #dailyDropdown:hover .dropdown-menu,
+#weeklyDropdown:hover .dropdown-menu,
+#yearlyDropdown:hover .dropdown-menu {
+    display: block;
+} */
+
+.butonTxt{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.span {
+    height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.mainTxt{
+    font-weight: 600;
+}
+
+.buttons{
+    margin-bottom: 2rem;
+}
+.overviewCard {
+    background: linear-gradient(45deg, #3498db, #e74c3c);
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .overviewCard p {
+    font-size: 18px;
+    margin: 0;
+  }

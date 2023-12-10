@@ -10,7 +10,7 @@ const createRazorpayOrder= async (orderId,total)=>{
 const totalAmount= parseInt(total,10)
 console.log('typeofamount',typeof(totalAmount))
     const options = {
-        amount: totalAmount,  // amount in the smallest currency unit
+        amount: totalAmount*100,  // amount in the smallest currency unit
         currency: "INR",
         receipt: ""+orderId
     };

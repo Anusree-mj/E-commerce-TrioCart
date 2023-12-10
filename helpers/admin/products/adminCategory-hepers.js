@@ -61,4 +61,52 @@ module.exports = {
         }
     },
 
+    editSubCategory: async (body) => {
+        try {
+            console.log('detailsineditsubcat', body)
+            const updateData = await collection.categoryCollection.updateOne(
+                {
+                    category: body.category,
+                    subCategory: body.subcategory
+                },
+                {
+                    $pull: {
+                        subCategory: body.subcategory
+                    }
+
+                }
+            )
+            if (updateData) {
+                console.log('collection got')
+            }
+            await collection.categoryCollection.updateOne(
+                {
+                    category: body.category,
+                },
+                {
+                    $push: {
+                        subCategory: body.newSubCategory
+                    }
+
+                }
+            )
+
+            await collection.productsCollection.updateMany(
+                {
+                    category: body.category,
+                    subCategory: body.subcategory
+                },
+                {
+                    $set: {
+                        subCategory: body.newSubCategory
+                    }
+                }
+            )
+
+            return { status: 'added' }
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' }
+        }
+    },
 }

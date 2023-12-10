@@ -1,18 +1,25 @@
 .container {
     max-width: 90% !important;
-
 }
 
 .tno {
     width: 0.6rem;
 }
-.returnHead{
+
+.returnHead {
     max-width: 4rem;
     text-align: center;
 }
+
 .thead {
     width: 3rem;
     margin: 0 0.5rem;
+}
+
+.contents {
+    width: 65rem;
+    max-width: 90%;
+    margin-top: 3rem;
 }
 
 .ttitle {
@@ -49,12 +56,13 @@
 }
 
 .subHead {
+    width: 80rem;
     margin-top: 1rem;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    align-items: flex-end;
+    justify-content: center;
     max-width: 100%;
-    padding-bottom: 2rem;
+    padding: 1rem;
 }
 
 .subHead-txt {
@@ -83,4 +91,9 @@
         height: 1.5rem !important;
         width: 5rem !important;
     }
+
+    .contents {
+        max-width: 80%;
+    }
+
 }

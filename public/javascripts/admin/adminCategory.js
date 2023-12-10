@@ -44,3 +44,28 @@ function addCategory() {
         .catch(err => console.log(err));
     }
 }
+
+// get edit Category page
+function editCategory(subcategory,category){
+    let newSubCategory = document.getElementById('subCategoryEdit').value
+    if(!newSubCategory){
+        document.getElementById('subCategory_editSpan').textContent='*This field is required'
+    }else{
+    let reqBody={subcategory,category,newSubCategory}
+    fetch(`http://localhost:3000/admin/category/edit`, {
+        method: "PUT",
+        body: JSON.stringify(reqBody),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                window.location.replace("/admin/category/");
+            } else {
+                alert("Editing product failed");
+            }
+        })
+        .catch(err => console.log(err));
+    }
+}
