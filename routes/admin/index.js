@@ -92,6 +92,10 @@ router.get('/returns', controller.adminControllers.returnController.getReturnsPa
 //edit return status
 router.put('/return', controller.adminControllers.returnController.editReturnStatus)
 
+// sales page
+router.get('/sales', controller.adminControllers.salesController.getSalesPage)
+
+
 //logout
 router.get('/logout', controller.adminControllers.loginController.logout)
 
