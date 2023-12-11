@@ -24,23 +24,23 @@ module.exports = {
             const orders = await collection.orderCollection.aggregate([
                 {
                     $group: {
-                      _id: {
-                        year: { $year: "$createdAt" },
-                        month: { $month: "$createdAt" },
-                        day: { $dayOfMonth: "$createdAt" }
-                      },
-                      totalCount: { $sum: 1 },
-                      totalPrice: { $sum: "$totalAmount" }
+                        _id: {
+                            year: { $year: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                            day: { $dayOfMonth: "$createdAt" }
+                        },
+                        totalCount: { $sum: 1 },
+                        totalPrice: { $sum: "$totalAmount" }
                     }
-                  },
-                  {
+                },
+                {
                     $sort: {
-                      "_id.year": 1,
-                      "_id.month": 1,
-                      "_id.day": 1
+                        "_id.year": 1,
+                        "_id.month": 1,
+                        "_id.day": 1
                     }
-                  }
-                  
+                }
+
             ]);
             console.log('orders::', orders)
 
@@ -88,13 +88,13 @@ module.exports = {
             if (orderCountsCursor.length > 0) {
                 const { shippedCount, deliveredCount, placedCount } = orderCountsCursor[0];
 
-                const yetToBeShippedCount = placedCount-shippedCount;
+                const yetToBeShippedCount = placedCount - shippedCount;
 
-                return { yetToBeShippedCount, deliveredCount, totalOrders,userCounts };
+                return { yetToBeShippedCount, deliveredCount, totalOrders, userCounts };
             }
-             else {
+            else {
                 console.log("No results found");
-                return { shippedCount: 0, deliveredCount: 0, placedCount: 0,userCounts };
+                return { shippedCount: 0, deliveredCount: 0, placedCount: 0, userCounts };
             }
 
         } catch (err) {
@@ -185,10 +185,16 @@ module.exports = {
         schedule.scheduleJob(rule, async () => {
             try {
                 const currentDate = new Date();
+
+                const orders = await collection.orderCollection.find({ returnValid: true }).toArray();
+                const modifiedReturnDates = orders.map(order => {
+                    return new Date(order.returnDate);
+                });
+
                 const updateResult = await collection.orderCollection.updateMany(
                     {
                         returnValid: true,
-                        returnDate: { $lt: currentDate },
+                        modifiedReturnDates: { $lt: currentDate },
                     },
                     {
                         $set: { returnValid: false },

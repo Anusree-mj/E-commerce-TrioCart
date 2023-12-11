@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
                                     font: {
                                         size: 16,
                                         weight: 'bolder',
-                                    }
+                                    },
+                                    stepSize: 1, // Set step size to 1 to display only integer values
+                                    precision: 0, // Set precision to 0 to avoid decimal places
                                 }
                             },
                             x: {
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 });
+                
                 
 
                 const pieChart = document.getElementById('ordersTotalAmount');
