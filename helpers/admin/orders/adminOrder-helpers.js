@@ -24,15 +24,23 @@ module.exports = {
             const orders = await collection.orderCollection.aggregate([
                 {
                     $group: {
-                        _id: {
-                            year: { $year: "$createdAt" },
-                            month: { $month: "$createdAt" },
-                            day: { $dayOfMonth: "$createdAt" }
-                        },
-                        totalCount: { $sum: 1 },
-                        totalPrice: { $sum: "$totalAmount" }
+                      _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" },
+                        day: { $dayOfMonth: "$createdAt" }
+                      },
+                      totalCount: { $sum: 1 },
+                      totalPrice: { $sum: "$totalAmount" }
                     }
-                }
+                  },
+                  {
+                    $sort: {
+                      "_id.year": 1,
+                      "_id.month": 1,
+                      "_id.day": 1
+                    }
+                  }
+                  
             ]);
             console.log('orders::', orders)
 

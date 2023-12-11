@@ -57,7 +57,7 @@ router.get('/addCategory', controller.adminControllers.categoryManagementControl
 router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage)
 
 //edit subcategory
-router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
+// router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
 
 //delete subcategory
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory)
@@ -84,7 +84,7 @@ router.get('/orders', controller.adminControllers.orderManagementController.getO
 router.put('/orders', controller.adminControllers.orderManagementController.editOrderStatus)
 
 // order details page
-router.get('/order/:orderId', controller.adminControllers.orderManagementController.getOrderDetailPage )
+router.get('/order/:orderId/orderDetails', controller.adminControllers.orderManagementController.getOrderDetailPage )
 
 // returns page
 router.get('/returns', controller.adminControllers.returnController.getReturnsPage )
