@@ -3,7 +3,7 @@
 
     <div class="row align-items-center justify-content-center">
         <div class="addForm">
-            <h2 class="head">Edit a Product</h2>
+            <h2 class="head">Edit Product Stock</h2>
             <!-- name -->
             <label class="label" for="name">Name</label>
             <input type="text" class="form-control"  value="<%= productData.name%>" disabled>
@@ -17,16 +17,20 @@
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" value="<%= productData.subCategory%>" disabled>
-            
+             
+            <!-- size -->
+              <label class="label" for="subCategory">Size</label>
+              <input type="text" class="form-control" value="<%= size %>" disabled>
+
+           
             <label class="label" for="stock">Stock<span class="required">*</span></label>
             <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')" type="text"
-                class="form-control" name="stock" id="stock" placeholder="Product stock" value="<%= productData.stock%>" >
-            <span id="stockSpan" class="span"></span>
-               
+                class="form-control" name="stock" id="stock" placeholder="Product stock" value="<%= count %>"  >
+            <span id="stockSpan" class="span"></span>               
 
                 <div class="button">
                     <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
-                        onclick="editStock('<%= productData._id %>')">Edit</button>
+                        onclick="editStock('<%= productData._id %>','<%= size %>')">Edit</button>
                 </div>
         </div>
     </div>

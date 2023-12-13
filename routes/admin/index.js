@@ -41,11 +41,14 @@ router.get('/products/:product_Id', controller.adminControllers.productManagemen
 //edit products
 router.put('/products/:product_Id', controller.adminControllers.productManagementController.editProduct)
 
-//get edit stockproduct  page
-router.get('/products/:product_Id/stock', controller.adminControllers.productManagementController.getEditProductStockPage)
+//get adminStock  page
+router.get('/stock', controller.adminControllers.stockController.getStockPage)
 
-//edit products stock
-router.put('/products/:product_Id/stock', controller.adminControllers.productManagementController.editProductStock)
+//get edit stock page
+router.get('/stock/:productId/:size', controller.adminControllers.stockController.getEditProductStockPage)
+
+//edit stock
+router.put('/stock/:product_Id', controller.adminControllers.stockController.editProductStock)
 
 //get category page
 router.get('/category', controller.adminControllers.categoryManagementController.getCategoryPage)

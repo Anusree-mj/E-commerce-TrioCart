@@ -4,10 +4,7 @@ const collection = require('../../models/index-model')
 module.exports = {
     cartProductIncrement: async (productId, size) => {
         try {
-            await collection.productsCollection.updateOne(
-                { _id: productId },
-                { $inc: { stock: -1 } }
-            )
+
             const updateData = await collection.cartCollection.updateOne(
                 {
                     'products.product': productId,
@@ -29,10 +26,7 @@ module.exports = {
 
     cartProductDecremnt: async (productId, size) => {
         try {
-            await collection.productsCollection.updateOne(
-                { _id: productId },
-                { $inc: { stock: +1 } }
-            )
+
             const updateData = await collection.cartCollection.updateOne(
                 {
                     'products.product': productId,
@@ -54,10 +48,6 @@ module.exports = {
 
     addToCart: async (user, productId, size) => {
         try {
-            await collection.productsCollection.updateOne(
-                { _id: productId },
-                { $inc: { stock: -1 } }
-            )
             const existingProduct = await collection.cartCollection.findOne({
                 userId: user._id,
                 'products.product': productId,
@@ -126,10 +116,6 @@ module.exports = {
 
     removeCartProducts: async (productId, body) => {
         try {
-            await collection.productsCollection.updateOne(
-                { _id: productId },
-                { $inc: { stock: body.count } }
-            )
             const updateData = await collection.cartCollection.updateOne(
                 { userId: body.userId },
                 { $pull: { products: { product: productId, Size: body.size } } }
@@ -153,5 +139,4 @@ module.exports = {
             return { status: 'nok' };
         }
     },
-
 }

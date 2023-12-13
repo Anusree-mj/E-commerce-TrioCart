@@ -109,27 +109,6 @@ const editProduct = (req, res, next) => {
     })
 }
 
-const getEditProductStockPage = (req, res, next) => {
-    const productId = req.params.product_Id
-    adminProductHelpers.getProductForEditing(productId).then((productData) => {
-        if (productData) {
-            res.render('admin/editStockProduct', { productData })
-        } else {
-            res.redirect('/products');
-        }
-    })
-}
-
-const editProductStock = (req, res, next) => {
-    const productId = req.params.product_Id
-    adminImgStockHelpers.editStock(req.body, productId).then((result) => {
-        if (result.status === 'ok') {
-            res.status(200).json({ status: "ok" });
-        } else {
-            res.status(500).json({ status: "nok" });
-        }
-    })
-}
 
 module.exports = {
     getProductPage,
@@ -141,6 +120,4 @@ module.exports = {
     undoSoftDeleteProduct,
     getEditProductPage,
     editProduct,
-    getEditProductStockPage,
-    editProductStock
-}
+   }

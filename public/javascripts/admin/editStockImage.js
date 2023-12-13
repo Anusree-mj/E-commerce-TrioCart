@@ -10,13 +10,13 @@ function isValidPrice(field) {
 }
 
 // edit stock
-function editStock(productId){
+function editStock(productId,size){
     let stock=document.getElementById('stock').value;
     if(stock && isStockValid){
-    let reqBody = { stock }
+    let reqBody = { stock,size }
 
     console.log(reqBody);
-fetch(`http://localhost:3000/admin/products/${productId}/stock`, {
+fetch(`http://localhost:3000/admin/stock/${productId}/`, {
     method: "PUT",
     body: JSON.stringify(reqBody),
     headers: {
@@ -25,7 +25,7 @@ fetch(`http://localhost:3000/admin/products/${productId}/stock`, {
 }).then((res) => res.json())
     .then((data) => {
         if (data.status === "ok") {
-            window.location.replace("/admin/products");
+            window.location.replace("/admin/stock");
         } else {
             alert("Editing stock failed");
         }
