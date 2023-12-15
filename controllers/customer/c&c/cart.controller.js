@@ -1,7 +1,7 @@
-const productHelpers = require('../../helpers/user/product-helpers')
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
+const productHelpers = require('../../../helpers/user/product-helpers')
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const cartHelpers = require('../../../helpers/user/cart-helpers');
 
 const getCartPage = async (req, res, next) => {
     let allCategories = await categoryHelpers.getCategoryDetails()
@@ -17,13 +17,13 @@ const getCartPage = async (req, res, next) => {
                 cartHelpers.getMyCartProducts(user).then((result) => {
                     if (result) {
                        const {cartProducts,totalCount,totalprice}=result
-                        res.render('users/cart', {
+                        res.render('customers/c&c/cart', {
                             layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
                             totalCartProduct:totalCount
                         });
                     }
                     else {
-                        res.render('users/cart', {
+                        res.render('customers/cart', {
                             layout: 'layout/layout', allCategories, viewMoreProducts, user,
                             cartProducts: undefined, totalCartProduct: undefined, totalPrice: undefined
                         });

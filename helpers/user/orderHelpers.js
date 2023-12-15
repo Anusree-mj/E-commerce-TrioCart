@@ -36,7 +36,7 @@ module.exports = {
 
     saveOrderDetails: async (orderDetails) => {
         try {
-            console.log('orderdetails',orderDetails)
+            console.log('orderdetails', orderDetails)
             const getBillingAddress = await collection.usersCollection.findOne({
                 _id: orderDetails.userId
             })
@@ -47,7 +47,21 @@ module.exports = {
             })
 
             const products = getOrderedProducts.products;
-            console.log('procusts',products);
+            console.log('procusts', products);
+            // update stock
+            const updateStock = products.map(async (product) => {
+                await collection.productsCollection.updateOne(
+                    {
+                        _id: product.product,
+                        'sizesStock.size': product.Size
+                    },
+                    { $inc: { 'sizesStock.$.count': -1 } }
+                )
+            })
+            const updateStockResults = await Promise.all(updateStock);
+            if (updateStock) {
+                console.log('updated stock', updateStockResults)
+            }
             const orderPlacementDate = new Date();
             const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(
                 orderPlacementDate, 'placed')
@@ -131,6 +145,32 @@ module.exports = {
 
     cancelAnOrder: async (orderId) => {
         try {
+            const orderDetails = await collection.orderCollection.findOne(
+                {
+                    _id: orderId,
+                }
+            )
+            console.log('orderDetailsss', orderDetails);
+
+            // update stock
+            const updateStock = orderDetails.products.map(async (item) => {
+                const productId = item.product;
+                const size = item.Size;
+                
+                console.log('Product and Size:', productId, size);
+            
+                await collection.productsCollection.updateOne(
+                    {
+                        _id: productId,
+                        'sizesStock.size': size
+                    },
+                    { $inc: { 'sizesStock.$.count': 1 } }
+                );
+            });
+            
+            await Promise.all(updateStock);
+            console.log('updatedstockss',updateStock);      
+         
             const updateData = await collection.orderCollection.updateOne(
                 { _id: orderId },
                 { $set: { orderStatus: 'Cancelled by User' } }
@@ -145,38 +185,48 @@ module.exports = {
             console.log(err);
             return { status: 'nok' };
         }
-    }
-,  returnProduct: async (productId,details,userID) => {
-    try {
-        let amount=details.count * details.price;        
-        const data = {
-            orderId:details.orderId,
-            userId: userID,
-            productId: productId,
-            totalAmount: amount,
-            size: details.size,
-            returnReason:details.reason,
-            returnStatus: 'placed'           
-        }      
-        await collection.productReturnCollection.insertMany([data]) 
-        await collection.orderCollection.updateOne(
-            {
-                _id: details.orderId,
-                'products.product': productId,
-            },
-            {
-                $set:{
-                    'products.$.isReturned': true,
-                }
-            }
+    },
+
+     returnProduct: async (productId, details, userID) => {
+        try {           
+         const updateStock= await collection.productsCollection.updateOne(
+                {
+                    _id: productId,
+                    'sizesStock.size': (details.size).trim()
+                },
+                { $inc: { 'sizesStock.$.count': 1 } }
             )
-        
-        return { status: 'ok'}
-    } catch (err) {
-        console.log(err);
-        return { status: 'nok' };
+            console.log('updatedstockss',updateStock);
+
+            let amount = details.count * details.price;
+            const data = {
+                orderId: details.orderId,
+                userId: userID,
+                productId: productId,
+                totalAmount: amount,
+                size: details.size,
+                returnReason: details.reason,
+                returnStatus: 'placed'
+            }
+            await collection.productReturnCollection.insertMany([data])
+            await collection.orderCollection.updateOne(
+                {
+                    _id: details.orderId,
+                    'products.product': productId,
+                },
+                {
+                    $set: {
+                        'products.$.isReturned': true,
+                    }
+                }
+            )
+
+            return { status: 'ok' }
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
     }
-}
 
 }
 

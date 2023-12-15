@@ -15,6 +15,10 @@ const CategorySchema = new mongoosedb.Schema(
                     type: Boolean,
                     default: false,
                 },
+                discount: {
+                    type: Number,
+                    default: 0,
+                }
             },
         ],
     },

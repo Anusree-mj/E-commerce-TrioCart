@@ -16,7 +16,7 @@ const getOrderSuccessPage = (req, res, next) => {
                     let estimatedTym = result.estimatedDelivery;
                     let latestOrder = result.latestOrder
 
-                    res.render('users/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
+                    res.render('customers/orders/orderSuccess', { layout: 'layout/layout', estimatedTym, userName, latestOrder });
                 }
             })
         }
@@ -45,7 +45,7 @@ const getOrderHistoryPage = async (req, res, next) => {
                             productHelpers.getNewArrivalProducts().then(result => {
                                 let viewMoreProducts = [
                                     ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-                                res.render('users/orderHistory', { layout: 'layout/layout', user, allCategories, totalCartProduct, orderDetails, viewMoreProducts });
+                                res.render('customers/orders/orderHistory', { layout: 'layout/layout', user, allCategories, totalCartProduct, orderDetails, viewMoreProducts });
                             })
                         }
                     })
@@ -77,7 +77,7 @@ const getOrderDetailPage = async (req, res, next) => {
                         productHelpers.getNewArrivalProducts().then(result => {
                             let viewMoreProducts = [
                                 ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-                            res.render('users/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts, userReadableId });
+                            res.render('customers/orders/orderDetails', { layout: 'layout/layout', user, allCategories, totalCartProduct, order, viewMoreProducts, userReadableId });
                         })
                     })
                 }

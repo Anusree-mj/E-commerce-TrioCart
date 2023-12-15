@@ -1,8 +1,8 @@
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
-const orderHelpers = require('../../helpers/user/orderHelpers');
-const verifyPaymentHelpers = require('../../helpers/user/verifyPayment-helpers');
-const razorpayUtil = require('../../utils/razorpayUtil')
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const cartHelpers = require('../../../helpers/user/cart-helpers');
+const orderHelpers = require('../../../helpers/user/orderHelpers');
+const verifyPaymentHelpers = require('../../../helpers/user/verifyPayment-helpers');
+const razorpayUtil = require('../../../utils/razorpayUtil')
 
 const getCheckoutPage = async (req, res, next) => {
     try {
@@ -17,7 +17,7 @@ const getCheckoutPage = async (req, res, next) => {
                 console.log('dsfdsf',cartResult.stockAvailability)
                 const {cartProducts,totalprice,totalCount}=cartResult;               
 
-                res.render('users/checkout', {
+                res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
                     cartProducts,

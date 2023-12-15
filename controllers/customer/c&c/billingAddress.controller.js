@@ -1,5 +1,5 @@
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const billingAddressHelpers = require('../../helpers/user/billingAddress-helpers');
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const billingAddressHelpers = require('../../../helpers/user/billingAddress-helpers');
 
 const saveBillingAddress = (req, res, next) => {
     let user = req.body

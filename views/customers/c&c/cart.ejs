@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
-            <%- include('../partials/header') %>
+            <%- include('../../partials/header') %>
                 <% } %>
-                    <%- include('../partials/subHeader',allCategories) %>
+                    <%- include('../../partials/subHeader',allCategories) %>
 
                         <!--  -->
                         <section class="cartPage">
@@ -176,5 +176,5 @@
                                         </div>
                         </section>
 
-                        <%- include('../partials/footer') %>
+                        <%- include('../../partials/footer') %>
                             <script src="/javascripts/users/cart.js"></script>

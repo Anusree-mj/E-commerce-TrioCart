@@ -25,11 +25,11 @@ const getsubcategoryProductsPage = async (req, res, next) => {
           cartHelpers.getMyCartProducts(userId).then((result) => {
             if (result) {
               let totalCartProduct = result.totalCount
-              res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, category, subCategory, categories, products, user, totalCartProduct })
+              res.render('customers/subCategoryProducts', { layout: 'layout/layout', allCategories, category, subCategory, categories, products, user, totalCartProduct })
             }
           })
         } else {
-          res.render('users/subCategoryProducts', { layout: 'layout/layout', allCategories, category, subCategory, categories, products, user: undefined })
+          res.render('customers/subCategoryProducts', { layout: 'layout/layout', allCategories, category, subCategory, categories, products, user: undefined })
   
         }
       })

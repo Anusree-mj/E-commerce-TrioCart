@@ -1,7 +1,7 @@
 // undo subcategory delete
-function undoSubcategoryDelete(deleteStatus, subCategory) {
+function undoSubcategoryDelete(deleteStatus,subCategory,category) {
     subCategory = subCategory.trim();
-    let reqBody = { subCategory }
+    let reqBody = {subCategory,category}
 
     if (deleteStatus === 'true') {
         const confirmation = window.confirm(`Are you sure you want to undo the deletion of the subcategory "${subCategory}"?`);
@@ -27,12 +27,12 @@ function undoSubcategoryDelete(deleteStatus, subCategory) {
 }
 
 //delete subcategory
-function deleteCategory(subCategory) {
+function deleteCategory(subCategory,category) {
     const confirmation = window.confirm(`Are you sure you want to delete the category "${subCategory}"?`);
 
     if (confirmation) {
 
-        let reqBody = { subCategory };
+        let reqBody = { subCategory,category };
         fetch('http://localhost:3000/admin/category', {
             method: "PATCH",
             body: JSON.stringify(reqBody),
@@ -51,3 +51,7 @@ function deleteCategory(subCategory) {
     }
 }
 
+// edit offer
+function editOffer(subcategory,category){
+    
+}

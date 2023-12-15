@@ -7,6 +7,7 @@ const getCategoryPage = (req, res, next) => {
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
             categoryHelpers.getCategoryDetails().then((categories) => {
+                console.log('categoriesss',categories[0])
                 res.render('admin/adminCategories', { layout: 'layout/layout', categories });
             })
         }
@@ -29,8 +30,8 @@ const getAddCategoryPage = (req, res, next) => {
 }
 
 const softDeleteSubcategory = (req, res, next) => {
-    const subCategory = req.body.subCategory
-    adminCategoryHelpers.deleteSubcategory(subCategory).then((result) => {
+    const {subCategory,category} = req.body
+    adminCategoryHelpers.deleteSubcategory(subCategory,category).then((result) => {
         if (result.status === 'deleted') {
             res.status(200).json({ status: "ok" });
         } else {
@@ -40,8 +41,8 @@ const softDeleteSubcategory = (req, res, next) => {
 }
 
 const undoSoftDeleteSubcategory = (req, res, next) => {
-    const subCategory = req.body.subCategory
-    adminCategoryHelpers.undoSubcategoryDelete(subCategory).then((result) => {
+    const {subCategory,category} = req.body
+    adminCategoryHelpers.undoSubcategoryDelete(subCategory,category).then((result) => {
         if (result.status === 'undo delete') {
             res.status(200).json({ status: "ok" });
         } else {
@@ -85,6 +86,7 @@ const editSubcategory = (req, res, next) => {
 }
 
 
+
 module.exports = {
     getCategoryPage,
     getAddCategoryPage,
@@ -92,5 +94,5 @@ module.exports = {
     undoSoftDeleteSubcategory,
     addSubcategory,
     getEditCategoryPage,
-    editSubcategory
+    editSubcategory,
 }

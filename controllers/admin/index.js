@@ -8,7 +8,8 @@ const orderManagementController = require("./orderManagement.controller");
 const returnController = require("./returns.controller");
 const salesController = require("./sales.controller");
 const stockController = require("./stock.controller");
-
+const categoryOfferController = require("./categoryOfferManagement.controller");
+const productOfferController = require("./offerMangement/productOffer.controllers");
 
 module.exports = {
     imageController,
@@ -20,5 +21,6 @@ module.exports = {
     orderManagementController,
     returnController,
     salesController,
-    stockController
+    stockController,categoryOfferController,
+    productOfferController,
 }
