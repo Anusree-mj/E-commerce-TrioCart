@@ -25,12 +25,12 @@ const getProductDetailPage = async (req, res, next) => {
                     cartHelpers.getMyCartProducts(userId).then((result) => {
                         if (result) {
                             let totalCartProduct = result.totalCount
-                            res.render('users/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user, totalCartProduct })
+                            res.render('customers/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user, totalCartProduct })
                         }
                     })
                 }
                 else {
-                    res.render('users/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user: undefined })
+                    res.render('customers/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user: undefined })
 
                 }
             })

@@ -202,6 +202,7 @@ function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, sta
 
 // remove billing address
 function deleteBillingAdress(addressId) {
+    window.alert('are you sure to dlt this ')
     console.log(addressId);
     fetch(`http://localhost:3000/billingAddress/${addressId}`, {
         method: "DELETE",

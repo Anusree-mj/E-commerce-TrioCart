@@ -17,13 +17,13 @@ const getCartPage = async (req, res, next) => {
                 cartHelpers.getMyCartProducts(user).then((result) => {
                     if (result) {
                        const {cartProducts,totalCount,totalprice}=result
-                        res.render('users/c&c/cart', {
+                        res.render('customers/c&c/cart', {
                             layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
                             totalCartProduct:totalCount
                         });
                     }
                     else {
-                        res.render('users/cart', {
+                        res.render('customers/cart', {
                             layout: 'layout/layout', allCategories, viewMoreProducts, user,
                             cartProducts: undefined, totalCartProduct: undefined, totalPrice: undefined
                         });

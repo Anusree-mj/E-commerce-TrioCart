@@ -6,7 +6,7 @@ const signupUtil = require('../../utils/signupUtil');
 
 
 const getOTPVerificationPage = (req, res, next) => {
-    res.render('users/logins/userVerify', { layout: 'layout/layout' });
+    res.render('customers/logins/userVerify', { layout: 'layout/layout' });
 }
 
 const resendOTP = (req, res, next) => {

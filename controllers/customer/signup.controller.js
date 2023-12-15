@@ -5,7 +5,7 @@ const signupUtil = require('../../utils/signupUtil');
 
 
 const getSignupPage =  (req, res, next) => {
-    res.render('users/logins/signup', { layout: 'layout/layout' });
+    res.render('customers/logins/signup', { layout: 'layout/layout' });
 }
 
 const sendUserSignupRequest =  (req, res, next) => {

@@ -17,7 +17,7 @@ const getCheckoutPage = async (req, res, next) => {
                 console.log('dsfdsf',cartResult.stockAvailability)
                 const {cartProducts,totalprice,totalCount}=cartResult;               
 
-                res.render('users/c&c/checkout', {
+                res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
                     cartProducts,

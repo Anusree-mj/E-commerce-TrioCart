@@ -3,7 +3,7 @@ const sessionHelpers = require('../../helpers/user/session-helpers');
 const uuidv4 = require('uuid').v4
 
 const getLoginPage =  (req, res, next) => {
-    res.render('users/logins/login', { layout: 'layout/layout' });
+    res.render('customers/logins/login', { layout: 'layout/layout' });
 }
 
 const sendUserLoginRequest =  (req, res, next) => {
