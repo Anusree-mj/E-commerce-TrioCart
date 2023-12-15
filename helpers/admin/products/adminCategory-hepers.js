@@ -1,5 +1,5 @@
 const collection = require('../../../models/index-model')
-const path = require('path');
+
 
 module.exports = {
 
@@ -21,43 +21,53 @@ module.exports = {
         }
     },
 
-    deleteSubcategory: async (subcategory) => {
+    deleteSubcategory: async (subcategory, category) => {
         try {
-            console.log('Subcategory:', subcategory);
+            console.log('fasdfsdf', category);
 
             await collection.productsCollection.updateMany(
-                { subCategory: subcategory },
+                {
+                    category: category,
+                    subCategory: subcategory
+                },
                 { $set: { isDeleted: true } }
             );
             await collection.categoryCollection.updateMany(
-                { "subCategory.name": subcategory },
+                {
+                    category: category,
+                    "subCategory.name": subcategory
+                },
                 { $set: { "subCategory.$.isDeleted": true } }
             );
             return { status: 'deleted' }
         }
         catch (err) {
             console.log(err)
-            return { status: "error" }
         }
     },
 
-    undoSubcategoryDelete: async (subcategory) => {
+    undoSubcategoryDelete: async (subcategory, category) => {
         try {
             console.log('Subcategory:', subcategory);
 
             await collection.productsCollection.updateMany(
-                { subCategory: subcategory },
+                {
+                    category: category,
+                    subCategory: subcategory
+                },
                 { $set: { isDeleted: false } }
             );
             await collection.categoryCollection.updateMany(
-                { "subCategory.name": subcategory },
+                {
+                    category: category,
+                    "subCategory.name": subcategory
+                },
                 { $set: { "subCategory.$.isDeleted": false } }
             );
             return { status: 'undo delete' }
         }
         catch (err) {
             console.log(err)
-            return { status: "error" }
         }
     },
 

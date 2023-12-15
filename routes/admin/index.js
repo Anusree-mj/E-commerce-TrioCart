@@ -68,6 +68,13 @@ router.patch('/category', controller.adminControllers.categoryManagementControll
 //undo subcategory delete
 router.patch('/subcategory/undo', controller.adminControllers.categoryManagementController.undoSoftDeleteSubcategory)
 
+//get category offer  page
+router.get('/category/offer/:category/:subcategory', controller.adminControllers.categoryOfferController.getCategoryOfferPage)
+
+//edit category offer 
+router.put('/category/offer/:category/:subcategory', controller.adminControllers.categoryOfferController.editCategoryOffer)
+
+
 //add subcategory
 router.post('/category', controller.adminControllers.categoryManagementController.addSubcategory)
 

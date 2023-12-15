@@ -15,7 +15,7 @@
                         <th scope="col">Category</th>
                         <th scope="col">SubCategory</th>
                         <th scope="col">Status</th>
-                        
+                        <th scope="col">Offers</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,9 +30,14 @@
                             </td>
                             <td>
                                 <% category.subCategory.forEach((item)=> { %>
+                                    <div class="d-flex">
                                     <p>
                                         <%= item.name %>
                                     </p>
+                                    <a class="ml-3" onclick="editSubcategory('<%= item.name %>','<%= category.category %>')">
+                                        <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
+                                    </a>
+                                </div>
                                 <% }) %>
                             </td>
                             <td>
@@ -40,13 +45,14 @@
                                     <% if (item.isDeleted) { %>
                                         <div class="d-flex">
                                         <p>Deleted</p>
-                                        <a class="ml-3" onclick="undoSubcategoryDelete('<%= item.isDeleted %>','<%= item.name %>')">
+                                        <a class="ml-3" onclick="undoSubcategoryDelete('<%= item.isDeleted %>',
+                                        '<%= item.name %>','<%= category.category %>')">
                                                 <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;">
                                             </a>
                                         </div>
                                     <% } else { %>
                                         <div class="d-flex">
-                                        <p>Available </p><a class="ml-3" onclick="deleteCategory('<%= item.name %>')">
+                                        <p>Available </p><a class="ml-3" onclick="deleteCategory('<%= item.name %>','<%= category.category %>')">
                                             <img style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete">
                                         </a>
                                     </div>
@@ -54,6 +60,18 @@
                                 <% }) %>
                             </td>
                             
+                            <td>
+                                <% category.subCategory.forEach((item)=> { %>
+                                    <div class="d-flex">
+                                    <p>
+                                        <%= item.discount %>%
+                                    </p>
+                                    <a class="ml-3" href="/admin/category/offer/<%= category.category %>/<%= item.name %>" >
+                                                <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
+                                            </a>
+                                </div>
+                                <% }) %>
+                            </td>
                         </tr>
                     <% }) %>
                 </tbody>
