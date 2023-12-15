@@ -36,6 +36,7 @@ module.exports = {
 
     saveOrderDetails: async (orderDetails) => {
         try {
+            console.log('orderdetails',orderDetails)
             const getBillingAddress = await collection.usersCollection.findOne({
                 _id: orderDetails.userId
             })
@@ -46,6 +47,7 @@ module.exports = {
             })
 
             const products = getOrderedProducts.products;
+            console.log('procusts',products);
             const orderPlacementDate = new Date();
             const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(
                 orderPlacementDate, 'placed')

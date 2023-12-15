@@ -22,8 +22,9 @@ function selectedSize(selctdSize) {
 }
 
 function addToCart(productId) {
-       if (choosedSize==='' ) {
-        document.getElementById('sizeSpan').textContent = 'Select a Size'
+    if (choosedSize === '') {
+
+        document.getElementById('addCart').textContent = 'Select a Size'
     } else {
         let reqBody = { choosedSize };
         fetch(`http://localhost:3000/cart/${productId}`, {
@@ -36,12 +37,17 @@ function addToCart(productId) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    document.getElementById('addCart').textContent="Product Added to Cart"
-                    setTimeout(()=>{
-                        document.getElementById('addCart').textContent=""
-                    },3000)
+                    const addToCartButton = document.getElementById('addToCart');
+                    addToCartButton.textContent = "Added To Cart";                   
+
+                    setTimeout(() => {
+                       window.location.reload()
+                    }, 3000);
+                } else if (data.status === 'outofStock') {
+                    document.getElementById('addCart').style.color = 'red'
+                    document.getElementById('addCart').textContent = "Out of Stock"
                 } else {
-                    console.log('product adding to cart failed')
+                    window.location.replace("/user/login")
                 }
             })
             .catch(err => console.log(err));

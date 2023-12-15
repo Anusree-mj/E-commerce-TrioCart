@@ -9,42 +9,10 @@ module.exports = {
                     $match: {
                         $expr: {
                             $and: [
-                                {
-                                    $gte: [
-                                        { $year: "$createdAt" },
-                                        start.getFullYear()
-                                    ]
-                                },
-                                {
-                                    $lte: [
-                                        { $year: "$createdAt" },
-                                        end.getFullYear()
-                                    ]
-                                },
-                                {
-                                    $gte: [
-                                        { $month: "$createdAt" },
-                                        start.getMonth() + 1
-                                    ]
-                                },
-                                {
-                                    $lte: [
-                                        { $month: "$createdAt" },
-                                        end.getMonth() + 1
-                                    ]
-                                },
-                                {
-                                    $gte: [
-                                        { $dayOfMonth: "$createdAt" },
-                                        start.getDate()
-                                    ]
-                                },
-                                {
-                                    $lte: [
-                                        { $dayOfMonth: "$createdAt" },
-                                        end.getDate()
-                                    ]
-                                }
+                                { $eq: [{ $year: { $toDate: "$createdAt" } }, day.getFullYear()] },
+                                { $eq: [{ $month: { $toDate: "$createdAt" } }, day.getMonth() + 1] },
+                                { $eq: [{ $dayOfMonth: { $toDate: "$createdAt" } }, day.getDate()] },
+                                { $eq: ["$paymentMethod", "onlinePayment"] }
                             ]
                         }
                     }
@@ -54,13 +22,7 @@ module.exports = {
                         _id: null,
                         totalOrder: { $sum: 1 },
                         totalPrice: {
-                            $sum: {
-                                $cond: {
-                                    if: { $eq: ["$paymentMethod", "onlinePayment"] },
-                                    then: "$totalAmount",
-                                    else: 0
-                                }
-                            }
+                            $sum: "$totalAmount"
                         },
                     }
                 }
@@ -73,7 +35,9 @@ module.exports = {
                             $and: [
                                 { $eq: [{ $year: "$updatedAt" }, day.getFullYear()] },
                                 { $eq: [{ $month: "$updatedAt" }, day.getMonth() + 1] },
-                                { $eq: [{ $dayOfMonth: "$updatedAt" }, day.getDate()] }
+                                { $eq: [{ $dayOfMonth: "$updatedAt" }, day.getDate()] },
+                                { $eq: ["$orderStatus", "delivered"] },
+                                { $eq: ["$paymentMethod", "COD"] }
                             ]
                         }
                     }
@@ -82,15 +46,7 @@ module.exports = {
                     $group: {
                         _id: null,
                         totalDelivery: {
-                            $sum: {
-                                $cond: {
-                                    if:
-                                    {
-                                        $eq: ["$orderStatus", "delivered"]
-                                    },
-                                    then: 1, else: 0
-                                }
-                            }
+                            $sum: 1,
                         },
                         totalPrice: {
                             $sum: {
@@ -139,7 +95,8 @@ module.exports = {
                                         { $eq: [{ $year: "$updatedAt" }, day.getFullYear()] },
                                         { $eq: [{ $month: "$updatedAt" }, day.getMonth() + 1] },
                                         { $eq: [{ $dayOfMonth: "$updatedAt" }, day.getDate()] },
-                                        { $eq: ["$orderStatus", "delivered"] }
+                                        { $eq: ["$orderStatus", "delivered"] },
+                                        { $eq: ["$paymentMethod", "COD"] }
                                     ]
                                 }
 
@@ -168,7 +125,7 @@ module.exports = {
                     $project: {
                         _id: 0,
                         productName: "$productDetails.name",
-                        productPrice:"$productDetails.price",
+                        productPrice: "$productDetails.price",
                         orderStatus: "$orderStatus",
                         count: 1
                     }

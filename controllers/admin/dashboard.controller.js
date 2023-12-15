@@ -29,9 +29,10 @@ const getDashboardPage = async (req, res, next) => {
   });
 }
 
-const getOrderGraph = (req, res, next) => {
-  adminorderHelpers.getAllOrdersGraph().then(result => {
+const getOrderGraph = async (req, res, next) => {
+ await adminorderHelpers.getAllOrdersGraph().then(result => {
     const orders = result.orders
+    console.log('orders based on graph',orders)
     if (orders) {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({ status: "ok", orders });
@@ -42,6 +43,7 @@ const getOrderGraph = (req, res, next) => {
     }
   })
 }
+
 module.exports = {
   getDashboardPage,
   getOrderGraph

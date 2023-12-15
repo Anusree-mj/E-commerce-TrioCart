@@ -53,20 +53,6 @@ router.post('/checkout', controller.customerControllers.checkoutController.submi
 // verify payment 
 router.post('/verifyPayment', controller.customerControllers.checkoutController.verifyPayment)
 
-// order success page
-router.get('/order/success', controller.customerControllers.orderController.getOrderSuccessPage)
-
-// get order history
-router.get('/order/history', controller.customerControllers.orderController.getOrderHistoryPage)
-
-// order details page
-router.get('/order/details/:orderId', controller.customerControllers.orderController.getOrderDetailPage)
-
-// cancel order 
-router.put('/order/:orderId/cancel', controller.customerControllers.orderController.cancelOrder)
-
-// return product 
-router.post('/order/:productId/return', controller.customerControllers.orderController.returnProduct)
 
 //logout
 router.get('/logout', controller.customerControllers.loginController.logout)

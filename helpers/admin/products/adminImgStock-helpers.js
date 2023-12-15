@@ -40,26 +40,45 @@ module.exports = {
             return { status: "error" }
         }
     },
-
-    editStock: async (body, productId) => {
+    getProductStockForEditing: async (productId, size) => {
         try {
-            console.log('bodystock', body.stock, "typeof:", typeof (body.stock));
-
-            if (body.stock === '0') {
-                await collection.productsCollection.updateOne(
-                    {
-                        _id: productId
-                    },
-                    {
-                        $set: { isDeleted: true }
-                    })
+            const productData = await collection.productsCollection.findOne(
+                {
+                    _id: productId,
+                    'sizesStock.size': size
+                },
+                {
+                    name: 1,
+                    category: 1,
+                    subCategory: 1,
+                    'sizesStock.$': 1
+                }
+            );
+            if (productData && productData.sizesStock.length > 0) {
+                const { size, count } = productData.sizesStock[0];
+                return { productData, size, count };
+            } else {
+                console.log('no products found')
             }
 
+            return productData
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },
+    editStock: async (stock, size, productId) => {
+        try {
+            console.log('bodystock', stock, "typeof:", typeof (stock));
+
             const updateData = await collection.productsCollection.updateOne(
-                { _id: productId },
+                {
+                    _id: productId,
+                    'sizesStock.size': size
+                },
                 {
                     $set: {
-                        stock: body.stock,
+                        'sizesStock.$.count': stock
                     }
                 });
             console.log('updated data is :::', updateData)

@@ -26,6 +26,17 @@ const ProductSchema = new mongoosedb.Schema(
             type: Array,
             required: true,
         },
+        sizesStock: [{
+            size: {
+                type: String,
+                required: true,
+            },
+            count: {
+                type: Number,
+                required: true,
+                default: 500, 
+            },
+        }],
         color: {
             type: Array,
             required: true,
@@ -36,10 +47,6 @@ const ProductSchema = new mongoosedb.Schema(
         },
         detailedImages: {
             type: Array,
-            requires: true,
-        },
-        stock: {
-            type: Number,
             requires: true,
         },
         isDeleted: {

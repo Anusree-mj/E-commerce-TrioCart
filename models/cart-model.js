@@ -13,10 +13,15 @@ const CartSchema = new mongoosedb.Schema(
                 type: mongoosedb.Schema.Types.ObjectId,
                 ref: 'products',
             },
-            Size: String,
+            Size: {
+                type:String,
+            },
             Count: {
                 type: Number,
                 default: 1,
+            },
+            stock:{
+                type:String,
             },
         }]
     },

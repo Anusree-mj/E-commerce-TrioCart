@@ -1,62 +1,65 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
 <%- include('../partials/adminHeaders') %>
-    <% var count=1; %>
-        <section>
-            <div class="container">
-                <div class="subHead">
-                    <a type="button" href="/admin/addCategory" class="btn btn-info ml-auto addButton"
-                        style="width: 7.5rem;">Add Category</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">SubCategory</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% var slNo = 1; %>
-                            <% categories.forEach((category) => { %>
-                                <% category.subCategory.forEach((subcategory, index) => { %>
-                                    <tr>
-                                        <% if (index === 0) { %>
-                                            <!-- Display Category only in the first row of each category -->
-                                            <th scope="row" rowspan="<%= category.subCategory.length %>">
-                                                <%= slNo %>
-                                            </th>
-                                            <td rowspan="<%= category.subCategory.length %>">
-                                                <%= category.category %>
-                                            </td>
-                                        <% } %>
-                                        <td>
-                                            <%= subcategory.name %>
-                                        </td>
-                                        <td>                                            
-                                            <% if (subcategory.isDeleted) { %>
-                                              <p>Deleted <a onclick="undoSubcategoryDelete('<%= subcategory.isDeleted%>',' <%= subcategory.name %>')">
-                                                    <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;">
-                                                </a></p> 
-                                            <% }else{ %>
-                                                <p>Available</p>
-                                                <% } %>%>
-                                        </td>
-                                        <td>
-                                            <a onclick="deleteCategory('<%= subcategory.name %>')">
-                                                <img style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete">
+<% var count=1; %>
+
+<section>
+    <div class="container">
+        <div class="subHead">
+            <a type="button" href="/admin/addCategory" class="btn btn-info ml-auto addButton" style="width: 7.5rem;">Add Category</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped" id="productsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">SubCategory</th>
+                        <th scope="col">Status</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <% categories.forEach((category, index)=> { %>
+                        <tr>
+                            <th scope="row">
+                                <%= index + 1 %>
+                            </th>
+                           
+                            <td>
+                                <%= category.category %>
+                            </td>
+                            <td>
+                                <% category.subCategory.forEach((item)=> { %>
+                                    <p>
+                                        <%= item.name %>
+                                    </p>
+                                <% }) %>
+                            </td>
+                            <td>
+                                <% category.subCategory.forEach((item)=> { %>
+                                    <% if (item.isDeleted) { %>
+                                        <div class="d-flex">
+                                        <p>Deleted</p>
+                                        <a class="ml-3" onclick="undoSubcategoryDelete('<%= item.isDeleted %>','<%= item.name %>')">
+                                                <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;">
                                             </a>
-                                        </td>
-                                    </tr>                                   
-                                <% }); %>
-                                <% slNo++; %>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <%- include('../partials/loginsFooter') %>
-        <script src="/javascripts/admin/categoryDlt.js"></script>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="d-flex">
+                                        <p>Available </p><a class="ml-3" onclick="deleteCategory('<%= item.name %>')">
+                                            <img style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete">
+                                        </a>
+                                    </div>
+                                    <% } %>
+                                <% }) %>
+                            </td>
+                            
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<%- include('../partials/loginsFooter') %>
+<script src="/javascripts/admin/categoryDlt.js"></script>

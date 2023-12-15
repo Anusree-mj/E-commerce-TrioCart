@@ -81,18 +81,19 @@
                                                 <p class="prodName">Order Status</p>
                                                 <% if (order.orderStatus==='Cancelled by User' ){ %>
                                                     <p>Order: cancelled
-                                                    </p>                                                    
-                                                        <% } else { %>
+                                                    </p>
+                                                    <% } else { %>
                                                         <p>Order: <%= order.orderStatus %>
                                                         </p>
                                                         <% } %>
 
-                                                            <% if (order.orderStatus!=='delivered' && order.orderStatus !=='Cancelled by User' 
-                                                            && order.orderStatus !=='returned' ) { %>
+                                                            <% if (order.orderStatus!=='delivered' && order.orderStatus
+                                                                !=='Cancelled by User' && order.orderStatus
+                                                                !=='returned' ) { %>
                                                                 <p>Estimated delivery :
                                                                     <%= order.estimatedDelivery %>
                                                                 </p>
-                                                                <% }else if(order.orderStatus==='delivered'){ %>
+                                                                <% }else if(order.orderStatus==='delivered' ){ %>
                                                                     <p> Delivered on :
                                                                         <%= order.deliveredDate %>
                                                                     </p>
@@ -108,8 +109,8 @@
                                                     </div>
                                                     <button type="button" class="btn btn-dark mt-3 commntBtn"
                                                         onclick="triggerReturn('<%= product.product._id %>')">Return</button>
-                                                    <% } else if ( product.isReturned && order.orderStatus !=='returned')
-                                                        { %>
+                                                    <% } else if ( product.isReturned && order.orderStatus !=='returned'
+                                                        ) { %>
                                                         <p class="returnTxt">Your product will be collected within 2
                                                             days.</p>
                                                         <% } %>
@@ -185,6 +186,26 @@
                                 <% }); %>
                 </div>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item <%= currentPage == 1 ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= currentPage == i ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                    <li class="page-item <%= currentPage == totalPages ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
             <div class="viewProducts">
                 <div class="cardHead">
                     <h3>Others Also Bought</h3>

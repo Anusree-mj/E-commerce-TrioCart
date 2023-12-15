@@ -19,13 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 const lineGraph = document.getElementById('ordersPerDay');
 
                 new Chart(lineGraph, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: formattedDates,
                         datasets: [{
                             label: '# of Sales',
                             data: orders.map(order => order.totalCount),
-                            borderWidth: 1
+                            borderWidth: 2,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: {
+                                target: 'origin',
+                            },
                         }]
                     },
                     options: {
@@ -33,16 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             y: {
                                 beginAtZero: true,
                                 ticks: {
-                                    // Customize the y-axis label font size and font weight
                                     font: {
                                         size: 16,
                                         weight: 'bolder',
-                                    }
+                                    },
+                                    stepSize: 1, // Set step size to 1 to display only integer values
+                                    precision: 0, // Set precision to 0 to avoid decimal places
                                 }
                             },
                             x: {
                                 ticks: {
-                                    // Customize the x-axis label font size and font weight
                                     font: {
                                         size: 16,
                                         weight: 'bolder',
@@ -60,14 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         },
                         elements: {
-                            bar: {
-                                borderWidth: 2, // Adjust bar border width
-                                borderColor: 'rgba(75, 192, 192, 1)', // Adjust bar border color
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Adjust bar background color
+                            line: {
+                                borderWidth: 2,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                tension: 0.4,
+                                fill: 'start',
                             },
                         }
                     }
                 });
+                
+                
 
                 const pieChart = document.getElementById('ordersTotalAmount');
 

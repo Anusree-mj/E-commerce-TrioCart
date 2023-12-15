@@ -68,7 +68,7 @@ console.log('products312321',products)
                     isDeleted: false,
                     price: { $lte: price }
 
-                }).sort({ createdAt: -1 });
+                }).sort({ price: 1 });
 
             return { categories, products }
         } else if (size && price && !query) {
@@ -85,7 +85,7 @@ console.log('products312321',products)
                     size: { $regex: new RegExp(size, 'i') },
                     price: { $lte: price }
 
-                }).sort({ createdAt: -1 });
+                }).sort({ price: 1 });
             console.log('productssss', products)
             return { categories, products }
         }

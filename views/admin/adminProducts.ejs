@@ -16,8 +16,7 @@
                             <th scope="col" class="thead">Category</th>
                             <th scope="col" class="thead" >SubCategory</th>
                             <th scope="col" class="thead" >Size</th>
-                            <th scope="col" class="thead">Price</th>
-                            <th scope="col" class="thead">Stock</th>
+                            <th scope="col" class="thead">Price</th>                            
                             <th scope="col" class="thead">Status</th>
                             <th scope="col" class="thead">Edit</th>
                             <th scope="col" class="thead">Delete</th>
@@ -44,12 +43,7 @@
                                 </td>
                                 <td>
                                     <%= product.price%>
-                                </td>
-                                <td>
-                                    <%= product.stock%>
-                                        <a href="/admin/products/<%= product._id %>/stock"><img
-                                                src="/images/navbar/edit.png" alt="edit" style="width: 1rem;"></a>
-                                </td>
+                                </td>                               
                                 <td>
                                     <% if (product.isDeleted===true) { %>
                                        <p>Deleted<a

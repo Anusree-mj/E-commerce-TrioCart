@@ -23,7 +23,12 @@ a:hover {
     background-color: #f5f3f1;
 }
 
-
+.stock{
+     height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
 .cartProducts {
     background-color: white;
     width: 45rem;

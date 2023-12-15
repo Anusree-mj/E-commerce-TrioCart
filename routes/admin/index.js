@@ -41,11 +41,14 @@ router.get('/products/:product_Id', controller.adminControllers.productManagemen
 //edit products
 router.put('/products/:product_Id', controller.adminControllers.productManagementController.editProduct)
 
-//get edit stockproduct  page
-router.get('/products/:product_Id/stock', controller.adminControllers.productManagementController.getEditProductStockPage)
+//get adminStock  page
+router.get('/stock', controller.adminControllers.stockController.getStockPage)
 
-//edit products stock
-router.put('/products/:product_Id/stock', controller.adminControllers.productManagementController.editProductStock)
+//get edit stock page
+router.get('/stock/:productId/:size', controller.adminControllers.stockController.getEditProductStockPage)
+
+//edit stock
+router.put('/stock/:product_Id', controller.adminControllers.stockController.editProductStock)
 
 //get category page
 router.get('/category', controller.adminControllers.categoryManagementController.getCategoryPage)
@@ -57,7 +60,7 @@ router.get('/addCategory', controller.adminControllers.categoryManagementControl
 router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage)
 
 //edit subcategory
-router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
+// router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
 
 //delete subcategory
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory)
@@ -84,7 +87,7 @@ router.get('/orders', controller.adminControllers.orderManagementController.getO
 router.put('/orders', controller.adminControllers.orderManagementController.editOrderStatus)
 
 // order details page
-router.get('/order/:orderId', controller.adminControllers.orderManagementController.getOrderDetailPage )
+router.get('/order/:orderId/orderDetails', controller.adminControllers.orderManagementController.getOrderDetailPage )
 
 // returns page
 router.get('/returns', controller.adminControllers.returnController.getReturnsPage )

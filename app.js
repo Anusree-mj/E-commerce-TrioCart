@@ -34,6 +34,8 @@ const imageRouter = require('./routes/admin/image');
 const productRouter = require('./routes/customer/products');
 const userLoginRouter = require('./routes/customer/userLogins');
 const searchRouter = require('./routes/customer/search');
+const ordersRouter = require('./routes/customer/order');
+
 
 const app = express();
 
@@ -73,7 +75,7 @@ app.use('/image', imageRouter);
 app.use('/products', productRouter);
 app.use('/user', userLoginRouter);
 app.use('/search', searchRouter);
-
+app.use('/order',ordersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
