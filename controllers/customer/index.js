@@ -7,9 +7,9 @@ const signupController = require('./signup.controller')
 const otpController = require('./otp.controller')
 const passwordController = require('./password.controller')
 const profileController = require('./profile.controller')
-const cartController = require('./cart.controller')
-const checkoutController = require('./checkout.controller')
-const billingAddressController = require('./billingAddress.controller');
+const cartController = require('./c&c/cart.controller')
+const checkoutController = require('./c&c/checkout.controller')
+const billingAddressController = require('./c&c/billingAddress.controller');
 const orderController = require('./order.controller');
 const homeController = require('./home.controller');
 
