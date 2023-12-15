@@ -1,14 +1,14 @@
 const sessionHelpers = require('../../helpers/user/session-helpers');
 const categoryHelpers = require('../../helpers/user/category-helpers');
 const cartHelpers = require('../../helpers/user/cart-helpers');
-const productHelpers = require('../../helpers/user/product-helpers')
+const productHelpers = require('../../helpers/user/product-helpers');
 
 const getHomePage = async (req, res, next) => {
     let sessionId = req.cookies.session
 
     let products = await productHelpers.getNewArrivalProducts();
     let allCategories = await categoryHelpers.getCategoryDetails()
-
+   
     sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
             let user = result.user

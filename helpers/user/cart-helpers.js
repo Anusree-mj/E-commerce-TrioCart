@@ -1,5 +1,5 @@
 const collection = require('../../models/index-model')
-
+const stockHelpers = require('../../helpers/user/stock-helpers');
 
 module.exports = {
     cartProductIncrement: async (productId, size) => {
@@ -48,42 +48,52 @@ module.exports = {
 
     addToCart: async (user, productId, size) => {
         try {
-            const existingProduct = await collection.cartCollection.findOne({
-                userId: user._id,
-                'products.product': productId,
-                'products.Size': size,
-            });
+            const checkStockAvailability = await stockHelpers.checkStock(productId, size);
+            if (checkStockAvailability.status === 'available') {
 
-            if (existingProduct) {
-                await collection.cartCollection.updateOne(
-                    {
-                        userId: user._id,
-                        'products.product': productId,
-                        'products.Size': size,
-                    },
-                    { $inc: { 'products.$.Count': 1 } }
-                );
-                console.log('Product count incremented');
-            }
-            else {
-                const updateData = await collection.cartCollection.updateOne(
-                    { userId: user._id },
-                    {
-                        $addToSet: {
-                            products: {
-                                product: productId,
-                                Size: size,
+                const existingProduct = await collection.cartCollection.findOne({
+                    userId: user._id,
+                    'products.product': productId,
+                    'products.Size': size,
+                });
+
+                if (existingProduct) {
+                    await collection.cartCollection.updateOne(
+                        {
+                            userId: user._id,
+                            'products.product': productId,
+                            'products.Size': size,
+                        },
+                        { $inc: { 'products.$.Count': 1 } }
+                    );
+                    console.log('Product count incremented');
+                    return { status: 'ok' }
+                }
+                else {
+                    const updateData = await collection.cartCollection.updateOne(
+                        { userId: user._id },
+                        {
+                            $addToSet: {
+                                products: {
+                                    product: productId,
+                                    Size: size,
+                                },
                             },
                         },
-                    },
-                    { upsert: true }
-                );
+                        { upsert: true }
+                    );
 
-                if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
-                    console.log('Data update success');
-                } else {
-                    console.log('Data update failed');
+                    if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
+                        console.log('Data update success');
+                        return { status: 'ok' }
+                    } else {
+                        console.log('Data update failed');
+                    }
                 }
+            }
+            else {
+                console.log('out of stock');
+                return { status: 'nok' }
             }
         } catch (err) {
             console.log(err);
@@ -92,20 +102,34 @@ module.exports = {
 
     getMyCartProducts: async (user) => {
         try {
+            let stockAvailability = true;
             const cart = await collection.cartCollection.findOne({ userId: user._id })
                 .populate('products.product');
 
             if (cart && cart.products) {
 
                 let cartProducts = cart.products;
+                console.log('cart prosud', cartProducts)
                 totalCount = cart.products.length
+
+                await Promise.all(cartProducts.map(async (cartProduct) => {
+                    const { product, Size } = cartProduct;
+                    const productId = product._id;
+                    const checkStockAvailability = await stockHelpers.checkStock(productId, Size);
+                    cartProduct.set({ stock: checkStockAvailability.status });
+                    if (checkStockAvailability.status === 'out of stock') {
+                        stockAvailability = false;
+                    }
+
+                }));
+
+                console.log('cartProducts Updated', cartProducts);
 
                 let totalprice = cartProducts.reduce((sum, item) => {
                     return sum + (item.product.price * item.Count)
                 }, 0)
 
-
-                return { cartProducts, totalCount, totalprice };
+                return { cartProducts, totalCount, totalprice, stockAvailability };
             } else {
                 return { totalCount: 0, totalPrice: 0 };
             }

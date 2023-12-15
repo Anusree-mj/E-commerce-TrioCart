@@ -16,12 +16,10 @@ const getCartPage = async (req, res, next) => {
 
                 cartHelpers.getMyCartProducts(user).then((result) => {
                     if (result) {
-                        let cartProducts = result.cartProducts;
-                        let totalprice = result.totalprice;
-                        let totalCartProduct = result.totalCount;
+                       const {cartProducts,totalCount,totalprice}=result
                         res.render('users/cart', {
                             layout: 'layout/layout', allCategories, viewMoreProducts, user, cartProducts, totalprice,
-                            totalCartProduct
+                            totalCartProduct:totalCount
                         });
                     }
                     else {
@@ -48,8 +46,13 @@ const addProductToCart = (req, res, next) => {
         if (result.status === 'ok') {
             let user = result.user
 
-            cartHelpers.addToCart(user, productId, size).then(() => {
-                res.status(200).json({ status: "ok" });
+            cartHelpers.addToCart(user, productId, size).then((result) => {
+                if(result.status==='ok'){
+                    res.status(200).json({ status: "ok" });
+                }else{
+                    res.status(200).json({ status: "outofStock" });
+                }
+                
             })
         }
         else {

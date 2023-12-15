@@ -10,7 +10,7 @@
                         <!--  -->
                         <section class="cartPage">
                             <!--  -->
-                            <% if (cartProducts) { %>
+                            <% if (cartProducts) { %>                               
                                 <div class="d-flex justify-content-around cartsctn">
                                     <div class="cartProducts">
                                         <% cartProducts.forEach(cartProduct=> { %>
@@ -34,6 +34,11 @@
                                                                 </p>
                                                                 <p>Total: ₹ <%= cartProduct.product.price %>/-
                                                                 </p>
+                                                                <% if (cartProduct.stock === 'limited stock') { %>
+                                                                    <p class="stock">Limited Stock. Buy Now !!!</p>
+                                                                <% }else if(cartProduct.stock ==='out of stock'){%>
+                                                                    <p class="stock">Out of Stock.</p>
+                                                                    <% } %>
                                                             </div>
                                                             <div class="mt-4 d-flex">
                                                                 <button type="button"

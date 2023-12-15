@@ -4,31 +4,36 @@ const orderHelpers = require('../../helpers/user/orderHelpers');
 const verifyPaymentHelpers = require('../../helpers/user/verifyPayment-helpers');
 const razorpayUtil = require('../../utils/razorpayUtil')
 
-const getCheckoutPage = (req, res, next) => {
-    let sessionId = req.cookies.session
-    sessionHelpers.checkSessions(sessionId).then((result) => {
-        if (result.status === 'ok') {
-            let user = result.user;
+const getCheckoutPage = async (req, res, next) => {
+    try {
+        const sessionId = req.cookies.session;
+        const sessionResult = await sessionHelpers.checkSessions(sessionId);
 
-            cartHelpers.getMyCartProducts(user).then((result) => {
-                if (result.cartProducts) {
-                    let cartProducts = result.cartProducts;
-                    let totalprice = result.totalprice;
-                    let totalCartProduct = result.totalCount;
-                    res.render('users/checkout', {
-                        layout: 'layout/layout', user, cartProducts
-                        , totalCartProduct, totalprice
-                    })
-                }else{
-                    res.redirect('/cart')
-                }
-            });
+        if (sessionResult.status === 'ok') {
+            const user = sessionResult.user;
+            const cartResult = await cartHelpers.getMyCartProducts(user);
+
+            if (cartResult.stockAvailability) {
+                console.log('dsfdsf',cartResult.stockAvailability)
+                const {cartProducts,totalprice,totalCount}=cartResult;               
+
+                res.render('users/checkout', {
+                    layout: 'layout/layout',
+                    user,
+                    cartProducts,
+                    totalCartProduct:totalCount,
+                    totalprice
+                });
+            } else {
+                res.redirect('/cart');
+            }
+        } else {
+            res.redirect('/user/login');
         }
-        else {
-            res.redirect('/user/login')
-        }
-    })
-}
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 const saveOrderAddress = (req, res, next) => {
     let userId = req.params.userId;
@@ -53,7 +58,7 @@ const saveOrderAddress = (req, res, next) => {
 const submitCheckoutPageDetails = (req, res, next) => {
     let orderDetails = req.body;
     let sessionId = req.cookies.session
- 
+
     sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
             const user = result.user
@@ -61,7 +66,7 @@ const submitCheckoutPageDetails = (req, res, next) => {
                 if (result.status === 'ok') {
                     if (orderDetails.paymentMethod === 'onlinePayment') {
                         let orderId = result.orderId
-                        let totalAmount = result.totalAmount 
+                        let totalAmount = result.totalAmount
                         const order = await razorpayUtil.createRazorpayOrder(orderId, totalAmount);
                         console.log('order in route', order)
                         res.status(200).json({ status: "ok", order, user });
