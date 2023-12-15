@@ -4,7 +4,7 @@ const adminImgStockHelpers = require('../../helpers/admin/products/adminImgStock
 const productHelpers = require('../../helpers/user/product-helpers')
 
 const getProductPage = (req, res, next) => {
-    let sessionId = req.cookies.adminSession
+    let sessionId = req.cookies.adminSession;
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
             productHelpers.getAllProducts().then((products) => {

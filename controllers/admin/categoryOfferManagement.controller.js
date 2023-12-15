@@ -1,5 +1,5 @@
 const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const adminCategoryOfferHelpers = require('../../helpers/admin/category/categoryOffer-helpers');
+const adminCategoryOfferHelpers = require('../../helpers/admin/offerManagement/categoryOffer-helpers');
 
 const getCategoryOfferPage = (req, res, next) => {
     let category = req.params.category

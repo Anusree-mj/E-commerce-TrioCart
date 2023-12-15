@@ -12,14 +12,15 @@
                         <tr>
                             <th scope="col" class="tno">No</th>
                             <th scope="col" class="thead">Image</th>
-                            <th scope="col" class="ttitle" >Tittle</th>
+                            <th scope="col" class="ttitle">Tittle</th>
                             <th scope="col" class="thead">Category</th>
-                            <th scope="col" class="thead" >SubCategory</th>
-                            <th scope="col" class="thead" >Size</th>
-                            <th scope="col" class="thead">Price</th>                            
+                            <th scope="col" class="thead">SubCategory</th>
+                            <th scope="col" class="thead">Size</th>
+                            <th scope="col" class="thead">Price</th>
+                            <th scope="col" class="thead">Offer Price</th>
+                            <th scope="col" class="thead">Offer</th>
                             <th scope="col" class="thead">Status</th>
                             <th scope="col" class="thead">Edit</th>
-                            <th scope="col" class="thead">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,22 +44,37 @@
                                 </td>
                                 <td>
                                     <%= product.price%>
-                                </td>                               
+                                </td>
+                                <td>
+                                    <%= product.offerPrice%>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                    <p><%= product.discount%> %</p>   
+                                    <a class="ml-3" href="/admin/products/offer/<%= product._id%>" >
+                                        <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
+                                    </a> 
+                                </div>                                
+                                </td>
                                 <td>
                                     <% if (product.isDeleted===true) { %>
-                                       <p>Deleted<a
-                                            onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
-                                                src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
-                                                id="undoProductDlt"></a></p>
-                                                <%} else{ %>
-                                                    <p>Available</p>
-                                                    <% } %>
+                                        <p>Deleted<a class="ml-2"
+                                                onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
+                                                    src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
+                                                    id="undoProductDlt"></a></p>
+                                        <%} else{ %>
+                                            <div class="d-flex">
+                                                <p>Available</p>
+                                                <a class="ml-2" onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
+                                                        style="width: 1.2rem;" src="/images/navbar/delete.png"
+                                                        alt="delete"></a>
+                                            </div>
+                                            <% } %>
                                 </td>
+                              
                                 <td><a href="/admin/products/<%= product._id %>"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1rem;"></a> </td>
-                                <td> <a onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
-                                            style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete"></a>
-                                </td>
+                                
                             </tr>
                             <% })%>
                     </tbody>

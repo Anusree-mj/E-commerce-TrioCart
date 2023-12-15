@@ -9,7 +9,7 @@ module.exports = {
                     "subCategory.name": subcategory
                 },
                 {
-                    category:1,
+                    category: 1,
                     "subCategory.$": 1
                 }
             )
@@ -20,6 +20,36 @@ module.exports = {
     },
     editOffer: async (category, subCategory, offer) => {
         try {
+            const products = await collection.productsCollection.find(
+                {
+                    category: category,
+                    subCategory: subCategory
+                })
+
+            let discountedPrice;
+            let discountAmount;
+            const updateProducts = products.map(async (product) => {
+                if (product.offerPrice ===0) {
+                  discountAmount = Math.round((Number(offer) / 100) * product.price);
+                    discountedPrice = product.price - discountAmount;
+                } else if(product.offerPrice > 0) {
+                    discountAmount = Math.round((Number(offer) / 100) * product.price);
+                    discountedPrice = product.offerPrice - discountAmount;
+                }
+
+                await collection.productsCollection.updateMany(
+                    {
+                        category: category,
+                        subCategory: subCategory
+                    },
+                    {
+                        $set: {
+                            offerPrice: discountedPrice,
+                        }
+                    });
+
+            })
+
             const updateData = await collection.categoryCollection.updateOne(
                 {
                     category: category,

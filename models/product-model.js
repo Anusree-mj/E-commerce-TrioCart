@@ -34,7 +34,7 @@ const ProductSchema = new mongoosedb.Schema(
             count: {
                 type: Number,
                 required: true,
-                default: 500, 
+                default: 500,
             },
         }],
         color: {
@@ -48,6 +48,14 @@ const ProductSchema = new mongoosedb.Schema(
         detailedImages: {
             type: Array,
             requires: true,
+        },
+        discount: {
+            type: Number,
+            default: 0,
+        },
+        offerPrice: {
+            type: Number,
+            default: 0,
         },
         isDeleted: {
             type: Boolean,

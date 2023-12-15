@@ -9,8 +9,7 @@
             <!-- category -->
             <label class="label" for="category">Category</label>
             <input type="text" class="form-control" value="<%= categoryDetails.category%>" disabled>
-            <span id="categorySpan" class="span"></span>
-
+          
             <!-- subcategory -->
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" value="<%= categoryDetails.subCategory[0].name%>" disabled>
@@ -22,7 +21,7 @@
 
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
-                    onclick="editOffer('<%= categoryDetails.category%>',
+                    onclick="editCategoryOffer('<%= categoryDetails.category%>',
                     '<%= categoryDetails.subCategory[0].name%>')">Edit</button>
             </div>
         </div>

@@ -17,6 +17,12 @@ router.post('/adminLogin', controller.adminControllers.loginController.sendAdmin
 //get products list
 router.get('/products', controller.adminControllers.productManagementController.getProductPage);
 
+//get product offer  page
+router.get('/products/offer/:productId', controller.adminControllers.productOfferController.getProductOfferPage)
+
+//edit product offer  
+router.put('/products/offer/:productId', controller.adminControllers.productOfferController.editProductOffer)
+
 //add product page
 router.get('/addProduct', controller.adminControllers.productManagementController.getAddProductPage)
 

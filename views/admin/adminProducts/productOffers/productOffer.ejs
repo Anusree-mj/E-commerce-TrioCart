@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<%- include('../../../partials/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="addForm">
+            <h2 class="head">Edit Product Offer</h2>
+            <!-- name -->
+            <label class="label" for="name">Name</label>
+            <input type="text" class="form-control" value="<%= productDetails.name%>" disabled>
+            
+            <!-- category -->
+            <label class="label" for="category">Category</label>
+            <input type="text" class="form-control" value="<%= productDetails.category%>" disabled>
+    
+            <!-- subcategory -->
+            <label class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" value="<%= productDetails.subCategory%>" disabled>
+
+            <label class="label" for="stock">Stock<span class="required">*</span></label>
+            <input onclick="clearValidity('productOffer'); clearSpan('productOfferSpan')" onblur="isValidPrice('productOffer')" type="text"
+                class="form-control" name="productOffer" id="productOffer" value="<%= productDetails.discount%>" >
+            <span id="productOfferSpan" class="span"></span>
+
+            <div class="button">
+                <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                    onclick="editProductOffer('<%= productDetails._id%>')">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../../partials/loginsFooter') %>
+    <script src="/javascripts/admin/offer.js"></script>
