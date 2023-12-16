@@ -1,23 +1,55 @@
 const collection = require('../../models/index-model')
 const bcrypt = require('bcrypt');
+const signupUtil = require('../../utils/signupUtil');
 
 module.exports = {
-    updateUser: async (userId, data) => {
+    verifyUser: async (userData, otp, userId) => {
         try {
-            const user = await collection.usersCollection.updateOne(
-                { _id: userId },
-                { 
-                    name: data.name,
-                    phone: data.phone,
-                    email: data.email
+          const updateTempUser = await collection.tempUsersCollection.updateOne(
+                { email: userId },
+                {
+                    name: userData.name,
+                    phone: userData.phone,
+                    email: userData.email,
+                    otp: otp
                 }
             )
-            if (user.modifiedCount === 1) {
-                console.log('user data updated');
-                return { status: 'ok' }
+
+           if(updateTempUser){
+            await signupUtil.sendOtpByEmail(userData.email, otp);
+            return { status: 'ok', }
+           } else{
+            console.log('no matched document')
+           }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    updateUser: async (userId, otp) => {
+        try {
+            const check = await collection.tempUsersCollection.findOne({ otp: otp });
+            console.log(otp,'otp')
+            if (check) {
+                const user = await collection.usersCollection.updateOne(
+                    { _id: userId },
+                    {
+                        name: check.name,
+                        phone: check.phone,
+                        email: check.email
+                    }
+                )
+                if (user.modifiedCount === 1) {
+                    console.log('user data updated');
+                    return { status: 'ok' }
+                } else {
+                    console.log('user data update failed');
+                }
             } else {
-                console.log('user data update failed');
+                return { status: 'nok' }
             }
+
         } catch (err) {
             console.log(err)
         }

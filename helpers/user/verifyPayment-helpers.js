@@ -16,6 +16,8 @@ module.exports = {
                 userId: user._id,
                 orderId: details.order.receipt,
                 amount: (details.order.amount) / 100,
+                method:'online',
+                status:'completed'
             }
             await collection.paymentCollection.insertMany([data])           
             return { status: 'ok' }

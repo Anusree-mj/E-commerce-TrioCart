@@ -57,7 +57,7 @@ function checkName() {
 }
 
 // update details
-function updateMyDetails(userId) {
+function verifyUser(userId) {
     let isError = false
     const fields = ['name_profile', 'email_profile', 'phone__profile'];
 
@@ -88,7 +88,8 @@ function updateMyDetails(userId) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    location.reload();
+                    document.querySelector('.editableDetails').style.display = 'none';
+                    document.querySelector('.verify').style.display = 'block';
                 } else {
                     console.log('update failed')
                 }
@@ -96,6 +97,7 @@ function updateMyDetails(userId) {
             .catch(err => console.log(err));
     }
 }
+
 //checks password strength
 let isStrongPassword = true
 function isStrongPaswrd() {
@@ -206,4 +208,27 @@ function changePassword(userId) {
             })
             .catch(err => console.log(err));
     }
+}
+
+function updateProfile(userId) {
+
+    let otp = document.getElementById('otp').value;  
+
+    fetch(`http://localhost:3000/profile/${userId}/update`, {
+        method: "PUT",
+        body: JSON.stringify({ otp }),
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                window.location.replace("/profile");
+            } else {
+                alert("OTP doesnt match");
+
+            }
+        })
+        .catch(err => console.log(err));
 }

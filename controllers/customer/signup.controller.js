@@ -1,5 +1,4 @@
 const userHelpers = require('../../helpers/user/user-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers'); 
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../../utils/signupUtil');
 

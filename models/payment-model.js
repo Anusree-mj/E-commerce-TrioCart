@@ -15,8 +15,16 @@ const OnlinePaymentCollection = new mongoosedb.Schema({
         type: Number,
         required: true
     },
-    })
+    method: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        default: 'pending',
+    }
+})
 const paymentCollection = new mongoosedb.model("payments", OnlinePaymentCollection)
 
 
-module. exports= paymentCollection
+module.exports = paymentCollection
