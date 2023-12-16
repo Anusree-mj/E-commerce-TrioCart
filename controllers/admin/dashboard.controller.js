@@ -15,7 +15,7 @@ const getDashboardPage = async (req, res, next) => {
           const ordersDelivered = result.deliveredCount;
           const totalUsers = result.userCounts;
           
-          res.render('admin/adminDashboard', {
+          res.render('admin/adminDashboard/dashboard', {
             layout: 'layout/layout', admin, ordersYetToBeShipped, ordersDelivered,
             totalOrders, totalUsers
           });

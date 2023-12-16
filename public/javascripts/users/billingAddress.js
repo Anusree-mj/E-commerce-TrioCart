@@ -199,10 +199,18 @@ function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, sta
             .catch(err => console.log(err));
     }
 }
-
+let addressId;
 // remove billing address
 function deleteBillingAdress(addressId) {
-    window.alert('are you sure to dlt this ')
+    addressId = addressId;
+    window.currentAddressId = addressId;
+    $('#confirmationModal').modal('show');
+}
+function confirmDeleteBillingAddress() {
+    const addressId = window.currentAddressId;
+
+    // Close the modal
+    $('#confirmationModal').modal('hide');
     console.log(addressId);
     fetch(`http://localhost:3000/billingAddress/${addressId}`, {
         method: "DELETE",

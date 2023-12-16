@@ -17,7 +17,7 @@ const getProfilePage = async (req, res, next) => {
       cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
-          res.render('customers/profile', { layout: 'layout/layout', allCategories, user: user, totalCartProduct });
+          res.render('customers/customer/profile', { layout: 'layout/layout', allCategories, user: user, totalCartProduct });
         }
       })
     } else {

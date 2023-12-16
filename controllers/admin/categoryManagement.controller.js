@@ -8,7 +8,7 @@ const getCategoryPage = (req, res, next) => {
         if (result.status === 'ok') {
             categoryHelpers.getCategoryDetails().then((categories) => {
                 console.log('categoriesss',categories[0])
-                res.render('admin/adminCategories', { layout: 'layout/layout', categories });
+                res.render('admin/adminCategory/category/adminCategories', { layout: 'layout/layout', categories });
             })
         }
         else {
@@ -21,7 +21,7 @@ const getAddCategoryPage = (req, res, next) => {
     let sessionId = req.cookies.adminSession
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
-            res.render('admin/addCategory', { layout: 'layout/layout' })
+            res.render('admin/adminCategory/categoryUpdates/addCategory', { layout: 'layout/layout' })
         }
         else {
             res.redirect('/admin');
