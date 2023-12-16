@@ -9,7 +9,10 @@ router.get('/', controller.customerControllers.homeController.getHomePage)
 router.get('/profile', controller.customerControllers.profileController.getProfilePage)
 
 //update profile
-router.put('/profile/:userId', controller.customerControllers.profileController.updateProfile);
+router.put('/profile/:userId', controller.customerControllers.profileController.sendUserProfileUpdateRequest);
+
+//update profile
+router.put('/profile/:userId/update', controller.customerControllers.profileController.updateProfile);
 
 //change password
 router.put('/password', controller.customerControllers.profileController.changePassword);

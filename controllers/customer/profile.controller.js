@@ -2,9 +2,11 @@ const userUpdateHelpers = require('../../helpers/user/userUpdate-helpers');
 const sessionHelpers = require('../../helpers/user/session-helpers');
 const categoryHelpers = require('../../helpers/user/category-helpers');
 const cartHelpers = require('../../helpers/user/cart-helpers');
+const signupUtil = require('../../utils/signupUtil');
+
 
 const getProfilePage = async (req, res, next) => {
-    let sessionId = req.cookies.session
+  let sessionId = req.cookies.session
   let allCategories = await categoryHelpers.getCategoryDetails()
 
   sessionHelpers.checkSessions(sessionId).then((result) => {
@@ -24,9 +26,22 @@ const getProfilePage = async (req, res, next) => {
   });
 }
 
+const sendUserProfileUpdateRequest = (req, res, next) => {
+  let userId = req.params.userId;
+  const otp = signupUtil.generateOTP();
+  userUpdateHelpers.verifyUser(req.body, otp, userId).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
+}
+
 const updateProfile = async (req, res, next) => {
-    let userId = req.params.userId;
-  userUpdateHelpers.updateUser(userId, req.body).then((result) => {
+  let userId = req.params.userId;
+  const {otp}=req.body;
+  userUpdateHelpers.updateUser(userId, otp).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -36,17 +51,18 @@ const updateProfile = async (req, res, next) => {
 }
 
 const changePassword = async (req, res, next) => {
-    userUpdateHelpers.changePassword(req.body).then((result) => {
-        if (result.status === 'ok') {
-          res.status(200).json({ status: "ok" });
-        } else {
-          res.status(400).json({ status: "nok" });
-        }
-      })
+  userUpdateHelpers.changePassword(req.body).then((result) => {
+    if (result.status === 'ok') {
+      res.status(200).json({ status: "ok" });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
 }
 
 module.exports = {
-    getProfilePage,
-    updateProfile,
-    changePassword,
+  getProfilePage,
+  sendUserProfileUpdateRequest,
+  updateProfile,
+  changePassword,
 }

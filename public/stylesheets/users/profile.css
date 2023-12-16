@@ -45,6 +45,7 @@ p {
     color: #131313;
     font-weight: 600;
     font-size: 1.2rem;
+    text-align: left !important;
 }
 .subHeadEdit{
     color: #131313;
@@ -89,4 +90,24 @@ p {
     position: absolute;
     right: 0.8rem;
     top: 2.5rem;
+}
+.verifyHead{
+    text-align: center;
+}
+.resnd {
+    font-size: 0.8rem;
+    color: #000;
+    font-weight: 600;
+}
+.resndTxt{
+    display: none;
+    color: #007bff;
+}
+.otpLine {
+    width: 2rem;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+    background: transparent;
 }
