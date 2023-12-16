@@ -23,9 +23,16 @@ const TemporaryUserSchema = new mongoosedb.Schema(
         otp: {
             type: String,
         },
+        otpExpiryTime: {
+            type: Date,
+        },
         isBlocked: {
             type: Boolean,
             default: false,
+        },
+        otpExpired: {
+            type: Boolean,
+            default: false
         }
     },
     {

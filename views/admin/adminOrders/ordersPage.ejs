@@ -47,7 +47,8 @@
                                     <div class="dropdown nav_icons">                                        
                                             <% if (order.orderStatus !== 'Cancelled by User' && 
                                             order.orderStatus !== 'pending' &&
-                                            order.orderStatus !== 'delivered') { %>
+                                            order.orderStatus !== 'delivered'&&  
+                                             order.orderStatus !== 'cancelled by seller') { %>
                                                 <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
                                             Status</p>

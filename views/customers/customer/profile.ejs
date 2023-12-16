@@ -70,7 +70,7 @@
                             <div class="resnd mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
 
                             <hr class="dividngLine">
-                            <a href="/user/resend/otp" class="resndTxt" id="resentTxt">resend OTP</a>
+                            <a onclick="resendOtp()" class="resndTxt" id="resentTxt">resend OTP</a>
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <button class="btn btn-dark save  mt-4" type="button" id="signin_button"
                                     onclick="updateProfile('<%= user._id %>')">Verify</button>
@@ -408,34 +408,6 @@
             <br><br><br><br>
         </section>
         <%- include('../../partials/footer') %>
-            <script>
-                let timerOn = true;
-
-                function timer(remaining) {
-                    var m = Math.floor(remaining / 60);
-                    var s = remaining % 60;
-
-                    m = m < 10 ? '0' + m : m;
-                    s = s < 10 ? '0' + s : s;
-                    document.getElementById('timer').innerHTML = m + ':' + s;
-                    remaining -= 1;
-
-                    if (remaining >= 0 && timerOn) {
-                        setTimeout(function () {
-                            timer(remaining);
-                        }, 1000);
-                        return;
-                    }
-                    document.getElementById('resndTimer').textContent = ""
-                    document.getElementById('resentTxt').style.display = "inline";
-                    var otpFields = document.querySelectorAll('.otpLine');
-                    otpFields.forEach((field) => {
-                        field.disabled = true;
-
-                    })
-                }
-
-                timer(60);
-            </script>
+            
             <script src="/javascripts/users/billingAddress.js"></script>
             <script src="/javascripts/users/profile.js"></script>

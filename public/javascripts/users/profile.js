@@ -56,8 +56,10 @@ function checkName() {
     }
 }
 
+let tempUserId;
 // update details
 function verifyUser(userId) {
+    console.log('enterung n verifyUser')
     let isError = false
     const fields = ['name_profile', 'email_profile', 'phone__profile'];
 
@@ -87,15 +89,57 @@ function verifyUser(userId) {
             },
         }).then((res) => res.json())
             .then((data) => {
-                if (data.status === "ok") {
+                if (data.status === "ok") {  
+                    tempUserId= data.tempUserId
+                    console.log('tempUserId',tempUserId)                
                     document.querySelector('.editableDetails').style.display = 'none';
                     document.querySelector('.verify').style.display = 'block';
+                    startTimer();
                 } else {
                     console.log('update failed')
                 }
             })
             .catch(err => console.log(err));
     }
+}
+let timer;
+let countdown = 60; 
+function startTimer() {
+    timer = setInterval(() => {
+        document.getElementById('timer').textContent = countdown;
+        countdown--;
+
+        if (countdown < 0) {
+            clearInterval(timer);
+            document.getElementById('resndTimer').style.display = 'none';
+            document.getElementById('resentTxt').style.display = 'block';
+        }
+    }, 1000);
+}
+
+
+function resendOtp(){
+    const reqBody={tempUserId}
+    fetch('http://localhost:3000/resendOTP', {
+        method: "PUT",
+        body: JSON.stringify(reqBody),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                document.getElementById('resndTimer').style.display = 'block';
+                document.getElementById('resentTxt').style.display = 'none';
+                countdown = 60;
+                document.getElementById('timer').textContent = countdown;
+            
+                startTimer();
+            } else {
+                console.log('update failed')
+            }
+        })
+        .catch(err => console.log(err));
 }
 
 //checks password strength
@@ -226,7 +270,7 @@ function updateProfile(userId) {
             if (data.status === "ok") {
                 window.location.replace("/profile");
             } else {
-                alert("OTP doesnt match");
+                alert("Invalid OTP");
 
             }
         })

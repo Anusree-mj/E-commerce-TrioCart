@@ -11,6 +11,10 @@ router.get('/profile', controller.customerControllers.profileController.getProfi
 //update profile
 router.put('/profile/:userId', controller.customerControllers.profileController.sendUserProfileUpdateRequest);
 
+// resend otp
+router.put('/resendOTP', controller.customerControllers.profileController.resendOtp)
+
+
 //update profile
 router.put('/profile/:userId/update', controller.customerControllers.profileController.updateProfile);
 

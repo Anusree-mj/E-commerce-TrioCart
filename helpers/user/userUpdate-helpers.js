@@ -5,32 +5,67 @@ const signupUtil = require('../../utils/signupUtil');
 module.exports = {
     verifyUser: async (userData, otp, userId) => {
         try {
-          const updateTempUser = await collection.tempUsersCollection.updateOne(
+            const otpExpiryTime = new Date();
+            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
+            const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(
                 { email: userId },
                 {
                     name: userData.name,
                     phone: userData.phone,
                     email: userData.email,
-                    otp: otp
+                    otp: otp,
+                    otpExpiryTime: otpExpiryTime,
+                    otpExpired: false,
                 }
             )
 
-           if(updateTempUser){
-            await signupUtil.sendOtpByEmail(userData.email, otp);
-            return { status: 'ok', }
-           } else{
-            console.log('no matched document')
-           }
+            if (updateTempUser) {
+                await signupUtil.sendOtpByEmail(userData.email, otp);
+              const tempUserId= updateTempUser._id
+                return { status: 'ok',tempUserId }
+            } else {
+                console.log('no matched document')
+            }
 
         } catch (err) {
             console.log(err)
         }
     },
+    resendOtp: async (otp, userId) => {
+        try {
+            const otpExpiryTime = new Date();
+            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
+            const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(
+                { _id: userId },
+                {                   
+                    otp: otp,
+                    otpExpiryTime: otpExpiryTime,
+                    otpExpired: false,
+                }
+            )
 
+            if (updateTempUser) {
+                console.log('sdfsdfklsd;kf',updateTempUser)
+                const email = updateTempUser.email;
+                await signupUtil.sendOtpByEmail(email, otp);                
+                return { status: 'ok', }
+            } else {
+                console.log('no matched document')
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
     updateUser: async (userId, otp) => {
         try {
-            const check = await collection.tempUsersCollection.findOne({ otp: otp });
-            console.log(otp,'otp')
+            const check = await collection.tempUsersCollection.findOne(
+                { 
+                otp: otp,
+                otpExpired:false
+             }
+                );
+            console.log(otp, 'otp')
             if (check) {
                 const user = await collection.usersCollection.updateOne(
                     { _id: userId },

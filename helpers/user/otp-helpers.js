@@ -5,9 +5,17 @@ const signupUtil = require('../../utils/signupUtil');
 module.exports = {
     getOtp: async (email, otp) => {
         try {
+            const otpExpiryTime = new Date();
+            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
             const user = await collection.tempUsersCollection.updateOne(
                 { email: email },
-                { $set: { otp: otp } }
+                {
+                    $set: {
+                        otp: otp,
+                        otpExpiryTime: otpExpiryTime,
+                        otpExpired: false,
+                    }
+                }
             )
             if (user) {
                 await signupUtil.sendOtpByEmail(email, otp)
@@ -39,7 +47,11 @@ module.exports = {
 
     verifyOtp: async (email, otp) => {
         try {
-            const user = await collection.tempUsersCollection.findOne({ email: email, otp: otp });
+            const user = await collection.tempUsersCollection.findOne({
+                email: email,
+                otp: otp,
+                otpExpired: false
+            });
             if (user) {
                 return { user, status: "ok" }
             } else {

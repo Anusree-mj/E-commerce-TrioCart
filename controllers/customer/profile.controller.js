@@ -27,9 +27,24 @@ const getProfilePage = async (req, res, next) => {
 }
 
 const sendUserProfileUpdateRequest = (req, res, next) => {
+  console.log('entered in senduserprodfileupdate')
   let userId = req.params.userId;
   const otp = signupUtil.generateOTP();
   userUpdateHelpers.verifyUser(req.body, otp, userId).then((result) => {
+    if (result.status === 'ok') {
+      const tempUserId = result.tempUserId
+      console.log(tempUserId,'gsdjkjgew')
+      res.status(200).json({ status: "ok",tempUserId });
+    } else {
+      res.status(400).json({ status: "nok" });
+    }
+  })
+}
+
+const resendOtp = (req, res, next) => {
+  let userId = req.body.tempUserId;
+  const otp = signupUtil.generateOTP();
+  userUpdateHelpers.resendOtp( otp, userId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -63,6 +78,7 @@ const changePassword = async (req, res, next) => {
 module.exports = {
   getProfilePage,
   sendUserProfileUpdateRequest,
+  resendOtp,
   updateProfile,
   changePassword,
 }

@@ -49,6 +49,16 @@ const OrderSchema = new mongoosedb.Schema(
             isReturned:{
                 type: Boolean,
                 default:false,
+            },
+            returnDate: {
+                type: String,
+            },
+            returnValid: {
+                type: Boolean,
+            },
+            isCancelled:{
+                type: Boolean,
+                default:false,
             }
         }],
         totalAmount: {
@@ -65,12 +75,7 @@ const OrderSchema = new mongoosedb.Schema(
         deliveredDate: {
             type: String,
         },
-        returnDate: {
-            type: String,
-        },
-        returnValid: {
-            type: Boolean,
-        },
+       
         orderStatus: {
             type: String,
             default: 'placed',
