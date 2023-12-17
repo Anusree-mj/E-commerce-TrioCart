@@ -7,19 +7,23 @@ module.exports = {
             await collection.cartCollection.deleteOne({
                 userId: user._id
             })
-          const updateDate = await collection.orderCollection.updateOne(
-            {  _id:details.order.receipt},
-            {$set: {orderStatus:'placed'}}
+            await collection.orderCollection.updateOne(
+                { _id: details.order.receipt },
+                { $set: { orderStatus: 'placed' } }
             )
-
+            const currentDate = new Date()
             const data = {
                 userId: user._id,
-                orderId: details.order.receipt,
-                amount: (details.order.amount) / 100,
-                method:'online',
-                status:'completed'
+                transactions: [
+                    {
+                        status: "Debited",
+                        amount: (details.order.amount) / 100,
+                        createdAt: currentDate
+                    }
+                ]
+
             }
-            await collection.paymentCollection.insertMany([data])           
+            await collection.walletCollection.insertMany([data])
             return { status: 'ok' }
 
         } catch (err) {

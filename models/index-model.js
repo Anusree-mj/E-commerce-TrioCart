@@ -7,7 +7,7 @@ const adminCollection = require('./admin-model');
 const adminSessionCollection = require('./adminSession-model');
 const tempUsersCollection = require('./tempUsers-model');
 const sessionCollection = require('./userSession-model');
-const paymentCollection = require('./payment-model');
+const walletCollection = require('./wallet-model');
 const productReturnCollection = require('./productReturn-model');
  
 module.exports = {
@@ -20,5 +20,6 @@ module.exports = {
     adminSessionCollection,
     tempUsersCollection,
     sessionCollection,
-    paymentCollection,productReturnCollection
+    walletCollection,
+    productReturnCollection
 }
