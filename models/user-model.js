@@ -93,23 +93,17 @@ const UserSchema = new mongoosedb.Schema(
             {
                 name: {
                     type: String,
-                    default: 'Referral Bonus'
                 },
                 count: {
                     type: Number,
                     default: 0,
                 },
-            },
-            {
-                name: {
-                    type: String,
-                    default: 'Referral Credit'
-                },
-                count: {
-                    type: Number,
-                    default: 0,
-                },
+                isApplicable: {
+                    type: Boolean,
+                    default: true,
+                }
             }
+
         ]
     },
     {

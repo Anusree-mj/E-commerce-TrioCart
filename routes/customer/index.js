@@ -21,6 +21,9 @@ router.put('/profile/:userId/update', controller.customerControllers.profileCont
 //change password
 router.put('/password', controller.customerControllers.profileController.changePassword);
 
+// get coupon page
+router.get('/coupon', controller.customerControllers.couponController.getCouponPage)
+
 /* get cart. */
 router.get('/cart', controller.customerControllers.cartController.getCartPage);
 

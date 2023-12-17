@@ -12,6 +12,7 @@ const checkoutController = require('./c&c/checkout.controller')
 const billingAddressController = require('./c&c/billingAddress.controller');
 const orderController = require('./order.controller');
 const homeController = require('./home.controller');
+const couponController = require('./user/coupon.controller');
 
 
 module.exports = {
@@ -28,5 +29,6 @@ module.exports = {
     checkoutController,
     billingAddressController,
     orderController,
-    homeController
+    homeController,
+    couponController
 }

@@ -11,6 +11,7 @@ module.exports = {
         try {
             referralCreditCount = 0;
             let invalidReferralCode = false;
+
             const user = await collection.usersCollection.findOne({ email: userData.email })
             if (user) {
                 return { status: 'same email' }
@@ -24,8 +25,14 @@ module.exports = {
                         {
                             $set: {
                                 'referralCode.isValid': false,
-                                'coupon[0].count': 1,
+                            },
+                               $push: {
+                                coupon: {
+                                    name: 'Referral Bonus',
+                                    count: 1
+                                }
                             }
+                            
                         }
                     )
                     if (checkReferralCode) {
@@ -72,12 +79,8 @@ module.exports = {
                     'referralCode.name': getReferralCode,
                     coupon: [
                         {
-                            name:'Referral Bonus',                          
-                            count:0
-                        },
-                        {
-                            name:'Referral Credit',                          
-                            count:referralCreditCount
+                            name: 'Referral Credit',
+                            count: referralCreditCount
                         }
                     ]
                 }
