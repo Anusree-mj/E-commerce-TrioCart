@@ -8,7 +8,7 @@ const getStockPage = (req, res, next) => {
         if (result.status === 'ok') {
             productHelpers.getAllProducts().then((products) => {
                 console.log('productsdetails',products[0])
-                res.render('admin/adminStock', { layout: 'layout/layout', products });
+                res.render('admin/adminStock/stock', { layout: 'layout/layout', products });
             })
         }
         else {
@@ -27,7 +27,7 @@ const getEditProductStockPage = (req, res, next) => {
         if (result) {
             const {productData,size,count}= result;
             console.log('productdata in edit stock page',productData)
-            res.render('admin/editStockProduct', { productData,size,count })
+            res.render('admin/adminStock/editStockProduct', { productData,size,count })
         } else {
             res.redirect('/products');
         }

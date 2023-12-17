@@ -5,12 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
-const session = require('express-session')
-const Razorpay = require('razorpay');
-const adminOrderHelpers = require ('./helpers/admin/orders/adminOrder-helpers')
-
-// calling scheduleReturnStatusUpdate
-adminOrderHelpers.scheduleReturnValidUpdate();
+const session = require('express-session');
+const cronFnctn = require('./utils/cron');
 
 //multer
 const storage = multer.diskStorage({ 
@@ -22,11 +18,8 @@ const storage = multer.diskStorage({
   }
 });
 
-// razorpay
-const instance = new Razorpay({
-  key_id: 'rzp_test_mj8FaMjD2VYPW4',
-  key_secret: 'bJeiO2GMbp3vvqfvPzwNQUaC',
-});
+// cron for otp expiry
+cronFnctn.scheduleCronJob();
 
 const usersRouter = require('./routes/customer');
 const adminRouter = require('./routes/admin');

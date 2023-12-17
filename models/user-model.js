@@ -78,6 +78,38 @@ const UserSchema = new mongoosedb.Schema(
                     required: true,
                 }
             },
+        ],
+        referralCode: {
+            name: {
+                type: String,
+                required: true,
+            },
+            isValid: {
+                type: Boolean,
+                default: true,
+            },
+        },
+        coupon: [
+            {
+                name: {
+                    type: String,
+                    default: 'Referral Bonus'
+                },
+                count: {
+                    type: Number,
+                    default: 0,
+                },
+            },
+            {
+                name: {
+                    type: String,
+                    default: 'Referral Credit'
+                },
+                count: {
+                    type: Number,
+                    default: 0,
+                },
+            }
         ]
     },
     {

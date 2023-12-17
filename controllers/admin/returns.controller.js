@@ -11,7 +11,7 @@ const getReturnsPage = (req, res, next) => {
                 const orderId = returnDetails.orderId;
                 console.log('orderid in return',orderId)
                 console.log('returns:::', returnDetails)
-                res.render('admin/adminReturns', { layout: 'layout/layout', returnDetails,orderId });
+                res.render('admin/adminOrders/adminReturns', { layout: 'layout/layout', returnDetails,orderId });
             })
         }
         else {

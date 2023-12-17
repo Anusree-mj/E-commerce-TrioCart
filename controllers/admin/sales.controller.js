@@ -19,7 +19,7 @@ const getSalesPage = (req, res, next) => {
                     console.log('salesqq:::', dailySales, "totalEarning::", totalSalesAmount)
 
                     dailySalesHelpers.getSalesBasedOnDay(day).then(salesList => {
-                        res.render('admin/sales', {
+                        res.render('admin/adminSales/sales', {
                             layout: 'layout/layout', dailySales,
                             totalEarnings: totalSalesAmount, salesList
                         });
@@ -34,7 +34,7 @@ const getSalesPage = (req, res, next) => {
                         console.log('salesqq:::', dailySales, "totalEarning::", totalSalesAmount)
     
                        yearlySalesHelpers.getSalesBasedOnYear(year).then(salesList => {
-                            res.render('admin/sales', {
+                            res.render('admin/adminSales/sales', {
                                 layout: 'layout/layout', dailySales,
                                 totalEarnings: totalSalesAmount, salesList
                             });
@@ -51,7 +51,7 @@ const getSalesPage = (req, res, next) => {
                         console.log('salesqq:::', dailySales, "totalEarning::", totalSalesAmount)
     
                        weaklySalesHelpers.getSalesBasedOnWeak(start,end).then(salesList => {
-                            res.render('admin/sales', {
+                            res.render('admin/adminSales/sales', {
                                 layout: 'layout/layout', dailySales,
                                 totalEarnings: totalSalesAmount, salesList
                             });
@@ -65,7 +65,7 @@ const getSalesPage = (req, res, next) => {
                     console.log('salesqq:::', dailySales, "totalEarning::", totalSalesAmount)
 
                     dailySalesHelpers.getSalesBasedOnDay(day).then(salesList => {
-                        res.render('admin/sales', {
+                        res.render('admin/adminSales/sales', {
                             layout: 'layout/layout', dailySales,
                             totalEarnings: totalSalesAmount, salesList
                         });

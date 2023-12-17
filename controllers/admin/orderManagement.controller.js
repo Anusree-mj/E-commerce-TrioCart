@@ -8,7 +8,7 @@ const getOrderPage = (req, res, next) => {
         if (result.status === 'ok') {
             adminOrderHelpers.getAllOrders().then((results) => {
                 let orders = results.orders
-                res.render('admin/adminOrders', { layout: 'layout/layout', orders });
+                res.render('admin/adminOrders/ordersPage', { layout: 'layout/layout', orders });
             })
         }
         else {
@@ -39,7 +39,7 @@ const getOrderDetailPage = (req, res, next) => {
             adminOrderHelpers.getAnOrder(orderId).then((result) => {
                 let order = result.order
 
-                res.render('admin/adminOrderDetails', { layout: 'layout/layout', order });
+                res.render('admin/adminOrders/adminOrderDetails', { layout: 'layout/layout', order });
             })
         }
         else {

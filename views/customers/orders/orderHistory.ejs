@@ -115,7 +115,8 @@
                                                             days.</p>
                                                         <% } %>
 
-                                                            <% if (order.orderStatus !=='Cancelled by User' ) { %>
+                                                            <% if (order.orderStatus !=='Cancelled by User'
+                                                            && !order.returnValid ) { %>
                                                                 <button type="button"
                                                                     class="btn btn-outline-dark mt-3 commntBtn">Leave
                                                                     your Comment</button>

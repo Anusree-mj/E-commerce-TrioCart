@@ -8,6 +8,7 @@ module.exports = {
             console.log('entered in order fnctn')
             const orders = await collection.orderCollection
                 .find()
+                .sort({ createdAt: -1 })
                 .populate('userId')
                 .populate('products.product');
 

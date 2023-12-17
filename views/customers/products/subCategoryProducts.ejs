@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
-            <%- include('../partials/header') %>
+            <%- include('../../partials/header') %>
                 <% } %>
-                    <%- include('../partials/subHeader',allCategories) %>
+                    <%- include('../../partials/subHeader',allCategories) %>
                         <section class="productsSctn d-flex justify-content-between ">
-                            <%- include('../partials/productsSidebar',categories) %>
+                            <%- include('../../partials/productsSidebar',categories) %>
                                 <div class="d-flex flex-column">
 
                                     <div class="d-flex mb-3 ml-3 filterSortSctn">
@@ -209,5 +209,5 @@
                                         </div>
                                         <% } %>
                         </section>
-                        <%- include('../partials/footer') %>
+                        <%- include('../../partials/footer') %>
                           <script src="/javascripts/users/subcategory.js"></script>

@@ -128,7 +128,8 @@ function signup() {
             name: document.getElementById("name").value,
             email: document.getElementById("email").value,
             phone: document.getElementById("phone").value,
-            password: document.getElementById("password").value
+            password: document.getElementById("password").value,
+            referralCode: document.getElementById('referralCode') ? (document.getElementById('referralCode').value).trim() : ''
         }
         fetch("http://localhost:3000/user/signup", {
             method: "POST",
@@ -140,8 +141,12 @@ function signup() {
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/user/verify");
-                } else {
-                    alert("Email already exist");
+                } else if(data.status ==='invalid referral code') {
+                   document.getElementById('referralCodeSpan').textContent="Invalid referral code."
+                   document.getElementById('referralCodeSpan').style.fontSize='1rem';
+                }else{
+                    document.getElementById('referralCodeSpan').textContent="Email already exist"
+                    document.getElementById('referralCodeSpan').style.fontSize='1.5rem';
                 }
             })
             .catch(err => console.log(err));

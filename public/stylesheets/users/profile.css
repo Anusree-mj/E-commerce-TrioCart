@@ -20,7 +20,9 @@ p {
     justify-content: center;
     align-items: center;
 }
-
+.alertTxt{
+    font-weight: 600;
+}
 .pageHead {
     width: 80rem;
     padding: 2rem 3rem;

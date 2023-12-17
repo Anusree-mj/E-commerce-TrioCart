@@ -10,11 +10,11 @@ const getOTPVerificationPage = (req, res, next) => {
 }
 
 const resendOTP = (req, res, next) => {
-    let emailId = req.cookies.Useremail
+    let emailId = req.cookies.Useremail 
     const otp = signupUtil.generateOTP();
     otpHelpers.getOtp(emailId, otp).then(result => {
         if (result.status === 'ok') {
-            res.redirect('/user/verify');
+            res.redirect('/user/verify'); 
         } else {
             res.status(400).json({ status: "nok" });
         }

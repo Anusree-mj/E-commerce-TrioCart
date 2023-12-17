@@ -2,26 +2,16 @@
 
 <div class="fluid">
   <% if (user) { %>
-    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
       <%} else{ %>
-        <%- include('../partials/header') %>
+        <%- include('../../partials/header') %>
           <% } %>
-            <%- include('../partials/subHeader',allCategories) %>
+            <%- include('../../partials/subHeader',allCategories) %>
               <div class="subTittle d-flex justify-content-around align-items-center">
                 <p class="subTittle-text">Members get free shipping above Rs.1999</p">
                 <p class="subTittle-text sbtxt">Free & flexible 15 days return</p>
                 <p class="subTittle-text sbtxt">Estimated delivery time: 2-7 days</p>
               </div>
-              <!-- add1 -->
-              <section class="adds-sectn d-flex justify-content-center">
-                <img src="/images/home/img1.avif" class="img-fluid adds-img " alt="Women in stylishjeans">
-                <div class="adds-contnt">
-                  <p class="head">Meet our stretchiest fits</p>
-                  <p class="subHead">True to you: denim adapts</p>
-                  <a href="/products/Ladies/Jeans" class="btn btn-light shopNow-btn">Shop Now</a>
-                </div>
-              </section>
-
               <!-- page redirect1 -->
               <section class="page-sectn">
                 <div class="pagesctn-contnts">
@@ -33,16 +23,15 @@
                 </div>
               </section>
 
-              <!-- add2 -->
+              <!-- add1 -->
               <section class="adds-sectn d-flex justify-content-center">
-                <img src="/images/home/img2.jpg" class="img-fluid adds-img" alt="winterKid">
+                <img src="/images/home/img1.avif" class="img-fluid adds-img " alt="Women in stylishjeans">
                 <div class="adds-contnt">
-                  <p class="head-men">Jackets for the win</p>
-                  <p class="subHead-men">Master the sharp looks throughout the chilly season.</p>
-                  <a href="/products/Mens/Jackets" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
+                  <p class="head">Meet our stretchiest fits</p>
+                  <p class="subHead">True to you: denim adapts</p>
+                  <a href="/products/Ladies/Jeans" class="btn btn-light shopNow-btn">Shop Now</a>
                 </div>
               </section>
-
               <!-- //new Arrivals -->
               <section class="newArrivals_sectn">
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -58,7 +47,9 @@
                                   <div class="card">
                                     <img class="card-img-top productImg" src="/<%= totalProducts[j].image %>"
                                       alt="Card image cap">
-                                    <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
+                                      <a href="/order/history">
+                                        <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
+                                      </a>
                                     <div class="card-body">
                                       <h3 class="card-title">
                                         <%= totalProducts[j].name %>
@@ -87,6 +78,15 @@
                   </a>
                 </div>
               </section>
+              <!-- add2 -->
+              <section class="adds-sectn d-flex justify-content-center">
+                <img src="/images/home/img2.jpg" class="img-fluid adds-img" alt="winterKid">
+                <div class="adds-contnt">
+                  <p class="head-men">Jackets for the win</p>
+                  <p class="subHead-men">Master the sharp looks throughout the chilly season.</p>
+                  <a href="/products/Mens/Jackets" type="button" class="btn btn-dark shopNow-btn">Shop Now</a>
+                </div>
+              </section>
 
               <!-- page redirect2 -->
               <section class="page-sectn">
@@ -109,4 +109,4 @@
                 </div>
               </section>
 </div>
-<%- include('../partials/footer') %>
+<%- include('../../partials/footer') %>

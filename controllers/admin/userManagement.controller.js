@@ -7,7 +7,7 @@ const getUserPage = (req, res, next) => {
         if (result.status === 'ok') {
             adminUserHelpers.getUsers().then((users) => {
                 console.log(users)
-                res.render('admin/users', { layout: 'layout/layout', users });
+                res.render('admin/adminUsers/users', { layout: 'layout/layout', users });
             })
         }
         else {

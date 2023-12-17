@@ -14,7 +14,9 @@ const sendUserSignupRequest =  (req, res, next) => {
       let email=result.email;
       res.cookie('Useremail', email);
       res.status(200).json({ status: "ok" });
-    } else {
+    } else if(result.status==='invalid referral code') {
+      res.status(400).json({ status: "invalid referral code" });
+    }else{
       res.status(400).json({ status: "nok" });
     }
   })

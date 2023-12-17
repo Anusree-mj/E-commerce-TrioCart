@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/stylesheets/users/productDetails.css">
 <% if (user) { %>
-    <%- include('../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
-            <%- include('../partials/header') %>
+            <%- include('../../partials/header') %>
                 <% } %>
-                    <%- include('../partials/subHeader',allCategories) %>
+                    <%- include('../../partials/subHeader',allCategories) %>
                         <section class="product-sctn d-flex flex-column justify-content-around">
                             <!-- product images -->
                             <div class="d-flex justify-content-around mt-4">
@@ -100,5 +100,5 @@
                                 </div>
                             </div>
                         </section>
-                        <%- include('../partials/footer') %>
+                        <%- include('../../partials/footer') %>
                             <script src="/javascripts/users/productDetails.js"></script>

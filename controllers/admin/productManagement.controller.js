@@ -8,7 +8,7 @@ const getProductPage = (req, res, next) => {
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
             productHelpers.getAllProducts().then((products) => {
-                res.render('admin/adminProducts', { layout: 'layout/layout', products });
+                res.render('admin/adminProducts/products/adminProducts', { layout: 'layout/layout', products });
             })
         }
         else {
@@ -21,7 +21,7 @@ const getAddProductPage = (req, res, next) => {
     let sessionId = req.cookies.adminSession
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
-            res.render('admin/addProduct', { layout: 'layout/layout' })
+            res.render('admin/adminProducts/productUpdates/addProduct', { layout: 'layout/layout' })
         }
         else {
             res.redirect('/admin');
@@ -91,7 +91,7 @@ const getEditProductPage = (req, res, next) => {
     console.log('Product ID:', productId);
     adminProductHelpers.getProductForEditing(productId).then((productData) => {
         if (productData) {
-            res.render('admin/editProduct', { productData })
+            res.render('admin/adminProducts/productUpdates/editProduct', { productData })
         } else {
             res.redirect('/products');
         }
