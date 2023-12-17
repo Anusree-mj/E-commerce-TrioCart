@@ -1,5 +1,4 @@
 const collection = require('../../models/index-model')
-
 const delvryTimeUtil = require('../../utils/delvryTymUtil');
 const userReadableIdUtil = require('../../utils/userReadableId');
 

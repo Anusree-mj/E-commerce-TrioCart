@@ -1,6 +1,7 @@
 const collection = require('../../models/index-model')
 const bcrypt = require('bcrypt');
 const signupUtil = require('../../utils/signupUtil');
+const cronFnctn = require('../../utils/cron');
 
 module.exports = {
     verifyUser: async (userData, otp, userId) => {
@@ -21,6 +22,7 @@ module.exports = {
 
             if (updateTempUser) {
                 await signupUtil.sendOtpByEmail(userData.email, otp);
+                cronFnctn.expireOTP();
               const tempUserId= updateTempUser._id
                 return { status: 'ok',tempUserId }
             } else {
@@ -47,7 +49,8 @@ module.exports = {
             if (updateTempUser) {
                 console.log('sdfsdfklsd;kf',updateTempUser)
                 const email = updateTempUser.email;
-                await signupUtil.sendOtpByEmail(email, otp);                
+                await signupUtil.sendOtpByEmail(email, otp);  
+                cronFnctn.expireOTP();              
                 return { status: 'ok', }
             } else {
                 console.log('no matched document')

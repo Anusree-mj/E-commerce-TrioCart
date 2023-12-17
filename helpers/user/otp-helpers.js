@@ -1,6 +1,6 @@
 const collection = require('../../models/index-model')
-const bcrypt = require('bcrypt')
 const signupUtil = require('../../utils/signupUtil');
+const cronFnctn = require('../../utils/cron');
 
 module.exports = {
     getOtp: async (email, otp) => {
@@ -19,6 +19,7 @@ module.exports = {
             )
             if (user) {
                 await signupUtil.sendOtpByEmail(email, otp)
+                cronFnctn.expireOTP();
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }

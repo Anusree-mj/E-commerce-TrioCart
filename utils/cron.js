@@ -21,8 +21,43 @@ const cron =  require('node-cron');
     }
   }
   
-  function scheduleCronJob() {   
-    cron.schedule('*/2 * * * *', markExpiredOTPs);
-  }
-  
-  module.exports = { scheduleCronJob };
+  async function markExpiredOrders() {
+    try {
+        const currentDate = new Date().toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+        });
+
+        const orders = await collection.orderCollection.find({ returnValid: true });
+
+        const expiredOrders = orders.filter(order => {
+            const orderDate = new Date(order.returnDate);
+            const orderDateString = orderDate.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+            });
+
+            return orderDateString < currentDate;
+        });
+
+        await Promise.all(expiredOrders.map(async (order) => {
+            order.returnValid = false;
+            await order.save();
+        }));
+
+        console.log('returnValidity updated');
+    } catch (error) {
+        console.log(error);
+    }
+}
+function expireOTP(){
+  cron.schedule('*/1 * * * *', markExpiredOTPs);
+}
+function scheduleCronJob() {   
+  cron.schedule('0 0 * * *', markExpiredOrders);
+}
+
+
+  module.exports = { scheduleCronJob,expireOTP };

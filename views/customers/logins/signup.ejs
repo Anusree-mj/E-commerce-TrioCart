@@ -5,25 +5,35 @@
         <div class="row align-items-center justify-content-center">
             <div class="login-form" id="signupform">
                 <h2 class="head">Signup</h2>
-                <label class="label" for="name">Name</label>
+                <label class="label" for="name">Name <span
+                    class="required">*</span></label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name"
                     onclick="clearSpan('nameSpan')" onblur="checkName()">
                 <span id="nameSpan" class="span"></span><br>
 
-                <label class="label" for="email">Email</label>
+                <label class="label" for="email">Email <span
+                    class="required">*</span></label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Enter you email"
                     onclick="clearSpan('emailSpan')" onblur="checkEmail()">
                 <span id="emailSpan" class="span"></span><br>
 
-                <label class="label" for="phone">Phone number</label>
+                <label class="label" for="phone">Phone number <span
+                    class="required">*</span></label>
                 <input type="text" class="form-control" name="phone" id="phone"
                     placeholder="Enter your contact number" onclick="clearSpan('phoneSpan')" onblur="checkPhone()">
                 <span id="phoneSpan" class="span"></span><br>
-                
+             
+                <!-- refferal code -->
+                <label class="label" for="phone">Referral Code</label>
+                <input type="text" class="form-control" name="referralcode" id="referralCode" 
+                    placeholder="Add any referral code"  onclick="clearSpan('referralCodeSpan')">
+                    <span id="referralCodeSpan" class="span"></span><br>
+
                 <!-- change password -->
                 <div class="password-box">
                     <label class="label">
-                        Password
+                        Password <span
+                        class="required">*</span>
                     </label>
                     <input type="password" class=" form-control" id="password" placeholder="Enter your password"
                         onclick="clearSpan('passwordSpan')" onblur="isStrongPaswrd()">
@@ -33,7 +43,8 @@
 
                 <!-- confirm password -->
                 <label class="label">
-                    Confirm Password
+                    Confirm Password <span
+                    class="required">*</span>
                 </label>
                 <input type="password" class=" form-control" id="confrmPsswrd" aria-describedby="emailHelp"
                     placeholder=" Confirm password" onclick="clearSpan('confrmPsswrdSpan')">

@@ -39,7 +39,7 @@ function addToCart(productId) {
                 if (data.status === "ok") {
                     const addToCartButton = document.getElementById('addToCart');
                     addToCartButton.textContent = "Added To Cart";                   
-
+                    addToCartButton.style.backgroundColor='green'
                     setTimeout(() => {
                        window.location.reload()
                     }, 3000);
