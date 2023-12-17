@@ -46,13 +46,20 @@ const OrderSchema = new mongoosedb.Schema(
             Count: {
                 type: Number,
             },
-            isReturned:{
+            isReturned: {
                 type: Boolean,
-                default:false,
-            }, isCancelled:{
+                default: false,
+            },
+            returnStatus: {
+                type: String,
+            },
+            isCancelled: {
                 type: Boolean,
-                default:false,
-            }
+                default: false,
+            },
+             cancelStatus: {
+                type: String,
+            },
         }],
         totalAmount: {
             type: Number,
@@ -73,7 +80,7 @@ const OrderSchema = new mongoosedb.Schema(
         },
         returnValid: {
             type: Boolean,
-            default:false
+            default: false
         },
         orderStatus: {
             type: String,

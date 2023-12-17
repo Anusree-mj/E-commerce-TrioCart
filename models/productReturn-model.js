@@ -2,15 +2,15 @@ const mongoosedb = require('./mongodb');
 
 // product return collection
 const productReturnSchema = new mongoosedb.Schema(
-    { 
+    {
         orderId: {
             type: mongoosedb.Schema.Types.ObjectId,
             ref: 'orders',
         },
         userId: {
-        type: mongoosedb.Schema.Types.ObjectId,
-        ref: 'users',
-    },
+            type: mongoosedb.Schema.Types.ObjectId,
+            ref: 'users',
+        },
         productId: {
             type: mongoosedb.Schema.Types.ObjectId,
             ref: 'products',
@@ -30,6 +30,10 @@ const productReturnSchema = new mongoosedb.Schema(
         returnStatus: {
             type: String,
         },
+        refundStatus: {
+            type: String,
+            default: 'pending'
+        }
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps

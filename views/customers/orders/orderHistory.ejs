@@ -76,7 +76,7 @@
                                                         <%= product.Size %>,
                                                     </p>
                                                     <p class="prodName"> Count : <%= product.Count %>
-                                                    </p>
+                                                    </p>                                                  
 
                                                 </div>
                                                 <div>
@@ -112,17 +112,20 @@
                                                         <button type="button" class="btn btn-dark mt-3 commntBtn"
                                                             onclick="triggerReturn('<%= product.product._id %>')">Return</button>
                                                         <% } else if ( product.isReturned && order.orderStatus
-                                                            !=='returned' ) { %>
+                                                            !=='returned' && product.returnStatus !=='Rejected' ) { %>
                                                             <p class="returnTxt">Your product will be collected within 2
                                                                 days.</p>
-                                                            <% } %>
-
-                                                                <% if (order.orderStatus !=='Cancelled by User' &&
+                                                            <% } else if (order.orderStatus !=='Cancelled by User' &&
                                                                     !order.returnValid ) { %>
                                                                     <button type="button"
                                                                         class="btn btn-outline-dark mt-3 commntBtn">Leave
                                                                         your Comment</button>
-                                                                    <% } %>
+                                                                    <% } if (product.returnStatus ==='Rejected' ) { %>
+                                                                        <p class="returnTxt">Your return request rejected.</p>
+                                                                        <button type="button"
+                                                                        class="btn btn-outline-dark mt-3 commntBtn">Leave
+                                                                        your Comment</button>
+                                                                        <% } %>
                                                 </div>
                                             </div>
 

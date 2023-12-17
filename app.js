@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
   }
 });
 
-// cron for otp expiry
+// cron for returndate expiry
 cronFnctn.scheduleCronJob();
 
 const usersRouter = require('./routes/customer');

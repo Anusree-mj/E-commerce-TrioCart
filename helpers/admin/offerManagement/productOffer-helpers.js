@@ -22,37 +22,48 @@ module.exports = {
 
     editOffer: async (productId, offer) => {
         try {
-            console.log('productId', productId)
-            const product = await collection.productsCollection.findOne({ _id: productId })
-
             let discountedPrice;
-            discountAmount = Math.round((Number(offer) / 100) * product.price);
-            if (product.offerPrice ===0) {
-                discountedPrice = product.price - discountAmount;
-            } else if(product.offerPrice > 0) {
-                discountedPrice = product.offerPrice - discountAmount;
+            // console.log('productId', productId)
+            const product = await collection.productsCollection.findOne({ _id: productId })
+            let discountAmount = Math.round((Number(offer) / 100) * product.price);
+            if (offer !== '0') {
+                if (product.offerPrice === 0) {
+                    discountedPrice = product.price - discountAmount;
+                } else if (product.offerPrice > 0) {
+                    discountedPrice = product.offerPrice - discountAmount;
+                }
+                await collection.productsCollection.updateOne(
+                    {
+                        _id: productId
+                    },
+                    {
+                        $set: {
+                            productOffer: offer,
+                            offerPrice: discountedPrice,
+                        }
+                    });
             }
-
-
-            const updateData = await collection.productsCollection.updateOne(
-                {
-                    _id: productId
-                },
-                {
-                    $set: {
-                        discount: offer,
-                        offerPrice: discountedPrice,
-                    }
-                });
-
-            console.log('updated data is :::', updateData)
-            if (updateData.modifiedCount === 1) {
-                console.log('modified count', updateData.modifiedCount);
-                console.log('Data update success')
-                return { status: 'ok' }
-            } else {
-                return { status: 'nok' }
+            else {
+                if (product.categoryOffer === 0) {
+                    discountedPrice = 0;
+                } else {
+                    discountAmount = Math.round((Number(product.categoryOffer) / 100) * product.price)
+                    discountedPrice = product.price - discountAmount;
+                }
+                await collection.productsCollection.updateOne(
+                    {
+                        _id: productId
+                    },
+                    {
+                        $set: {
+                            productOffer: offer,
+                            offerPrice: discountedPrice,
+                        }
+                    });
             }
+            return { status: 'ok' }
+
+
         } catch (err) {
             console.log("error occured", err)
             return { status: 'nok' }
