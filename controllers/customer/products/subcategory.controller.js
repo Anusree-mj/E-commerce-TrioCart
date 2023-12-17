@@ -1,6 +1,6 @@
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const cartHelpers = require('../../../helpers/user/cart-helpers');
 
 
 const getsubcategoryProductsPage = async (req, res, next) => {

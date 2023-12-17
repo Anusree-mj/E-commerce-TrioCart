@@ -11,7 +11,13 @@ p {
     justify-content: center;
     align-items: center;
 }
-
+.noOrders{
+    width: 60rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: underline;
+}
 .pageHead {
     width: 80rem;
     padding: 2rem 3rem;

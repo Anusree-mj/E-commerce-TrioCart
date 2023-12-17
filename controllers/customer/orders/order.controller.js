@@ -1,8 +1,8 @@
-const productHelpers = require('../../helpers/user/product-helpers')
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
-const orderHelpers = require('../../helpers/user/orderHelpers');
+const productHelpers = require('../../../helpers/user/product-helpers')
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const cartHelpers = require('../../../helpers/user/cart-helpers');
+const orderHelpers = require('../../../helpers/user/orderHelpers');
 
 const getOrderSuccessPage = (req, res, next) => {
     let sessionId = req.cookies.session
@@ -45,8 +45,16 @@ const getOrderHistoryPage = async (req, res, next) => {
                             productHelpers.getNewArrivalProducts().then(result => {
                                 let viewMoreProducts = [
                                     ...result.category1, ...result.category2, ...result.category3, ...result.category4];
-                                res.render('customers/orders/orderHistory', { layout: 'layout/layout', user, allCategories, totalCartProduct, orderDetails, viewMoreProducts });
+                                res.render('customers/orders/orderHistory', { layout: 'layout/layout', user, allCategories,
+                                 totalCartProduct, orderDetails:orderDetails, viewMoreProducts });
                             })
+                        }else{
+                            productHelpers.getNewArrivalProducts().then(result => {
+                                let viewMoreProducts = [
+                                    ...result.category1, ...result.category2, ...result.category3, ...result.category4];
+                                res.render('customers/orders/orderHistory', { layout: 'layout/layout', user, allCategories,
+                                 totalCartProduct,orderDetails:undefined, viewMoreProducts });
+                            })  
                         }
                     })
                 }

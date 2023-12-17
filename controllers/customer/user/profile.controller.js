@@ -1,8 +1,8 @@
-const userUpdateHelpers = require('../../helpers/user/userUpdate-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const cartHelpers = require('../../helpers/user/cart-helpers');
-const signupUtil = require('../../utils/signupUtil');
+const userUpdateHelpers = require('../../../helpers/user/userUpdate-helpers');
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const cartHelpers = require('../../../helpers/user/cart-helpers');
+const signupUtil = require('../../../utils/signupUtil');
 
 
 const getProfilePage = async (req, res, next) => {

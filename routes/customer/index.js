@@ -14,7 +14,6 @@ router.put('/profile/:userId', controller.customerControllers.profileController.
 // resend otp
 router.put('/resendOTP', controller.customerControllers.profileController.resendOtp)
 
-
 //update profile
 router.put('/profile/:userId/update', controller.customerControllers.profileController.updateProfile);
 
@@ -62,7 +61,6 @@ router.post('/checkout', controller.customerControllers.checkoutController.submi
 
 // verify payment 
 router.post('/verifyPayment', controller.customerControllers.checkoutController.verifyPayment)
-
 
 //logout
 router.get('/logout', controller.customerControllers.loginController.logout)
