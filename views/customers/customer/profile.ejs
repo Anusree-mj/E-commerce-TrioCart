@@ -27,6 +27,15 @@
                         <p class="userDetail">
                             <%= user.email %>
                         </p>
+                        <p class="mt-2">Referral Code:</p>
+                        <p class="userDetail">
+                            <%= user.referralCode.name %>
+                        </p>
+                        <% if (user.referralCode.isValid) { %>
+                            <p class="referralTxt">Share your referral code and get a discount for the first reference!</p>
+                            <% } else { %>
+                                <p class="referralTxt">You've already been referred. Enjoy your discount!</p>
+                                <% } %>
                     </div>
                     <hr><br>
                     <!-- editing mydetails -->
@@ -408,6 +417,6 @@
             <br><br><br><br>
         </section>
         <%- include('../../partials/footer') %>
-            
+
             <script src="/javascripts/users/billingAddress.js"></script>
             <script src="/javascripts/users/profile.js"></script>

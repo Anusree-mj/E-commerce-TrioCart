@@ -116,12 +116,14 @@ module.exports = {
             const orderDetails = await collection.orderCollection.find({
                 userId: userId
             }).sort({ createdAt: -1 }).populate('products.product');
+            if (orderDetails) {
+                const latestOrder = orderDetails[0];
+                const estimatedDelivery = latestOrder.estimatedDelivery;
 
-            const latestOrder = orderDetails[0];
-            const estimatedDelivery = latestOrder.estimatedDelivery;
-
-            return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
-
+                return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
+            } else {
+                return { status: 'ok' }
+            }
         } catch (err) {
             console.log(err);
             return { status: 'nok' };
@@ -155,9 +157,9 @@ module.exports = {
             const updateStock = orderDetails.products.map(async (item) => {
                 const productId = item.product;
                 const size = item.Size;
-                
+
                 console.log('Product and Size:', productId, size);
-            
+
                 await collection.productsCollection.updateOne(
                     {
                         _id: productId,
@@ -166,10 +168,10 @@ module.exports = {
                     { $inc: { 'sizesStock.$.count': 1 } }
                 );
             });
-            
+
             await Promise.all(updateStock);
-            console.log('updatedstockss',updateStock);      
-         
+            console.log('updatedstockss', updateStock);
+
             const updateData = await collection.orderCollection.updateOne(
                 { _id: orderId },
                 { $set: { orderStatus: 'Cancelled by User' } }
@@ -186,16 +188,16 @@ module.exports = {
         }
     },
 
-     returnProduct: async (productId, details, userID) => {
-        try {           
-         const updateStock= await collection.productsCollection.updateOne(
+    returnProduct: async (productId, details, userID) => {
+        try {
+            const updateStock = await collection.productsCollection.updateOne(
                 {
                     _id: productId,
                     'sizesStock.size': (details.size).trim()
                 },
                 { $inc: { 'sizesStock.$.count': 1 } }
             )
-            console.log('updatedstockss',updateStock);
+            console.log('updatedstockss', updateStock);
 
             let amount = details.count * details.price;
             const data = {
@@ -228,4 +230,3 @@ module.exports = {
     }
 
 }
-

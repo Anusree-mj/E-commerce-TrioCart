@@ -108,6 +108,13 @@ router.get('/returns', controller.adminControllers.returnController.getReturnsPa
 //edit return status
 router.put('/return', controller.adminControllers.returnController.editReturnStatus)
 
+//edit return status
+router.post('/refund', controller.adminControllers.returnController.doRefund)
+
+//edit return status
+router.post('/verifyPayment', controller.adminControllers.returnController.verifyPayment)
+
+
 // sales page
 router.get('/sales', controller.adminControllers.salesController.getSalesPage)
 

@@ -1,7 +1,7 @@
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const productQueryHelpers = require('../../helpers/user/productQuery-helpers')
-const cartHelpers = require('../../helpers/user/cart-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const productQueryHelpers = require('../../../helpers/user/productQuery-helpers')
+const cartHelpers = require('../../../helpers/user/cart-helpers');
 
 const searchProduct = async (req, res, next) => {
     let allCategories = await categoryHelpers.getCategoryDetails()

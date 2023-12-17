@@ -12,182 +12,191 @@
 
             <div class="ordercontainer">
                 <div class="orderSctn">
-                    <% orderDetails.forEach(order=> { %>
-                        <% if (order.orderStatus!=='pending' ) { %>
-                            <div class="d-flex flex-column orders">
-                                <div class="d-flex justify-content-between orderHeadSctn">
-                                    <div class="d-flex flex-column orderHeadSub">
-                                        <p class="subHead">Order Placed</p>
-                                        <p>
-                                            <%= new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short' ,
-                                                day: 'numeric' , year: 'numeric' }) %>
-                                        </p>
-                                    </div>
-                                    <div class="d-flex flex-column orderHeadSub">
-                                        <p class="subHead">Total</p>
-                                        <p>₹ <%= order.totalAmount %>/-</p>
-                                    </div>
-                                    <div class="d-flex flex-column orderHeadSub">
-                                        <p class="subHead">Ship To</p>
-                                        <p>
-                                            <%= order.billingAddress[0].name %>
-                                        </p>
-                                        <p>
-                                            <%= order.billingAddress[0].phone %>
-                                        </p>
-                                        <p>
-                                            <%= order.billingAddress[0].address %>
-                                        </p>
-                                        <p>
-                                            <%= order.billingAddress[0].town %> , <%= order.billingAddress[0].pincode %>
-                                        </p>
-                                        <p>
-                                            <%= order.billingAddress[0].state %>
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <div class="d-flex flex-column">
-                                            <p class="subHead">ORDER
+                    <% if(orderDetails){ %>
+                        <% orderDetails.forEach(order=> { %>
+                            <% if (order.orderStatus !=='pending' ) { %>
+                                <div class="d-flex flex-column orders">
+                                    <div class="d-flex justify-content-between orderHeadSctn">
+                                        <div class="d-flex flex-column orderHeadSub">
+                                            <p class="subHead">Order Placed</p>
+                                            <p>
+                                                <%= new Date(order.createdAt).toLocaleDateString('en-US', {
+                                                    month: 'short' , day: 'numeric' , year: 'numeric' }) %>
                                             </p>
-                                            <a href="/order/details/<%= order._id %>" class="viewDetails">View order
-                                                details</a>
+                                        </div>
+                                        <div class="d-flex flex-column orderHeadSub">
+                                            <p class="subHead">Total</p>
+                                            <p>₹ <%= order.totalAmount %>/-</p>
+                                        </div>
+                                        <div class="d-flex flex-column orderHeadSub">
+                                            <p class="subHead">Ship To</p>
+                                            <p>
+                                                <%= order.billingAddress[0].name %>
+                                            </p>
+                                            <p>
+                                                <%= order.billingAddress[0].phone %>
+                                            </p>
+                                            <p>
+                                                <%= order.billingAddress[0].address %>
+                                            </p>
+                                            <p>
+                                                <%= order.billingAddress[0].town %> , <%=
+                                                        order.billingAddress[0].pincode %>
+                                            </p>
+                                            <p>
+                                                <%= order.billingAddress[0].state %>
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <div class="d-flex flex-column">
+                                                <p class="subHead">ORDER
+                                                </p>
+                                                <a href="/order/details/<%= order._id %>" class="viewDetails">View order
+                                                    details</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="d-flex flex-column prodctSctn ">
-                                    <% order.products.forEach(product=> { %>
-                                        <div class="d-flex justify-content-between align-items-center mt-4">
-                                            <a href="/products/<%= product.product._id %>">
-                                                <img class="prodImg" src="/<%= product.product.image %>"
-                                                    alt="orderproduct">
-                                            </a>
+                                    <div class="d-flex flex-column prodctSctn ">
+                                        <% order.products.forEach(product=> { %>
+                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                                <a href="/products/<%= product.product._id %>">
+                                                    <img class="prodImg" src="/<%= product.product.image %>"
+                                                        alt="orderproduct">
+                                                </a>
 
-                                            <div class="">
-                                                <p class="prodName">
-                                                    <%= product.product.name %>
-                                                </p>
-                                                <p class="prodName">
-                                                    ₹ <%= product.product.price %>/-
-                                                </p>
-                                                <p class="prodName">Size:
-                                                    <%= product.Size %>,
-                                                </p>
-                                                <p class="prodName"> Count : <%= product.Count %>
-                                                </p>
-
-                                            </div>
-                                            <div>
-                                                <p class="prodName">Order Status</p>
-                                                <% if (order.orderStatus==='Cancelled by User' ){ %>
-                                                    <p>Order: cancelled
+                                                <div class="">
+                                                    <p class="prodName">
+                                                        <%= product.product.name %>
                                                     </p>
-                                                    <% } else { %>
-                                                        <p>Order: <%= order.orderStatus %>
-                                                        </p>
-                                                        <% } %>
+                                                    <p class="prodName">
+                                                        ₹ <%= product.product.price %>/-
+                                                    </p>
+                                                    <p class="prodName">Size:
+                                                        <%= product.Size %>,
+                                                    </p>
+                                                    <p class="prodName"> Count : <%= product.Count %>
+                                                    </p>                                                  
 
-                                                            <% if (order.orderStatus!=='delivered' && order.orderStatus
-                                                                !=='Cancelled by User' && order.orderStatus
-                                                                !=='returned' ) { %>
-                                                                <p>Estimated delivery :
-                                                                    <%= order.estimatedDelivery %>
-                                                                </p>
-                                                                <% }else if(order.orderStatus==='delivered' ){ %>
-                                                                    <p> Delivered on :
-                                                                        <%= order.deliveredDate %>
+                                                </div>
+                                                <div>
+                                                    <p class="prodName">Order Status</p>
+                                                    <% if (order.orderStatus==='Cancelled by User' ){ %>
+                                                        <p>Order: cancelled
+                                                        </p>
+                                                        <% } else { %>
+                                                            <p>Order: <%= order.orderStatus %>
+                                                            </p>
+                                                            <% } %>
+
+                                                                <% if (order.orderStatus!=='delivered' &&
+                                                                    order.orderStatus !=='Cancelled by User' &&
+                                                                    order.orderStatus !=='returned' ) { %>
+                                                                    <p>Estimated delivery :
+                                                                        <%= order.estimatedDelivery %>
                                                                     </p>
-                                                                    <% } %>
+                                                                    <% }else if(order.orderStatus==='delivered' ){ %>
+                                                                        <p> Delivered on :
+                                                                            <%= order.deliveredDate %>
+                                                                        </p>
+                                                                        <% } %>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <% if (order.orderStatus==='delivered' && order.returnValid &&
+                                                        !product.isReturned) { %>
+                                                        <div class="d-flex flex-wrap" style="max-width: 13rem;">
+                                                            <p class="returnTxt">Return requests accepted until: <%=
+                                                                    order.returnDate %>
+                                                            </p>
+                                                        </div>
+                                                        <button type="button" class="btn btn-dark mt-3 commntBtn"
+                                                            onclick="triggerReturn('<%= product.product._id %>')">Return</button>
+                                                        <% } else if ( product.isReturned && order.orderStatus
+                                                            !=='returned' && product.returnStatus !=='Rejected' ) { %>
+                                                            <p class="returnTxt">Your product will be collected within 2
+                                                                days.</p>
+                                                            <% } else if (order.orderStatus !=='Cancelled by User' &&
+                                                                    !order.returnValid ) { %>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-dark mt-3 commntBtn">Leave
+                                                                        your Comment</button>
+                                                                    <% } if (product.returnStatus ==='Rejected' ) { %>
+                                                                        <p class="returnTxt">Your return request rejected.</p>
+                                                                        <button type="button"
+                                                                        class="btn btn-outline-dark mt-3 commntBtn">Leave
+                                                                        your Comment</button>
+                                                                        <% } %>
+                                                </div>
                                             </div>
-                                            <div class="d-flex flex-column">
-                                                <% if (order.orderStatus==='delivered' && order.returnValid &&
-                                                    !product.isReturned) { %>
-                                                    <div class="d-flex flex-wrap" style="max-width: 13rem;">
-                                                        <p class="returnTxt">Return requests accepted until: <%=
-                                                                order.returnDate %>
-                                                        </p>
-                                                    </div>
-                                                    <button type="button" class="btn btn-dark mt-3 commntBtn"
-                                                        onclick="triggerReturn('<%= product.product._id %>')">Return</button>
-                                                    <% } else if ( product.isReturned && order.orderStatus !=='returned'
-                                                        ) { %>
-                                                        <p class="returnTxt">Your product will be collected within 2
-                                                            days.</p>
-                                                        <% } %>
 
-                                                            <% if (order.orderStatus !=='Cancelled by User'
-                                                            && !order.returnValid ) { %>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-dark mt-3 commntBtn">Leave
-                                                                    your Comment</button>
-                                                                <% } %>
-                                            </div>
-                                        </div>
-
-                                        <div id="returnDetails_<%= product.product._id %>" style="display: none;">
-                                            <p class="subHead mt-4">Tell us why you're returning. We value your
-                                                feedback!</p>
-                                            <div class="form-check mt-4">
-                                                <input class="form-check-input" type="radio" name="selectedReason"
-                                                    value="Product defect or damage">
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Product has defects or damage upon arrival
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedReason"
-                                                    id="onlinePayment" value="Recieved wrong item">
-                                                <label class="form-check-label" for="exampleRadios3">
-                                                    Received the wrong item
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedReason"
-                                                    value="Size/fitness issue">
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Size or fit issues with the product
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedReason"
-                                                    value="Dissatified / changed mind">
-                                                <label class="form-check-label" for="exampleRadios3">
-                                                    Changed mind or dissatisfied with the product
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedReason"
-                                                    value="Late delivery">
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Late delivery
-                                                </label>
-                                            </div>
-                                            <hr>
-                                            <span id="returnSpan" class="span"></span><br>
-                                            <button type="button" class="btn btn-dark mt-2 commntBtn"
-                                                onclick="returnProduct('<%= product.product._id %>','<%= product.product.price %>',
+                                            <div id="returnDetails_<%= product.product._id %>" style="display: none;">
+                                                <p class="subHead mt-4">Tell us why you're returning. We value your
+                                                    feedback!</p>
+                                                <div class="form-check mt-4">
+                                                    <input class="form-check-input" type="radio" name="selectedReason"
+                                                        value="Product defect or damage">
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                        Product has defects or damage upon arrival
+                                                    </label>
+                                                </div>
+                                                <hr>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="selectedReason"
+                                                        id="onlinePayment" value="Recieved wrong item">
+                                                    <label class="form-check-label" for="exampleRadios3">
+                                                        Received the wrong item
+                                                    </label>
+                                                </div>
+                                                <hr>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="selectedReason"
+                                                        value="Size/fitness issue">
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                        Size or fit issues with the product
+                                                    </label>
+                                                </div>
+                                                <hr>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="selectedReason"
+                                                        value="Dissatified / changed mind">
+                                                    <label class="form-check-label" for="exampleRadios3">
+                                                        Changed mind or dissatisfied with the product
+                                                    </label>
+                                                </div>
+                                                <hr>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="selectedReason"
+                                                        value="Late delivery">
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                        Late delivery
+                                                    </label>
+                                                </div>
+                                                <hr>
+                                                <span id="returnSpan" class="span"></span><br>
+                                                <button type="button" class="btn btn-dark mt-2 commntBtn"
+                                                    onclick="returnProduct('<%= product.product._id %>','<%= product.product.price %>',
                                                 ' <%= product.Size %>','<%= product.Count %>','<%= order._id %>')">Submit</button>
-                                            <hr>
-                                        </div>
-                                        <% }); %>
-                                            <div>
-                                                <% if (order.orderStatus==='placed' || order.orderStatus==='packed' &&
-                                                    order.paymentMethod==='COD' ) { %>
-                                                    <button type="button" class="btn btn-dark mt-4 commntBtn"
-                                                        onclick="cancelOrder('<%= order._id %>')">Cancel Order</button>
-                                                    <% } %>
+                                                <hr>
                                             </div>
+                                            <% }); %>
+                                                <div>
+                                                    <% if (order.orderStatus==='placed' || order.orderStatus==='packed'
+                                                        && order.paymentMethod==='COD' ) { %>
+                                                        <button type="button" class="btn btn-dark mt-4 commntBtn"
+                                                            onclick="cancelOrder('<%= order._id %>')">Cancel
+                                                            Order</button>
+                                                        <% } %>
+                                                </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <% } %>
-                                <% }); %>
+                                <% } %>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <p class="noOrders">No orders yet</p>
+                                            <% } %>
                 </div>
             </div>
-           
+
             <div class="viewProducts">
                 <div class="cardHead">
                     <h3>Others Also Bought</h3>

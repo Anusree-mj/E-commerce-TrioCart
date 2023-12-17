@@ -49,7 +49,11 @@ const ProductSchema = new mongoosedb.Schema(
             type: Array,
             requires: true,
         },
-        discount: {
+        productOffer: {
+            type: Number,
+            default: 0,
+        },
+        categoryOffer: {
             type: Number,
             default: 0,
         },

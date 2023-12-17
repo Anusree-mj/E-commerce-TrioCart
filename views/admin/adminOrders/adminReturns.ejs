@@ -29,11 +29,12 @@
                                         <%= slNo %>
                                     </th>
                                     <td>
-                                        <img style="width: 50px;" src="/<%= returnDetail.productId.image %>" alt="product">
+                                        <img style="width: 50px;" src="/<%= returnDetail.productId.image %>"
+                                            alt="product">
                                     </td>
                                     <td>
                                         <%= returnDetail.productId.name %>
-                                    </td>                                    
+                                    </td>
                                     <td>
                                         <%= returnDetail.size %>
                                     </td>
@@ -53,25 +54,38 @@
                                         <%= returnDetail.returnStatus %>
                                     </td>
                                     <td>
-                                        <% if (returnDetail.returnStatus !== 'confirmed') { %>
-                                        <div class="dropdown nav_icons">
-                                            <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
-                                                Status</p>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-item">
-                                                    <a class="dropdown_text"
-                                                        onclick="editReturnStatus(' <%= returnDetail._id %>',' <%= returnDetail.orderId._id %>')">Confirmed</a>
+                                        <% if (returnDetail.returnStatus !=='Confirmed' && returnDetail.returnStatus
+                                            !=='Rejected' ) { %>
+                                            <div class="dropdown nav_icons">
+                                                <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Edit
+                                                    Status</p>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <div class="dropdown-item">
+                                                        <a class="dropdown_text"
+                                                            onclick="editReturnStatus('<%= returnDetail._id %>',
+                                                        ' <%= returnDetail.orderId._id %>','Confirmed','<%= returnDetail.productId._id %>')">Confirm</a>
+                                                    </div>
+                                                    <div class="dropdown-item">
+                                                        <a class="dropdown_text" onclick="editReturnStatus('<%= returnDetail._id %>',' <%= returnDetail.orderId._id %>',
+                                                        'Rejected','<%= returnDetail.productId._id %>')">Reject</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <% } else { %>                                          
-                                            <p class=" disabledTxt ">Edit
-                                            Status</p>                                            
-                                    <% } %>
+                                            <% } else { %>
+                                                <p class=" disabledTxt ">Edit
+                                                    Status</p>
+                                                <% } %>
                                     </td>
                                     <td>
-                                        <a class="updateTxt" >Refund<a>
+                                        <% if (returnDetail.returnStatus==='Confirmed'&&
+                                        returnDetail.refundStatus!=='completed') { %>
+                                            <a class="updateTxt"
+                                                onclick="refund('<%= returnDetail._id %>','<%= returnDetail.userId._id %>','<%= returnDetail.totalAmount %>')">Refund<a>
+                                                    <% } else { %>
+                                                        <p>Completed</p>
+                                                        <% } %>
                                     </td>
                                 </tr>
                                 <% slNo++; %>

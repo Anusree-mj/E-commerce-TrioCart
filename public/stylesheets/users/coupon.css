@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+.referralContainer {
+    background-color: #f5f3f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    margin-bottom: 3rem;  
+   }
+.card {
+  width: 25rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  padding: 10px 10px;
+  position: relative;
+  
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+}
+
+.co-img img {
+  width: 5rem;
+  margin-left: 0.5rem;
+}
+.vertical {
+  border-left: 5px dotted black;
+  height: 100px;
+  position: absolute;
+  left: 32%;
+}
+
+.content h1 {
+  font-size: 35px;
+  margin-left: 2.5rem;
+  color: #565656;
+}
+
+.content h1 span {
+  font-size: 18px;
+}
+.content h2 {
+  font-size: 18px;
+  margin-left: 2rem;
+  color: #565656;
+  text-transform: uppercase;
+}
+.card::after {
+    position: absolute;
+    content: "";
+    height: 40px;
+    right: -20px;
+    border-radius: 40px;
+    z-index: 1;
+    top: 70px;
+    background-color: #f5f3f1;
+    width: 40px;
+  }
+  
+  .card::before {
+    position: absolute;
+    content: "";
+    height: 40px;
+    left: -20px;
+    border-radius: 40px;
+    z-index: 1;
+    top: 70px;
+    background-color: #f5f3f1;
+    width: 40px;
+  }
+  
+.content p {
+  font-size: 16px;
+  color: #696969;
+  margin-left: 2.5rem;
+}

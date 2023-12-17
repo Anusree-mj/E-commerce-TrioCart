@@ -52,5 +52,17 @@ module.exports = {
             return { status: 'nok' }
         }
     },
-
+    getAUser: async (userId) => {
+        try {
+            console.log('usereieddd',userId)
+            const user = await collection.usersCollection.find({
+                _id: userId.trim()
+            })
+            return{user}
+        }
+        catch (err) {
+            console.log("error occured", err)
+            return { status: 'nok' }
+        }
+    }
 }

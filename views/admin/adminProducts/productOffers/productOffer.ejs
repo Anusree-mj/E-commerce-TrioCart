@@ -16,7 +16,7 @@
             <label class="label" for="subCategory">SubCategory</label>
             <input type="text" class="form-control" value="<%= productDetails.subCategory%>" disabled>
 
-            <label class="label" for="stock">Stock<span class="required">*</span></label>
+            <label class="label" for="stock">Offer<span class="required">*</span></label>
             <input onclick="clearValidity('productOffer'); clearSpan('productOfferSpan')" onblur="isValidPrice('productOffer')" type="text"
                 class="form-control" name="productOffer" id="productOffer" value="<%= productDetails.discount%>" >
             <span id="productOfferSpan" class="span"></span>

@@ -1,8 +1,8 @@
-const userHelpers = require('../../helpers/user/user-helpers');
-const sessionHelpers = require('../../helpers/user/session-helpers');
-const otpHelpers = require('../../helpers/user/otp-helpers');
+const userHelpers = require('../../../helpers/user/user-helpers');
+const sessionHelpers = require('../../../helpers/user/session-helpers');
+const otpHelpers = require('../../../helpers/user/otp-helpers');
 const uuidv4 = require('uuid').v4
-const signupUtil = require('../../utils/signupUtil');
+const signupUtil = require('../../../utils/signupUtil');
 
 
 const getOTPVerificationPage = (req, res, next) => {

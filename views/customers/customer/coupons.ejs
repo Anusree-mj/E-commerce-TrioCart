@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="/stylesheets/users/profile.css">
+<link rel="stylesheet" href="/stylesheets/users/coupon.css">
+
+<%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/subHeader',allCategories) %>
+
+        <section class="profilepage">
+            <div class="pageHead">
+                <h2>Your Coupons</h2>
+                <p>You can view and get a coupon here</p>
+                <hr>
+                <a class="mt-3" id="addReferralCode" onclick="getAddReferrlSection()">+ Add a referal code</a>
+            </div>
+            <div class="referralContainer" style="display: none;">
+                <div class="mydetailSctn">
+                    <div class="d-flex justify-content-between">
+                        <p class="subHead">Add a referral code to unlock exclusive discounts</p>
+                    </div>
+                    <div class="addReferralCode">
+                        <label class="label mt-3" for="name">Enter Referral Code<span class="required">*</span></label>
+                        <input type="text" class="form-control" name="referralCode" id="referralCode"
+                            placeholder="Add referral code here" onclick="clearSpan('referralCodeSpan')">
+                        <span id="referralCodeSpan" class="span"></span><br>
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <button type="button" class="btn btn-dark save "
+                                onclick="addReferralCode('<%= user.email %>')">Apply Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center flex-wrap">
+                <% if (user.coupon && user.coupon.length> 0) { %>
+                    <% user.coupon.forEach(couponItem=>{%>
+                        <div class="card ml-4">
+                            <div class="main">
+                                <div class="co-img">
+                                    <img src="/images/navbar/logo.png" alt="logo">
+                                </div>
+                                <div class="vertical"></div>
+                                <div class="content">
+                                    <h2>TrioCarts</h2>
+                                    <% if ( couponItem.name==='Referral Bonus' ) { %>
+                                        <h1>10% <span>
+                                                <%= couponItem.name %>
+                                            </span></h1>
+                                        <% } else { %>
+                                            <h1>5% <span>
+                                                    <%= couponItem.name %>
+                                                </span></h1>
+                                            <% } %>
+                                                <p>Get discount on you next purchase</p>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="card ml-4">
+                                    <div class="main">
+                                        <div class="content">
+                                            <p>No coupons yet</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+            </div>
+            <br><br><br><br>
+        </section>
+        <%- include('../../partials/footer') %>
+            <script src="/javascripts/users/coupon.js"></script>

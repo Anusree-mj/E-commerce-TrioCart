@@ -41,8 +41,8 @@ p {
     width: 70rem;
     max-width: 90%;
     background-color: white;
-    padding: 1rem;
-}
+    padding: 1rem 1rem 2rem 1rem;
+   }
 .subHead {
     color: #131313;
     font-weight: 600;
@@ -53,6 +53,10 @@ p {
     color: #131313;
     font-weight: 600;
     font-size: 1rem;
+}
+.referralTxt{
+font-weight: 600;
+color: #9e0b0b;
 }
 .edit {
     color: #131313;

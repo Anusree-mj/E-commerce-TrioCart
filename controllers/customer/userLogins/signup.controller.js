@@ -1,6 +1,6 @@
-const userHelpers = require('../../helpers/user/user-helpers');
+const userHelpers = require('../../../helpers/user/user-helpers');
 const uuidv4 = require('uuid').v4
-const signupUtil = require('../../utils/signupUtil');
+const signupUtil = require('../../../utils/signupUtil');
 
 
 const getSignupPage =  (req, res, next) => {
