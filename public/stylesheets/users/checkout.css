@@ -27,6 +27,7 @@ a:hover {
 }
 
 .checkoutDetails {
+    max-width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,18 +64,19 @@ a:hover {
 .label {
     font-size: 0.9rem;
 }
-.addAddress{
+
+.addAddress {
     font-size: 0.9rem;
     color: #000;
 
 }
+
 .purchase {
     background-color: white;
     width: 25rem;
     max-width: 50%;
     margin-top: 2rem;
-    padding: 1rem;
-    height: 60vh;
+    padding: 1rem;    
 }
 
 .darkHeads {
@@ -134,13 +136,72 @@ a:hover {
 .deliveryDetails {
     margin-left: 2.3rem;
 }
-.checkoutBtn{
+
+.checkoutBtn {
     width: 25rem;
     max-width: 100%;
-    background-color: #a7a7a7 ;
-    color: rgb(255, 255, 255) ;
+    background-color: #a7a7a7;
+    color: rgb(255, 255, 255);
 }
 
+.card {
+    width: 15rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    padding: 1rem 0.5rem;
+    position: relative;
+}
+
+.main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.co-img img {
+    width: 3rem;
+}
+
+.vertical {
+    border-left: 4px dotted black;
+    height: 50px;
+    position: absolute;
+    left: 32%;
+}
+
+.content h1 {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    color: #565656;
+}
+
+.content h1 span {
+    font-size: 0.8rem;
+}
+
+.content h2 {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    color: #565656;
+    text-transform: uppercase;
+}
+
+.content p {
+    font-size: 16px;
+    color: #696969;
+    margin-left: 2.5rem;
+}
+
+.apply {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #000 !important;
+}
+.strikePrice{
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
 @media only screen and (max-width: 980px) {
     .checkout {
         display: flex;
@@ -154,15 +215,20 @@ a:hover {
     .viewOrderDetails,
     .payment {
         width: 20rem;
-        max-width: 100%;        
-    }
-    .purchase{
-        max-width: 90%;
-    }
-    .delivery{
         max-width: 100%;
     }
-    .prodImg{
+
+    .purchase {
+        max-width: 90%;
+    }
+
+    .delivery {
+        max-width: 100%;
+    }
+    .checkoutDetails {
+        max-width: 90%;
+    }
+    .prodImg {
         width: 6rem;
     }
 }

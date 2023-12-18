@@ -40,7 +40,7 @@ function selectedAddress(userId, name, phone,
 
 // toggle checkout button
 let paymentMethod;
-function paymentSelected(method) {   
+function paymentSelected(method) {
     paymentMethod = method;
     let checkoutButtn = document.getElementById('checkoutBtn')
     checkoutButtn.classList.remove('checkoutBtn');
@@ -50,9 +50,20 @@ function paymentSelected(method) {
 }
 
 // make purchase
-function purchase(userId, total) {
-
-    let reqBody = { userId, paymentMethod, total }
+function purchase(userId, discount,totalPrice) {
+    let reqBody;
+    let total;
+    // console.log('totall',totalPrice)
+    // console.log(discount,'djdsfo',typeof discount)
+    if (discount === '0') {
+        total = totalPrice
+        // console.log('tota22',total)
+        reqBody = { userId, paymentMethod, total }
+    } else {
+        total = discount;
+        // console.log('totaa333',total)
+        reqBody = { userId, paymentMethod, total }
+    }
 
     fetch("http://localhost:3000/checkout", {
         method: "POST",
@@ -63,8 +74,8 @@ function purchase(userId, total) {
     }).then((res) => res.json())
         .then((data) => {
             if (data.status === "ok" && data.order) {
-               const user = data.user
-                razorpayPayment(data.order,user)
+                const user = data.user
+                razorpayPayment(data.order, user)
             } else if (data.status === "ok" && !data.order) {
                 window.location.replace("/order/success");
             } else {
@@ -75,10 +86,10 @@ function purchase(userId, total) {
 
 }
 
-const razorpayPayment = (order,user) => {
+const razorpayPayment = (order, user) => {
     var options = {
         "key": "rzp_test_mj8FaMjD2VYPW4", // Enter the Key ID generated from the Dashboard
-        "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
         "name": "TrioCart",
         "description": "Test Transaction",
@@ -88,7 +99,7 @@ const razorpayPayment = (order,user) => {
             // alert(response.razorpay_payment_id);
             // alert(response.razorpay_order_id);
             // alert(response.razorpay_signature);
-            verifyPayment(response,order)
+            verifyPayment(response, order)
         },
         "prefill": {
             "name": user.name,
@@ -102,13 +113,13 @@ const razorpayPayment = (order,user) => {
             "color": "#3399cc"
         }
     };
-    var rzp1 = new Razorpay(options);    
-        rzp1.open();
-        
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+
 }
 
-const verifyPayment = (payment,order)=>{
-    let reqBody={payment,order};
+const verifyPayment = (payment, order) => {
+    let reqBody = { payment, order };
     fetch("http://localhost:3000/verifyPayment", {
         method: "POST",
         body: JSON.stringify(reqBody),
@@ -125,4 +136,65 @@ const verifyPayment = (payment,order)=>{
         })
         .catch(err => console.log(err));
 
+}
+
+function togglePurchaseDiv() {
+    console.log('entered in toggle functions')
+    const purchaseDiv = document.querySelector('.purchaseOptns');
+    const couponDiv = document.querySelector('.coupon');
+
+    purchaseDiv.style.display = 'none';
+    couponDiv.style.display = 'block';
+}
+
+function cancelCoupon() {
+    const purchaseDiv = document.querySelector('.purchaseOptns');
+    const couponDiv = document.querySelector('.coupon');
+
+    purchaseDiv.style.display = 'block';
+    couponDiv.style.display = 'none';
+}
+
+// applying coupon
+function applyCoupon(couponName, totalprice, cartId) {
+    // Set up an event listener for the Apply Coupon button in the new modal
+    document.getElementById('applyCouponConfirmationModal').querySelector('.btn-success').onclick = function () {
+        // Proceed with applying the coupon after confirmation
+        let reqBody = { couponName, totalprice, cartId };
+        fetch("http://localhost:3000/applyCoupon", {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    const discount = data.discountPrice;
+                    const purchaseDiv = document.querySelector('.purchaseOptns');
+                    const couponDiv = document.querySelector('.coupon');
+
+                    purchaseDiv.style.display = 'block';
+                    couponDiv.style.display = 'none';
+                    document.getElementById('price').style.textDecoration = 'line-through';
+                    document.getElementById('price').style.color = 'red';
+                    document.getElementById('discount').textContent = `₹ ${discount} /-`
+                    location.reload()
+                } else {
+                    console.log("failed to apply coupon");
+                }
+            })
+            .catch(err => console.log(err));
+
+        // Hide the new modal after processing
+        $('#applyCouponConfirmationModal').modal('hide');
+    };
+
+    // Show the new modal
+    $('#applyCouponConfirmationModal').modal('show');
+}
+
+// This function is triggered when the "Apply Coupon" button in the new modal is clicked
+function confirmApplyCoupon() {
+    // This function can be empty as it's handled within the applyCoupon function
 }

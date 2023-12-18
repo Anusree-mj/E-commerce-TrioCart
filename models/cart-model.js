@@ -23,7 +23,11 @@ const CartSchema = new mongoosedb.Schema(
             stock:{
                 type:String,
             },
-        }]
+        }],
+        discount:{
+            type: Number,
+            default: 0,
+        }
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps

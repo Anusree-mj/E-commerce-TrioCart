@@ -14,15 +14,17 @@ const getCheckoutPage = async (req, res, next) => {
             const cartResult = await cartHelpers.getMyCartProducts(user);
 
             if (cartResult.stockAvailability) {
-                console.log('dsfdsf',cartResult.stockAvailability)
-                const {cartProducts,totalprice,totalCount}=cartResult;               
+                // console.log('dsfdsf',cartResult.stockAvailability)
+                const { cartId, discount,
+                    cartProducts, totalprice, totalCount } = cartResult;
 
+                console.log('iddd', cartId)
                 res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
                     cartProducts,
-                    totalCartProduct:totalCount,
-                    totalprice
+                    totalCartProduct: totalCount,
+                    totalprice, cartId, discount
                 });
             } else {
                 res.redirect('/cart');

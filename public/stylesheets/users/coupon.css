@@ -4,15 +4,17 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 .referralContainer {
-    background-color: #f5f3f1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 90%;
-    margin-bottom: 3rem;  
-   }
+  background-color: #f5f3f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
+  margin-bottom: 3rem;
+}
+
 .card {
   width: 25rem;
   border-radius: 5px;
@@ -20,7 +22,7 @@
   background-color: #fff;
   padding: 10px 10px;
   position: relative;
-  
+
 }
 
 .main {
@@ -34,6 +36,7 @@
   width: 5rem;
   margin-left: 0.5rem;
 }
+
 .vertical {
   border-left: 5px dotted black;
   height: 100px;
@@ -50,36 +53,46 @@
 .content h1 span {
   font-size: 18px;
 }
+
 .content h2 {
   font-size: 18px;
   margin-left: 2rem;
   color: #565656;
   text-transform: uppercase;
 }
+
 .card::after {
-    position: absolute;
-    content: "";
-    height: 40px;
-    right: -20px;
-    border-radius: 40px;
-    z-index: 1;
-    top: 70px;
-    background-color: #f5f3f1;
-    width: 40px;
-  }
-  
-  .card::before {
-    position: absolute;
-    content: "";
-    height: 40px;
-    left: -20px;
-    border-radius: 40px;
-    z-index: 1;
-    top: 70px;
-    background-color: #f5f3f1;
-    width: 40px;
-  }
-  
+  position: absolute;
+  content: "";
+  height: 40px;
+  right: -20px;
+  border-radius: 40px;
+  z-index: 1;
+  top: 45px;
+  background-color: #f5f3f1;
+  width: 40px;
+}
+
+.card::before {
+  position: absolute;
+  content: "";
+  height: 40px;
+  left: -20px;
+  border-radius: 40px;
+  z-index: 1;
+  top: 45px;
+  background-color: #f5f3f1;
+  width: 40px;
+}
+
+.usedCoupon {
+  color: brown !important;
+  font-weight: 600;
+}
+.discountCoupon{
+  color: brown !important;
+  font-weight: 600;
+}
 .content p {
   font-size: 16px;
   color: #696969;

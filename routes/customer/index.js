@@ -62,6 +62,9 @@ router.put('/billingAddress', controller.customerControllers.billingAddressContr
 // post checkout detais
 router.post('/checkout', controller.customerControllers.checkoutController.submitCheckoutPageDetails)
 
+// apply a coupon 
+router.post('/applyCoupon', controller.customerControllers.couponController.applyCoupon)
+
 // verify payment 
 router.post('/verifyPayment', controller.customerControllers.checkoutController.verifyPayment)
 
