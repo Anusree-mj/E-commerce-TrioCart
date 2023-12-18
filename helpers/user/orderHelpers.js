@@ -47,7 +47,8 @@ module.exports = {
 
             const products = getOrderedProducts.products;
             console.log('procusts', products);
-            // update stock
+
+            // updating stock
             const updateStock = products.map(async (product) => {
                 await collection.productsCollection.updateOne(
                     {
@@ -56,15 +57,17 @@ module.exports = {
                     },
                     { $inc: { 'sizesStock.$.count': -1 } }
                 )
-            })
-            const updateStockResults = await Promise.all(updateStock);
+            });
+            await Promise.all(updateStock);            
             if (updateStock) {
-                console.log('updated stock', updateStockResults)
+                console.log('updated stock', updateStock)
             }
+            // get estimated delivery time
             const orderPlacementDate = new Date();
             const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(
                 orderPlacementDate, 'placed')
 
+                // update details in order collection
             const data = {
                 userId: orderDetails.userId,
 
@@ -98,6 +101,7 @@ module.exports = {
             console.log('orderId', orderId);
 
             const totalAmount = orderDetails.total;
+            // delete ordered products from cartcollection if not online paymetn
             if (orderDetails.paymentMethod !== 'onlinePayment') {
                 await collection.cartCollection.deleteOne({
                     userId: orderDetails.userId

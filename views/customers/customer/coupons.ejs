@@ -24,6 +24,7 @@
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <button type="button" class="btn btn-dark save "
                                 onclick="addReferralCode('<%= user.email %>')">Apply Code</button>
+                                <a href="/coupon" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -39,16 +40,14 @@
                                 <div class="vertical"></div>
                                 <div class="content">
                                     <h2>TrioCarts</h2>
-                                    <% if ( couponItem.name==='Referral Bonus' ) { %>
-                                        <h1>10% <span>
-                                                <%= couponItem.name %>
-                                            </span></h1>
-                                        <% } else { %>
-                                            <h1>5% <span>
-                                                    <%= couponItem.name %>
-                                                </span></h1>
-                                            <% } %>
-                                                <p>Get discount on you next purchase</p>
+                                    <h1><%= couponItem.couponAmount %>% <span>
+                                        <%= couponItem.name %>
+                                    </span></h1> 
+                                    <% if (couponItem.isApplicable) { %>   
+                                                <p class="discountCoupon">Enjoy Coupon !!!</p>
+                                                <% } else { %>
+                                                    <p class="usedCoupon">Coupon Used</p>
+                                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +62,7 @@
                                 </div>
                                 <% } %>
             </div>
-            <br><br><br><br>
+            <br><br><br><br><br><br><br>
         </section>
         <%- include('../../partials/footer') %>
             <script src="/javascripts/users/coupon.js"></script>

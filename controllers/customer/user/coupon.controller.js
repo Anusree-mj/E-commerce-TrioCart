@@ -27,15 +27,15 @@ const getCouponPage = async (req, res, next) => {
 const addCoupon = async (req, res, next) => {
     let sessionId = req.cookies.session;
     const referral = req.body.referralCode;
-    
+
     sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
             let userId = result.user._id
-            couponHelpers.addCoupon(userId, referral).then(result =>{
-                if(result.status==='ok'){
+            couponHelpers.addCoupon(userId, referral).then(result => {
+                if (result.status === 'ok') {
                     res.status(200).json({ status: "ok" });
                 } else {
-                  res.status(400).json({ status: "nok" });
+                    res.status(400).json({ status: "nok" });
                 }
             })
         } else {
@@ -43,7 +43,34 @@ const addCoupon = async (req, res, next) => {
         }
     });
 }
+
+const applyCoupon = async (req, res, next) => {
+    let sessionId = req.cookies.session;
+    let { couponName, totalprice, cartId } = req.body;
+    sessionHelpers.checkSessions(sessionId).then((result) => {
+        if (result.status === 'ok') {
+
+            let userId = result.user._id
+            couponHelpers.applyCoupon(userId, couponName, totalprice,cartId).then(result => {
+
+                if (result.status === 'ok') {
+                    const discountPrice = result.discount
+                    console.log('discount', discountPrice)
+                    res.status(200).json({ status: "ok", discountPrice });
+                } 
+                else {
+                    res.status(400).json({ status: "nok" });
+                }
+            })
+        }
+        else {
+            res.redirect('/user/login')
+        }
+    });
+}
+
 module.exports = {
     getCouponPage,
-    addCoupon
+    addCoupon,
+    applyCoupon,
 }

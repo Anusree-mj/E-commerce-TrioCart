@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/stylesheets/users/productDetails.css">
+
 <% if (user) { %>
     <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
@@ -46,9 +47,22 @@
                                     </h3>
 
                                     <p class="subHead">MRP inclusive of all taxes :- </p>
-                                    <p class="subHead">
-                                        ₹ <%= product.price %>/-
-                                    </p>
+                                    <div class="d-flex  align-items-center">
+                                        <% if (product.offerPrice===0) { %>
+                                            <p class="price">
+                                                ₹ <%= product.price %>/-
+                                            </p>
+                                            <%} else{ %>                                                                           
+                                                <p class="price original-price">
+                                                  ₹ <%=product.price %>
+                                                </p>
+                                           
+                                                <p class="price ml-3">
+                                                    ₹ <%= product.offerPrice %>/- 
+                                                </p>  
+                                                <p class="offerTxt ml-3">Great offer buy now !!!</p>                                                                     
+                                                <% } %>
+                                    </div>
                                     <p class="subHead">Sizes</p>
                                     <% sizesArray=product.size[0].split(','); sizesArray.forEach(size=> { %>
                                         <button type="button" class="btn btn-outline-dark" id="btn<%= size %>"
@@ -66,7 +80,7 @@
 
                                             <div class="mt-4">
                                                 <p>Description & Fit</p>
-                                                <p><%=product.description %>.trim()
+                                                <p class="description"><%=product.description %>
                                                 </p>
                                             </div>
                                 </div>

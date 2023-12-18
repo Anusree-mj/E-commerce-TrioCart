@@ -94,7 +94,7 @@ const UserSchema = new mongoosedb.Schema(
                 name: {
                     type: String,
                 },
-                count: {
+                couponAmount: {
                     type: Number,
                     default: 0,
                 },

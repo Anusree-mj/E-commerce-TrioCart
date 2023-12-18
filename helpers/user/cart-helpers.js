@@ -1,5 +1,5 @@
 const collection = require('../../models/index-model')
-const stockHelpers = require('../../helpers/user/stock-helpers');
+const stockHelpers = require('./stock-helpers');
 
 module.exports = {
     cartProductIncrement: async (productId, size) => {
@@ -107,7 +107,10 @@ module.exports = {
                 .populate('products.product');
 
             if (cart && cart.products) {
-
+                let cartId = cart._id;
+                let discount=cart.discount;
+                console.log('discountt',discount)
+                // console.log('cartIddd12323', cartId)
                 let cartProducts = cart.products;
                 console.log('cart prosud', cartProducts)
                 totalCount = cart.products.length
@@ -129,7 +132,7 @@ module.exports = {
                     return sum + (item.product.price * item.Count)
                 }, 0)
 
-                return { cartProducts, totalCount, totalprice, stockAvailability };
+                return {cartId,discount, cartProducts, totalCount, totalprice, stockAvailability };
             } else {
                 return { totalCount: 0, totalPrice: 0 };
             }

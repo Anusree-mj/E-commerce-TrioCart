@@ -15,7 +15,7 @@ const getCategoryProductsPage = async (req, res, next) => {
         let categories = result.categories;
         let searchProducts = result.searchProducts;
         let sessionId = req.cookies.session
-
+        // console.log('productssssss', products)
         sessionHelpers.checkSessions(sessionId).then((result) => {
             const isAuthenticated = result.status === 'ok';
             if (isAuthenticated) {

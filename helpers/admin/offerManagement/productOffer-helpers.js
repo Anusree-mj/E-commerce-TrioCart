@@ -11,7 +11,7 @@ module.exports = {
                     name: 1,
                     category: 1,
                     subCategory: 1,
-                    discount: 1
+                    productOffer: 1
                 }
             )
             return offerDetails;

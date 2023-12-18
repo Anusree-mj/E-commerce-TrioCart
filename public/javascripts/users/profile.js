@@ -276,3 +276,17 @@ function updateProfile(userId) {
         })
         .catch(err => console.log(err));
 }
+
+// toggle wallet
+function toggleWalletHistory(){
+    const displayWallet = document.querySelector('.displayWallet');
+    const walletToggle = document.getElementById('walletToggle');
+
+    if (displayWallet.style.display === 'none') {
+        displayWallet.style.display = 'block';
+        walletToggle.textContent = 'Hide wallet history';
+    } else {
+        displayWallet.style.display = 'none';
+        walletToggle.textContent = 'Show wallet history';
+    }
+}
