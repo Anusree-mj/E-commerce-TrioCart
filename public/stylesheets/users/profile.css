@@ -3,6 +3,7 @@ p {
     color: #646363;
     font-size: 0.9rem;
 }
+
 .required {
     color: red
 }
@@ -13,6 +14,7 @@ p {
     font-size: 0.8rem;
     margin-left: 0.5rem;
 }
+
 .profilepage {
     background-color: #f5f3f1;
     display: flex;
@@ -20,14 +22,17 @@ p {
     justify-content: center;
     align-items: center;
 }
-.alertTxt{
+
+.alertTxt {
     font-weight: 600;
 }
+
 .pageHead {
     width: 80rem;
     padding: 2rem 3rem;
     max-width: 90%;
 }
+
 .profilecontainer {
     background-color: #f5f3f1;
     display: flex;
@@ -37,26 +42,46 @@ p {
     max-width: 90%;
 
 }
+
 .mydetailSctn {
     width: 70rem;
     max-width: 90%;
     background-color: white;
     padding: 1rem 1rem 2rem 1rem;
-   }
+}
+
 .subHead {
     color: #131313;
     font-weight: 600;
     font-size: 1.2rem;
     text-align: left !important;
 }
-.subHeadEdit{
+
+.subHeadEdit {
     color: #131313;
     font-weight: 600;
     font-size: 1rem;
 }
-.referralTxt{
-font-weight: 600;
-color: #9e0b0b;
+
+.referralTxt {
+    font-weight: 600;
+    color: #9e0b0b;
+}
+
+.walletToggle {
+    color: #000;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.displayWallet {
+    max-height: 15rem;
+    overflow-y: auto;
+    display: none;
+}
+.pointerCursor{
+    cursor: pointer;
 }
 .edit {
     color: #131313;
@@ -64,20 +89,25 @@ color: #9e0b0b;
     margin-top: 0.6rem;
     cursor: pointer;
 }
+
 .edit:hover {
     color: #131313;
-    }
-.userDetail{
+}
+
+.userDetail {
     color: #2e2e2e;
 }
-.save{
+
+.save {
     width: 30rem;
     max-width: 80%;
 }
+
 .password-box {
     position: relative;
 }
-.currntShow{
+
+.currntShow {
     border: none;
     background-color: rgba(255, 255, 255, 0);
     color: #232627;
@@ -85,8 +115,9 @@ color: #9e0b0b;
     font-size: 0.9rem;
     position: absolute;
     right: 0.8rem;
-    top: 3.5rem;  
+    top: 3.5rem;
 }
+
 .signupShow {
     border: none;
     background-color: rgba(255, 255, 255, 0);
@@ -97,18 +128,22 @@ color: #9e0b0b;
     right: 0.8rem;
     top: 2.5rem;
 }
-.verifyHead{
+
+.verifyHead {
     text-align: center;
 }
+
 .resnd {
     font-size: 0.8rem;
     color: #000;
     font-weight: 600;
 }
-.resndTxt{
+
+.resndTxt {
     display: none;
     color: #007bff;
 }
+
 .otpLine {
     width: 2rem;
     text-align: center;

@@ -8,6 +8,7 @@
                 <p>You can manage your profile here</p>
                 <hr>
             </div>
+            <!-- my details -->
             <div class="profilecontainer">
                 <div class="mydetailSctn">
                     <div class="d-flex justify-content-between">
@@ -32,7 +33,8 @@
                             <%= user.referralCode.name %>
                         </p>
                         <% if (user.referralCode.isValid) { %>
-                            <p class="referralTxt">Share your referral code and get a discount for the first reference!</p>
+                            <p class="referralTxt">Share your referral code and get a discount for the first reference!
+                            </p>
                             <% } else { %>
                                 <p class="referralTxt">You've already been referred. Enjoy your discount!</p>
                                 <% } %>
@@ -90,6 +92,52 @@
 
                 </div>
             </div>
+
+            <!-- my wallet -->
+            <div class="profilecontainer mt-4">
+                <div class="mydetailSctn">
+                    <p class="subHead">My Wallet</p>
+                    <p class="walletToggle" id="walletToggle" onclick="toggleWalletHistory()">Show wallet history</a>
+                        <hr>
+                        <!-- wallet history -->
+                    <div class="displayWallet">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% walletDetails.forEach((wallet, index)=> { %>
+                                    <% wallet.transactions.forEach((walletItem)=> { %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= index + 1 %>
+                                            </th>
+                                            <td>
+                                                <%= walletItem.createdAt.toDateString()%>
+                                            </td>
+                                            <td>
+                                                <%= walletItem.status %>
+                                            </td>
+                                            <td>
+                                                <%= walletItem.amount %>
+                                            </td>
+                                        </tr>
+                                        <% })%>
+                                            <% })%>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+
             <!-- address book -->
             <div class="profilecontainer mt-4">
                 <div class="mydetailSctn">
@@ -103,11 +151,11 @@
                                             Name: <%= address.name %>
                                         </p>
                                         <div>
-                                            <img src="/images/navbar/edit.png" style="width: 1rem;" alt="edit" onclick="editBillingAdress('<%= address._id %>','name_addressEdit',
+                                            <img src="/images/navbar/edit.png" class="pointerCursor" style="width: 1rem;" alt="edit" onclick="editBillingAdress('<%= address._id %>','name_addressEdit',
                                                 'phone_addressEdit','address_addressEdit','town_addressEdit',
                                                 'pincode_addressEdit','state_addressEdit')">
                                             <img src="/images/navbar/delete.png" style="width: 1rem;" alt="edit"
-                                                class="ml-4" onclick="deleteBillingAdress('<%= address._id %>')">
+                                                class="ml-4 pointerCursor" onclick="deleteBillingAdress('<%= address._id %>')">
                                         </div>
 
                                     </div>

@@ -1,5 +1,5 @@
 const collection = require('../../models/index-model')
-const stockHelpers = require('../../helpers/user/stock-helpers');
+const stockHelpers = require('./stock-helpers');
 
 module.exports = {
     cartProductIncrement: async (productId, size) => {

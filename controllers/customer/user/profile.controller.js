@@ -3,7 +3,7 @@ const sessionHelpers = require('../../../helpers/user/session-helpers');
 const categoryHelpers = require('../../../helpers/user/category-helpers');
 const cartHelpers = require('../../../helpers/user/cart-helpers');
 const signupUtil = require('../../../utils/signupUtil');
-
+const walletHelpers = require('../../../helpers/user/wallet-helpers')
 
 const getProfilePage = async (req, res, next) => {
   let sessionId = req.cookies.session
@@ -17,7 +17,23 @@ const getProfilePage = async (req, res, next) => {
       cartHelpers.getMyCartProducts(userId).then((result) => {
         if (result) {
           let totalCartProduct = result.totalCount;
-          res.render('customers/customer/profile', { layout: 'layout/layout', allCategories, user: user, totalCartProduct });
+          walletHelpers.getWalletDetails(userId).then(result => {
+            if (result.status === 'ok') {
+              const walletDetails = result.walletDetails
+
+              // console.log('walletdetails', walletDetails[0])
+              res.render('customers/customer/profile', {
+                layout: 'layout/layout',
+                allCategories, user: user, totalCartProduct, walletDetails: walletDetails
+              });
+            }
+            else {
+              res.render('customers/customer/profile', {
+                layout: 'layout/layout',
+                allCategories, user: user, totalCartProduct, walletDetails: undefined
+              });
+            }
+          })
         }
       })
     } else {
@@ -33,8 +49,8 @@ const sendUserProfileUpdateRequest = (req, res, next) => {
   userUpdateHelpers.verifyUser(req.body, otp, userId).then((result) => {
     if (result.status === 'ok') {
       const tempUserId = result.tempUserId
-      console.log(tempUserId,'gsdjkjgew')
-      res.status(200).json({ status: "ok",tempUserId });
+      console.log(tempUserId, 'gsdjkjgew')
+      res.status(200).json({ status: "ok", tempUserId });
     } else {
       res.status(400).json({ status: "nok" });
     }
@@ -44,7 +60,7 @@ const sendUserProfileUpdateRequest = (req, res, next) => {
 const resendOtp = (req, res, next) => {
   let userId = req.body.tempUserId;
   const otp = signupUtil.generateOTP();
-  userUpdateHelpers.resendOtp( otp, userId).then((result) => {
+  userUpdateHelpers.resendOtp(otp, userId).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
     } else {
@@ -55,7 +71,7 @@ const resendOtp = (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   let userId = req.params.userId;
-  const {otp}=req.body;
+  const { otp } = req.body;
   userUpdateHelpers.updateUser(userId, otp).then((result) => {
     if (result.status === 'ok') {
       res.status(200).json({ status: "ok" });
