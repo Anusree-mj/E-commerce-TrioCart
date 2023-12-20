@@ -6,6 +6,9 @@ const cronFnctn = require('../../utils/cron');
 module.exports = {
     verifyUser: async (userData, otp, userId) => {
         try {
+            console.log(userData,'gsddsgsdg');
+            console.log('otp',otp),
+            console.log('idd',userId)
             const otpExpiryTime = new Date();
             otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
             const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(

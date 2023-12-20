@@ -15,6 +15,11 @@
   margin-bottom: 3rem;
 }
 
+.couponSection {
+  max-width: 80%;
+
+}
+
 .card {
   width: 25rem;
   border-radius: 5px;
@@ -89,10 +94,12 @@
   color: brown !important;
   font-weight: 600;
 }
-.discountCoupon{
-  color: brown !important;
+
+.discountCoupon {
+  color: rgb(24, 116, 1) !important;
   font-weight: 600;
 }
+
 .content p {
   font-size: 16px;
   color: #696969;

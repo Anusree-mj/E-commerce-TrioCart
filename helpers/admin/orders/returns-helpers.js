@@ -47,6 +47,18 @@ module.exports = {
                 { _id: details.order.receipt },
                 { $set: { refundStatus: 'completed' } }
             )
+            await collection.orderCollection.updateOne(
+                {
+                    _id: details.order.receipt,
+                    'products.product':data.productId
+                 },
+                {
+                    $set: {
+                         'products.$.returnStatus': 'Completed',
+                    }
+                }
+            )
+
             const currentDate = new Date()
             const data = {
                 userId: user,

@@ -48,7 +48,7 @@
                                         <%= returnDetail.userId.email %>
                                     </td>
                                     <td>
-                                        <%= returnDetail.totalAmount %>
+                                        ₹ <%= returnDetail.totalAmount %>
                                     </td>
                                     <td>
                                         <%= returnDetail.returnStatus %>
@@ -79,8 +79,7 @@
                                                 <% } %>
                                     </td>
                                     <td>
-                                        <% if (returnDetail.returnStatus==='Confirmed'&&
-                                        returnDetail.refundStatus!=='completed') { %>
+                                        <% if (returnDetail.refundStatus!=='completed') { %>
                                             <a class="updateTxt"
                                                 onclick="refund('<%= returnDetail._id %>','<%= returnDetail.userId._id %>','<%= returnDetail.totalAmount %>')">Refund<a>
                                                     <% } else { %>

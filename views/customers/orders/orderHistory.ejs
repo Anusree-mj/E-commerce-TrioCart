@@ -112,11 +112,12 @@
                                                         <button type="button" class="btn btn-dark mt-3 commntBtn"
                                                             onclick="triggerReturn('<%= product.product._id %>')">Return</button>
                                                         <% } else if ( product.isReturned && order.orderStatus
-                                                            !=='returned' && product.returnStatus !=='Rejected' ) { %>
+                                                            !=='returned' && product.returnStatus !=='Rejected' && 
+                                                            product.returnStatus !=='Completed' ) { %>
                                                             <p class="returnTxt">Your product will be collected within 2
                                                                 days.</p>
                                                             <% } else if (order.orderStatus !=='Cancelled by User' &&
-                                                                    !order.returnValid ) { %>
+                                                                    !order.returnValid &&product.returnStatus !=='Completed' ) { %>
                                                                     <button type="button"
                                                                         class="btn btn-outline-dark mt-3 commntBtn">Leave
                                                                         your Comment</button>
@@ -126,6 +127,9 @@
                                                                         class="btn btn-outline-dark mt-3 commntBtn">Leave
                                                                         your Comment</button>
                                                                         <% } %>
+                                                                        <%  if (product.returnStatus ==='Completed' ) { %>
+                                                                            <p class="returnTxt">Product Returned.</p>                                                                         
+                                                                            <% } %>
                                                 </div>
                                             </div>
 

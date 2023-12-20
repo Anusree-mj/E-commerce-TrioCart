@@ -29,10 +29,10 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="d-flex justify-content-center align-items-around flex-wrap couponSection">
                 <% if (user.coupon && user.coupon.length> 0) { %>
                     <% user.coupon.forEach(couponItem=>{%>
-                        <div class="card ml-4">
+                        <div class="card ml-4 mt-3">
                             <div class="main">
                                 <div class="co-img">
                                     <img src="/images/navbar/logo.png" alt="logo">
@@ -46,7 +46,7 @@
                                     <% if (couponItem.isApplicable) { %>   
                                                 <p class="discountCoupon">Enjoy Coupon !!!</p>
                                                 <% } else { %>
-                                                    <p class="usedCoupon">Coupon Used</p>
+                                                    <p class="usedCoupon">x Coupon Used x</p>
                                                     <% } %>
                                 </div>
                             </div>

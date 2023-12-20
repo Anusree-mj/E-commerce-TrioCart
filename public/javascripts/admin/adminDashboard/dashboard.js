@@ -17,11 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 }));
 
                 const lineGraph = document.getElementById('ordersPerDay');
+                const thisWeekLabels = formattedDates.filter(date => {
+                    const currentDate = new Date(date);
+                    const today = new Date();
+                    const daysDifference = today.getDay() - currentDate.getDay();
+                    return daysDifference >= 0 && daysDifference < 7;
+                  });
 
                 new Chart(lineGraph, {
                     type: 'line',
                     data: {
-                        labels: formattedDates,
+                        labels: thisWeekLabels,
                         datasets: [{
                             label: '# of Sales',
                             data: orders.map(order => order.totalCount),
