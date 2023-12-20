@@ -1,43 +1,54 @@
 const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
 const adminUserHelpers = require('../../helpers/admin/manageUser/adminUser-helpers');
 
-const getUserPage = (req, res, next) => {
-    let sessionId = req.cookies.adminSession
-    adminLoginHelpers.checkSessions(sessionId).then(result => {
+const getUserPage = async (req, res, next) => {
+    try {
+        let sessionId = req.cookies.adminSession;
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            adminUserHelpers.getUsers().then((users) => {
-                console.log(users)
-                res.render('admin/adminUsers/users', { layout: 'layout/layout', users });
-            })
-        }
-        else {
+            let users = await adminUserHelpers.getUsers();
+            console.log(users);
+            res.render('admin/adminUsers/users', { layout: 'layout/layout', users });
+        } else {
             res.redirect('/admin');
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const softDeleteUser = (req, res, next) => {
-    const userId = req.body.userId
-    adminUserHelpers.blockUser(userId).then((result) => {
+const softDeleteUser = async (req, res, next) => {
+    const userId = req.body.userId;
+
+    try {
+        let result = await adminUserHelpers.blockUser(userId);
+
         if (result.status === 'ok') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const undoSoftDeleteUser = (req, res, next) => {
-    const userId = req.body.userId
-    adminUserHelpers.unblockUser(userId).then((result) => {
+const undoSoftDeleteUser = async (req, res, next) => {
+    const userId = req.body.userId;
+
+    try {
+        let result = await adminUserHelpers.unblockUser(userId);
+
         if (result.status === 'ok') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
-
+    } catch (error) {
+        console.error(error);
+    }
+};
 module.exports = {
     getUserPage,
     softDeleteUser,

@@ -1,48 +1,52 @@
 const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
 const adminorderHelpers = require('../../helpers/admin/orders/adminOrder-helpers');
-const userHelpers = require('../../helpers/admin/manageUser/adminUser-helpers');
 
 const getDashboardPage = async (req, res, next) => {
-  let sessionId = req.cookies.adminSession
+  try {
+    let sessionId = req.cookies.adminSession;
+    let result = await adminLoginHelpers.checkSessions(sessionId);
 
-  adminLoginHelpers.checkSessions(sessionId).then((result) => {
     if (result.status === 'ok') {
-      adminLoginHelpers.getAdmin(result.adminId).then((admin) => {
+      let admin = await adminLoginHelpers.getAdmin(result.adminId);
+      let countsResult = await adminorderHelpers.getTotalCounts();
 
-        adminorderHelpers.getTotalCounts().then(result => {
-          const ordersYetToBeShipped = result.yetToBeShippedCount;
-          const totalOrders = result.totalOrders;
-          const ordersDelivered = result.deliveredCount;
-          const totalUsers = result.userCounts;
-          
-          res.render('admin/adminDashboard/dashboard', {
-            layout: 'layout/layout', admin, ordersYetToBeShipped, ordersDelivered,
-            totalOrders, totalUsers
-          });
-        })
+      const ordersYetToBeShipped = countsResult.yetToBeShippedCount;
+      const totalOrders = countsResult.totalOrders;
+      const ordersDelivered = countsResult.deliveredCount;
+      const totalUsers = countsResult.userCounts;
 
-      })
-    }
-    else {
+      res.render('admin/adminDashboard/dashboard', {
+        layout: 'layout/layout',
+        admin,
+        ordersYetToBeShipped,
+        ordersDelivered,
+        totalOrders,
+        totalUsers
+      });
+    } else {
       res.redirect('/admin/login');
     }
-  });
-}
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const getOrderGraph = async (req, res, next) => {
- await adminorderHelpers.getAllOrdersGraph().then(result => {
-    const orders = result.orders
-    console.log('orders based on graph',orders)
+  try {
+    let result = await adminorderHelpers.getAllOrdersGraph();
+    const orders = result.orders;
+
     if (orders) {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({ status: "ok", orders });
-    }
-    else {
+    } else {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({ status: "nok" });
     }
-  })
-}
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 module.exports = {
   getDashboardPage,

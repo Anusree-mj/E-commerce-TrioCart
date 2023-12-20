@@ -2,90 +2,115 @@ const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers'
 const categoryHelpers = require('../../helpers/user/category-helpers');
 const adminCategoryHelpers = require('../../helpers/admin/products/adminCategory-hepers');
 
-const getCategoryPage = (req, res, next) => {
-    let sessionId = req.cookies.adminSession
-    adminLoginHelpers.checkSessions(sessionId).then(result => {
+const getCategoryPage = async (req, res, next) => {
+    try {
+        let sessionId = req.cookies.adminSession;
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            categoryHelpers.getCategoryDetails().then((categories) => {
-                console.log('categoriesss',categories[0])
-                res.render('admin/adminCategory/category/adminCategories', { layout: 'layout/layout', categories });
-            })
-        }
-        else {
+            let categories = await categoryHelpers.getCategoryDetails();
+            console.log('categoriesss', categories[0]);
+            res.render('admin/adminCategory/category/adminCategories', { layout: 'layout/layout', categories });
+        } else {
             res.redirect('/admin');
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const getAddCategoryPage = (req, res, next) => {
-    let sessionId = req.cookies.adminSession
-    adminLoginHelpers.checkSessions(sessionId).then(result => {
+const getAddCategoryPage = async (req, res, next) => {
+    try {
+        let sessionId = req.cookies.adminSession;
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            res.render('admin/adminCategory/categoryUpdates/addCategory', { layout: 'layout/layout' })
-        }
-        else {
+            res.render('admin/adminCategory/categoryUpdates/addCategory', { layout: 'layout/layout' });
+        } else {
             res.redirect('/admin');
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const softDeleteSubcategory = (req, res, next) => {
-    const {subCategory,category} = req.body
-    adminCategoryHelpers.deleteSubcategory(subCategory,category).then((result) => {
+const softDeleteSubcategory = async (req, res, next) => {
+    const { subCategory, category } = req.body;
+
+    try {
+        let result = await adminCategoryHelpers.deleteSubcategory(subCategory, category);
+
         if (result.status === 'deleted') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const undoSoftDeleteSubcategory = (req, res, next) => {
-    const {subCategory,category} = req.body
-    adminCategoryHelpers.undoSubcategoryDelete(subCategory,category).then((result) => {
+const undoSoftDeleteSubcategory = async (req, res, next) => {
+    const { subCategory, category } = req.body;
+
+    try {
+        let result = await adminCategoryHelpers.undoSubcategoryDelete(subCategory, category);
+
         if (result.status === 'undo delete') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const addSubcategory = (req, res, next) => {
-    adminCategoryHelpers.addSubCategory(req.body).then((result) => {
+const addSubcategory = async (req, res, next) => {
+    try {
+        let result = await adminCategoryHelpers.addSubCategory(req.body);
+
         if (result.status === 'added') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const getEditCategoryPage = (req, res, next) => {
-    let category = req.params.category
-    let subCategory = req.params.subcategory
-    let sessionId = req.cookies.adminSession
-    adminLoginHelpers.checkSessions(sessionId).then(result => {
+const getEditCategoryPage = async (req, res, next) => {
+    let category = req.params.category;
+    let subCategory = req.params.subcategory;
+    let sessionId = req.cookies.adminSession;
+
+    try {
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            res.render('admin/editCategory', { layout: 'layout/layout',category,subCategory })
-        }
-        else {
+            res.render('admin/editCategory', { layout: 'layout/layout', category, subCategory });
+        } else {
             res.redirect('/admin');
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const editSubcategory = (req, res, next) => {
-    adminCategoryHelpers.editSubCategory(req.body).then((result) => {
+const editSubcategory = async (req, res, next) => {
+    try {
+        let result = await adminCategoryHelpers.editSubCategory(req.body);
+
         if (result.status === 'added') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
-
-
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 module.exports = {
     getCategoryPage,

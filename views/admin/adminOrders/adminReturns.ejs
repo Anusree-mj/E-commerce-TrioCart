@@ -3,7 +3,6 @@
 
     <section>
         <div class="container">
-
             <div class="table-responsive" style="margin-top: 2rem;">
                 <table class="table table-striped" id="productsTable">
                     <thead>
@@ -79,9 +78,13 @@
                                                 <% } %>
                                     </td>
                                     <td>
-                                        <% if (returnDetail.refundStatus!=='completed') { %>
+                                        <% if (returnDetail.refundStatus!=='completed' ) { %>
+                                            <% if ( returnDetail.returnStatus !=='Rejected') { %>                                           
                                             <a class="updateTxt"
                                                 onclick="refund('<%= returnDetail._id %>','<%= returnDetail.userId._id %>','<%= returnDetail.totalAmount %>')">Refund<a>
+                                                    <% } else { %>
+                                                        <p>Rejected</p>
+                                                        <% } %>
                                                     <% } else { %>
                                                         <p>Completed</p>
                                                         <% } %>

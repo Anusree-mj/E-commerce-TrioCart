@@ -2,7 +2,7 @@
 <%- include('../../partials/adminHeaders') %>
 
     <section>
-        <div class="container" >
+        <div class="container">
 
             <div class="table-responsive" style="margin-top: 2rem;">
                 <table class="table table-striped" id="productsTable">
@@ -19,78 +19,82 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% var slNo = 1; %>
-                        <% orders.forEach(order=> { %>
-                            <tr>
-                                <th scope="row" rowspan="<%= order.length %>">
-                                    <%= slNo %>
-                                </th>
-                                <td>
-                                    <%= order.userId.name%>
-                                </td>
-                                <td>
-                                    <% const productNames = order.products.map(product => product.product ? product.product.name : '').join(', '); %>
-                                    <%= productNames %>
-                                
-                                </td>
+                        <% var slNo=1; %>
+                            <% orders.forEach(order=> { %>
+                                <tr>
+                                    <th scope="row" rowspan="<%= order.length %>">
+                                        <%= slNo %>
+                                    </th>
+                                    <td>
+                                        <%= order.userId.name%>
+                                    </td>
+                                    <td>
+                                        <% const productNames=order.products.map(product=> product.product ?
+                                            product.product.name : '').join(', '); %>
+                                            <%= productNames %>
 
-                                <td>
-                                    ₹ <%= order.totalAmount %>/-
-                                </td>
-                                <td>
-                                    <%= order.paymentMethod %>
-                                </td>
-                                <td>
-                                    <%= order.orderStatus%>
-                                </td>
-                                <td>
-                                    <div class="dropdown nav_icons">                                        
-                                            <% if (order.orderStatus !== 'Cancelled by User' && 
-                                            order.orderStatus !== 'pending' &&
-                                            order.orderStatus !== 'delivered'&&  
-                                             order.orderStatus !== 'cancelled by seller') { %>
+                                    </td>
+
+                                    <td>
+                                        ₹ <%= order.totalAmount %>/-
+                                    </td>
+                                    <td>
+                                        <%= order.paymentMethod %>
+                                    </td>
+                                    <td>
+                                        <%= order.orderStatus%>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown nav_icons">
+                                            <% if (order.orderStatus !=='Cancelled by User' && order.orderStatus
+                                                !=='pending' && order.orderStatus !=='delivered' && order.orderStatus
+                                                !=='cancelled by seller' ) { %>
                                                 <p class="nav_icon_text edittxt" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit
-                                            Status</p>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-item">
-                                                <a class="dropdown_text"
-                                                    onclick="editOrderStatus('cancelled by seller','<%= order._id%>')">Cancel</a>
-                                            </div>
-                                            <div class="dropdown-item">
-                                                <a class="dropdown_text"
-                                                    onclick="editOrderStatus('packed','<%= order._id%>')">Packed</a>
-                                            </div>
-                                            <div class="dropdown-item">
-                                                <a class="dropdown_text"
-                                                    onclick="editOrderStatus('shipped','<%= order._id%>')">Shipped</a>
-                                            </div>
-                                            <div class="dropdown-item">
-                                                <a class="dropdown_text"
-                                                    onclick="editOrderStatus('outfordelivery','<%= order._id%>')">Out
-                                                    for Delivery</a>
-                                            </div>
-                                            <div class="dropdown-item">
-                                                <a class="dropdown_text"
-                                                    onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</a>
-                                            </div>
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Edit
+                                                    Status</p>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <% if (order.paymentMethod !=='onlinePayment' ) { %>
+                                                        <div class="dropdown-item">
+                                                            <a class="dropdown_text"
+                                                                onclick="editOrderStatus('cancelled by seller','<%= order._id%>')">Cancel</a>
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="dropdown-item">
+                                                                <a class="dropdown_text"
+                                                                    onclick="editOrderStatus('packed','<%= order._id%>')">Packed</a>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <a class="dropdown_text"
+                                                                    onclick="editOrderStatus('shipped','<%= order._id%>')">Shipped</a>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <a class="dropdown_text"
+                                                                    onclick="editOrderStatus('outfordelivery','<%= order._id%>')">Out
+                                                                    for Delivery</a>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <a class="dropdown_text"
+                                                                    onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</a>
+                                                            </div>
+                                                </div>
+                                                <% } else { %>
+                                                    <p class=" disabledTxt ">Edit
+                                                        Status</p>
+                                                    <% } %>
                                         </div>
-                                        <% } else { %>                                          
-                                                <p class=" disabledTxt ">Edit
-                                                Status</p>                                            
-                                        <% } %>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a class="updateTxt" href="/admin/order/<%= order._id %>/orderDetails">Get More Details<a>
-                                </td>
-                            </tr>
-                            <% slNo++; %>
-                            <% })%>
+                                    </td>
+                                    <td>
+                                        <a class="updateTxt" href="/admin/order/<%= order._id %>/orderDetails">Get More
+                                            Details<a>
+                                    </td>
+                                </tr>
+                                <% slNo++; %>
+                                    <% })%>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
     <%- include('../../partials/loginsFooter') %>
-    <script src="/javascripts/admin/adminOrders.js"></script>
+        <script src="/javascripts/admin/adminOrders.js"></script>

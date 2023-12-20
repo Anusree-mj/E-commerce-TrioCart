@@ -3,88 +3,98 @@ const adminReturnHelpers = require('../../helpers/admin/orders/returns-helpers')
 const razorpayUtil = require('../../utils/razorpayUtil')
 const adminUserHelpers = require('../../helpers/admin/manageUser/adminUser-helpers');
 
-const getReturnsPage = (req, res, next) => {
-    let sessionId = req.cookies.adminSession
-    adminLoginHelpers.checkSessions(sessionId).then((result) => {
+const getReturnsPage = async (req, res, next) => {
+    try {
+        let sessionId = req.cookies.adminSession;
+        let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            adminReturnHelpers.getAllProductReturns().then((result) => {
-                const returnDetails = result.returns
-                const orderId = returnDetails.orderId;
-                console.log('orderid in return', orderId)
-                console.log('returns:::', returnDetails)
-                res.render('admin/adminOrders/adminReturns', { layout: 'layout/layout', returnDetails, orderId });
-            })
+            let resultReturns = await adminReturnHelpers.getAllProductReturns();
+            const returnDetails = resultReturns.returns;
+            const orderId = returnDetails.orderId;
+            console.log('orderid in return', orderId);
+            console.log('returns:::', returnDetails);
+            res.render('admin/adminOrders/adminReturns', { layout: 'layout/layout', returnDetails, orderId });
+        } else {
+            res.redirect('/admin/login');
         }
-        else {
-            res.redirect('/admin/login')
-        }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const editReturnStatus = (req, res, next) => {
-    let data = req.body;
-    adminReturnHelpers.updateReturnStatus(data).then((result) => {
+const editReturnStatus = async (req, res, next) => {
+    try {
+        let data = req.body;
+        let result = await adminReturnHelpers.updateReturnStatus(data);
 
         if (result.status === 'ok') {
             res.status(200).json({ status: "ok" });
-        }
-        else {
+        } else {
             res.status(500).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 let userId;
+
 const doRefund = async (req, res, next) => {
-    let sessionId = req.cookies.adminSession;
-    const { returnId, amount } = req.body
-    userId = req.body.userId;
-    adminLoginHelpers.checkSessions(sessionId).then(async (result) => {
+    try {
+        let sessionId = req.cookies.adminSession;
+        const { returnId, amount } = req.body;
+        userId = req.body.userId;
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
             const order = await razorpayUtil.createRazorpayOrder(returnId, amount);
-            console.log('order in route', order)
+            console.log('order in route', order);
+
             if (order) {
-                adminUserHelpers.getAUser(userId).then(result => {
-                    const user = result.user
-                    res.status(200).json({ status: "ok", order, user });
-                })
-            }
-            else {
+                let userResult = await adminUserHelpers.getAUser(userId);
+                const user = userResult.user;
+                res.status(200).json({ status: "ok", order, user });
+            } else {
                 res.status(200).json({ status: "ok" });
             }
-
+        } else {
+            res.redirect('/admin/login');
         }
-        else {
-            res.redirect('/admin/login')
-        }
-    })
-}
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: "error" });
+    }
+};
 
 const verifyPayment = async (req, res, next) => {
-    console.log('payment details', req.body)
+    console.log('payment details', req.body);
     let sessionId = req.cookies.adminSession;
-    let paymentDetails = req.body
-    adminLoginHelpers.checkSessions(sessionId).then(async (result) => {
+    let paymentDetails = req.body;
+
+    try {
+        let result = await adminLoginHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            const paymentMatch = razorpayUtil.verifyPayment(paymentDetails)
+            const paymentMatch = razorpayUtil.verifyPayment(paymentDetails);
+
             if (paymentMatch.status === 'ok') {
                 const saveResult = await adminReturnHelpers.savePaymentDetails(paymentDetails, userId);
-               
+
                 if (saveResult.status === 'ok') {
                     res.status(200).json({ status: "ok" });
                 }
-
-            }
-            else {
-                console.log('payment doesnt match')
+            } else {
+                console.log('payment doesn\'t match');
                 res.status(400).json({ status: "nok" });
             }
+        } else {
+            res.redirect('/admin/login');
         }
-        else {
-            res.redirect('/admin/login')
-        }
-    })
-}
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 module.exports = {
     getReturnsPage,

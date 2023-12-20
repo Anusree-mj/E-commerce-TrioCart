@@ -3,32 +3,42 @@ const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers'
 
 const getLoginPage = (req, res, next) => {
   res.render('admin/adminLogin', { layout: 'layout/layout' });
-}
-const sendAdminLoginRequest = (req, res, next) => {
-  adminLoginHelpers.dologin(req.body).then((admin) => {
+};
+
+const sendAdminLoginRequest = async (req, res, next) => {
+  try {
+    let admin = await adminLoginHelpers.dologin(req.body);
+
     if (admin) {
       const sessionId = uuidv4();
-      const adminId = admin.email
-      adminLoginHelpers.saveSessions(sessionId, adminId)
+      const adminId = admin.email;
+      await adminLoginHelpers.saveSessions(sessionId, adminId);
       res.cookie('adminSession', sessionId);
       res.status(200).json({ status: "ok" });
     } else {
       res.status(400).json({ status: "nok" });
     }
-  })
-}
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-const logout = (req, res, next) => {
-  let sessionId = req.cookies.adminSession
-  adminLoginHelpers.deleteSessions(sessionId).then((result) => {
+const logout = async (req, res, next) => {
+  try {
+    let sessionId = req.cookies.adminSession;
+    let result = await adminLoginHelpers.deleteSessions(sessionId);
+
     if (result) {
       req.session.destroy(function (err) {
         res.clearCookie('connect.sid');
         res.redirect('/admin');
-      })
+      });
     }
-  })
-}
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 module.exports = {
   getLoginPage,
