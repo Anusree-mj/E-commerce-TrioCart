@@ -10,7 +10,7 @@ const getHomePage = async (req, res, next) => {
     let allCategories = await categoryHelpers.getCategoryDetails()
    
     sessionHelpers.checkSessions(sessionId).then((result) => {
-        if (result.status === 'ok') {
+        if (result.status === 'ok') { 
             let user = result.user
             let userId = result.user._id
 

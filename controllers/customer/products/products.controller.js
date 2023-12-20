@@ -5,38 +5,51 @@ const cartHelpers = require('../../../helpers/user/cart-helpers');
 
 
 const getProductDetailPage = async (req, res, next) => {
-    const productId = req.params.productId
-    let allCategories = await categoryHelpers.getCategoryDetails()
+    try {
+        const productId = req.params.productId;
+        let allCategories = await categoryHelpers.getCategoryDetails();
 
-    productHelpers.getAproduct(productId).then((result) => {
-        let product = result;
-        let category = result.category;
-        let subCategory = result.subCategory
+        let productResult = await productHelpers.getAproduct(productId);
+        let product = productResult;
+        let category = product.category;
+        let subCategory = product.subCategory;
 
-        categoryHelpers.viewEachSubcategoryProducts(category, subCategory).then(result => {
-            let viewMoreProducts = result.products;
-            let sessionId = req.cookies.session
+        let subcategoryProductsResult = await categoryHelpers.viewEachSubcategoryProducts(category, subCategory);
+        let viewMoreProducts = subcategoryProductsResult.products;
+        let sessionId = req.cookies.session;
 
-            sessionHelpers.checkSessions(sessionId).then((result) => {
-                if (result.status === 'ok') {
-                    let user = result.user
-                    let userId = result.user._id
+        let sessionResult = await sessionHelpers.checkSessions(sessionId);
 
-                    cartHelpers.getMyCartProducts(userId).then((result) => {
-                        if (result) {
-                            let totalCartProduct = result.totalCount
-                            res.render('customers/products/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user, totalCartProduct })
-                        }
-                    })
-                }
-                else {
-                    res.render('customers/products/productDetails', { layout: 'layout/layout', allCategories, viewMoreProducts, product, user: undefined })
+        if (sessionResult.status === 'ok') {
+            let user = sessionResult.user;
+            let userId = user._id;
 
-                }
-            })
-        })
-    })
-}
+            let cartResult = await cartHelpers.getMyCartProducts(userId);
+
+            if (cartResult) {
+                let totalCartProduct = cartResult.totalCount;
+                res.render('customers/products/productDetails', {
+                    layout: 'layout/layout',
+                    allCategories,
+                    viewMoreProducts,
+                    product,
+                    user,
+                    totalCartProduct
+                });
+            }
+        } else {
+            res.render('customers/products/productDetails', {
+                layout: 'layout/layout',
+                allCategories,
+                viewMoreProducts,
+                product,
+                user: undefined
+            });
+        }
+    } catch (error) {       
+        console.error(error);      
+    }
+};
 
 module.exports = {
     getProductDetailPage,

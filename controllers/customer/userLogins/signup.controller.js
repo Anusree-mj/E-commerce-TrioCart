@@ -7,20 +7,24 @@ const getSignupPage =  (req, res, next) => {
     res.render('customers/logins/signup', { layout: 'layout/layout' });
 }
 
-const sendUserSignupRequest =  (req, res, next) => {
-    const otp = signupUtil.generateOTP();
-  userHelpers.doSignup(req.body, otp).then((result) => {
-    if (result.status === 'ok') {
-      let email=result.email;
-      res.cookie('Useremail', email);
-      res.status(200).json({ status: "ok" });
-    } else if(result.status==='invalid referral code') {
-      res.status(400).json({ status: "invalid referral code" });
-    }else{
-      res.status(400).json({ status: "nok" });
-    }
-  })
-}
+const sendUserSignupRequest = async (req, res, next) => {
+  try {
+      const otp = signupUtil.generateOTP();
+      const result = await userHelpers.doSignup(req.body, otp);
+
+      if (result.status === 'ok') {
+          let email = result.email;
+          res.cookie('Useremail', email);
+          res.status(200).json({ status: "ok" });
+      } else if (result.status === 'invalid referral code') {
+          res.status(400).json({ status: "invalid referral code" });
+      } else {
+          res.status(400).json({ status: "nok" });
+      }
+  } catch (error) {
+      console.error(error);
+  }
+};
 
 module.exports = {
     getSignupPage,
