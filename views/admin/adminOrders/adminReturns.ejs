@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <%- include('../../partials/adminHeaders') %>
 
     <section>
@@ -34,7 +36,7 @@
                                     <td>
                                         <%= returnDetail.productId.name %>
                                     </td>
-                                    <td>
+                                    <td id="size">
                                         <%= returnDetail.size %>
                                     </td>
                                     <td>
@@ -62,13 +64,13 @@
                                                     Status</p>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <div class="dropdown-item">
-                                                        <a class="dropdown_text"
+                                                        <p class="dropdown_text"
                                                             onclick="editReturnStatus('<%= returnDetail._id %>',
-                                                        ' <%= returnDetail.orderId._id %>','Confirmed','<%= returnDetail.productId._id %>')">Confirm</a>
+                                                        ' <%= returnDetail.orderId._id %>','Confirmed','<%= returnDetail.productId._id %>')">Confirm</p>
                                                     </div>
                                                     <div class="dropdown-item">
-                                                        <a class="dropdown_text" onclick="editReturnStatus('<%= returnDetail._id %>',' <%= returnDetail.orderId._id %>',
-                                                        'Rejected','<%= returnDetail.productId._id %>')">Reject</a>
+                                                        <p class="dropdown_text" onclick="editReturnStatus('<%= returnDetail._id %>',' <%= returnDetail.orderId._id %>',
+                                                        'Rejected','<%= returnDetail.productId._id %>')">Reject</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,16 +80,17 @@
                                                 <% } %>
                                     </td>
                                     <td>
-                                        <% if (returnDetail.refundStatus!=='completed' ) { %>
-                                            <% if ( returnDetail.returnStatus !=='Rejected') { %>                                           
-                                            <a class="updateTxt"
-                                                onclick="refund('<%= returnDetail._id %>','<%= returnDetail.userId._id %>','<%= returnDetail.totalAmount %>')">Refund<a>
-                                                    <% } else { %>
-                                                        <p>Rejected</p>
-                                                        <% } %>
-                                                    <% } else { %>
-                                                        <p>Completed</p>
-                                                        <% } %>
+                                        <% if (returnDetail.refundStatus !=='completed' ) { %>
+                                            <% if (returnDetail.returnStatus !=='Rejected' ) { %>
+                                                <p class="updateTxt" onclick="refund('<%= returnDetail._id %>',
+                                                '<%= returnDetail.userId._id %>','<%= returnDetail.totalAmount %>',
+                                                '<%= returnDetail.productId._id %>')">Refund</p>
+                                                <% } else { %>
+                                                    <p>Rejected</p>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <p>Completed</p>
+                                                            <% } %>
                                     </td>
                                 </tr>
                                 <% slNo++; %>

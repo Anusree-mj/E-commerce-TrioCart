@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <%- include('../../../partials/adminHeaders') %>
 
     <section>
@@ -51,34 +53,37 @@
                                 </td>
                                 <td>
                                     ₹ <%= product.offerPrice%>
-                                </td>                               
+                                </td>
                                 <td>
                                     <div class="d-flex">
-                                    <p><%= product.productOffer%> %</p>   
-                                    <a class="ml-3" href="/admin/products/offer/<%= product._id%>" >
-                                        <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
-                                    </a> 
-                                </div>                                
+                                        <p>
+                                            <%= product.productOffer%> %
+                                        </p>
+                                        <a class="ml-3" href="/admin/products/offer/<%= product._id%>">
+                                            <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
+                                        </a>
+                                    </div>
                                 </td>
                                 <td>
                                     <% if (product.isDeleted===true) { %>
-                                        <p>Deleted<a class="ml-2"
+                                        <p>Deleted<p class="ml-2"
                                                 onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
                                                     src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
-                                                    id="undoProductDlt"></a></p>
+                                                    id="undoProductDlt"></p></p>
                                         <%} else{ %>
                                             <div class="d-flex">
                                                 <p>Available</p>
-                                                <a class="ml-2" onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
+                                                <p class="ml-2"
+                                                    onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
                                                         style="width: 1.2rem;" src="/images/navbar/delete.png"
-                                                        alt="delete"></a>
+                                                        alt="delete"></p>
                                             </div>
                                             <% } %>
                                 </td>
-                              
+
                                 <td><a href="/admin/products/<%= product._id %>"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1rem;"></a> </td>
-                                
+
                             </tr>
                             <% })%>
                     </tbody>

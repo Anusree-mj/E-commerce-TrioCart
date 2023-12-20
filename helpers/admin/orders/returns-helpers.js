@@ -3,7 +3,7 @@ const collection = require('../../../models/index-model')
 module.exports = {
     getAllProductReturns: async () => {
         try {
-            const returns = await collection.productReturnCollection.find()
+            const returns = await collection.productReturnCollection.find() .sort({ createdAt: -1 })
                 .populate('orderId userId productId');
             return { returns }
         } catch (err) {
@@ -21,11 +21,11 @@ module.exports = {
             await collection.orderCollection.updateOne(
                 {
                     _id: data.orderId.trim(),
-                    'products.product':data.productId
-                 },
+                    'products.product': data.productId
+                },
                 {
                     $set: {
-                         'products.$.returnStatus': data.status,
+                        'products.$.returnStatus': data.status,
                     }
                 }
             )
@@ -42,7 +42,8 @@ module.exports = {
     },
 
     savePaymentDetails: async (details, user) => {
-        try {           
+        try {
+            console.log('details', details)
             await collection.productReturnCollection.updateOne(
                 { _id: details.order.receipt },
                 { $set: { refundStatus: 'completed' } }
@@ -50,15 +51,21 @@ module.exports = {
             await collection.orderCollection.updateOne(
                 {
                     _id: details.order.receipt,
-                    'products.product':data.productId
-                 },
+                    'products.product': details.productId
+                },
                 {
                     $set: {
-                         'products.$.returnStatus': 'Completed',
+                        'products.$.returnStatus': 'Completed',
                     }
                 }
             )
-
+            await collection.productsCollection.updateOne(
+                {
+                    _id: details.productId,
+                    'sizesStock.size': details.Size
+                },
+                { $inc: { 'sizesStock.$.count': 1 } }
+            )
             const currentDate = new Date()
             const data = {
                 userId: user,
@@ -79,6 +86,6 @@ module.exports = {
         }
     }
 }
-    
+
 
 

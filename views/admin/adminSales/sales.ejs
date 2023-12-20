@@ -13,11 +13,11 @@
                         Daily
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="getDailySales('today')">Today</a>
-                        <a class="dropdown-item" onclick="getDailySales('yesterday')">Yesterday</a>
+                        <p class="dropdown-item" onclick="getDailySales('today')">Today</p>
+                        <p class="dropdown-item" onclick="getDailySales('yesterday')">Yesterday</p>
                         <div class="dropdown-divider"></div>
                         <div class="d-flex justify-content-around-">
-                            <a class="dropdown-item" onclick="getDailySales('custom')">Customize</a>
+                            <p class="dropdown-item" onclick="getDailySales('custom')">Customize</p>
                             <input type="date" id="dailyCustom"
                                 onclick="clearSpan('dailyCustomSpan'); event.stopPropagation();">
                         </div>
@@ -33,9 +33,9 @@
                         Weekly
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="getWeeklySales('thisWeek')">This Week</a>
+                        <p class="dropdown-item" onclick="getWeeklySales('thisWeek')">This Week</p>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" onclick="getWeeklySales('custom')">Customize</a>
+                        <p class="dropdown-item" onclick="getWeeklySales('custom')">Customize</p>
                         <div class="d-flex justify-content-around">                          
                             <a class="dropdown-item">StartPoint :</a> 
                             <input type="date" id="startPoint"
@@ -55,11 +55,11 @@
                         Yearly
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="getYearlySales('thisYear')">This Year</a>
-                        <a class="dropdown-item" onclick="getYearlySales('lastYear')">Last Year</a>
+                        <p class="dropdown-item" onclick="getYearlySales('thisYear')">This Year</p>
+                        <p class="dropdown-item" onclick="getYearlySales('lastYear')">Last Year</p>
                         <div class="dropdown-divider"></div>
                         <div class="d-flex justify-content-around-">
-                            <a class="dropdown-item" onclick="getYearlySales('custom')">Customize</a>
+                            <p class="dropdown-item" onclick="getYearlySales('custom')">Customize</p>
                             <input type="number" id="yearInput">
                         </div>
                     </div>

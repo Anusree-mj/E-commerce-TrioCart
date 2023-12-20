@@ -10,7 +10,7 @@ const getReturnsPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let resultReturns = await adminReturnHelpers.getAllProductReturns();
-            const returnDetails = resultReturns.returns;
+            const returnDetails = resultReturns.returns;          
             const orderId = returnDetails.orderId;
             console.log('orderid in return', orderId);
             console.log('returns:::', returnDetails);

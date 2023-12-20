@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <%- include('../../partials/adminHeaders') %>
 
     <section>
@@ -9,7 +11,7 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">User</th>
+                            <th scope="col">User</th>                           
                             <th scope="col" style="max-width: 100%; width: 12rem;">Products</th>
                             <th scope="col">Total</th>
                             <th scope="col">Payment</th>
@@ -27,7 +29,7 @@
                                     </th>
                                     <td>
                                         <%= order.userId.name%>
-                                    </td>
+                                    </td>                                    
                                     <td>
                                         <% const productNames=order.products.map(product=> product.product ?
                                             product.product.name : '').join(', '); %>
@@ -56,26 +58,26 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <% if (order.paymentMethod !=='onlinePayment' ) { %>
                                                         <div class="dropdown-item">
-                                                            <a class="dropdown_text"
-                                                                onclick="editOrderStatus('cancelled by seller','<%= order._id%>')">Cancel</a>
+                                                            <p class="dropdown_text"
+                                                                onclick="editOrderStatus('cancelled by seller','<%= order._id%>')">Cancel</p>
                                                         </div>
                                                         <% } %>
                                                             <div class="dropdown-item">
-                                                                <a class="dropdown_text"
-                                                                    onclick="editOrderStatus('packed','<%= order._id%>')">Packed</a>
+                                                                <p class="dropdown_text"
+                                                                    onclick="editOrderStatus('packed','<%= order._id%>')">Packed</p>
                                                             </div>
                                                             <div class="dropdown-item">
-                                                                <a class="dropdown_text"
-                                                                    onclick="editOrderStatus('shipped','<%= order._id%>')">Shipped</a>
+                                                                <p class="dropdown_text"
+                                                                    onclick="editOrderStatus('shipped','<%= order._id%>')">Shipped</p>
                                                             </div>
                                                             <div class="dropdown-item">
-                                                                <a class="dropdown_text"
+                                                                <p class="dropdown_text"
                                                                     onclick="editOrderStatus('outfordelivery','<%= order._id%>')">Out
-                                                                    for Delivery</a>
+                                                                    for Delivery</p>
                                                             </div>
                                                             <div class="dropdown-item">
-                                                                <a class="dropdown_text"
-                                                                    onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</a>
+                                                                <p class="dropdown_text"
+                                                                    onclick="editOrderStatus('delivered','<%= order._id%>')">Delivered</p>
                                                             </div>
                                                 </div>
                                                 <% } else { %>
