@@ -2,6 +2,7 @@ const sessionHelpers = require('../../../helpers/user/session-helpers');
 const categoryHelpers = require('../../../helpers/user/category-helpers');
 const cartHelpers = require('../../../helpers/user/cart-helpers');
 const couponHelpers = require('../../../helpers/user/coupon-helpers');
+const adminCouponHelpers = require('../../../helpers/admin/manageUser/coupon-helpers');
 
 const getCouponPage = async (req, res, next) => {
     try {
@@ -18,7 +19,11 @@ const getCouponPage = async (req, res, next) => {
 
             if (cartResult) {
                 let totalCartProduct = cartResult.totalCount;
-                res.render('customers/customer/coupons', { layout: 'layout/layout', allCategories, user, totalCartProduct });
+                let coupons = await adminCouponHelpers.getAllCoupons();
+                res.render('customers/customer/coupons', {
+                    layout: 'layout/layout', allCategories, user, totalCartProduct
+                    ,coupons
+                });
             }
         } else {
             res.redirect('/user/login');
@@ -55,13 +60,13 @@ const addCoupon = async (req, res, next) => {
 const applyCoupon = async (req, res, next) => {
     try {
         let sessionId = req.cookies.session;
-        let { couponName, totalprice, cartId } = req.body;
+        let { couponId, totalprice, cartId } = req.body;
 
         let result = await sessionHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
             let userId = result.user._id;
-            let couponResult = await couponHelpers.applyCoupon(userId, couponName, totalprice, cartId);
+            let couponResult = await couponHelpers.applyCoupon(userId, couponId, totalprice, cartId);
 
             if (couponResult.status === 'ok') {
                 const discountPrice = couponResult.discount;

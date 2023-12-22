@@ -58,11 +58,11 @@ function purchase(userId, discount,totalPrice) {
     if (discount === '0') {
         total = totalPrice
         // console.log('tota22',total)
-        reqBody = { userId, paymentMethod, total }
+        reqBody = { userId, paymentMethod, total,totalPrice }
     } else {
         total = discount;
         // console.log('totaa333',total)
-        reqBody = { userId, paymentMethod, total }
+        reqBody = { userId, paymentMethod, total,totalPrice }
     }
 
     fetch("http://localhost:3000/checkout", {
@@ -136,4 +136,64 @@ const verifyPayment = (payment, order) => {
         })
         .catch(err => console.log(err));
 
+}
+
+function togglePurchaseDiv() {
+    console.log('entered in toggle functions')
+    const purchaseDiv = document.querySelector('.purchaseOptns');
+    const couponDiv = document.querySelector('.coupon');
+
+    purchaseDiv.style.display = 'none';
+    couponDiv.style.display = 'block';
+}
+
+function cancelCoupon() {
+    const purchaseDiv = document.querySelector('.purchaseOptns');
+    const couponDiv = document.querySelector('.coupon');
+
+    purchaseDiv.style.display = 'block';
+    couponDiv.style.display = 'none';
+}
+
+// applying coupon
+function applyCoupon(couponId, totalprice, cartId) {
+    console.log(couponId)
+    document.getElementById('applyCouponConfirmationModal').querySelector('.btn-success').onclick = function () {
+     
+        let reqBody = { couponId,totalprice,cartId };
+        fetch("http://localhost:3000/applyCoupon", {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    // const discount = data.discountPrice;
+                    // const purchaseDiv = document.querySelector('.purchaseOptns');
+                    // const couponDiv = document.querySelector('.coupon');
+                    // purchaseDiv.style.display = 'block';
+                    // couponDiv.style.display = 'none';
+                    // document.getElementById('price').style.textDecoration = 'line-through';
+                    // document.getElementById('price').style.color = 'red';
+                    // document.getElementById('discount').textContent = `₹ ${discount} /-`
+                    location.reload()
+                } else {
+                    console.log("failed to apply coupon");
+                }
+            })
+            .catch(err => console.log(err));
+
+        // Hiding the new modal after processing
+        $('#applyCouponConfirmationModal').modal('hide');
+    };
+
+    // Show the new modal
+    $('#applyCouponConfirmationModal').modal('show');
+}
+
+// This function is triggered when the "Apply Coupon" button in the new modal is clicked
+function confirmApplyCoupon() {
+    // This function can be empty as it's handled within the applyCoupon function
 }

@@ -2,7 +2,9 @@ const sessionHelpers = require('../../../helpers/user/session-helpers');
 const cartHelpers = require('../../../helpers/user/cart-helpers');
 const orderHelpers = require('../../../helpers/user/orderHelpers');
 const verifyPaymentHelpers = require('../../../helpers/user/verifyPayment-helpers');
-const razorpayUtil = require('../../../utils/razorpayUtil')
+const razorpayUtil = require('../../../utils/razorpayUtil');
+const couponHelpers = require('../../../helpers/admin/manageUser/coupon-helpers');
+
 
 const getCheckoutPage = async (req, res, next) => {
     try {
@@ -15,8 +17,9 @@ const getCheckoutPage = async (req, res, next) => {
 
             if (cartResult.stockAvailability) {
                 const { cartId, discount, cartProducts, totalprice, totalCount } = cartResult;
+                const coupons = await couponHelpers.getAllCoupons();
 
-                console.log('iddd', cartId)
+                console.log('idtotalprice in checkoutdd', totalprice)
                 res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
@@ -24,7 +27,7 @@ const getCheckoutPage = async (req, res, next) => {
                     totalCartProduct: totalCount,
                     totalprice,
                     cartId,
-                    discount
+                    discount,coupons
                 });
             } else {
                 res.redirect('/cart');

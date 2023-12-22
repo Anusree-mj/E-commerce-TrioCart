@@ -56,15 +56,16 @@
                                     <p class="subHead">Order Summary</p>
                                     <div class="d-flex justify-content-between">
                                         <p>Item(s) Subtotal: </p>
-                                        <p>₹ <%= order.totalAmount %>/-</p>
+                                        <p>₹ <%= order.orderValue %>/-</p>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p>Shipping: </p>
                                         <p>₹ 0 /-</p>
                                     </div>
+
                                     <div class="d-flex justify-content-between">
                                         <p>Promotion Applied: </p>
-                                        <p>-₹ 0 /-</p>
+                                        <p><%= order.discount %> %</p>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="subHead">Grand Total: </p>

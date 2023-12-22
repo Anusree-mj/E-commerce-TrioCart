@@ -27,7 +27,7 @@
   background-color: #fff;
   padding: 10px 10px;
   position: relative;
-
+  max-width: 90%;
 }
 
 .main {
@@ -35,20 +35,24 @@
   justify-content: space-between;
   padding: 0 10px;
   align-items: center;
+  max-width: 90%;
 }
 
 .co-img img {
   width: 5rem;
   margin-left: 0.5rem;
+  
 }
 
 .vertical {
   border-left: 5px dotted black;
-  height: 100px;
-  position: absolute;
-  left: 32%;
+  height: 15rem;
+  max-height: 80%; 
+  margin-left: 1rem;
 }
-
+.content{
+ 
+}
 .content h1 {
   font-size: 35px;
   margin-left: 2.5rem;
@@ -73,7 +77,7 @@
   right: -20px;
   border-radius: 40px;
   z-index: 1;
-  top: 45px;
+  top: 6.8rem;
   background-color: #f5f3f1;
   width: 40px;
 }
@@ -85,7 +89,7 @@
   left: -20px;
   border-radius: 40px;
   z-index: 1;
-  top: 45px;
+  top: 6.8rem;
   background-color: #f5f3f1;
   width: 40px;
 }
@@ -104,4 +108,9 @@
   font-size: 16px;
   color: #696969;
   margin-left: 2.5rem;
+}
+@media only screen and (max-width: 980px) {
+  .card {
+     width: 15rem;
+  }
 }

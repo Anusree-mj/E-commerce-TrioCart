@@ -143,60 +143,56 @@ a:hover {
     background-color: #a7a7a7;
     color: rgb(255, 255, 255);
 }
-
-.card {
-    width: 15rem;
+.cardCoupon {
+    width: 20rem;
     border-radius: 5px;
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
     background-color: #fff;
     padding: 1rem 0.5rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
 .co-img img {
-    width: 3rem;
+    width: 5rem;
 }
 
 .vertical {
     border-left: 4px dotted black;
-    height: 50px;
-    position: absolute;
-    left: 32%;
+    height: 6rem;
+    max-width: 5%;
 }
 
-.content h1 {
-    font-size: 1rem;
-    margin-left: 0.5rem;
-    color: #565656;
-}
-
-.content h1 span {
-    font-size: 0.8rem;
+.content {
+    text-align: center;
+    max-width: 100%;
 }
 
 .content h2 {
     font-size: 1rem;
-    margin-left: 0.5rem;
+    margin-top: 0.5rem;
     color: #565656;
     text-transform: uppercase;
 }
 
-.content p {
-    font-size: 16px;
-    color: #696969;
-    margin-left: 2.5rem;
-}
 
 .apply {
     cursor: pointer;
     text-decoration: underline;
     color: #000 !important;
+}
+.couponAvailability{
+    color: rgb(165, 16, 16);
+    font-weight: 600;
 }
 .strikePrice{
     text-decoration: line-through;

@@ -65,6 +65,14 @@ const OrderSchema = new mongoosedb.Schema(
             type: Number,
             required: true,
         },
+        orderValue: {
+            type: Number,
+            required: true,
+        },
+        discount:{
+            type: Number,
+            default: 0,
+        },
         paymentMethod: {
             type: String,
             required: true,

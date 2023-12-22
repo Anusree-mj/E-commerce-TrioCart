@@ -58,7 +58,7 @@ module.exports = {
                     { $inc: { 'sizesStock.$.count': -1 } }
                 )
             });
-            await Promise.all(updateStock);            
+            await Promise.all(updateStock);
             if (updateStock) {
                 console.log('updated stock', updateStock)
             }
@@ -67,7 +67,12 @@ module.exports = {
             const deliveryTym = delvryTimeUtil.calculateDeliveryEstimation(
                 orderPlacementDate, 'placed')
 
-                // update details in order collection
+            // discount percenteage
+            const orderValue = orderDetails.totalPrice;
+            const originalAmount = orderDetails.total;
+            const amountDifference=orderValue - originalAmount;
+            const discountPercentage = amountDifference !== 0 ? Math.round((amountDifference / orderValue) * 100) : 0;
+            // update details in order collection
             const data = {
                 userId: orderDetails.userId,
 
@@ -89,6 +94,8 @@ module.exports = {
                 paymentMethod: orderDetails.paymentMethod,
                 estimatedDelivery: deliveryTym,
                 totalAmount: orderDetails.total,
+                orderValue: orderDetails.totalPrice,
+                discount:discountPercentage,
                 orderStatus: (orderDetails.paymentMethod === 'onlinePayment' ? 'pending' : "placed")
             }
             console.log('inserted data in orders ', data)

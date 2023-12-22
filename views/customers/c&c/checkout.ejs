@@ -348,11 +348,11 @@
         </div>
 
         <!-- purchase -->
-        <div class="purchase ">
-            <div class="purchaseOptns sticky-top">
+        <div class="purchase">
+            <div class="purchaseOptns  sticky-top">
                 <div class="d-flex justify-content-between">
                     <p>Discounts</p>
-                    <p>Apply discounts</p>
+                    <a onclick="togglePurchaseDiv()">Apply discounts</a>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
@@ -361,7 +361,11 @@
                 </div>
                 <div class="d-flex justify-content-between mt-2">
                     <p>Delivery</p>
-                    <p class="darkHeads mt-0">0 /-</p>
+                    <p class="darkHeads mt-0">₹ 0 /-</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <p>Discount</p>
+                    <p class="darkHeads mt-0">₹ <%= discount %> /-</p>
                 </div>
                 <hr>
                 <div class=" d-flex justify-content-between">
@@ -395,7 +399,70 @@
                     .
                 </p>
 
-            </div>           
+            </div>
+
+            <!-- apply coupon -->
+            <div class="coupon" style="display: none;">
+                <div class="d-flex flex-column justify-content-around align-items-center">
+                    <p class="boldTxt">Available coupons</p>
+                    <% if (coupons && coupons.length> 0) { %>
+                        <% coupons.forEach(coupon=>{%>
+                            <% if (!user.coupon || !user.coupon.includes(coupon._id)) {
+                                %>
+                                <% if (coupon.minAmount < totalprice) {
+                                    %>
+                                <div class="cardCoupon mt-4">
+                                    <div class="main">
+                                        <div class="co-img">
+                                            <img src="/images/navbar/logo.png" alt="logo">
+                                        </div>
+                                        <div class="vertical"></div>
+                                        <div class="content">
+                                            <h2>TrioCarts</h2>
+                                            <h1>
+                                                <%= coupon.discount %>% Off
+                                            </h1>
+                                            <h2>
+                                                <%= coupon.name %>
+                                            </h2>
+
+                                            <p class="apply" onclick="applyCoupon('<%= coupon._id %>',
+                                            '<%= totalprice %>','<%= cartId %>')">
+                                                Apply
+                                                coupon</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } else { %>
+                                    <div class="cardCoupon mt-4">
+                                        <div class="main">
+                                            <div class="co-img">
+                                                <img src="/images/navbar/logo.png" alt="logo">
+                                            </div>
+                                            <div class="vertical"></div>
+                                            <div class="content">
+                                                <h2>TrioCarts</h2>
+                                                <h1>
+                                                    <%= coupon.discount %>% Off
+                                                </h1>
+                                                <h2>
+                                                    <%= coupon.name %>
+                                                </h2>
+                                                <p class="couponAvailability">To validate, buy up to ₹<%= coupon.minAmount %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+                                    <% } %>                                        
+                                        <% }) %>
+                                            <% } %>
+                                                <div>
+                                                    <p onclick="cancelCoupon()" type="button"
+                                                        class="btn btn-dark save mt-3" style="color: white;">Cancel</p>
+                                                </div>
+                </div>
+            </div>
         </div>
         <!-- address modal -->
         <div class="modal" id="confirmationModal">
@@ -422,7 +489,34 @@
 
                 </div>
             </div>
-        </div>     
+        </div>
+
+        <!-- coupon modal -->
+        <div class="modal" id="applyCouponConfirmationModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Apply Coupon Confirmation</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <p class="alertTxt">Are you sure you want to apply this coupon?</p>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" onclick="confirmApplyCoupon()">Apply
+                            Coupon</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <br><br><br>
 </section>
