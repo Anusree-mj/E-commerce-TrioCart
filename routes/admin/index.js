@@ -65,9 +65,6 @@ router.get('/addCategory', controller.adminControllers.categoryManagementControl
 //get edit category  page
 router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage);
 
-//edit subcategory
-// router.put('/category/edit', controller.adminControllers.categoryManagementController.editSubcategory)
-
 //delete subcategory;
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory);
 
@@ -85,6 +82,15 @@ router.post('/category', controller.adminControllers.categoryManagementControlle
 
 //get users list
 router.get('/users', controller.adminControllers.userManagementController.getUserPage);
+
+//get coupons list
+router.get('/coupons', controller.adminControllers.couponController.getCouponsPage);
+
+//get add coupons page
+router.get('/addCoupon', controller.adminControllers.couponController.getAddCouponsPage);
+
+//get add coupons page
+router.post('/addCoupon', controller.adminControllers.couponController.addCoupon);
 
 //block users
 router.delete('/users', controller.adminControllers.userManagementController.softDeleteUser);

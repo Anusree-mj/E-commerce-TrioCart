@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="/stylesheets/admin/updates.css">
+<%- include('../../partials/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="addForm">
+            <h2 class="head">Add Coupon</h2>
+            <!-- name -->
+            <label class="label" for="name">Name <span
+                class="required">*</span></label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Coupon Name"
+                onclick="clearValidity('name');clearSpan('nameSpan')" onblur="isValidInput('name')">
+            <span id="nameSpan" class="span"></span>
+
+            <label class="label" for="name">Description <span
+                class="required">*</span></label>
+            <input type="text" class="form-control" name="description" id="description" placeholder="Coupon description"
+                onclick="clearValidity('description');clearSpan('descriptionSpan')" onblur="isValidInput('description')">
+            <span id="descriptionSpan" class="span"></span>
+
+            <!-- amount -->
+            <label class="label" for="category">Min.Amount for Activation<span
+                class="required">*</span></label>
+            <input type="text" class="form-control" name="amount" id="amount" placeholder="Coupon amount"
+                onclick="clearValidity('amount');clearSpan('amountSpan')" onblur="isValidPrice('amount')">
+            <span id="amountSpan" class="span"></span>
+
+            <label class="label" for="category">Discount <span
+                class="required">*</span></label>
+            <input type="text" class="form-control" name="discount" id="discount" placeholder="Coupon discount"
+                onclick="clearValidity('discount');clearSpan('discountSpan')" onblur="isValidPrice('discount')">
+            <span id="discountSpan" class="span"></span>
+
+
+            <!-- validity date -->
+            <label class="label" for="subCategory">Valid until <span
+                class="required">*</span></label>
+            <input type="date" class="form-control" name="validDate" id="validDate" placeholder="Coupon validDate"
+                onclick="clearValidity('validDate');clearSpan('validDateSpan')">
+            <span id="validDateSpan" class="span"></span>
+           
+            <div class="button">
+                <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                    onclick="addCoupon()" style="width: 15rem;">Add Coupon</button>
+            </div>
+        </div>
+    </div>
+    <%- include('../../partials/loginsFooter') %>
+        <script src="/javascripts/admin/adminCoupons.js"></script>

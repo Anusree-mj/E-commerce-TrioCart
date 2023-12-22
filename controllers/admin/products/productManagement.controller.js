@@ -1,7 +1,7 @@
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const adminProductHelpers = require('../../helpers/admin/products/adminProduct-helpers');
-const adminImgStockHelpers = require('../../helpers/admin/products/adminImgStock-helpers');
-const productHelpers = require('../../helpers/user/product-helpers')
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const adminProductHelpers = require('../../../helpers/admin/products/adminProduct-helpers');
+const adminImgStockHelpers = require('../../../helpers/admin/products/adminImgStock-helpers');
+const productHelpers = require('../../../helpers/user/product-helpers')
 
 const getProductPage = async (req, res, next) => {
     try {

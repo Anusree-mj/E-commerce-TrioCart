@@ -1,7 +1,7 @@
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const dailySalesHelpers = require('../../helpers/admin/orders/sales/dailySales-helpers');
-const yearlySalesHelpers = require('../../helpers/admin/orders/sales/yearlySales-helpers');
-const weaklySalesHelpers = require('../../helpers/admin/orders/sales/weaklySales-helpers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const dailySalesHelpers = require('../../../helpers/admin/orders/sales/dailySales-helpers');
+const yearlySalesHelpers = require('../../../helpers/admin/orders/sales/yearlySales-helpers');
+const weaklySalesHelpers = require('../../../helpers/admin/orders/sales/weaklySales-helpers');
 
 const getSalesPage = async (req, res, next) => {
     try {

@@ -8,43 +8,11 @@ let referralCreditCount = 0;
 
 module.exports = {
     doSignup: async (userData, otp) => {
-        try {
-            referralCreditCount = 0;
-            let invalidReferralCode = false;
-
+        try {           
             const user = await collection.usersCollection.findOne({ email: userData.email })
             if (user) {
                 return { status: 'same email' }
-            } else {
-                if (userData.referralCode !== '') {
-                    const checkReferralCode = await collection.usersCollection.findOneAndUpdate(
-                        {
-                            'referralCode.name': userData.referralCode,
-                            'referralCode.isValid': true
-                        },
-                        {
-                            $set: {
-                                'referralCode.isValid': false,
-                            },
-                               $push: {
-                                coupon: {
-                                    name: 'Referral Bonus',
-                                    count: 1
-                                }
-                            }
-                            
-                        }
-                    )
-                    if (checkReferralCode) {
-                        referralCreditCount = 1;
-                    } else {
-                        invalidReferralCode = true;
-                    }
-                }
-                if (invalidReferralCode) {
-                    return { status: 'invalid referral code' }
-                } else {
-
+            } else {              
                     userData.password = await bcrypt.hash(userData.password, 10)
                     const data = {
                         name: userData.name,
@@ -57,7 +25,7 @@ module.exports = {
                     await collection.tempUsersCollection.insertMany([data])
                     await signupUtil.sendOtpByEmail(userData.email, otp);
                     return { status: 'ok', email }
-                }
+                
             }
         } catch (err) {
             console.log(err)

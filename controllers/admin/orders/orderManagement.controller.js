@@ -1,5 +1,5 @@
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const adminOrderHelpers = require('../../helpers/admin/orders/adminOrder-helpers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const adminOrderHelpers = require('../../../helpers/admin/orders/adminOrder-helpers');
 
 const getOrderPage = async (req, res, next) => {
     try {

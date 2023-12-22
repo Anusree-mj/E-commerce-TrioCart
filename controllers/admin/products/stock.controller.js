@@ -1,6 +1,6 @@
-const adminImgStockHelpers = require('../../helpers/admin/products/adminImgStock-helpers');
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const productHelpers = require('../../helpers/user/product-helpers');
+const adminImgStockHelpers = require('../../../helpers/admin/products/adminImgStock-helpers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const productHelpers = require('../../../helpers/user/product-helpers');
 
 const getStockPage = async (req, res, next) => {
     try {

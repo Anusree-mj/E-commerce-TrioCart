@@ -1,6 +1,6 @@
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const categoryHelpers = require('../../helpers/user/category-helpers');
-const adminCategoryHelpers = require('../../helpers/admin/products/adminCategory-hepers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const categoryHelpers = require('../../../helpers/user/category-helpers');
+const adminCategoryHelpers = require('../../../helpers/admin/products/adminCategory-hepers');
 
 const getCategoryPage = async (req, res, next) => {
     try {

@@ -1,5 +1,5 @@
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
-const adminCategoryOfferHelpers = require('../../helpers/admin/offerManagement/categoryOffer-helpers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
+const adminCategoryOfferHelpers = require('../../../helpers/admin/offerManagement/categoryOffer-helpers');
 
 const getCategoryOfferPage = async (req, res, next) => {
     try {

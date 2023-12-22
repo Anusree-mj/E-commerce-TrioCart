@@ -1,5 +1,5 @@
 const uuidv4 = require('uuid').v4
-const adminLoginHelpers = require('../../helpers/admin/login/adminLogin-helpers');
+const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
 
 const getLoginPage = (req, res, next) => {
   res.render('admin/adminLogin', { layout: 'layout/layout' });

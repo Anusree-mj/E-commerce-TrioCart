@@ -20,10 +20,21 @@
 
             </div>
         </div>
-        <div class="nav_icons">
-            <img class="nav_icon" src="/images/navbar/users.png" alt="">
-            <a href="/admin/users" class="nav_icon_text">Users</a>
-        </div>
+        <div class="dropdown nav_icons">
+            <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" src="/images/navbar/users.png" alt="orders">
+            <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Users</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/users">Users</a>
+                </div>
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/coupons">Coupons</a>
+                </div>
+            </div>
+        </div>       
         <!-- orders -->
         <div class="dropdown nav_icons">
             <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
