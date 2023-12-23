@@ -1,40 +1,47 @@
-const userHelpers = require('../../../helpers/user/user-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers'); 
+const userHelpers = require('../../../helpers/user/userHelpers/user-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
 const uuidv4 = require('uuid').v4
 
-const getLoginPage =  (req, res, next) => {
+const getLoginPage = (req, res, next) => {
     res.render('customers/logins/login', { layout: 'layout/layout' });
-}
+};
 
-const sendUserLoginRequest =  (req, res, next) => {
-    userHelpers.dologin(req.body).then((result) => {
-        console.log('result in post ', result)
+const sendUserLoginRequest = async (req, res, next) => {
+    try {
+        const result = await userHelpers.dologin(req.body);
+
         if (result.user) {
-          const sessionId = uuidv4();
-          const userId = result.user._id
-          sessionHelpers.saveSessions(sessionId, userId)
-          res.cookie('session', sessionId);
-          res.status(200).json({ status: "ok" });
+            const sessionId = uuidv4();
+            const userId = result.user._id;
+            await sessionHelpers.saveSessions(sessionId, userId);
+            res.cookie('session', sessionId);
+            res.status(200).json({ status: "ok" });
         } else if (result.status === 'invalid') {
-          res.status(400).json({ status: "invalid" });
+            res.status(400).json({ status: "invalid" });
         } else {
-          res.status(400).json({ status: "blocked" });
+            res.status(400).json({ status: "blocked" });
         }
-      })
-}
-
-const logout =  (req, res, next) => {
-  let sessionId = req.cookies.session
-  sessionHelpers.deleteSessions(sessionId).then((result) => {
-    if (result) {
-      req.session.isAuthenticated = false;
-      req.session.destroy(function (err) {
-        res.clearCookie('session');
-        res.redirect('/');
-      })
+    } catch (error) {
+        next(error);
     }
-  })
-}
+};
+
+const logout = async (req, res, next) => {
+    try {
+        let sessionId = req.cookies.session;
+        let result = await sessionHelpers.deleteSessions(sessionId);
+
+        if (result) {
+            req.session.isAuthenticated = false;
+            req.session.destroy(function (err) {
+                res.clearCookie('session');
+                res.redirect('/');
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     getLoginPage,

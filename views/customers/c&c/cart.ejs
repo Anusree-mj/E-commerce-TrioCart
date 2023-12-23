@@ -10,7 +10,7 @@
                         <!--  -->
                         <section class="cartPage">
                             <!--  -->
-                            <% if (cartProducts) { %>                               
+                            <% if (cartProducts) { %>
                                 <div class="d-flex justify-content-around cartsctn">
                                     <div class="cartProducts">
                                         <% cartProducts.forEach(cartProduct=> { %>
@@ -34,11 +34,11 @@
                                                                 </p>
                                                                 <p>Total: ₹ <%= cartProduct.product.price %>/-
                                                                 </p>
-                                                                <% if (cartProduct.stock === 'limited stock') { %>
+                                                                <% if (cartProduct.stock==='limited stock' ) { %>
                                                                     <p class="stock">Limited Stock. Buy Now !!!</p>
-                                                                <% }else if(cartProduct.stock ==='out of stock'){%>
-                                                                    <p class="stock">Out of Stock.</p>
-                                                                    <% } %>
+                                                                    <% }else if(cartProduct.stock==='out of stock' ){%>
+                                                                        <p class="stock">Out of Stock.</p>
+                                                                        <% } %>
                                                             </div>
                                                             <div class="mt-4 d-flex">
                                                                 <button type="button"
@@ -67,10 +67,11 @@
                                     </div>
                                     <!-- purchase -->
                                     <div class="purchase">
-                                        <div class="purchase-box">
+                                        <div class="purchase-box sticky-top">
+                                            <div class="purchaseOptns">
                                             <div class="d-flex justify-content-between">
                                                 <p>Discounts</p>
-                                                <a href="">Apply discounts</a>
+                                                <p class="apply" onclick="toggleCouponDiv()">Apply discounts</p>
                                             </div>
                                             <hr>
                                             <div class=" d-flex justify-content-between">
@@ -95,6 +96,8 @@
                                                 Customers would receive an SMS/WhatsApp notifications regarding
                                                 deliveries on the registered phone number
                                             </p>
+                                        </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -172,6 +175,36 @@
                                                         </a>
                                                     </div>
                                                     <% }) %>
+                                            </div>
+                                        </div>
+                                        <!-- coupon modal -->
+                                        <div class="modal" id="applyCouponConfirmationModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Apply Coupon Confirmation</h4>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal Body -->
+                                                    <div class="modal-body">
+                                                        <p class="alertTxt">Are you sure you want to apply this coupon?
+                                                        </p>
+                                                    </div>
+
+                                                    <!-- Modal Footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancel</button>
+                                                        <button type="button" class="btn btn-success"
+                                                            onclick="confirmApplyCoupon()">Apply
+                                                            Coupon</button>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                         </section>

@@ -97,12 +97,13 @@
             <div class="profilecontainer mt-4">
                 <div class="mydetailSctn">
                     <p class="subHead">My Wallet</p>
-                    <p class="walletToggle mt-4" id="walletToggle" onclick="toggleWalletHistory()">Show wallet history</a>
+                    <p class="walletToggle mt-4" id="walletToggle" onclick="toggleWalletHistory()">Show wallet
+                        history</a>
                         <hr>
                         <!-- wallet history -->
                     <div class="displayWallet">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="thead-dark sticky-top">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Date</th>
@@ -121,10 +122,19 @@
                                                 <%= walletItem.createdAt.toDateString()%>
                                             </td>
                                             <td>
-                                                <%= walletItem.status %>
+                                                <% if (walletItem.status==='Debited' ) { %>
+                                                    <p class="referralTxt" style="color: red;">
+                                                        <%= walletItem.status %>
+                                                    </p>
+                                                    <% } else { %>
+                                                        <p class="referralTxt" style="color: green;">
+                                                            <%= walletItem.status %>
+                                                        </p>
+                                                        <% } %>
                                             </td>
                                             <td>
-                                                <%= walletItem.amount %>
+
+                                                ₹ <%= walletItem.amount %> /-
                                             </td>
                                         </tr>
                                         <% })%>
@@ -151,11 +161,13 @@
                                             Name: <%= address.name %>
                                         </p>
                                         <div>
-                                            <img src="/images/navbar/edit.png" class="pointerCursor" style="width: 1rem;" alt="edit" onclick="editBillingAdress('<%= address._id %>','name_addressEdit',
+                                            <img src="/images/navbar/edit.png" class="pointerCursor"
+                                                style="width: 1rem;" alt="edit" onclick="editBillingAdress('<%= address._id %>','name_addressEdit',
                                                 'phone_addressEdit','address_addressEdit','town_addressEdit',
                                                 'pincode_addressEdit','state_addressEdit')">
                                             <img src="/images/navbar/delete.png" style="width: 1rem;" alt="edit"
-                                                class="ml-4 pointerCursor" onclick="deleteBillingAdress('<%= address._id %>')">
+                                                class="ml-4 pointerCursor"
+                                                onclick="deleteBillingAdress('<%= address._id %>')">
                                         </div>
 
                                     </div>

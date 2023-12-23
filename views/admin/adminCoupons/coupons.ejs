@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%- include('../../partials/headers/adminHeaders') %>
+
+    <section>
+        <div class="container">
+            <div class="subHead">
+                <a type="button" href="/admin/addCoupon" class="btn btn-info ml-auto addButton">Add Coupon</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="tno">No</th>
+                            <th scope="col" class="thead">Name</th>
+                            <th scope="col" class="thead">Description</th>
+                            <th scope="col" class="ttitle">Min amount</th>
+                            <th scope="col" class="ttitle">Discount</th>
+                            <th scope="col" class="thead">Starts On
+                            </th>
+                            <th scope="col" class="thead">Ends On
+                            </th>
+                            <th scope="col" class="thead">Status</th>                            
+                            <th scope="col" class="thead">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% coupons.forEach((coupon, index)=> { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= index + 1 %>
+                                </th>
+                               
+                                <td>
+                                    <%= coupon.name%>
+                                </td>
+                                <td>
+                                    <%= coupon.description%>
+                                </td>
+                                <td>
+                                    ₹ <%= coupon.minAmount%> /-
+                                </td>
+                                <td>
+                                    <%= coupon.discount%> %
+                                </td>
+                                <td>
+                                    <%= coupon.couponActivatingDate.toDateString() %>
+                                </td>  
+                                <td>
+                                    <%= coupon.couponDeactivatingDate.toDateString() %>
+                                </td>                               
+                                <td>
+                                    <% if (coupon.isValid===false) { %>
+                                        <p>Inactive</p>
+                                       
+                                        <%} else{ %>
+                                            <div class="d-flex">
+                                                <p>Active</p>
+                                               
+                                            </div>
+                                            <% } %>
+                                </td>
+
+                                <td><a href="/admin/coupon/edit/<%= coupon._id %>"><img src="/images/navbar/edit.png"
+                                            alt="edit" style="width: 1rem;"></a> </td>
+
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>

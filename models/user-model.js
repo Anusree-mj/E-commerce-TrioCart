@@ -89,22 +89,9 @@ const UserSchema = new mongoosedb.Schema(
                 default: true,
             },
         },
-        coupon: [
-            {
-                name: {
-                    type: String,
-                },
-                couponAmount: {
-                    type: Number,
-                    default: 0,
-                },
-                isApplicable: {
-                    type: Boolean,
-                    default: true,
-                }
-            }
-
-        ]
+        coupon: {
+            type:Array
+        }
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps

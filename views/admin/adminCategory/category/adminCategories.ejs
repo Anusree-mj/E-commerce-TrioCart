@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
-<%- include('../../../partials/adminHeaders') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%- include('../../../partials/headers/adminHeaders') %>
 <% var count=1; %>
 
 <section>
@@ -34,9 +36,9 @@
                                     <p>
                                         <%= item.name %>
                                     </p>
-                                    <a class="ml-3" onclick="editSubcategory('<%= item.name %>','<%= category.category %>')">
+                                    <p class="ml-3" onclick="editSubcategory('<%= item.name %>','<%= category.category %>')">
                                         <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
-                                    </a>
+                                    </p>
                                 </div>
                                 <% }) %>
                             </td>
@@ -45,16 +47,16 @@
                                     <% if (item.isDeleted) { %>
                                         <div class="d-flex">
                                         <p>Deleted</p>
-                                        <a class="ml-3" onclick="undoSubcategoryDelete('<%= item.isDeleted %>',
+                                        <p class="ml-3" onclick="undoSubcategoryDelete('<%= item.isDeleted %>',
                                         '<%= item.name %>','<%= category.category %>')">
                                                 <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;">
-                                            </a>
+                                        </p>
                                         </div>
                                     <% } else { %>
                                         <div class="d-flex">
-                                        <p>Available </p><a class="ml-3" onclick="deleteCategory('<%= item.name %>','<%= category.category %>')">
+                                        <p>Available </p><p class="ml-3" onclick="deleteCategory('<%= item.name %>','<%= category.category %>')">
                                             <img style="width: 1.2rem;" src="/images/navbar/delete.png" alt="delete">
-                                        </a>
+                                        </p>
                                     </div>
                                     <% } %>
                                 <% }) %>
@@ -68,7 +70,7 @@
                                     </p>
                                     <a class="ml-3" href="/admin/category/offer/<%= category.category %>/<%= item.name %>" >
                                                 <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
-                                            </a>
+                                    </a>
                                 </div>
                                 <% }) %>
                             </td>

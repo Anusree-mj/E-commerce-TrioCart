@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminHeader.css">
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a href="/admin"><img class="logo" src="/images/navbar/logo.png" alt="logo"></a>
+
+    <div class="d-flex justify-content-around">
+        <div class=" nav_icons">
+            <img class="nav_icon" src="/images/navbar/dasboards.png" alt="">
+            <a href="/admin/" class="nav_icon_text">Dashboard</a>
+        </div>
+
+        <div class="dropdown nav_icons btn-group ">
+            <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" src="/images/navbar/products.png" alt="">
+            <a class="btn nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown">Products</a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown_text dropdown-item" href="/admin/products">Manage Products</a>
+                <a class="dropdown_text dropdown-item" href="/admin/category">Manage Categories</a> 
+                <a class="dropdown_text dropdown-item" href="/admin/stock">Manage Stock</a>
+
+            </div>
+        </div>
+        <div class="dropdown nav_icons">
+            <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" src="/images/navbar/users.png" alt="orders">
+            <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Users</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/users">Users</a>
+                </div>
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/coupons">Coupons</a>
+                </div>
+            </div>
+        </div>       
+        <!-- orders -->
+        <div class="dropdown nav_icons">
+            <img class="nav_icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" src="/images/navbar/orders.png" alt="orders">
+            <a class="nav_icon_text " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Orders</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/orders">Orders</a>
+                </div>
+                <div class="dropdown-item">
+                    <a class="dropdown_text" href="/admin/returns">Returns</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="nav_icons">
+            <img class="nav_icon" src="/images/navbar/sales.png" alt="">
+            <a href="/admin/sales" class="nav_icon_text">Sales</a>
+        </div>
+
+        <div class="nav_icons">
+            <img class="nav_icon" src="/images/navbar/logout.png" alt="">
+            <a href="/admin/logout" class="nav_icon_text">Logout</a>
+        </div>
+    </div>
+</nav>

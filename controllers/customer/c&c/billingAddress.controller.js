@@ -1,82 +1,90 @@
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const billingAddressHelpers = require('../../../helpers/user/billingAddress-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const billingAddressHelpers = require('../../../helpers/user/c&c/billingAddress-helpers');
 
-const saveBillingAddress = (req, res, next) => {
-    let user = req.body
-    billingAddressHelpers.saveBillingAddress(user).then((result) => {
+const saveBillingAddress = async (req, res, next) => {
+    try {
+        let user = req.body;
+        let result = await billingAddressHelpers.saveBillingAddress(user);
+
         if (result.status === 'ok') {
             res.status(200).json({ status: "ok" });
         } else {
             res.status(400).json({ status: "nok" });
         }
-    })
-}
+    } catch (error) {
+        next(error);
+    }
+};
 
-const getEditBillingAddressDiv = (req, res, next) => {
-    let addressId = req.params.adressId;
-    let sessionId = req.cookies.session
+const getEditBillingAddressDiv = async (req, res, next) => {
+    try {
+        let addressId = req.params.adressId;
+        let sessionId = req.cookies.session;
+        let result = await sessionHelpers.checkSessions(sessionId);
 
-    sessionHelpers.checkSessions(sessionId).then((result) => {
         if (result.status === 'ok') {
-            billingAddressHelpers.getBillingAddress(addressId).then(result => {
-                if (result.address) {
-                    let address = result.address
+            let addressResult = await billingAddressHelpers.getBillingAddress(addressId);
 
-                    res.status(200).json({ status: "ok", address });
-                } else {
-                    res.status(400).json({ status: "nok" });
-                }
-            })
+            if (addressResult.address) {
+                let address = addressResult.address;
+                res.status(200).json({ status: "ok", address });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         } else {
-            res.redirect('/user/login')
+            res.redirect('/user/login');
         }
-    })
-}
+    } catch (error) {
+        next(error);
+    }
+};
 
-const deletBillingAddress = (req, res, next) => {
-    let addressId = req.params.adressId;
-    let sessionId = req.cookies.session
-    console.log('addressid', addressId)
+const deletBillingAddress = async (req, res, next) => {
+    try {
+        let addressId = req.params.adressId;
+        let sessionId = req.cookies.session;
 
-    sessionHelpers.checkSessions(sessionId).then((result) => {
+        let result = await sessionHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            let userId = result.user._id
+            let userId = result.user._id;
+            let deleteResult = await billingAddressHelpers.deleteBillingAddress(addressId, userId);
 
-            billingAddressHelpers.deleteBillingAddress(addressId, userId).then(result => {
-                if (result.status === 'ok') {
-                    res.status(200).json({ status: "ok" });
-                }
-                else {
-                    res.status(400).json({ status: "nok" });
-                }
-            })
+            if (deleteResult.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
+        } else {
+            res.redirect('/user/login');
         }
-        else {
-            res.redirect('/user/login')
-        }
-    })
-}
+    } catch (error) {
+        next(error);
+    }
+};
 
-const updateBillingAddress = (req, res, next) => {
-    let billingAddress = req.body;
-    let sessionId = req.cookies.session
+const updateBillingAddress = async (req, res, next) => {
+    try {
+        let billingAddress = req.body;
+        let sessionId = req.cookies.session;
 
-    sessionHelpers.checkSessions(sessionId).then((result) => {
+        let result = await sessionHelpers.checkSessions(sessionId);
+
         if (result.status === 'ok') {
-            billingAddressHelpers.updateBillingAddress(billingAddress).then(result => {
-                if (result.status === 'ok') {
-                    res.status(200).json({ status: "ok" });
-                }
-                else {
-                    res.status(400).json({ status: "nok" });
-                }
-            })
+            let updateResult = await billingAddressHelpers.updateBillingAddress(billingAddress);
+
+            if (updateResult.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
+        } else {
+            res.redirect('/user/login');
         }
-        else {
-            res.redirect('/user/login')
-        }
-    })
-}
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     saveBillingAddress,

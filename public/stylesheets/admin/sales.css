@@ -1,21 +1,8 @@
-/* Initially hide all dropdowns */
-/* #dailyDropdown .dropdown-menu,
-#weeklyDropdown .dropdown-menu,
-#yearlyDropdown .dropdown-menu {
-    display: none;
-} */
-
-/* Display the dropdown when the parent is hovered */
-/* #dailyDropdown:hover .dropdown-menu,
-#weeklyDropdown:hover .dropdown-menu,
-#yearlyDropdown:hover .dropdown-menu {
-    display: block;
-} */
-
-.butonTxt{
+.butonTxt {
     font-size: 1rem;
     font-weight: bold;
 }
+
 .span {
     height: 1rem;
     color: red;
@@ -23,13 +10,14 @@
     margin-left: 0.5rem;
 }
 
-.mainTxt{
+.mainTxt {
     font-weight: 600;
 }
 
-.buttons{
+.buttons {
     margin-bottom: 2rem;
 }
+
 .overviewCard {
     background: linear-gradient(45deg, #3498db, #e74c3c);
     color: white;
@@ -39,9 +27,22 @@
     margin: 20px;
     display: flex;
     justify-content: space-around;
-  }
+    max-width: 90%;
+}
 
-  .overviewCard p {
+.overviewCard p {
     font-size: 18px;
     margin: 0;
-  }
+}
+
+.cardHead {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 912px) {
+    .overviewCard {
+        display: flex;
+        flex-direction: column;
+    }
+}

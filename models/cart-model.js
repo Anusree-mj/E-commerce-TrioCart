@@ -14,20 +14,20 @@ const CartSchema = new mongoosedb.Schema(
                 ref: 'products',
             },
             Size: {
-                type:String,
+                type: String,
             },
             Count: {
                 type: Number,
                 default: 1,
             },
-            stock:{
-                type:String,
+            stock: {
+                type: String,
             },
         }],
-        discount:{
+        discount: {
             type: Number,
             default: 0,
-        }
+        },
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps

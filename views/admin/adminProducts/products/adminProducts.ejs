@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
-<%- include('../../../partials/adminHeaders') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%- include('../../../partials/headers/adminHeaders') %>
 
     <section>
         <div class="container">
@@ -14,9 +16,10 @@
                             <th scope="col" class="thead">Image</th>
                             <th scope="col" class="ttitle">Tittle</th>
                             <th scope="col" class="thead">Category</th>
-                            <th scope="col" class="thead">SubCategory</th>
+                            <th scope="col" class="thead">SubCat.</th>
                             <th scope="col" class="thead">Size</th>
                             <th scope="col" class="thead">Price</th>
+                            <th scope="col" class="thead">Cat.Offer</th>
                             <th scope="col" class="thead">Offer Price</th>
                             <th scope="col" class="thead">Offer</th>
                             <th scope="col" class="thead">Status</th>
@@ -43,38 +46,44 @@
                                     <%= product.size%>
                                 </td>
                                 <td>
-                                    <%= product.price%>
+                                    ₹ <%= product.price%>
                                 </td>
                                 <td>
-                                    <%= product.offerPrice%>
+                                    <%= product.categoryOffer %>%
+                                </td>
+                                <td>
+                                    ₹ <%= product.offerPrice%>
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                    <p><%= product.productOffer%> %</p>   
-                                    <a class="ml-3" href="/admin/products/offer/<%= product._id%>" >
-                                        <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
-                                    </a> 
-                                </div>                                
+                                        <p>
+                                            <%= product.productOffer%> %
+                                        </p>
+                                        <a class="ml-3" href="/admin/products/offer/<%= product._id%>">
+                                            <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
+                                        </a>
+                                    </div>
                                 </td>
                                 <td>
                                     <% if (product.isDeleted===true) { %>
-                                        <p>Deleted<a class="ml-2"
+                                        <p>Deleted<p class="ml-2"
                                                 onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
                                                     src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
-                                                    id="undoProductDlt"></a></p>
+                                                    id="undoProductDlt"></p></p>
                                         <%} else{ %>
                                             <div class="d-flex">
                                                 <p>Available</p>
-                                                <a class="ml-2" onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
+                                                <p class="ml-2"
+                                                    onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
                                                         style="width: 1.2rem;" src="/images/navbar/delete.png"
-                                                        alt="delete"></a>
+                                                        alt="delete"></p>
                                             </div>
                                             <% } %>
                                 </td>
-                              
+
                                 <td><a href="/admin/products/<%= product._id %>"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1rem;"></a> </td>
-                                
+
                             </tr>
                             <% })%>
                     </tbody>

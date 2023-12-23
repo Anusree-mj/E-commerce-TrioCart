@@ -348,8 +348,8 @@
         </div>
 
         <!-- purchase -->
-        <div class="purchase ">
-            <div class="purchaseOptns sticky-top">
+        <div class="purchase">
+            <div class="purchaseOptns  sticky-top">
                 <div class="d-flex justify-content-between">
                     <p>Discounts</p>
                     <a onclick="togglePurchaseDiv()">Apply discounts</a>
@@ -361,7 +361,11 @@
                 </div>
                 <div class="d-flex justify-content-between mt-2">
                     <p>Delivery</p>
-                    <p class="darkHeads mt-0">0 /-</p>
+                    <p class="darkHeads mt-0">₹ 0 /-</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <p>Discount</p>
+                    <p class="darkHeads mt-0">₹ <%= discount %> /-</p>
                 </div>
                 <hr>
                 <div class=" d-flex justify-content-between">
@@ -397,45 +401,67 @@
 
             </div>
 
+            <!-- apply coupon -->
             <div class="coupon" style="display: none;">
-                <div class="d-flex justify-content-center align-items-center flex-wrap">
+                <div class="d-flex flex-column justify-content-around align-items-center">
                     <p class="boldTxt">Available coupons</p>
-                    <% if (user.coupon && user.coupon.length> 0) { %>
-                        <% user.coupon.forEach(couponItem=>{%>
-                            <% if (couponItem.isApplicable) { %>  
-                            <div class="card mt-4">
-                                <div class="main">
-                                    <div class="co-img">
-                                        <img src="/images/navbar/logo.png" alt="logo">
-                                    </div>
-                                    <div class="vertical"></div>
-                                    <div class="content">
-                                        <h2>TrioCarts</h2>
-                                        <h1>
-                                            <%= couponItem.couponAmount %>% <span>
-                                                    <%= couponItem.name %>
-                                                </span>
-                                        </h1>
-                                        <a class="apply" onclick="applyCoupon('<%= couponItem.name %>',
-                                                    '<%= totalprice %>','<%= cartId %>')">Apply coupon</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <% } %>
-                            <% }) %>
-                                <% } else { %>
-                                    <div class="card ml-4">
+                    <% if (coupons && coupons.length> 0) { %>
+                        <% coupons.forEach(coupon=>{%>
+                            <% if (coupon.isValid && (!user.coupon || !user.coupon.includes(coupon._id))) { %>
+                                <% if (coupon.minAmount < totalprice) { %>
+                                    <div class="cardCoupon mt-4">
                                         <div class="main">
+                                            <div class="co-img">
+                                                <img src="/images/navbar/logo.png" alt="logo">
+                                            </div>
+                                            <div class="vertical"></div>
                                             <div class="content">
-                                                <p>No coupons yet</p>
+                                                <h2>TrioCarts</h2>
+                                                <h1>
+                                                    <%= coupon.discount %>% Off
+                                                </h1>
+                                                <h2>
+                                                    <%= coupon.name %>
+                                                </h2>
+
+                                                <p class="apply" onclick="applyCoupon('<%= coupon._id %>',
+                                            '<%= totalprice %>','<%= cartId %>')">
+                                                    Apply
+                                                    coupon</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <% } %>
-                                        <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <a onclick="cancelCoupon()" type="button" class="btn btn-dark save mt-3"
-                                                style="color: white;">Cancel</a>
+                                    <% } else { %>
+                                        <div class="cardCoupon mt-4">
+                                            <div class="main">
+                                                <div class="co-img">
+                                                    <img src="/images/navbar/logo.png" alt="logo">
+                                                </div>
+                                                <div class="vertical"></div>
+                                                <div class="content">
+                                                    <h2>TrioCarts</h2>
+                                                    <h1>
+                                                        <%= coupon.discount %>% Off
+                                                    </h1>
+                                                    <h2>
+                                                        <%= coupon.name %>
+                                                    </h2>
+                                                    <p class="couponAvailability">To validate, buy up to ₹<%=
+                                                            coupon.minAmount %>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        <% } %>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% } %>
+                                                        <div>
+                                                            <p onclick="cancelCoupon()" type="button"
+                                                                class="btn btn-dark save mt-3" style="color: white;">
+                                                                Cancel</p>
+                                                        </div>
                 </div>
             </div>
         </div>

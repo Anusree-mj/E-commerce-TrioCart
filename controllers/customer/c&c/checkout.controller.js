@@ -1,8 +1,10 @@
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
-const orderHelpers = require('../../../helpers/user/orderHelpers');
-const verifyPaymentHelpers = require('../../../helpers/user/verifyPayment-helpers');
-const razorpayUtil = require('../../../utils/razorpayUtil')
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
+const orderHelpers = require('../../../helpers/user/orders/orderHelpers');
+const verifyPaymentHelpers = require('../../../helpers/user/orders/verifyPayment-helpers');
+const razorpayUtil = require('../../../utils/razorpayUtil');
+const couponHelpers = require('../../../helpers/admin/manageUser/coupon-helpers');
+
 
 const getCheckoutPage = async (req, res, next) => {
     try {
@@ -14,17 +16,17 @@ const getCheckoutPage = async (req, res, next) => {
             const cartResult = await cartHelpers.getMyCartProducts(user);
 
             if (cartResult.stockAvailability) {
-                // console.log('dsfdsf',cartResult.stockAvailability)
-                const { cartId, discount,
-                    cartProducts, totalprice, totalCount } = cartResult;
+                const { cartId, discount, cartProducts, totalprice, totalCount } = cartResult;
+                const coupons = await couponHelpers.getAllCoupons();
 
-                console.log('iddd', cartId)
                 res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
                     cartProducts,
                     totalCartProduct: totalCount,
-                    totalprice, cartId, discount
+                    totalprice,
+                    cartId,
+                    discount, coupons
                 });
             } else {
                 res.redirect('/cart');
@@ -33,79 +35,84 @@ const getCheckoutPage = async (req, res, next) => {
             res.redirect('/user/login');
         }
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 };
 
-const saveOrderAddress = (req, res, next) => {
-    let userId = req.params.userId;
-    let sessionId = req.cookies.session
+const saveOrderAddress = async (req, res, next) => {
+    try {
+        let userId = req.params.userId;
+        let sessionId = req.cookies.session;
 
-    sessionHelpers.checkSessions(sessionId).then((result) => {
-        if (result.status === 'ok') {
+        const sessionResult = await sessionHelpers.checkSessions(sessionId);
 
-            orderHelpers.saveOrderAddress(userId, req.body).then(result => {
-                if (result.status === 'ok') {
-                    res.status(200).json({ status: "ok" });
-                } else {
-                    res.status(400).json({ status: "nok" });
-                }
-            })
+        if (sessionResult.status === 'ok') {
+            const result = await orderHelpers.saveOrderAddress(userId, req.body);
+
+            if (result.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         } else {
-            res.redirect('/user/login')
+            res.redirect('/user/login');
         }
-    })
-}
+    } catch (err) {
+        next(err);
+    }
+};
 
-const submitCheckoutPageDetails = (req, res, next) => {
-    let orderDetails = req.body;
-    let sessionId = req.cookies.session
+const submitCheckoutPageDetails = async (req, res, next) => {
+    try {
+        let orderDetails = req.body;
+        let sessionId = req.cookies.session;
 
-    sessionHelpers.checkSessions(sessionId).then((result) => {
-        if (result.status === 'ok') {
-            const user = result.user
-            orderHelpers.saveOrderDetails(orderDetails).then(async (result) => {
-                if (result.status === 'ok') {
-                    if (orderDetails.paymentMethod === 'onlinePayment') {
-                        let orderId = result.orderId
-                        let totalAmount = result.totalAmount
-                        const order = await razorpayUtil.createRazorpayOrder(orderId, totalAmount);
-                        console.log('order in route', order)
-                        res.status(200).json({ status: "ok", order, user });
-                    }
-                    else {
-                        res.status(200).json({ status: "ok" });
-                    }
+        const sessionResult = await sessionHelpers.checkSessions(sessionId);
+
+        if (sessionResult.status === 'ok') {
+            const user = sessionResult.user;
+            const result = await orderHelpers.saveOrderDetails(orderDetails);
+
+            if (result.status === 'ok') {
+                if (orderDetails.paymentMethod === 'onlinePayment') {
+                    let orderId = result.orderId;
+                    let totalAmount = result.totalAmount;
+                    const order = await razorpayUtil.createRazorpayOrder(orderId, totalAmount);
+                    res.status(200).json({ status: "ok", order, user });
+                } else {
+                    res.status(200).json({ status: "ok" });
                 }
-                else {
-                    res.status(400).json({ status: "nok" });
-                }
-            })
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         }
-    })
-}
+    } catch (err) {
+        next(err);
+    }
+};
 
 const verifyPayment = async (req, res, next) => {
-    console.log('payment details', req.body)
-    let sessionId = req.cookies.session
-    let paymentDetails = req.body
-    const sessionResult = await sessionHelpers.checkSessions(sessionId);
-    const user = sessionResult.user
+    try {
+        let sessionId = req.cookies.session;
+        let paymentDetails = req.body;
+        const sessionResult = await sessionHelpers.checkSessions(sessionId);
+        const user = sessionResult.user;
 
-    const paymentMatch = razorpayUtil.verifyPayment(paymentDetails)
-    if (paymentMatch.status === 'ok') {
-        const saveResult = await verifyPaymentHelpers.savePaymentDetails(paymentDetails, user);
-        if (saveResult.status === 'ok') {
-            res.status(200).json({ status: "ok" });
+        const paymentMatch = await razorpayUtil.verifyPayment(paymentDetails);
+
+        if (paymentMatch.status === 'ok') {
+            const saveResult = await verifyPaymentHelpers.savePaymentDetails(paymentDetails, user);
+            if (saveResult.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            }
+        } else {
+            res.status(400).json({ status: "nok" });
         }
-
+    } catch (err) {
+        next(err);
     }
-    else {
-        console.log('payment doesnt match')
-        res.status(400).json({ status: "nok" });
-    }
+};
 
-}
 
 module.exports = {
     getCheckoutPage,

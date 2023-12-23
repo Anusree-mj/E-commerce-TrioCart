@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="/stylesheets/admin/addProducts.css">
+<link rel="stylesheet" href="/stylesheets/admin/updates.css">
 <link rel="stylesheet" href="/cropperjs/cropper.css">
 
-<%- include('../../../partials/adminHeaders') %>
+<%- include('../../../partials/headers/adminHeaders') %>
 
     <div class="row align-items-center justify-content-center ">
         <div class="addForm">
@@ -67,13 +67,7 @@
                 <input onclick="clearValidity('price'); clearSpan('priceSpan')" onblur="isValidPrice('price')"
                     type="text" class="form-control" name="price" id="price" value="<%= productData.price%>">
                 <span id="priceSpan" class="span"></span>
-
-                <label class="label" for="stock">Stock<span class="required">*</span></label>
-                <input onclick="clearValidity('stock'); clearSpan('stockSpan')" onblur="isValidPrice('stock')"
-                    type="text" class="form-control" name="stock" id="stock" placeholder="Product stock"
-                    value="<%= productData.stock%>">
-                <span id="stockSpan" class="span"></span>
-
+              
                 <!-- curent image -->
                 <label class="label" id="image" for="image">Image</label>
                 <div class="image-preview">

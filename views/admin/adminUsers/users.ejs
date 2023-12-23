@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
-<%- include('../../partials/adminHeaders') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%- include('../../partials/headers/adminHeaders') %>
 
     <section>
         <div style="padding: 2rem;"></div>
@@ -34,15 +36,15 @@
 
                                 <td>
                                     <% if (user.isBlocked) { %>
-                                        <p>Blocked<a onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"></a></p>
+                                        <p>Blocked<p onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"></p></p>
                                      <% } else { %>
                                         <p>Active</p>
                                      <% } %>
                                      
                                 </td>
                                 <td>
-                                    <a onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img
-                                            src="/images/home/block.png" alt="edit" style="width: 1.5rem;"></a>
+                                    <p onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img
+                                            src="/images/home/block.png" alt="edit" style="width: 1.5rem;"></p>
                                 </td>
                             </tr>
                             <% })%>

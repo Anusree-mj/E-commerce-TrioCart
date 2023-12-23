@@ -110,7 +110,7 @@ function isValidPrice(field) {
 // edit product
 function editProduct(product_id) {
 
-    const fields = ["name", "detailed_description", "category", "subCategory", "price", "stock"];
+    const fields = ["name", "detailed_description", "category", "subCategory", "price"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -133,8 +133,7 @@ function editProduct(product_id) {
     let detailed_description = document.getElementById('detailed_description').value;
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
-    let price = document.getElementById('price').value;
-    let stock = document.getElementById('stock').value;
+    let price = document.getElementById('price').value;   
 
     let sizeMap = {
         'option1': 'S',
@@ -171,7 +170,7 @@ function editProduct(product_id) {
         let reqBody =
         {
             name, detailed_description, category,
-            subCategory, price, size, stock, imagePath, detailedImagePaths
+            subCategory, price, size, imagePath, detailedImagePaths
         }
 
         console.log(reqBody);
