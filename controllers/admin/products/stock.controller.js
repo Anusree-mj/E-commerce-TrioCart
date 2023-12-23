@@ -9,7 +9,6 @@ const getStockPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let products = await productHelpers.getAllProducts();
-            console.log('productsdetails', products[0]);
             res.render('admin/adminStock/stock', { layout: 'layout/layout', products });
         } else {
             res.redirect('/admin');
@@ -21,16 +20,13 @@ const getStockPage = async (req, res, next) => {
 
 const getEditProductStockPage = async (req, res, next) => {
     try {
-        console.log('entered in get edit stock page');
         const productId = req.params.productId;
         const getSize = req.params.size;
 
-        console.log('Product ID:', productId);
         let result = await adminImgStockHelpers.getProductStockForEditing(productId, getSize);
 
         if (result) {
             const { productData, size, count } = result;
-            console.log('productdata in edit stock page', productData);
             res.render('admin/adminStock/editStockProduct', { productData, size, count });
         } else {
             res.redirect('/products');
@@ -44,8 +40,6 @@ const editProductStock = async (req, res, next) => {
     try {
         const productId = req.params.product_Id;
         const { stock, size } = req.body;
-        console.log('entered in edit stock');
-        console.log('stockgottt:', stock, 'size:', size);
 
         let result = await adminImgStockHelpers.editStock(stock, size, productId);
 

@@ -8,7 +8,6 @@ const getProductOfferPage = (req, res, next) => {
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
             adminProductOfferHelpers.getProductOfferDetails(productId).then(productDetails => {
-                console.log('cafjsdfjaelf', productDetails)
                 res.render('admin/adminProducts/productOffers/productOffer',
                     { layout: 'layout/layout', productDetails })
             })
@@ -22,13 +21,11 @@ const getProductOfferPage = (req, res, next) => {
 const editProductOffer = (req, res, next) => {
     let productId = req.params.productId;
     let sessionId = req.cookies.adminSession;
-    const {offer} =req.body;
-        
+    const { offer } = req.body;
+
     adminLoginHelpers.checkSessions(sessionId).then(result => {
         if (result.status === 'ok') {
-            console.log('sdfsdf')
-           adminProductOfferHelpers.editOffer(productId,offer).then((result) => {
-                console.log('updated',result)
+            adminProductOfferHelpers.editOffer(productId, offer).then((result) => {
                 if (result.status === 'ok') {
                     res.status(200).json({ status: "ok" });
                 } else {
@@ -42,7 +39,7 @@ const editProductOffer = (req, res, next) => {
     })
 }
 
- module.exports = {
+module.exports = {
     getProductOfferPage,
     editProductOffer
- }
+}

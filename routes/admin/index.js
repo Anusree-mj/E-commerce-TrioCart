@@ -128,7 +128,6 @@ router.post('/verifyPayment', controller.adminControllers.returnController.verif
 // sales page
 router.get('/sales', controller.adminControllers.salesController.getSalesPage);
 
-
 //logout
 router.get('/logout', controller.adminControllers.loginController.logout);
 

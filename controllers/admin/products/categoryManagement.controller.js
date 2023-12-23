@@ -9,7 +9,6 @@ const getCategoryPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let categories = await categoryHelpers.getCategoryDetails();
-            console.log('categoriesss', categories[0]);
             res.render('admin/adminCategory/category/adminCategories', { layout: 'layout/layout', categories });
         } else {
             res.redirect('/admin');

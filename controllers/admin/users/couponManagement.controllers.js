@@ -8,7 +8,6 @@ const getCouponsPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let coupons = await couponHelpers.getAllCoupons();
-            console.log(coupons, 'coupons')
             res.render('admin/adminCoupons/coupons', {
                 layout: 'layout/layout',
                 coupons
@@ -40,7 +39,6 @@ const getAddCouponsPage = async (req, res, next) => {
 
 const addCoupon = async (req, res, next) => {
     try {
-        console.log('entered in add coupon function')
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
@@ -68,7 +66,6 @@ const getEditCouponsPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             const coupon = await couponHelpers.getACoupon(couponId);
-            console.log('couponnn',coupon)
             res.render('admin/adminCoupons/editCoupon', {
                 layout: 'layout/layout', coupon
             });
@@ -82,7 +79,6 @@ const getEditCouponsPage = async (req, res, next) => {
 
 const editCoupon = async (req, res, next) => {
     try {
-        console.log('entered in edit coupon function')
         const couponId = req.params.couponId;
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);

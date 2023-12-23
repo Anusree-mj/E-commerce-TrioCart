@@ -8,7 +8,6 @@ const getUserPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let users = await adminUserHelpers.getUsers();
-            console.log(users);
             res.render('admin/adminUsers/users', { layout: 'layout/layout', users });
         } else {
             res.redirect('/admin');

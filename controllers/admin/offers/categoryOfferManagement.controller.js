@@ -10,7 +10,6 @@ const getCategoryOfferPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let categoryDetails = await adminCategoryOfferHelpers.getCategoryOfferDetails(subCategory, category);
-            console.log('cafjsdfjaelf', categoryDetails);
             res.render('admin/adminCategory/categoryOffers/categoryOffer', { layout: 'layout/layout', categoryDetails });
         } else {
             res.redirect('/admin');
@@ -29,7 +28,6 @@ const editCategoryOffer = async (req, res, next) => {
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            console.log('sdfsdf');
             let editResult = await adminCategoryOfferHelpers.editOffer(category, subCategory, offer);
 
             if (editResult.status === 'ok') {

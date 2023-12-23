@@ -10,10 +10,8 @@ const getReturnsPage = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let resultReturns = await adminReturnHelpers.getAllProductReturns();
-            const returnDetails = resultReturns.returns;          
+            const returnDetails = resultReturns.returns;
             const orderId = returnDetails.orderId;
-            console.log('orderid in return', orderId);
-            console.log('returns:::', returnDetails);
             res.render('admin/adminOrders/adminReturns', { layout: 'layout/layout', returnDetails, orderId });
         } else {
             res.redirect('/admin/login');
@@ -49,7 +47,6 @@ const doRefund = async (req, res, next) => {
 
         if (result.status === 'ok') {
             const order = await razorpayUtil.createRazorpayOrder(returnId, amount);
-            console.log('order in route', order);
 
             if (order) {
                 let userResult = await adminUserHelpers.getAUser(userId);
@@ -68,7 +65,6 @@ const doRefund = async (req, res, next) => {
 };
 
 const verifyPayment = async (req, res, next) => {
-    console.log('payment details', req.body);
     let sessionId = req.cookies.adminSession;
     let paymentDetails = req.body;
 
@@ -85,7 +81,6 @@ const verifyPayment = async (req, res, next) => {
                     res.status(200).json({ status: "ok" });
                 }
             } else {
-                console.log('payment doesn\'t match');
                 res.status(400).json({ status: "nok" });
             }
         } else {
