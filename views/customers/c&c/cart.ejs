@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
         <%} else{ %>
-            <%- include('../../partials/header') %>
+            <%- include('../../partials/headers/header') %>
                 <% } %>
                     <%- include('../../partials/subHeader',allCategories) %>
 
@@ -69,35 +69,35 @@
                                     <div class="purchase">
                                         <div class="purchase-box sticky-top">
                                             <div class="purchaseOptns">
-                                            <div class="d-flex justify-content-between">
-                                                <p>Discounts</p>
-                                                <p class="apply" onclick="toggleCouponDiv()">Apply discounts</p>
+                                                <div class="d-flex justify-content-between">
+                                                    <p>Discounts</p>
+                                                    <p class="apply" onclick="toggleCouponDiv()">Apply discounts</p>
+                                                </div>
+                                                <hr>
+                                                <div class=" d-flex justify-content-between">
+                                                    <p class="boldTxt">Total</p>
+                                                    <p class="boldTxt">₹ <%= totalprice %> /-</p>
+                                                </div>
+                                                <a href="/checkout" type="button" class="btn btn-secondary purchasebtn">
+                                                    Continue to
+                                                    Checkout </a>
+                                                <p class="darkHeads">We accept</p>
+                                                <div class="d-flex justify-content-around align-items-center">
+                                                    <p class="paytxt">Cash On Delivery</p>
+                                                    <img src="/images/home/visa.png" alt="">
+                                                    <img src="/images/home/rupay.png" alt="">
+                                                    <p class="paytxt">EMI</p>
+                                                    <img src="/images/home/gpay.png" alt="">
+                                                </div>
+                                                <p class="mt-4">
+                                                    Prices and delivery costs are not confirmed until you've reached the
+                                                    checkout.</p>
+                                                <p>15 days free returns. Read more about return and refund policy.
+                                                    Customers would receive an SMS/WhatsApp notifications regarding
+                                                    deliveries on the registered phone number
+                                                </p>
                                             </div>
-                                            <hr>
-                                            <div class=" d-flex justify-content-between">
-                                                <p class="boldTxt">Total</p>
-                                                <p class="boldTxt">₹ <%= totalprice %> /-</p>
-                                            </div>
-                                            <a href="/checkout" type="button" class="btn btn-secondary purchasebtn">
-                                                Continue to
-                                                Checkout </a>
-                                            <p class="darkHeads">We accept</p>
-                                            <div class="d-flex justify-content-around align-items-center">
-                                                <p class="paytxt">Cash On Delivery</p>
-                                                <img src="/images/home/visa.png" alt="">
-                                                <img src="/images/home/rupay.png" alt="">
-                                                <p class="paytxt">EMI</p>
-                                                <img src="/images/home/gpay.png" alt="">
-                                            </div>
-                                            <p class="mt-4">
-                                                Prices and delivery costs are not confirmed until you've reached the
-                                                checkout.</p>
-                                            <p>15 days free returns. Read more about return and refund policy.
-                                                Customers would receive an SMS/WhatsApp notifications regarding
-                                                deliveries on the registered phone number
-                                            </p>
-                                        </div>
-                                           
+
                                         </div>
                                     </div>
                                 </div>

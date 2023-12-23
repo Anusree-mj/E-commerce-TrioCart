@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-        <%} else{ %>
-            <%- include('../../partials/header') %>
+    <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%} else{ %>
+            <%- include('../../partials/headers/header') %>
                 <% } %>
                     <%- include('../../partials/subHeader',allCategories) %>
                         <section class="productsSctn d-flex justify-content-between ">
@@ -193,14 +193,14 @@
                                                                         <p class="card-text">
                                                                             ₹ <%= product.price %>/-
                                                                         </p>
-                                                                        <%} else{ %>                                                                           
+                                                                        <%} else{ %>
                                                                             <p class="card-text original-price">
-                                                                              ₹ <%=product.price %>
+                                                                                ₹ <%=product.price %>
                                                                             </p>
-                                                                       
+
                                                                             <p class="card-text ml-2">
-                                                                                ₹ <%= product.offerPrice %>/- 
-                                                                            </p>                                                                       
+                                                                                ₹ <%= product.offerPrice %>/-
+                                                                            </p>
                                                                             <% } %>
                                                                 </div>
                                                             </div>

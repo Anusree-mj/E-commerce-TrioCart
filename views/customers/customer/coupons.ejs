@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/users/profile.css">
 <link rel="stylesheet" href="/stylesheets/users/coupon.css">
 
-<%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+<%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
     <%- include('../../partials/subHeader',allCategories) %>
 
         <section class="profilepage">
@@ -24,7 +24,7 @@
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <button type="button" class="btn btn-dark save "
                                 onclick="addReferralCode('<%= user.email %>')">Apply Code</button>
-                                <a href="/coupon" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
+                            <a href="/coupon" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -40,17 +40,17 @@
                                 <div class="vertical"></div>
                                 <div class="content">
                                     <h2>TrioCarts</h2>
-                                            <h1>
-                                                <%= coupon.name %>
-                                            </h1>
-                                            <p >
-                                                <%= coupon.description %>
-                                            </p>
-                                    <% if (!user.coupon || !user.coupon.includes(coupon._id)) { %>   
-                                                <p class="discountCoupon">Enjoy Coupon !!!</p>
-                                                <% } else { %>
-                                                    <p class="usedCoupon">x Coupon Used x</p>
-                                                    <% } %>
+                                    <h1>
+                                        <%= coupon.name %>
+                                    </h1>
+                                    <p>
+                                        <%= coupon.description %>
+                                    </p>
+                                    <% if (!user.coupon || !user.coupon.includes(coupon._id)) { %>
+                                        <p class="discountCoupon">Enjoy Coupon !!!</p>
+                                        <% } else { %>
+                                            <p class="usedCoupon">x Coupon Used x</p>
+                                            <% } %>
                                 </div>
                             </div>
                         </div>
