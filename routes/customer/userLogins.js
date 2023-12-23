@@ -18,7 +18,8 @@ router.post('/signup', controller.customerControllers.signupController.sendUserS
 router.get('/verify', controller.customerControllers.otpController.getOTPVerificationPage);
 
 //resend otp 
-router.get('/resend/otp', controller.customerControllers.otpController.resendOTP)
+router.get('/resend/otp', controller.customerControllers.otpController.resendOTP);
+
 //verify user
 router.post('/verify', controller.customerControllers.otpController.verifyUser);
 

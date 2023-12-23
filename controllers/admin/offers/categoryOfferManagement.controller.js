@@ -15,7 +15,7 @@ const getCategoryOfferPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -39,7 +39,7 @@ const editCategoryOffer = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

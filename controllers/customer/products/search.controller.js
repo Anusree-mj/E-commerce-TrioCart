@@ -1,13 +1,12 @@
-const categoryHelpers = require('../../../helpers/user/category-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const productQueryHelpers = require('../../../helpers/user/productQuery-helpers')
-const cartHelpers = require('../../../helpers/user/cart-helpers');
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const productQueryHelpers = require('../../../helpers/user/products/productQuery-helpers')
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
 
 const searchProduct = async (req, res, next) => {
     try {
         let allCategories = await categoryHelpers.getCategoryDetails();
         let query = req.query.q;
-        console.log("queryyyyyyy", query);
         let sessionId = req.cookies.session;
 
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
@@ -58,7 +57,7 @@ const searchProduct = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

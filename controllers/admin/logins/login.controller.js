@@ -19,7 +19,7 @@ const sendAdminLoginRequest = async (req, res, next) => {
       res.status(400).json({ status: "nok" });
     }
   } catch (error) {
-    console.error(error);
+   next(error);
   }
 };
 
@@ -35,7 +35,7 @@ const logout = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+   next(error);
   }
 };
 

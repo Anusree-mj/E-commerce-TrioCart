@@ -1,7 +1,6 @@
-const categoryHelpers = require('../../../helpers/user/category-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
-
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
 
 const getCategoryProductsPage = async (req, res, next) => {
     try {
@@ -50,8 +49,8 @@ const getCategoryProductsPage = async (req, res, next) => {
                 user: undefined
             });
         }
-    } catch (error) {       
-        console.error(error);        
+    } catch (error) {
+        next(error);
     }
 };
 

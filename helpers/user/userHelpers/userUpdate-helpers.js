@@ -1,7 +1,7 @@
-const collection = require('../../models/index-model')
+const collection = require('../../../models/index-model')
 const bcrypt = require('bcrypt');
-const signupUtil = require('../../utils/signupUtil');
-const cronFnctn = require('../../utils/cron');
+const signupUtil = require('../../../utils/signupUtil');
+const cronFnctn = require('../../../utils/cron');
 
 module.exports = {
     verifyUser: async (userData, otp, userId) => {

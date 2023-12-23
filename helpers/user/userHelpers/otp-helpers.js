@@ -1,6 +1,6 @@
-const collection = require('../../models/index-model')
-const signupUtil = require('../../utils/signupUtil');
-const cronFnctn = require('../../utils/cron');
+const collection = require('../../../models/index-model')
+const signupUtil = require('../../../utils/signupUtil');
+const cronFnctn = require('../../../utils/cron');
 
 module.exports = {
     getOtp: async (email, otp) => {

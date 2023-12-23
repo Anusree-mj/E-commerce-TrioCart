@@ -17,7 +17,7 @@ const getReturnsPage = async (req, res, next) => {
             res.redirect('/admin/login');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -32,7 +32,7 @@ const editReturnStatus = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -59,8 +59,7 @@ const doRefund = async (req, res, next) => {
             res.redirect('/admin/login');
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ status: "error" });
+        next(error); res.status(500).json({ status: "error" });
     }
 };
 
@@ -87,7 +86,7 @@ const verifyPayment = async (req, res, next) => {
             res.redirect('/admin/login');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

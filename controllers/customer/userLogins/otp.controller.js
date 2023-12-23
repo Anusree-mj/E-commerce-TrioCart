@@ -1,6 +1,6 @@
-const userHelpers = require('../../../helpers/user/user-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const otpHelpers = require('../../../helpers/user/otp-helpers');
+const userHelpers = require('../../../helpers/user/userHelpers/user-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const otpHelpers = require('../../../helpers/user/userHelpers/otp-helpers');
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../../../utils/signupUtil');
 
@@ -20,8 +20,8 @@ const resendOTP = async (req, res, next) => {
         } else {
             res.status(400).json({ status: "nok" });
         }
-    } catch (error) {     
-        console.error(error);        
+    } catch (error) {
+        next(error);
     }
 };
 
@@ -41,7 +41,7 @@ const verifyUser = async (req, res, next) => {
             res.status(400).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -57,7 +57,7 @@ const getOTP = async (req, res, next) => {
             res.status(400).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -73,7 +73,7 @@ const verifyOTP = async (req, res, next) => {
             res.status(400).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

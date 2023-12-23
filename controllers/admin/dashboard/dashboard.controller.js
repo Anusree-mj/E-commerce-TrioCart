@@ -27,7 +27,7 @@ const getDashboardPage = async (req, res, next) => {
       res.redirect('/admin/login');
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -44,7 +44,7 @@ const getOrderGraph = async (req, res, next) => {
       res.status(200).json({ status: "nok" });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 

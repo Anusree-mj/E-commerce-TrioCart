@@ -1,5 +1,5 @@
 const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
-const categoryHelpers = require('../../../helpers/user/category-helpers');
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
 const adminCategoryHelpers = require('../../../helpers/admin/products/adminCategory-hepers');
 
 const getCategoryPage = async (req, res, next) => {
@@ -14,7 +14,7 @@ const getCategoryPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -29,7 +29,7 @@ const getAddCategoryPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -45,7 +45,7 @@ const softDeleteSubcategory = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -61,7 +61,7 @@ const undoSoftDeleteSubcategory = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -75,7 +75,7 @@ const addSubcategory = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -93,7 +93,7 @@ const getEditCategoryPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -107,7 +107,7 @@ const editSubcategory = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

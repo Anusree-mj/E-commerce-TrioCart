@@ -1,11 +1,8 @@
 <link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
-<%- include('../../partials/adminHeaders') %>
+<%- include('../../partials/headers/adminHeaders') %>
 
     <section>
-        <div class="container">
-            <div class="subHead">
-                <a type="button" href="/admin/addProduct" class="btn btn-info ml-auto addButton">Add Product</a>
-            </div>
+        <div class="container mt-4">
             <div class="table-responsive">
                 <table class="table table-striped" id="productsTable">
                     <thead>
@@ -37,8 +34,8 @@
                                     <% product.sizesStock.forEach((sizeStock)=> { %>
                                         <p>
                                             <%= sizeStock.size %>: <%= sizeStock.count %>
-                                            <a href="/admin/stock/<%= product._id %>/<%= sizeStock.size %>">
-                                                <img src="/images/navbar/edit.png" alt="edit"
+                                                    <a href="/admin/stock/<%= product._id %>/<%= sizeStock.size %>">
+                                                        <img src="/images/navbar/edit.png" alt="edit"
                                                             style="width: 1rem;"></a>
                                         </p>
                                         <% })%>

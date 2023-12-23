@@ -1,4 +1,4 @@
-const collection = require('../../models/index-model')
+const collection = require('../../../models/index-model')
 
 
 module.exports = {

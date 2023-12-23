@@ -1,6 +1,6 @@
-const collection = require('../../models/index-model')
-const delvryTimeUtil = require('../../utils/delvryTymUtil');
-const userReadableIdUtil = require('../../utils/userReadableId');
+const collection = require('../../../models/index-model')
+const delvryTimeUtil = require('../../../utils/delvryTymUtil');
+const userReadableIdUtil = require('../../../utils/userReadableId');
 
 module.exports = {
     saveOrderAddress: async (userId, billingAddress) => {

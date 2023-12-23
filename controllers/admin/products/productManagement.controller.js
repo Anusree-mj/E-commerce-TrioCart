@@ -1,7 +1,7 @@
 const adminLoginHelpers = require('../../../helpers/admin/login/adminLogin-helpers');
 const adminProductHelpers = require('../../../helpers/admin/products/adminProduct-helpers');
 const adminImgStockHelpers = require('../../../helpers/admin/products/adminImgStock-helpers');
-const productHelpers = require('../../../helpers/user/product-helpers')
+const productHelpers = require('../../../helpers/user/products/product-helpers')
 
 const getProductPage = async (req, res, next) => {
     try {
@@ -15,7 +15,7 @@ const getProductPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -30,7 +30,7 @@ const getAddProductPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -44,7 +44,7 @@ const addProduct = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -60,7 +60,7 @@ const softDeleteProductMainImage = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -77,7 +77,7 @@ const softDeleteProductDetailedImage = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -93,7 +93,7 @@ const softDeleteProduct = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -109,7 +109,7 @@ const undoSoftDeleteProduct = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -125,7 +125,7 @@ const getEditProductPage = async (req, res, next) => {
             res.redirect('/products');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -141,7 +141,7 @@ const editProduct = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

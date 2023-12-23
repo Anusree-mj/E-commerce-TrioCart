@@ -1,14 +1,14 @@
-const productHelpers = require('../../../helpers/user/product-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const categoryHelpers = require('../../../helpers/user/category-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
+const productHelpers = require('../../../helpers/user/products/product-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
 
 const getCartPage = async (req, res, next) => {
     try {
         let allCategories = await categoryHelpers.getCategoryDetails();
         let result = await productHelpers.getNewArrivalProducts();
         let viewMoreProducts = [...result.category1, ...result.category2,
-             ...result.category3, ...result.category4];
+        ...result.category3, ...result.category4];
         let sessionId = req.cookies.session;
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
 

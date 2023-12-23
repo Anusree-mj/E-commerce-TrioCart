@@ -14,7 +14,7 @@ const getOrderPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -29,7 +29,7 @@ const editOrderStatus = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -48,7 +48,7 @@ const getOrderDetailPage = async (req, res, next) => {
             res.redirect('/admin/login');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

@@ -1,8 +1,8 @@
-const collection = require('../../models/index-model')
+const collection = require('../../../models/index-model')
 const bcrypt = require('bcrypt')
-const signupUtil = require('../../utils/signupUtil');
-const referralCodeUtil = require('../../utils/referralCode');
-const { updateOne } = require('../../models/order-model');
+const signupUtil = require('../../../utils/signupUtil');
+const referralCodeUtil = require('../../../utils/referralCode');
+const { updateOne } = require('../../../models/order-model');
 
 let referralCreditCount = 0;
 

@@ -1,8 +1,8 @@
-const productHelpers = require('../../../helpers/user/product-helpers')
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const categoryHelpers = require('../../../helpers/user/category-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
-const orderHelpers = require('../../../helpers/user/orderHelpers');
+const productHelpers = require('../../../helpers/user/products/product-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
+const orderHelpers = require('../../../helpers/user/orders/orderHelpers');
 
 const getOrderSuccessPage = async (req, res, next) => {
     try {
@@ -109,7 +109,7 @@ const getOrderDetailPage = async (req, res, next) => {
             res.redirect('/user/login');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -146,7 +146,6 @@ const returnProduct = async (req, res, next) => {
             let returnResult = await orderHelpers.returnProduct(productId, returnDetails, userId);
 
             if (returnResult.status === 'ok') {
-                console.log('return data added to db');
                 res.status(200).json({ status: "ok" });
             } else {
                 res.status(400).json({ status: "nok" });

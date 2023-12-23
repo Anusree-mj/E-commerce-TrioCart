@@ -1,4 +1,4 @@
-const userHelpers = require('../../../helpers/user/user-helpers');
+const userHelpers = require('../../../helpers/user/userHelpers/user-helpers');
 const uuidv4 = require('uuid').v4
 const signupUtil = require('../../../utils/signupUtil');
 
@@ -19,7 +19,7 @@ const sendUserSignupRequest = async (req, res, next) => {
             res.status(400).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 

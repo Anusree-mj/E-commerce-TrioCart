@@ -1,9 +1,9 @@
-const userUpdateHelpers = require('../../../helpers/user/userUpdate-helpers');
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const categoryHelpers = require('../../../helpers/user/category-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
+const userUpdateHelpers = require('../../../helpers/user/userHelpers/userUpdate-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const categoryHelpers = require('../../../helpers/user/products/category-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
 const signupUtil = require('../../../utils/signupUtil');
-const walletHelpers = require('../../../helpers/user/wallet-helpers')
+const walletHelpers = require('../../../helpers/user/userHelpers/wallet-helpers')
 
 const getProfilePage = async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ const getProfilePage = async (req, res, next) => {
     if (result.status === 'ok') {
       let user = result.user;
       let userId = result.user._id;
-      
+
       let cartResult = await cartHelpers.getMyCartProducts(userId);
 
       if (cartResult) {
@@ -45,14 +45,12 @@ const getProfilePage = async (req, res, next) => {
 
 const sendUserProfileUpdateRequest = async (req, res, next) => {
   try {
-    console.log('entered in senduserprodfileupdate');
     let userId = req.params.userId;
     const otp = signupUtil.generateOTP();
     let result = await userUpdateHelpers.verifyUser(req.body, otp, userId);
 
     if (result.status === 'ok') {
       const tempUserId = result.tempUserId;
-      console.log(tempUserId, 'gsdjkjgew');
       res.status(200).json({ status: "ok", tempUserId });
     } else {
       res.status(400).json({ status: "nok" });

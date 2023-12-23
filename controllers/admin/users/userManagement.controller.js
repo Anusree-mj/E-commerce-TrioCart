@@ -13,7 +13,7 @@ const getUserPage = async (req, res, next) => {
             res.redirect('/admin');
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -29,7 +29,7 @@ const softDeleteUser = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 
@@ -45,7 +45,7 @@ const undoSoftDeleteUser = async (req, res, next) => {
             res.status(500).json({ status: "nok" });
         }
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 };
 module.exports = {

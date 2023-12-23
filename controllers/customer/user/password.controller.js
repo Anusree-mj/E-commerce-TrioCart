@@ -1,4 +1,4 @@
-const userUpdateHelpers = require('../../../helpers/user/userUpdate-helpers');
+const userUpdateHelpers = require('../../../helpers/user/userHelpers/userUpdate-helpers');
 
 const getForgotPasswordPage = (req, res, next) => {
     res.render('customers/logins/changePassword', { layout: 'layout/layout' });

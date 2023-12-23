@@ -1,7 +1,7 @@
-const sessionHelpers = require('../../../helpers/user/session-helpers');
-const cartHelpers = require('../../../helpers/user/cart-helpers');
-const orderHelpers = require('../../../helpers/user/orderHelpers');
-const verifyPaymentHelpers = require('../../../helpers/user/verifyPayment-helpers');
+const sessionHelpers = require('../../../helpers/user/userHelpers/session-helpers');
+const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
+const orderHelpers = require('../../../helpers/user/orders/orderHelpers');
+const verifyPaymentHelpers = require('../../../helpers/user/orders/verifyPayment-helpers');
 const razorpayUtil = require('../../../utils/razorpayUtil');
 const couponHelpers = require('../../../helpers/admin/manageUser/coupon-helpers');
 
@@ -19,7 +19,6 @@ const getCheckoutPage = async (req, res, next) => {
                 const { cartId, discount, cartProducts, totalprice, totalCount } = cartResult;
                 const coupons = await couponHelpers.getAllCoupons();
 
-                console.log('idtotalprice in checkoutdd', totalprice)
                 res.render('customers/c&c/checkout', {
                     layout: 'layout/layout',
                     user,
@@ -27,7 +26,7 @@ const getCheckoutPage = async (req, res, next) => {
                     totalCartProduct: totalCount,
                     totalprice,
                     cartId,
-                    discount,coupons
+                    discount, coupons
                 });
             } else {
                 res.redirect('/cart');
@@ -79,7 +78,6 @@ const submitCheckoutPageDetails = async (req, res, next) => {
                     let orderId = result.orderId;
                     let totalAmount = result.totalAmount;
                     const order = await razorpayUtil.createRazorpayOrder(orderId, totalAmount);
-                    console.log('order in route', order);
                     res.status(200).json({ status: "ok", order, user });
                 } else {
                     res.status(200).json({ status: "ok" });
@@ -95,7 +93,6 @@ const submitCheckoutPageDetails = async (req, res, next) => {
 
 const verifyPayment = async (req, res, next) => {
     try {
-        console.log('payment details', req.body);
         let sessionId = req.cookies.session;
         let paymentDetails = req.body;
         const sessionResult = await sessionHelpers.checkSessions(sessionId);
@@ -109,7 +106,6 @@ const verifyPayment = async (req, res, next) => {
                 res.status(200).json({ status: "ok" });
             }
         } else {
-            console.log('payment doesnt match');
             res.status(400).json({ status: "nok" });
         }
     } catch (err) {
