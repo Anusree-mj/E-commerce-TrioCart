@@ -20,7 +20,11 @@ const CouponSchema = new mongoosedb.Schema(
             type: Number,
             required:true,
         },
-        validityDate: {
+        couponActivatingDate:{
+            type: Date,
+            required:true
+        },
+        couponDeactivatingDate: {
             type: Date,
             required:true
         },

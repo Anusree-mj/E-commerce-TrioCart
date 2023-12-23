@@ -92,6 +92,12 @@ router.get('/addCoupon', controller.adminControllers.couponController.getAddCoup
 //get add coupons page
 router.post('/addCoupon', controller.adminControllers.couponController.addCoupon);
 
+//get edit coupons page
+router.get('/coupon/edit/:couponId', controller.adminControllers.couponController.getEditCouponsPage);
+
+// edit coupon
+router.put('/coupon/edit/:couponId', controller.adminControllers.couponController.editCoupon);
+
 //block users
 router.delete('/users', controller.adminControllers.userManagementController.softDeleteUser);
 

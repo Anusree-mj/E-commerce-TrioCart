@@ -183,7 +183,11 @@ a:hover {
     color: #565656;
     text-transform: uppercase;
 }
-
+.content h1{
+    color: #565656;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
 
 .apply {
     cursor: pointer;

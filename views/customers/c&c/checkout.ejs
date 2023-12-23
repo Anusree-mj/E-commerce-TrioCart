@@ -407,33 +407,8 @@
                     <p class="boldTxt">Available coupons</p>
                     <% if (coupons && coupons.length> 0) { %>
                         <% coupons.forEach(coupon=>{%>
-                            <% if (!user.coupon || !user.coupon.includes(coupon._id)) {
-                                %>
-                                <% if (coupon.minAmount < totalprice) {
-                                    %>
-                                <div class="cardCoupon mt-4">
-                                    <div class="main">
-                                        <div class="co-img">
-                                            <img src="/images/navbar/logo.png" alt="logo">
-                                        </div>
-                                        <div class="vertical"></div>
-                                        <div class="content">
-                                            <h2>TrioCarts</h2>
-                                            <h1>
-                                                <%= coupon.discount %>% Off
-                                            </h1>
-                                            <h2>
-                                                <%= coupon.name %>
-                                            </h2>
-
-                                            <p class="apply" onclick="applyCoupon('<%= coupon._id %>',
-                                            '<%= totalprice %>','<%= cartId %>')">
-                                                Apply
-                                                coupon</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% } else { %>
+                            <% if (coupon.isValid && (!user.coupon || !user.coupon.includes(coupon._id))) { %>
+                                <% if (coupon.minAmount < totalprice) { %>
                                     <div class="cardCoupon mt-4">
                                         <div class="main">
                                             <div class="co-img">
@@ -448,19 +423,45 @@
                                                 <h2>
                                                     <%= coupon.name %>
                                                 </h2>
-                                                <p class="couponAvailability">To validate, buy up to ₹<%= coupon.minAmount %></p>
+
+                                                <p class="apply" onclick="applyCoupon('<%= coupon._id %>',
+                                            '<%= totalprice %>','<%= cartId %>')">
+                                                    Apply
+                                                    coupon</p>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <% } %>
-                                    <% } %>                                        
-                                        <% }) %>
-                                            <% } %>
-                                                <div>
-                                                    <p onclick="cancelCoupon()" type="button"
-                                                        class="btn btn-dark save mt-3" style="color: white;">Cancel</p>
+                                    <% } else { %>
+                                        <div class="cardCoupon mt-4">
+                                            <div class="main">
+                                                <div class="co-img">
+                                                    <img src="/images/navbar/logo.png" alt="logo">
                                                 </div>
+                                                <div class="vertical"></div>
+                                                <div class="content">
+                                                    <h2>TrioCarts</h2>
+                                                    <h1>
+                                                        <%= coupon.discount %>% Off
+                                                    </h1>
+                                                    <h2>
+                                                        <%= coupon.name %>
+                                                    </h2>
+                                                    <p class="couponAvailability">To validate, buy up to ₹<%=
+                                                            coupon.minAmount %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% } %>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% } %>
+                                                        <div>
+                                                            <p onclick="cancelCoupon()" type="button"
+                                                                class="btn btn-dark save mt-3" style="color: white;">
+                                                                Cancel</p>
+                                                        </div>
                 </div>
             </div>
         </div>

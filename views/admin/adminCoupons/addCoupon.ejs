@@ -32,11 +32,16 @@
 
 
             <!-- validity date -->
-            <label class="label" for="subCategory">Valid until <span
+            <label class="label" for="subCategory">Starts On <span
                 class="required">*</span></label>
             <input type="date" class="form-control" name="validDate" id="validDate" placeholder="Coupon validDate"
                 onclick="clearValidity('validDate');clearSpan('validDateSpan')">
             <span id="validDateSpan" class="span"></span>
+            <label class="label" for="subCategory">Ends On <span
+                class="required">*</span></label>
+            <input type="date" class="form-control" name="endDate" id="endDate" placeholder="Coupon endDate"
+                onclick="clearValidity('endDate');clearSpan('endDateSpan')">
+            <span id="endDateSpan" class="span"></span>
            
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"

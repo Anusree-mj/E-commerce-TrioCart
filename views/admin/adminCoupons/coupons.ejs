@@ -17,8 +17,9 @@
                             <th scope="col" class="thead">Description</th>
                             <th scope="col" class="ttitle">Min amount</th>
                             <th scope="col" class="ttitle">Discount</th>
-                            <th scope="col" class="thead">Validity 
-                                Until
+                            <th scope="col" class="thead">Starts On
+                            </th>
+                            <th scope="col" class="thead">Ends On
                             </th>
                             <th scope="col" class="thead">Status</th>                            
                             <th scope="col" class="thead">Edit</th>
@@ -44,21 +45,24 @@
                                     <%= coupon.discount%> %
                                 </td>
                                 <td>
-                                    <%= coupon.validityDate.toDateString() %>
+                                    <%= coupon.couponActivatingDate.toDateString() %>
+                                </td>  
+                                <td>
+                                    <%= coupon.couponDeactivatingDate.toDateString() %>
                                 </td>                               
                                 <td>
                                     <% if (coupon.isValid===false) { %>
-                                        <p>valid</p>
+                                        <p>Inactive</p>
                                        
                                         <%} else{ %>
                                             <div class="d-flex">
-                                                <p>Available</p>
+                                                <p>Active</p>
                                                
                                             </div>
                                             <% } %>
                                 </td>
 
-                                <td><a href="/admin/products/<%= coupon._id %>"><img src="/images/navbar/edit.png"
+                                <td><a href="/admin/coupon/edit/<%= coupon._id %>"><img src="/images/navbar/edit.png"
                                             alt="edit" style="width: 1rem;"></a> </td>
 
                             </tr>
