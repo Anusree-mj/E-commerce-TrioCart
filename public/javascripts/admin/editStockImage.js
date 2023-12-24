@@ -15,7 +15,6 @@ function editStock(productId,size){
     if(stock && isStockValid){
     let reqBody = { stock,size }
 
-    console.log(reqBody);
 fetch(`http://localhost:3000/admin/stock/${productId}/`, {
     method: "PUT",
     body: JSON.stringify(reqBody),
@@ -37,7 +36,6 @@ fetch(`http://localhost:3000/admin/stock/${productId}/`, {
 // delete detailed image
 function deleteImage(image, productId) {
     let reqBody = { image, productId }
-    console.log(reqBody)
     fetch('http://localhost:3000/admin/products/image', {
         method: 'DELETE',
         headers: {
@@ -48,7 +46,6 @@ function deleteImage(image, productId) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'ok') {
-                console.log('Image deleted successfully');
                 location.reload()
             } else {
                 console.error('Image deletion failed');

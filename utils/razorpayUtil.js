@@ -8,7 +8,6 @@ var instance = new Razorpay({
 
 const createRazorpayOrder= async (orderId,total)=>{
 const totalAmount= parseInt(total,10)
-console.log('typeofamount',typeof(totalAmount))
     const options = {
         amount: totalAmount*100,  // amount in the smallest currency unit
         currency: "INR",
@@ -16,7 +15,6 @@ console.log('typeofamount',typeof(totalAmount))
     };
     try {
         const order = await instance.orders.create(options);
-        console.log('razopaycreatedorder',order)
         return order;
       } catch (error) {
         throw error;
@@ -35,7 +33,6 @@ const verifyPayment= (details)=>{
       .digest('hex');
       if (generatedSignature === razorpaySignature) {
         // Payment is successful
-        console.log('Payment match');  
         return{status:'ok'}      
       } else{
         console.log('payment doesnt match')

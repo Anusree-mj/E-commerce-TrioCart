@@ -25,7 +25,6 @@ let validAddress = true;
 // check address
 function checkAddress(field, displayField) {
     validAddress = true;
-    console.log("Checking address validation");
     let data = document.getElementById(field).value;
     const addressRegex = /^[0-9A-Za-z.,]+(?: [0-9A-Za-z.,]+)*$/;
 
@@ -69,7 +68,6 @@ function checkPincode(field, displayField) {
 
 // save billing address
 function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeId, stateId) {
-    console.log('userid', userId);
 
     let isError = false;
 
@@ -77,7 +75,6 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
 
     // Checking for any empty fields
     fields.forEach(field => {
-        console.log('checking empty fields');
         const value = document.getElementById(field).value;
         if (!value) {
             isError = true;
@@ -85,10 +82,8 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
             document.getElementById(field).style.boxShadow = '0 0 5px red';
         }
     });
-    console.log('before if ')
     // Fetching data
     if (!isError && validAddress && validNameAndTown && validPhone && validPincode) {
-        console.log('entered in if');
         let reqBody = {
             userId,
             name: document.getElementById(nameId).value,
@@ -99,7 +94,6 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
             state: document.getElementById(stateId).value
         };
 
-        console.log('Request Body:', reqBody);
 
         fetch("http://localhost:3000/checkout/user", {
             method: "POST",
@@ -122,8 +116,7 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
 // edit billing address
 let editedAddressId = '';
 function editBillingAdress(addressId, name, phone, address, town, pincode, state) {
-    console.log('edit triggered')
-    console.log(addressId);
+
     fetch(`http://localhost:3000/billingAddress/${addressId}`, {
         method: "GET",
     }).then((res) => res.json())
@@ -140,7 +133,6 @@ function editBillingAdress(addressId, name, phone, address, town, pincode, state
 
 
                 let billingAddress = data.address.billingAddress[0];
-                console.log('billingaddress', billingAddress)
                 editedAddressId = billingAddress._id
                 document.getElementById(name).value = billingAddress.name;
                 document.getElementById(phone).value = billingAddress.phone;
@@ -160,7 +152,6 @@ function editBillingAdress(addressId, name, phone, address, town, pincode, state
 function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, stateid) {
     let isError = false
     const fields = [nameid, phoneid, addressid, townid, pincodeid, stateid];
-    console.log('update triggered')
     //checking for any empty fields
     fields.forEach(field => {
         const value = document.getElementById(field).value;
@@ -181,7 +172,6 @@ function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, sta
             pincode: document.getElementById(pincodeid).value,
             state: document.getElementById(stateid).value
         }
-        console.log('fetcf', reqBody)
         fetch(`http://localhost:3000/billingAddress`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
@@ -211,7 +201,6 @@ function confirmDeleteBillingAddress() {
 
     // Close the modal
     $('#confirmationModal').modal('hide');
-    console.log(addressId);
     fetch(`http://localhost:3000/billingAddress/${addressId}`, {
         method: "DELETE",
     }).then((res) => res.json())

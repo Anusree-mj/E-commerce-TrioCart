@@ -15,7 +15,6 @@ function selectedSize(selctdSize) {
         document.getElementById(`btn${choosedSize}`).classList.add('btn-outline-dark');
     }
     choosedSize = selctdSize;
-    console.log('selected size', choosedSize)
     document.getElementById(`btn${choosedSize}`).classList.remove('btn-outline-dark');
     document.getElementById(`btn${choosedSize}`).classList.add('btn-dark');
 

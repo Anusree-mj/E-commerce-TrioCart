@@ -24,7 +24,6 @@ function editCategoryOffer(category, subcategory) {
     if (offer && isOfferValid) {
         let reqBody = { offer }
 
-        console.log(reqBody);
         fetch(`http://localhost:3000/admin/category/offer/${category}/${subcategory}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
@@ -48,7 +47,6 @@ function editProductOffer(productId) {
     if (offer && isOfferValid) {
         let reqBody = { offer }
 
-        console.log(reqBody,'sdfsad');
         fetch(`http://localhost:3000/admin/products/offer/${productId}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),

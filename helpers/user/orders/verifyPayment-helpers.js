@@ -11,19 +11,23 @@ module.exports = {
                 { _id: details.order.receipt },
                 { $set: { orderStatus: 'placed' } }
             )
-            const currentDate = new Date()
-            const data = {
-                userId: user._id,
-                transactions: [
-                    {
-                        status: "Debited",
-                        amount: (details.order.amount) / 100,
-                        createdAt: currentDate
-                    }
-                ]
-
-            }
-            await collection.walletCollection.insertMany([data])
+            await collection.walletCollection.updateOne(
+                {
+                    userId: user._id,
+                },
+                {
+                    $push: {
+                        transactions: {
+                            status: "Debited",
+                            amount: (details.order.amount) / 100,
+                            createdAt: new Date(),
+                        }
+                    },
+                },
+                {
+                    upsert: true,
+                }
+            );
             return { status: 'ok' }
 
         } catch (err) {

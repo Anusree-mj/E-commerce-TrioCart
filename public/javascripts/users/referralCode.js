@@ -4,23 +4,32 @@ function clearSpan(spanId) {
 }
 
 function getAddReferrlSection() {
-    document.getElementById('addReferralCode').style.display = 'none'
+    document.getElementById('addReferralCode').style.display = 'none';
+    document.getElementById('walletToggle').style.display='none';
     const referralContainers = document.querySelectorAll('.referralContainer');
     if (referralContainers.length > 0) {
         referralContainers[0].style.display = 'block';
     }
 }
 
+function cancelReferring(){
+    document.getElementById('addReferralCode').style.display = 'block';
+    document.getElementById('walletToggle').style.display='block';
+    const referralContainers = document.querySelectorAll('.referralContainer');
+    if (referralContainers.length > 0) {
+        referralContainers[0].style.display = 'none';
+    }
+}
+
 function addReferralCode() {
     const referralCodeInput = document.getElementById('referralCode');
-    console.log('entered in add referal code')
     const referralCode = referralCodeInput.value ? (referralCodeInput.value).trim() : "";
     if (referralCode === "") {
         document.getElementById('referralCodeSpan').textContent = 'Add a referral code'
     }
     else{  
         let reqBody={referralCode}      
-        fetch(`http://localhost:3000/coupon`, {
+        fetch(`http://localhost:3000/referral`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -30,7 +39,7 @@ function addReferralCode() {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/coupon");
+                    window.location.replace("/profile");
                 } else {
                     document.getElementById('referralCodeSpan').textContent = 'Invalid referral code'
     

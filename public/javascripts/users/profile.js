@@ -59,7 +59,6 @@ function checkName() {
 let tempUserId;
 // update details
 function verifyUser(userId) {
-    console.log('enterung n verifyUser')
     let isError = false
     const fields = ['name_profile', 'email_profile', 'phone__profile'];
 
@@ -91,7 +90,6 @@ function verifyUser(userId) {
             .then((data) => {
                 if (data.status === "ok") {  
                     tempUserId= data.tempUserId
-                    console.log('tempUserId',tempUserId)                
                     document.querySelector('.editableDetails').style.display = 'none';
                     document.querySelector('.verify').style.display = 'block';
                     startTimer();
@@ -192,7 +190,6 @@ function addAddress() {
 //password toggling
 function togglePassword(field) {
     let password = document.getElementById(field);
-    console.log(password)
     if (password.type == "password") {
         document.getElementById(`${field}Toggle`).innerHTML = "Hide";
         password.type = "text";

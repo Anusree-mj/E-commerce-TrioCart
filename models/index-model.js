@@ -10,6 +10,7 @@ const sessionCollection = require('./userSession-model');
 const walletCollection = require('./wallet-model');
 const productReturnCollection = require('./productReturn-model');
 const couponCollection = require('./coupon-models');
+const cashBackCollection = require('./cashBack-models');
 
 module.exports = {
     usersCollection,
@@ -23,5 +24,6 @@ module.exports = {
     sessionCollection,
     walletCollection,
     productReturnCollection,
-    couponCollection
+    couponCollection,
+    cashBackCollection
 }

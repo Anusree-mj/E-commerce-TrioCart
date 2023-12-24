@@ -13,10 +13,8 @@ module.exports = {
                 { $inc: { 'products.$.Count': 1 } }
             );
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success');
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed');
                 return { status: 'nok' }
             }
         } catch (err) {
@@ -35,10 +33,8 @@ module.exports = {
                 { $inc: { 'products.$.Count': -1 } }
             );
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success');
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed');
                 return { status: 'nok' }
             }
         } catch (err) {
@@ -66,7 +62,6 @@ module.exports = {
                         },
                         { $inc: { 'products.$.Count': 1 } }
                     );
-                    console.log('Product count incremented');
                     return { status: 'ok' }
                 }
                 else {
@@ -84,11 +79,8 @@ module.exports = {
                     );
 
                     if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
-                        console.log('Data update success');
                         return { status: 'ok' }
-                    } else {
-                        console.log('Data update failed');
-                    }
+                    } 
                 }
             }
             else {
@@ -109,10 +101,8 @@ module.exports = {
             if (cart && cart.products) {
                 let cartId = cart._id;
                 let discount=cart.discount;
-                console.log('discountt',discount)
                 // console.log('cartIddd12323', cartId)
                 let cartProducts = cart.products;
-                console.log('cart prosud', cartProducts)
                 totalCount = cart.products.length
 
                 await Promise.all(cartProducts.map(async (cartProduct) => {
@@ -149,12 +139,9 @@ module.exports = {
             );
 
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success');
-
                 const updatedCart = await collection.cartCollection.findOne({ userId: body.userId });
                 if (updatedCart.products.length < 1) {
                     await collection.cartCollection.deleteOne({ userId: body.userId });
-                    console.log('Cart document deleted');
                 }
                 return { status: 'ok' };
             }

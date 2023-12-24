@@ -68,7 +68,6 @@ module.exports = {
     editProduct: async (body, productId) => {
         try {
             const product = await collection.productsCollection.findOne({ _id: productId })
-            console.log('product found:', product)
             const updateData = await collection.productsCollection.updateOne(
                 { _id: productId },
                 {
@@ -85,10 +84,7 @@ module.exports = {
                         detailedImages: body.detailedImagePaths
                     }
                 });
-            console.log('updated data is :::', updateData)
             if (updateData.modifiedCount === 1) {
-                console.log('modified count', updateData.modifiedCount);
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }

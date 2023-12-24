@@ -3,7 +3,6 @@ const collection = require('../../../../models/index-model');
 module.exports = {
     getSalesCountBasedOnYear: async (year) => {
         try {
-            console.log('year passed', year)
             const orders = await collection.orderCollection.aggregate([
                 {
                     $match: {
@@ -130,8 +129,6 @@ module.exports = {
                     }
                 }
             ]);
-
-            console.log('aggreagation in sales0', sales)
 
             return sales
         } catch (err) {

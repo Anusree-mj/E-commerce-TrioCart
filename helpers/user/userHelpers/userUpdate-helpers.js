@@ -5,10 +5,7 @@ const cronFnctn = require('../../../utils/cron');
 
 module.exports = {
     verifyUser: async (userData, otp, userId) => {
-        try {
-            console.log(userData,'gsddsgsdg');
-            console.log('otp',otp),
-            console.log('idd',userId)
+        try {          
             const otpExpiryTime = new Date();
             otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
             const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(
@@ -28,9 +25,7 @@ module.exports = {
                 cronFnctn.expireOTP();
               const tempUserId= updateTempUser._id
                 return { status: 'ok',tempUserId }
-            } else {
-                console.log('no matched document')
-            }
+            } 
 
         } catch (err) {
             console.log(err)
@@ -50,15 +45,11 @@ module.exports = {
             )
 
             if (updateTempUser) {
-                console.log('sdfsdfklsd;kf',updateTempUser)
                 const email = updateTempUser.email;
                 await signupUtil.sendOtpByEmail(email, otp);  
                 cronFnctn.expireOTP();              
                 return { status: 'ok', }
-            } else {
-                console.log('no matched document')
-            }
-
+            } 
         } catch (err) {
             console.log(err)
         }
@@ -71,7 +62,6 @@ module.exports = {
                 otpExpired:false
              }
                 );
-            console.log(otp, 'otp')
             if (check) {
                 const user = await collection.usersCollection.updateOne(
                     { _id: userId },
@@ -82,11 +72,8 @@ module.exports = {
                     }
                 )
                 if (user.modifiedCount === 1) {
-                    console.log('user data updated');
                     return { status: 'ok' }
-                } else {
-                    console.log('user data update failed');
-                }
+                } 
             } else {
                 return { status: 'nok' }
             }

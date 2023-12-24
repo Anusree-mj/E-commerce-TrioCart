@@ -15,7 +15,6 @@ async function markExpiredOTPs() {
       }
     );
 
-    console.log('otp expired');
   } catch (error) {
     console.error('Error occured', error);
   }
@@ -47,7 +46,6 @@ async function markExpiredOrders() {
       await order.save();
     }
 
-    console.log('returnValidity updated');
   } catch (error) {
     console.log(error);
   }
@@ -63,16 +61,21 @@ async function markExpiredCoupons() {
       isValid: true,
     });
 
-    for (const coupon of expiredCoupons) {
-      coupon.isValid = false;
-      await coupon.save();
+    for (const coupon of expiredCoupons) {      
+      if (
+        currentDate < coupon.couponActivatingDate ||
+        currentDate >= coupon.couponDeactivatingDate
+      ) {
+        coupon.isValid = false;
+        await coupon.save();
+      }
     }
 
-    console.log('Expired coupons marked as invalid');
   } catch (error) {
     console.error('Error marking expired coupons:', error);
   }
 }
+
 
 function expireOTP() {
   cron.schedule('*/1 * * * *', markExpiredOTPs);

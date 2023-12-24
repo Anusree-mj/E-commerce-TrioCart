@@ -3,7 +3,6 @@ const collection = require('../../../../models/index-model');
 module.exports = {
     getSalesCountBasedOnDay: async (day) => {
         try {
-            console.log('day passed', day)
             const orders = await collection.orderCollection.aggregate([
                 {
                     $match: {
@@ -131,9 +130,6 @@ module.exports = {
                     }
                 }
             ]);
-
-            console.log('aggreagation in sales0', sales)
-
             return sales
         } catch (err) {
             console.log(err)

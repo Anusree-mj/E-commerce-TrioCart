@@ -1,7 +1,6 @@
 //password toggle
 function togglePassword() {
     let password = document.getElementById("my-password");
-    console.log(password)
     if (password.type == "password") {
         document.getElementById("visibility").innerHTML = "Hide";
         password.type = "text";

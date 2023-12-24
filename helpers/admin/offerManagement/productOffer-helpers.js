@@ -23,7 +23,6 @@ module.exports = {
     editOffer: async (productId, offer) => {
         try {
             let discountedPrice;
-            // console.log('productId', productId)
             const product = await collection.productsCollection.findOne({ _id: productId })
             let discountAmount = Math.round((Number(offer) / 100) * product.price);
             if (offer !== '0') {

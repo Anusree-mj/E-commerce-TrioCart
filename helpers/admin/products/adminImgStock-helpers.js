@@ -57,10 +57,7 @@ module.exports = {
             if (productData && productData.sizesStock.length > 0) {
                 const { size, count } = productData.sizesStock[0];
                 return { productData, size, count };
-            } else {
-                console.log('no products found')
-            }
-
+            } 
             return productData
         }
         catch (err) {
@@ -69,8 +66,6 @@ module.exports = {
     },
     editStock: async (stock, size, productId) => {
         try {
-            console.log('bodystock', stock, "typeof:", typeof (stock));
-
             const updateData = await collection.productsCollection.updateOne(
                 {
                     _id: productId,
@@ -81,10 +76,7 @@ module.exports = {
                         'sizesStock.$.count': stock
                     }
                 });
-            console.log('updated data is :::', updateData)
             if (updateData.modifiedCount === 1) {
-                console.log('modified count', updateData.modifiedCount);
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }

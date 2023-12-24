@@ -24,7 +24,7 @@ router.put('/password', controller.customerControllers.profileController.changeP
 router.get('/coupon', controller.customerControllers.couponController.getCouponPage)
 
 // add a coupon 
-router.post('/coupon', controller.customerControllers.couponController.addCoupon)
+router.post('/referral', controller.customerControllers.couponController.getCashBack)
 
 /* get cart. */
 router.get('/cart', controller.customerControllers.cartController.getCartPage);

@@ -5,15 +5,11 @@ const schedule = require('node-schedule');
 module.exports = {
     getAllOrders: async () => {
         try {
-            console.log('entered in order fnctn')
             const orders = await collection.orderCollection
                 .find()
                 .sort({ createdAt: -1 })
                 .populate('userId')
                 .populate('products.product');
-
-            console.log('orders::', orders)
-
             return { orders }
         }
         catch (err) {
@@ -43,7 +39,6 @@ module.exports = {
                 }
 
             ]);
-            console.log('orders::', orders)
 
             return { orders }
         }
@@ -94,7 +89,6 @@ module.exports = {
                 return { yetToBeShippedCount, deliveredCount, totalOrders, userCounts };
             }
             else {
-                console.log("No results found");
                 return { shippedCount: 0, deliveredCount: 0, placedCount: 0, userCounts };
             }
 
@@ -115,7 +109,6 @@ module.exports = {
                 )
 
                 if (updateData.modifiedCount === 1) {
-                    console.log('order update success')
                     return { status: 'ok' }
                 } else {
                     return { status: 'nok' }
@@ -151,7 +144,6 @@ module.exports = {
                 )
 
                 if (updateData.modifiedCount === 1) {
-                    console.log('order update success')
                     return { status: 'ok' }
                 } else {
                     return { status: 'nok' }
@@ -201,8 +193,6 @@ module.exports = {
                         $set: { returnValid: false },
                     }
                 );
-
-                console.log(`${updateResult.modifiedCount} orders' returnValid updated`);
             } catch (error) {
                 console.error('Error updating returnValid:', error);
             }

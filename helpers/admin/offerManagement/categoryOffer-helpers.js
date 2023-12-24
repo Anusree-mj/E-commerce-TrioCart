@@ -74,8 +74,6 @@ module.exports = {
             );
     
             if (updateData.modifiedCount === 1) {
-                console.log('modified count', updateData.modifiedCount);
-                console.log('Data update success');
                 return { status: 'ok' };
             } else {
                 return { status: 'nok' };

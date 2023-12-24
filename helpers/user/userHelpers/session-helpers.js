@@ -10,7 +10,6 @@ module.exports = {
                 sessionId: sessionId
             }
             await collection.sessionCollection.insertMany([data])
-            console.log('session stored')
         }
         catch (err) {
             console.log(err, 'session storing failed')

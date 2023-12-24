@@ -39,8 +39,6 @@ function blockUser(user, userName) {
 // undo product delete
 function unblockUser(user, userName) {
     const userId = user.trim();
-    console.log('userid', userId);
-
     const confirmationText = `Are you sure you want to unblock the user "${userName}"?`;
 
     Swal.fire({

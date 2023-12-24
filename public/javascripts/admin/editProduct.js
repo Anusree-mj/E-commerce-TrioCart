@@ -1,6 +1,5 @@
 let imageUploaded = true;
 let imagePath = document.getElementById('curentImage').value;
-console.log('imagepathexistingvalue', imagePath)
 function changeMainImage(productId) {
 
     let reqBody = { productId };
@@ -15,7 +14,6 @@ function changeMainImage(productId) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'ok') {
-                console.log('Image deleted successfully');
                 document.getElementById('curentImage').remove();
                 document.getElementById('mainImageDlt').remove();
                 document.getElementById('image').remove();
