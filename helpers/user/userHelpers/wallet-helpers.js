@@ -10,7 +10,6 @@ module.exports = {
             if (walletDetails) {
                 return { status: 'ok', walletDetails }
             } else {
-                console.log('no wallet ')
                 return { status: 'nok' }
             }
         } catch (err) {

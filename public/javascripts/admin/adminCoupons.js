@@ -60,8 +60,6 @@ function addCoupon() {
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/admin/coupons");
-                } else {
-                   console.log('Coupon adding failed')
                 }
             })
             .catch(err => console.log(err));
@@ -84,7 +82,6 @@ function editCoupon(couponId) {
         }
     });
     if (!isError && isValidPrice && isValidInput) {
-        console.log('entered in fetch')
         const name = document.getElementById('nameEdit').value;
         const description = document.getElementById('descriptionEdit').value;
         const amount = document.getElementById('amountEdit').value;

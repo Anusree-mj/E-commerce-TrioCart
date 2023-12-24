@@ -1,33 +1,14 @@
 <link rel="stylesheet" href="/stylesheets/users/profile.css">
 <link rel="stylesheet" href="/stylesheets/users/coupon.css">
 
-<%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+<%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
     <%- include('../../partials/subHeader',allCategories) %>
 
-        <section class="profilepage">
+        <section class="profilepage">           
             <div class="pageHead">
                 <h2>Your Coupons</h2>
                 <p>You can view and get a coupon here</p>
                 <hr>
-                <p class="mt-3" id="addReferralCode" onclick="getAddReferrlSection()">+ Add a referal code</p>
-            </div>
-            <div class="referralContainer" style="display: none;">
-                <div class="mydetailSctn">
-                    <div class="d-flex justify-content-between">
-                        <p class="subHead">Add a referral code to unlock exclusive discounts</p>
-                    </div>
-                    <div class="addReferralCode">
-                        <label class="label mt-3" for="name">Enter Referral Code<span class="required">*</span></label>
-                        <input type="text" class="form-control" name="referralCode" id="referralCode"
-                            placeholder="Add referral code here" onclick="clearSpan('referralCodeSpan')">
-                        <span id="referralCodeSpan" class="span"></span><br>
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <button type="button" class="btn btn-dark save "
-                                onclick="addReferralCode('<%= user.email %>')">Apply Code</button>
-                                <a href="/coupon" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="d-flex justify-content-center align-items-around flex-wrap couponSection">
                 <% if (coupons && coupons.length> 0) { %>
@@ -40,17 +21,17 @@
                                 <div class="vertical"></div>
                                 <div class="content">
                                     <h2>TrioCarts</h2>
-                                            <h1>
-                                                <%= coupon.name %>
-                                            </h1>
-                                            <p >
-                                                <%= coupon.description %>
-                                            </p>
-                                    <% if (!user.coupon || !user.coupon.includes(coupon._id)) { %>   
-                                                <p class="discountCoupon">Enjoy Coupon !!!</p>
-                                                <% } else { %>
-                                                    <p class="usedCoupon">x Coupon Used x</p>
-                                                    <% } %>
+                                    <h1>
+                                        <%= coupon.name %>
+                                    </h1>
+                                    <p>
+                                        <%= coupon.description %>
+                                    </p>
+                                    <% if (!user.coupon || !user.coupon.includes(coupon._id)) { %>
+                                        <p class="discountCoupon">Enjoy Coupon !!!</p>
+                                        <% } else { %>
+                                            <p class="usedCoupon">x Coupon Used x</p>
+                                            <% } %>
                                 </div>
                             </div>
                         </div>
@@ -68,4 +49,3 @@
             <br><br><br><br><br><br><br>
         </section>
         <%- include('../../partials/footer') %>
-            <script src="/javascripts/users/coupon.js"></script>

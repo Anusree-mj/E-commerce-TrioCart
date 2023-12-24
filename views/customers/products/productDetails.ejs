@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/stylesheets/users/productDetails.css">
 
 <% if (user) { %>
-    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-        <%} else{ %>
-            <%- include('../../partials/header') %>
+    <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%} else{ %>
+            <%- include('../../partials/headers/header') %>
                 <% } %>
                     <%- include('../../partials/subHeader',allCategories) %>
                         <section class="product-sctn d-flex flex-column justify-content-around">
@@ -52,15 +52,15 @@
                                             <p class="price">
                                                 ₹ <%= product.price %>/-
                                             </p>
-                                            <%} else{ %>                                                                           
+                                            <%} else{ %>
                                                 <p class="price original-price">
-                                                  ₹ <%=product.price %>
+                                                    ₹ <%=product.price %>
                                                 </p>
-                                           
+
                                                 <p class="price ml-3">
-                                                    ₹ <%= product.offerPrice %>/- 
-                                                </p>  
-                                                <p class="offerTxt ml-3">Great offer buy now !!!</p>                                                                     
+                                                    ₹ <%= product.offerPrice %>/-
+                                                </p>
+                                                <p class="offerTxt ml-3">Great offer buy now !!!</p>
                                                 <% } %>
                                     </div>
                                     <p class="subHead">Sizes</p>
@@ -80,7 +80,8 @@
 
                                             <div class="mt-4">
                                                 <p>Description & Fit</p>
-                                                <p class="description"><%=product.description %>
+                                                <p class="description">
+                                                    <%=product.description %>
                                                 </p>
                                             </div>
                                 </div>

@@ -26,7 +26,6 @@ function addCategory() {
     if(!isError){
     
     let reqBody = { category, subCategory }
-    console.log(reqBody)
     fetch("http://localhost:3000/admin/category", {
         method: "POST",
         body: JSON.stringify(reqBody),

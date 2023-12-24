@@ -11,6 +11,7 @@ const stockController = require("./products/stock.controller");
 const categoryOfferController = require("./offers/categoryOfferManagement.controller");
 const productOfferController = require("./offers/productOffer.controllers");
 const couponController = require("./users/couponManagement.controllers");
+const cashBackController = require("./users/cashBackController");
 
 
 module.exports = {
@@ -25,5 +26,6 @@ module.exports = {
     salesController,
     stockController,categoryOfferController,
     productOfferController,
-    couponController
+    couponController,
+    cashBackController
 }

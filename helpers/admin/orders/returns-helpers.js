@@ -3,7 +3,7 @@ const collection = require('../../../models/index-model')
 module.exports = {
     getAllProductReturns: async () => {
         try {
-            const returns = await collection.productReturnCollection.find() .sort({ createdAt: -1 })
+            const returns = await collection.productReturnCollection.find().sort({ createdAt: -1 })
                 .populate('orderId userId productId');
             return { returns }
         } catch (err) {
@@ -12,7 +12,6 @@ module.exports = {
     },
     updateReturnStatus: async (data) => {
         try {
-            console.log('datainupdatereturnStatys', data)
             const updateData = await collection.productReturnCollection.updateOne(
                 { _id: data.returnId.trim() },
                 { $set: { returnStatus: data.status } }
@@ -43,7 +42,6 @@ module.exports = {
 
     savePaymentDetails: async (details, user) => {
         try {
-            console.log('details', details)
             await collection.productReturnCollection.updateOne(
                 { _id: details.order.receipt },
                 { $set: { refundStatus: 'completed' } }
@@ -66,19 +64,24 @@ module.exports = {
                 },
                 { $inc: { 'sizesStock.$.count': 1 } }
             )
-            const currentDate = new Date()
-            const data = {
-                userId: user,
-                transactions: [
-                    {
-                        status: "Credited",
-                        amount: (details.order.amount) / 100,
-                        createdAt: currentDate
-                    }
-                ]
+            await collection.walletCollection.updateOne(
+                {
+                    userId: user,
+                },
+                {
+                    $push: {
+                        transactions: {
+                            status: "Credited",
+                            amount: (details.order.amount) / 100,
+                            createdAt: new Date(),
+                        }
+                    },
+                },
+                {
+                    upsert: true,
+                }
+            );
 
-            }
-            await collection.walletCollection.insertMany([data])
             return { status: 'ok' }
 
         } catch (err) {

@@ -53,15 +53,12 @@ function paymentSelected(method) {
 function purchase(userId, discount,totalPrice) {
     let reqBody;
     let total;
-    // console.log('totall',totalPrice)
-    // console.log(discount,'djdsfo',typeof discount)
+
     if (discount === '0') {
         total = totalPrice
-        // console.log('tota22',total)
         reqBody = { userId, paymentMethod, total,totalPrice }
     } else {
         total = discount;
-        // console.log('totaa333',total)
         reqBody = { userId, paymentMethod, total,totalPrice }
     }
 
@@ -95,10 +92,7 @@ const razorpayPayment = (order, user) => {
         "description": "Test Transaction",
         "image": "https://example.com/your_logo",
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response) {
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature);
+        "handler": function (response) {           
             verifyPayment(response, order)
         },
         "prefill": {
@@ -169,15 +163,7 @@ function applyCoupon(couponId, totalprice, cartId) {
             },
         }).then((res) => res.json())
             .then((data) => {
-                if (data.status === "ok") {
-                    // const discount = data.discountPrice;
-                    // const purchaseDiv = document.querySelector('.purchaseOptns');
-                    // const couponDiv = document.querySelector('.coupon');
-                    // purchaseDiv.style.display = 'block';
-                    // couponDiv.style.display = 'none';
-                    // document.getElementById('price').style.textDecoration = 'line-through';
-                    // document.getElementById('price').style.color = 'red';
-                    // document.getElementById('discount').textContent = `₹ ${discount} /-`
+                if (data.status === "ok") {                   
                     location.reload()
                 } else {
                     console.log("failed to apply coupon");

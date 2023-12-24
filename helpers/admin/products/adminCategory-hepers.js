@@ -23,7 +23,6 @@ module.exports = {
 
     deleteSubcategory: async (subcategory, category) => {
         try {
-            console.log('fasdfsdf', category);
 
             await collection.productsCollection.updateMany(
                 {
@@ -48,8 +47,6 @@ module.exports = {
 
     undoSubcategoryDelete: async (subcategory, category) => {
         try {
-            console.log('Subcategory:', subcategory);
-
             await collection.productsCollection.updateMany(
                 {
                     category: category,
@@ -73,7 +70,6 @@ module.exports = {
 
     editSubCategory: async (body) => {
         try {
-            console.log('detailsineditsubcat', body)
             const updateData = await collection.categoryCollection.updateOne(
                 {
                     category: body.category,

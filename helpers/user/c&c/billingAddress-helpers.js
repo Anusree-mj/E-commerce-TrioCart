@@ -18,10 +18,8 @@ module.exports = {
                     }
                 })
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed')
                 return { status: 'nok' }
             }
         }
@@ -37,7 +35,6 @@ module.exports = {
                 { 'billingAddress._id': addressId },
                 { 'billingAddress.$': 1 }
             );
-            console.log('adress', address)
             return { address }
         }
         catch (err) {
@@ -53,10 +50,8 @@ module.exports = {
                 { $pull: { billingAddress: { _id: addressId } } }
 
             ); if (updateData.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed')
                 return { status: 'nok' }
             }
         }
@@ -68,7 +63,6 @@ module.exports = {
 
     updateBillingAddress: async (billingAddress) => {
         try {
-            console.log('editingid', billingAddress.editedAddressId)
             const updateData = await collection.usersCollection.updateOne(
                 { 'billingAddress._id': billingAddress.editedAddressId },
                 {
@@ -86,10 +80,8 @@ module.exports = {
             );
 
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed')
                 return { status: 'nok' }
             }
         }

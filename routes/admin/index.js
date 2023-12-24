@@ -98,6 +98,9 @@ router.get('/coupon/edit/:couponId', controller.adminControllers.couponControlle
 // edit coupon
 router.put('/coupon/edit/:couponId', controller.adminControllers.couponController.editCoupon);
 
+//get cashbacks list
+router.get('/cashBack', controller.adminControllers.cashBackController.getCashbacksPage);
+
 //block users
 router.delete('/users', controller.adminControllers.userManagementController.softDeleteUser);
 

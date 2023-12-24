@@ -18,9 +18,7 @@ module.exports = {
                 {
                     $set: { isBlocked: true }
                 })
-            console.log('Update Result:', user);
             if (user.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }
@@ -33,15 +31,12 @@ module.exports = {
     },
     unblockUser: async (userId) => {
         try {
-            console.log('useridinunblick', userId)
             const user = await collection.usersCollection.updateOne(
                 { _id: userId },
                 {
                     $set: { isBlocked: false }
                 })
-            console.log('Update Result:', user);
             if (user.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }
@@ -54,7 +49,6 @@ module.exports = {
     },
     getAUser: async (userId) => {
         try {
-            console.log('usereieddd',userId)
             const user = await collection.usersCollection.find({
                 _id: userId.trim()
             })

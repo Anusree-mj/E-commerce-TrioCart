@@ -4,7 +4,6 @@ module.exports = {
 
     getSearchProduct: async (query) => {
         try {
-            console.log('queryInsearchfnctn', query)
             const searchProducts = await collection.productsCollection.find({
                 $or: [
                     { name: { $regex: new RegExp(query, 'i') } },

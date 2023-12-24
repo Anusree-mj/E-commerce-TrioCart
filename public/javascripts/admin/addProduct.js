@@ -21,7 +21,6 @@ function uploadImage() {
                 })
                     .then(response => response.json())
                     .then((data) => {
-                        console.log('data:', data)
                         if (data.status === "ok") {
                             if (!imagePath) {
                                 imagePath = data.imagePathWithoutPublic;
@@ -40,7 +39,6 @@ function uploadImage() {
                             previewContainer.appendChild(previewImage);
 
                             imageUploaded = true;
-                            console.log('image:', imagePath, "detailedImages:", detailedImagePath)
                             return imagePath, detailedImagePath;
                         } else {
                             alert("Uploading Image Failed");
@@ -139,8 +137,6 @@ function addProduct() {
             name, detailed_description, category, subCategory, price,
             size, stock, imagePath, detailedImagePath
         }
-
-        console.log(reqBody);
 
         fetch("http://localhost:3000/admin/product", {
             method: "POST",

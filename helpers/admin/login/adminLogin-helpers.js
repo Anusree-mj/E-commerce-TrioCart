@@ -4,7 +4,6 @@ module.exports = {
     dologin: async (adminData) => {
         try {
             const admin = await collection.adminCollection.findOne({ email: adminData.email })
-            console.log(admin)
             if (admin && admin.password === adminData.password) {
                 return admin
             } else {
@@ -23,7 +22,6 @@ module.exports = {
                 sessionId: sessionId
             }
             await collection.adminSessionCollection.insertMany([data])
-            console.log('session stored')
         }
         catch (err) {
             console.log(err, 'session storing failed')

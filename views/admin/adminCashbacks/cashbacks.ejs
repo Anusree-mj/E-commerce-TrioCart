@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="/stylesheets/admin/adminProducts.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<%- include('../../partials/headers/adminHeaders') %>
+
+    <section >
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="tno">No</th>
+                            <th scope="col" class="thead">Name</th>
+                            <th scope="col" class="thead">Description</th>
+                            <th scope="col" class="ttitle">Cashback</th>
+                            <th scope="col" class="thead">Status</th>
+                            <th scope="col" class="thead">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cashbacks.forEach((cashback, index)=> { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= index + 1 %>
+                                </th>
+
+                                <td>
+                                    <%= cashback.name%>
+                                </td>
+                                <td>
+                                    <%= cashback.description%>
+                                </td>
+                                <td>
+                                    ₹ <%= cashback.cashBack%>
+                                </td>
+                                <td>
+                                    <% if (cashbacks.isValid===false) { %>
+                                        <p>Inactive</p>
+
+                                        <%} else{ %>
+                                            <div class="d-flex">
+                                                <p>Active</p>
+
+                                            </div>
+                                            <% } %>
+                                </td>
+                                <td><a href="/admin/cashbacks/edit/<%= cashbacks._id %>"><img
+                                            src="/images/navbar/edit.png" alt="edit" style="width: 1rem;"></a> </td>
+
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>

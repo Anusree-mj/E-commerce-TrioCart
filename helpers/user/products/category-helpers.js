@@ -46,7 +46,6 @@ module.exports = {
                 categories = await collection.categoryCollection.findOne({
                     category: category
                 })
-                console.log('categories', category, subcategory, size)
                 products = await collection.productsCollection.find(
                     {
                         category: category,
@@ -54,7 +53,6 @@ module.exports = {
                         isDeleted: false,
                         size: { $regex: new RegExp(size, 'i') }
                     })
-                console.log('products312321', products)
                 return { categories, products }
             } else if (!size && !query && price) {
                 categories = await collection.categoryCollection.findOne({
@@ -72,7 +70,6 @@ module.exports = {
 
                 return { categories, products }
             } else if (size && price && !query) {
-                console.log('size price', size, price)
                 categories = await collection.categoryCollection.findOne({
                     category: category
                 })
@@ -86,7 +83,6 @@ module.exports = {
                         price: { $lte: price }
 
                     }).sort({ price: 1 });
-                console.log('productssss', products)
                 return { categories, products }
             }
 
@@ -98,7 +94,6 @@ module.exports = {
 
     viewAllProductsofEAchCAtegory: async (category, query, size, price) => {
         try {
-            console.log('queryinfnct', query)
             let products;
             let categories;
 

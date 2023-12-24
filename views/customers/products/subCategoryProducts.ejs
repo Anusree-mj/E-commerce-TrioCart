@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
 
 <% if (user) { %>
-    <%- include('../../partials/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-        <%} else{ %>
-            <%- include('../../partials/header') %>
+    <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
+    <%} else{ %>
+            <%- include('../../partials/headers/header') %>
                 <% } %>
                     <%- include('../../partials/subHeader',allCategories) %>
                         <section class="productsSctn d-flex justify-content-between ">
@@ -163,7 +163,8 @@
                                                             <div
                                                                 class="d-flex justify-content-center align-items-center">
                                                                 <button class="btn btn-dark addFilter"
-                                                                    onclick="addFilter('<%= category %>','<%= subCategory %>')">Add Filter</button>
+                                                                    onclick="addFilter('<%= category %>','<%= subCategory %>')">Add
+                                                                    Filter</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -172,54 +173,55 @@
 
                                         </div>
                                     </div>
-                                    <% if (products && products.length > 0) { %>
-                                    <div class="cards-section">
-                                        <% products.forEach(product=>{%>
+                                    <% if (products && products.length> 0) { %>
+                                        <div class="cards-section">
+                                            <% products.forEach(product=>{%>
 
-                                            <div class="col-sm-3 mb-4">
-                                                <a href="/products/<%= product._id %>">
-                                                    <div class="card mycard">
-                                                        <div>
-                                                            <img class="img-fluid img-thumbnail "
-                                                                src="/<%= product.image %>" alt="Card image cap">
-                                                        </div>
-                                                        <div class="card-body" style="width: 18rem;">
-                                                            <h5 class="card-title">
-                                                                <%=product.name %>
-                                                            </h5>
-                                                            <div class="d-flex">
-                                                                <% if (product.offerPrice===0) { %>
-                                                                    <p class="card-text">
-                                                                        ₹ <%= product.price %>/-
-                                                                    </p>
-                                                                    <%} else{ %>                                                                           
-                                                                        <p class="card-text original-price">
-                                                                          ₹ <%=product.price %>/
+                                                <div class="col-sm-3 mb-4">
+                                                    <a href="/products/<%= product._id %>">
+                                                        <div class="card mycard">
+                                                            <div>
+                                                                <img class="img-fluid img-thumbnail "
+                                                                    src="/<%= product.image %>" alt="Card image cap">
+                                                            </div>
+                                                            <div class="card-body" style="width: 18rem;">
+                                                                <h5 class="card-title">
+                                                                    <%=product.name %>
+                                                                </h5>
+                                                                <div class="d-flex">
+                                                                    <% if (product.offerPrice===0) { %>
+                                                                        <p class="card-text">
+                                                                            ₹ <%= product.price %>/-
                                                                         </p>
-                                                                   
-                                                                        <p class="card-text ml-2">
-                                                                            ₹ <%= product.offerPrice %>/- 
-                                                                        </p>                                                                       
-                                                                        <% } %>
+                                                                        <%} else{ %>
+                                                                            <p class="card-text original-price">
+                                                                                ₹ <%=product.price %>/
+                                                                            </p>
+
+                                                                            <p class="card-text ml-2">
+                                                                                ₹ <%= product.offerPrice %>/-
+                                                                            </p>
+                                                                            <% } %>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <% }) %>
-                                    </div>
+                                                    </a>
+                                                </div>
+                                                <% }) %>
+                                        </div>
                                 </div>
                                 <%} else{ %>
                                     <div class="emptyCart" style="width: 80rem; max-width: 100%;">
                                         <img class="emptyImg" src="/images/home/emptyCart.svg" alt="">
                                         <div class="d-flex flex-column justify-content-center align-items-center ">
                                             <h3 class="emptyHead">Product not found</h3>
-    
-                                            <a href="/" type="button" class="btn btn-dark cartbtn" style="width: 20rem;">Continue
+
+                                            <a href="/" type="button" class="btn btn-dark cartbtn"
+                                                style="width: 20rem;">Continue
                                                 Shopping</a>
-    
+
                                         </div>
                                         <% } %>
                         </section>
                         <%- include('../../partials/footer') %>
-                          <script src="/javascripts/users/subcategory.js"></script>
+                            <script src="/javascripts/users/subcategory.js"></script>

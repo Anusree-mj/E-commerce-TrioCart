@@ -87,7 +87,6 @@ function getStatusText(status) {
 }
 
 function refund(returnId,userId, amount,productId) {
-   console.log('rentered in refunddd')
     let reqBody = { returnId,userId, amount };
 
     fetch('http://localhost:3000/admin/refund', {

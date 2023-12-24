@@ -35,11 +35,6 @@ module.exports = {
                 { email: email },
                 { $unset: { otp: 1 } }
             )
-            if (user.modifiedCount === 1) {
-                console.log('otp delete success');
-            } else {
-                console.log('otp delete failed');
-            }
         }
         catch (err) {
             console.log(err)

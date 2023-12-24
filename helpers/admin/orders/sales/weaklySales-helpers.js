@@ -3,7 +3,6 @@ const collection = require('../../../../models/index-model');
 module.exports = {
     getSalesCountBasedOnWeak: async (start, end) => {
         try {
-            console.log('start:', start, "end:", end)
             const orders = await collection.orderCollection.aggregate([
                 {
                     $match: {
@@ -228,9 +227,6 @@ module.exports = {
                     }
                 }
             ]);
-
-            console.log('aggreagation in sales0', sales)
-
             return sales
         } catch (err) {
             console.log(err)

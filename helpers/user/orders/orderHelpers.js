@@ -20,10 +20,8 @@ module.exports = {
                     }
                 })
             if (updateData.modifiedCount === 1) {
-                console.log('Data update success')
                 return { status: 'ok' }
             } else {
-                console.log('Data update failed')
                 return { status: 'nok' }
             }
         }
@@ -35,7 +33,6 @@ module.exports = {
 
     saveOrderDetails: async (orderDetails) => {
         try {
-            console.log('orderdetails', orderDetails)
             const getBillingAddress = await collection.usersCollection.findOne({
                 _id: orderDetails.userId
             })
@@ -46,7 +43,6 @@ module.exports = {
             })
 
             const products = getOrderedProducts.products;
-            console.log('procusts', products);
 
             // updating stock
             const updateStock = products.map(async (product) => {
@@ -60,7 +56,6 @@ module.exports = {
             });
             await Promise.all(updateStock);
             if (updateStock) {
-                console.log('updated stock', updateStock)
             }
             // get estimated delivery time
             const orderPlacementDate = new Date();
@@ -98,14 +93,12 @@ module.exports = {
                 discount:discountPercentage,
                 orderStatus: (orderDetails.paymentMethod === 'onlinePayment' ? 'pending' : "placed")
             }
-            console.log('inserted data in orders ', data)
 
             const orderDocument = new collection.orderCollection(data);
             // Save the order to the database
             await orderDocument.save();
             // Retrieve the inserted order ID
             const orderId = orderDocument._id;
-            console.log('orderId', orderId);
 
             const totalAmount = orderDetails.total;
             // delete ordered products from cartcollection if not online paymetn
@@ -162,15 +155,11 @@ module.exports = {
                     _id: orderId,
                 }
             )
-            console.log('orderDetailsss', orderDetails);
 
             // update stock
             const updateStock = orderDetails.products.map(async (item) => {
                 const productId = item.product;
                 const size = item.Size;
-
-                console.log('Product and Size:', productId, size);
-
                 await collection.productsCollection.updateOne(
                     {
                         _id: productId,
@@ -181,14 +170,12 @@ module.exports = {
             });
 
             await Promise.all(updateStock);
-            console.log('updatedstockss', updateStock);
 
             const updateData = await collection.orderCollection.updateOne(
                 { _id: orderId },
                 { $set: { orderStatus: 'Cancelled by User' } }
             )
             if (updateData.modifiedCount === 1) {
-                console.log('order update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }
@@ -208,7 +195,6 @@ module.exports = {
                 },
                 { $inc: { 'sizesStock.$.count': 1 } }
             )
-            console.log('updatedstockss', updateStock);
 
             let amount = details.count * details.price;
             const data = {

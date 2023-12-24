@@ -32,7 +32,7 @@ const getCouponPage = async (req, res, next) => {
     }
 };
 
-const addCoupon = async (req, res, next) => {
+const getCashBack = async (req, res, next) => {
     try {
         let sessionId = req.cookies.session;
         const referral = req.body.referralCode;
@@ -41,7 +41,7 @@ const addCoupon = async (req, res, next) => {
 
         if (result.status === 'ok') {
             let userId = result.user._id;
-            let couponResult = await couponHelpers.addCoupon(userId, referral);
+            let couponResult = await couponHelpers.getCashBack(userId, referral);
 
             if (couponResult.status === 'ok') {
                 res.status(200).json({ status: "ok" });
@@ -83,6 +83,6 @@ const applyCoupon = async (req, res, next) => {
 
 module.exports = {
     getCouponPage,
-    addCoupon,
+    getCashBack,
     applyCoupon,
 }
