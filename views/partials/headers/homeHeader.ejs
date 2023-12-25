@@ -3,11 +3,7 @@
 <header>
     <!-- !1st section -->
     <nav class="navbar navbar-light bg-light justify-content-between">
-        <div>
-            <!-- class="topnav" id="myTopnav" -->
-            <!-- <a href="javascript:void(0);" class="icon" onclick="displayHamburger()">
-                <i class="fa fa-bars"></i>
-              </a> -->
+        <div class="customerTxts">           
             <a href="#" class="nav_icon_text">Customer Service</a>
             <a href="#about" class="nav_icon_text">Find a Store</a>
         </div>
@@ -28,14 +24,10 @@
                         <img class="dropdown_icon" src="/images/navbar/orders.png" alt="">
                         <a class="dropdown_text" href="/order/history">Orders</a>
                     </div>
-                    <div class="dropdown-item">
+                    <div class="dropdown_item">
                         <img class="dropdown_icon" src="/images/navbar/coupon.png" alt="">
                         <a class="dropdown_text" href="/coupon">Coupons</a>
-                    </div>
-                    <div class="dropdown-item">
-                        <img class="dropdown_icon" src="/images/navbar/giftCard.png" alt="">
-                        <a class="dropdown_text" href="#">Gift Cards</a>
-                    </div>
+                    </div>                    
                     <div class="dropdown-item">
                         <img class="dropdown_icon" src="/images/navbar/notification.png" alt="">
                         <a class="dropdown_text" href="#">Notifications</a>
@@ -44,20 +36,16 @@
                         <img class="dropdown_icon" src="/images/navbar/logout.png" alt="">
                         <a class="dropdown_text" href="/logout">Logout</a>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item signup_txt" href="/user/signup">Create a new account? Signup</a>
+                    <div class="dropdown-divider d-flex flex-wrapper"></div>
+                    <a class="dropdown-item signup_txt" id="signup" href="/user/signup">Create a new account? Signup</a>
                 </div>
-            </div>
-            <div class="nav_icons nav_search">
-                <img class="search-icon nav_icon" src="/images/navbar/search.png" alt="">
-                <p class="nav_icon_text ">Search</p>
-            </div>
+            </div>            
             <div class="nav_icons">
                 <img class="nav_icon" src="/images/navbar/wishlist.png" alt="">
                 <a href="/#" class="nav_icon_text ">Favourites</a>
             </div>
             <div class="nav_icons">
-                <img class="nav_icon" src="/images/navbar/cart.png" alt="">
+                <a href="/cart"><img class="nav_icon" src="/images/navbar/cart.png" alt=""></a>
                 <a href="/cart" class="nav_icon_text">Shopping bag<span class="badge">(<%= totalCartProduct %>)</span></a>
             </div>
         </div>

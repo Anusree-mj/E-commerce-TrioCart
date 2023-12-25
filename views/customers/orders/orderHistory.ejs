@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="d-flex flex-column prodctSctn ">
                                         <% order.products.forEach(product=> { %>
-                                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                            <div class="d-flex justify-content-around align-items-center mt-4">
                                                 <a href="/products/<%= product.product._id %>">
                                                     <img class="prodImg" src="/<%= product.product.image %>"
                                                         alt="orderproduct">
@@ -120,12 +120,10 @@
                                                                 !order.returnValid &&product.returnStatus !=='Completed'
                                                                 ) { %>
                                                                 <button type="button"
-                                                                    class="btn btn-outline-dark mt-3 ml-3 commntBtn">Comment</button>
+                                                                    class="btn btn-outline-dark mt-3 commntBtn">Comment</button>
                                                                 <% } if (product.returnStatus==='Rejected' ) { %>
                                                                     <p class="returnTxt">Your return request rejected.
                                                                     </p>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-dark mt-3 ml-3  commntBtn">Comment</button>
                                                                     <% } %>
                                                                         <% if (product.returnStatus==='Completed' ) { %>
                                                                             <p class="returnTxt">Product Returned.</p>
@@ -183,10 +181,10 @@
                                                 <hr>
                                             </div>
                                             <% }); %>
-                                                <div>
+                                                <div class="d-flex justify-content-center align-items-center">
                                                     <% if (order.orderStatus==='placed' || order.orderStatus==='packed'
                                                         && order.paymentMethod==='COD' ) { %>
-                                                        <button type="button" class="btn btn-dark mt-4 commntBtn"
+                                                        <button type="button" class="btn btn-dark mt-4 cancelBtn" 
                                                             onclick="cancelOrder('<%= order._id %>')">Cancel
                                                             Order</button>
                                                         <% } %>
