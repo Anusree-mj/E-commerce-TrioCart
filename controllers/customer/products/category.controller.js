@@ -17,9 +17,8 @@ const getCategoryProductsPage = async (req, res, next) => {
         let sessionId = req.cookies.session;
 
         // pagination
-
         const page = parseInt(req.query.page) || 1;
-        const productsPerPage = 20;
+        const productsPerPage = 16;
         const startIndex = (page - 1) * productsPerPage;
         const endIndex = page * productsPerPage;
 

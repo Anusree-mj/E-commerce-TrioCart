@@ -124,10 +124,7 @@ function editBillingAdress(addressId, name, phone, address, town, pincode, state
             if (data.status === "ok") {
                 const readonlyElements = Array.from(document.getElementsByClassName('readonly'));
                 const editableElements = Array.from(document.getElementsByClassName('editable'));
-                const addAddressElements = Array.from(document.getElementsByClassName('addAddress'));
-
-
-                addAddressElements.forEach(element => element.style.display = 'none');
+                document.getElementById('addTxt').style.display = "none"
                 readonlyElements.forEach(element => element.style.display = 'none');
                 editableElements.forEach(element => element.style.display = 'block');
 
@@ -147,7 +144,15 @@ function editBillingAdress(addressId, name, phone, address, town, pincode, state
         })
         .catch(err => console.log(err));
 }
+// cancel edit address
+function cancelEditAddress() {
+    const readonlyElements = Array.from(document.getElementsByClassName('readonly'));
+    const editableElements = Array.from(document.getElementsByClassName('editable'));
+    document.getElementById('addTxt').style.display = "block";
+    readonlyElements.forEach(element => element.style.display = 'block');
+    editableElements.forEach(element => element.style.display = 'none');
 
+}
 // update billing address
 function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, stateid) {
     let isError = false
