@@ -16,6 +16,17 @@ const getCategoryProductsPage = async (req, res, next) => {
         let searchProducts = result.searchProducts;
         let sessionId = req.cookies.session;
 
+        // pagination
+
+        const page = parseInt(req.query.page) || 1;
+        const productsPerPage = 20;
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = page * productsPerPage;
+
+        const paginatedProducts = products.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(products.length / productsPerPage);
+        const currentPage = page; 
+
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
         const isAuthenticated = sessionResult.status === 'ok';
 
@@ -32,10 +43,12 @@ const getCategoryProductsPage = async (req, res, next) => {
                     allCategories,
                     category,
                     searchProducts,
-                    products,
+                    products: paginatedProducts,
                     categories,
                     user,
-                    totalCartProduct
+                    totalCartProduct,
+                    totalPages,
+                    currentPage,
                 });
             }
         } else {
@@ -44,9 +57,11 @@ const getCategoryProductsPage = async (req, res, next) => {
                 allCategories,
                 category,
                 searchProducts,
-                products,
+                products: paginatedProducts,
                 categories,
-                user: undefined
+                user: undefined,
+                totalPages,
+                currentPage
             });
         }
     } catch (error) {
