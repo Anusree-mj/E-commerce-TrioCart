@@ -80,10 +80,12 @@
         transform: rotate(20deg);
     }
 }
-.offerTxt{
-    color:rgb(190, 9, 9);
+
+.offerTxt {
+    color: rgb(190, 9, 9);
     font-weight: 600;
 }
+
 .details {
     width: 30rem;
     margin-top: 3rem;
@@ -139,6 +141,35 @@
 @media only screen and (max-width: 980px) {
     .emptyHead {
         font-size: 1.2rem;
+    }
+
+    .prodctDetails {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+    }
+
+    .images {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 90% !important;
+        margin-top: 0.2rem !important;
+    }
+
+    .image {
+        width: 10rem;
+    }
+
+    .details {
+        max-width: 80%;
+    }
+
+    .description {
+        margin-top: 0 !important;
     }
 
     .col-sm-3 {

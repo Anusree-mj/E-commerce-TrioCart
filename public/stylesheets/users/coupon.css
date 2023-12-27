@@ -5,93 +5,59 @@
   font-family: "Poppins", sans-serif;
 }
 
-.referralContainer {
-  background-color: #f5f3f1;
+.couponSection {
+  max-width: 80%;
+}
+
+.card {
+  width: 20rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  padding: 1rem 0.5rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 90%;
-  margin-bottom: 3rem;
-}
-
-.couponSection {
-  max-width: 80%;
-
-}
-
-.card {
-  width: 25rem;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-  padding: 10px 10px;
-  position: relative;
-  max-width: 90%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.123);
 }
 
 .main {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
+  justify-content: space-around;
   align-items: center;
-  max-width: 90%;
 }
 
 .co-img img {
-  width: 5rem;
-  margin-left: 0.5rem;
-  
+  width: 4rem;
 }
 
 .vertical {
-  border-left: 5px dotted black;
-  height: 15rem;
-  max-height: 80%; 
-  margin-left: 1rem;
-}
-.content{
- 
-}
-.content h1 {
-  font-size: 35px;
-  margin-left: 2.5rem;
-  color: #565656;
+  border-left: 4px dotted black;
+  height: 6rem;
+  max-width: 5%; 
 }
 
-.content h1 span {
-  font-size: 18px;
+.content {
+  text-align: center;
+  max-width: 100%;
 }
 
-.content h2 {
-  font-size: 18px;
-  margin-left: 2rem;
+.TriocartTxt {
   color: #565656;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.nameTxt {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #a50404;
   text-transform: uppercase;
-}
-
-.card::after {
-  position: absolute;
-  content: "";
-  height: 40px;
-  right: -20px;
-  border-radius: 40px;
-  z-index: 1;
-  top: 6.8rem;
-  background-color: #f5f3f1;
-  width: 40px;
-}
-
-.card::before {
-  position: absolute;
-  content: "";
-  height: 40px;
-  left: -20px;
-  border-radius: 40px;
-  z-index: 1;
-  top: 6.8rem;
-  background-color: #f5f3f1;
-  width: 40px;
+  font-weight: 600;
 }
 
 .usedCoupon {
@@ -104,13 +70,19 @@
   font-weight: 600;
 }
 
-.content p {
+.descriptionTxt {
   font-size: 16px;
   color: #696969;
   margin-left: 2.5rem;
+  font-weight: 600;
 }
+
 @media only screen and (max-width: 980px) {
-  .card {
-     width: 15rem;
+  .TriocartTxt {
+    font-size: 1rem;
+  }
+
+  .descriptionTxt {
+    font-size: 0.65rem;
   }
 }
