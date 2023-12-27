@@ -11,15 +11,14 @@ const searchProduct = async (req, res, next) => {
 
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
         const isAuthenticated = sessionResult.status === 'ok';
+        let productQueryResult = await productQueryHelpers.getSearchProduct(query);
+        let searchProducts = productQueryResult.searchProducts;
+        if (productQueryResult.status === 'ok') {
+            if (isAuthenticated) {
+                let user = sessionResult.user;
+                let userId = user._id;
 
-        if (isAuthenticated) {
-            let user = sessionResult.user;
-            let userId = user._id;
 
-            let productQueryResult = await productQueryHelpers.getSearchProduct(query);
-
-            if (productQueryResult.status === 'ok') {
-                let searchProducts = productQueryResult.searchProducts;
 
                 let cartResult = await cartHelpers.getMyCartProducts(userId);
 
@@ -37,15 +36,15 @@ const searchProduct = async (req, res, next) => {
                         layout: 'layout/layout',
                         allCategories,
                         user,
-                        searchProducts: undefined
+                        searchProducts
                     });
                 }
             } else {
                 res.render('customers/search', {
                     layout: 'layout/layout',
                     allCategories,
-                    user,
-                    searchProducts: undefined
+                    user: undefined,
+                    searchProducts
                 });
             }
         } else {

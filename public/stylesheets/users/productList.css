@@ -23,6 +23,7 @@
 }
 
 .filterSortSctn {
+   
     background-color: #f5f3f1;
     padding: 0.5rem 0;
     max-width: 100%;
@@ -90,7 +91,7 @@
     border: 1px solid red;
 }
 .filterSortSctn {
-    max-width: 80%;
+       max-width: 80%;
     border: 1px solid green;
     margin: 0 !important;
     padding: 0 !important;
@@ -100,12 +101,12 @@
     }
 
     .col-sm-3 {
-        width: 100% !important;
-        
+        width: 10rem !important;
+        max-width: 80%;
     }
 
     .card {
-        width: 12rem !important;
+        width: 10rem !important;
         max-width: 100%;
     }
 }

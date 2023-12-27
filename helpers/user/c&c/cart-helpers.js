@@ -80,11 +80,10 @@ module.exports = {
 
                     if (updateData.modifiedCount === 1 || updateData.upsertedCount === 1) {
                         return { status: 'ok' }
-                    } 
+                    }
                 }
             }
             else {
-                console.log('out of stock');
                 return { status: 'nok' }
             }
         } catch (err) {
@@ -100,8 +99,7 @@ module.exports = {
 
             if (cart && cart.products) {
                 let cartId = cart._id;
-                let discount=cart.discount;
-                // console.log('cartIddd12323', cartId)
+                let discount = cart.discount;
                 let cartProducts = cart.products;
                 totalCount = cart.products.length
 
@@ -116,13 +114,11 @@ module.exports = {
 
                 }));
 
-                console.log('cartProducts Updated', cartProducts);
-
                 let totalprice = cartProducts.reduce((sum, item) => {
                     return sum + (item.product.price * item.Count)
                 }, 0)
 
-                return {cartId,discount, cartProducts, totalCount, totalprice, stockAvailability };
+                return { cartId, discount, cartProducts, totalCount, totalprice, stockAvailability };
             } else {
                 return { totalCount: 0, totalPrice: 0 };
             }

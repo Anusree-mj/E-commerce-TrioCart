@@ -3,53 +3,26 @@
 
     <div class="row align-items-center justify-content-center">
         <div class="addForm">
-            <h2 class="head">Edit Coupon</h2>
+            <h2 class="head">Edit Cashback</h2>
             <!-- name -->
-            <label class="label" for="name">Name <span class="required">*</span></label>
-            <input type="text" class="form-control" name="nameEdit" id="nameEdit"
-                onclick="clearValidity('nameEdit');clearSpan('nameEditSpan')" onblur="isValidInput('nameEdit')"
-                value="<%= coupon[0].name %>">
-            <span id="nameEditSpan" class="span"></span>
+            <label class="label" for="name">Name</label>
+            <input type="text" class="form-control" value="<%= cashback[0].name %>" readonly>
 
-            <label class="label" for="name">Description <span class="required">*</span></label>
-            <input type="text" class="form-control" name="descriptionEdit" id="descriptionEdit"
-                onclick="clearValidity('descriptionEdit');clearSpan('descriptionEditSpan')"
-                onblur="isValidInput('descriptionEdit')" value="<%= coupon[0].description %>">
-            <span id="descriptionEditSpan" class="span"></span>
-
-            <!-- amount -->
-            <label class="label" for="category">Min.Amount for Activation<span class="required">*</span></label>
-            <input type="text" class="form-control" name="amountEdit" id="amountEdit"
-                onclick="clearValidity('amountEdit');clearSpan('amountEditSpan')" onblur="isValidPrice('amountEdit')"
-                value="<%= coupon[0].minAmount %>">
-            <span id="amountEditSpan" class="span"></span>
+            <label class="label" for="name">Description</label>
+            <input type="text" class="form-control" value="<%= cashback[0].description %>" readonly>
 
             <label class="label" for="category">Discount <span class="required">*</span></label>
-            <input type="text" class="form-control" name="discountEdit" id="discountEdit"
-                onclick="clearValidity('discountEdit');clearSpan('discountEditSpan')"
-                onblur="isValidPrice('discountEdit')" value="<%= coupon[0].discount %>">
-            <span id="discountEditSpan" class="span"></span>
-
-            <!-- validity date -->
-            <label class="label" for="subCategory">Starts On <span class="required">*</span></label>
-            <input type="date" class="form-control" name="validDateEdit" id="validDateEdit"
-                onclick="clearValidity('validDateEdit');clearSpan('validDateEditSpan')"
-                value="<%= coupon[0].couponActivatingDate.toISOString().split('T')[0] %>">
-            <span id="validDateEditSpan" class="span"></span>
-
-            <!-- validity date -->
-            <label class="label" for="subCategory">Ends On <span class="required">*</span></label>
-            <input type="date" class="form-control" name="endDateEdit" id="endDateEdit"
-                onclick="clearValidity('endDateEdit');clearSpan('endDateEditSpan')"
-                value="<%= coupon[0].couponDeactivatingDate.toISOString().split('T')[0] %>">
-            <span id="endDateEditSpan" class="span"></span>
-
+            <input type="text" class="form-control" name="cbdiscountEdit" id="cbdiscountEdit"
+                onclick="clearValidity('cbdiscountEdit'); clearSpan('cbdiscountEditSpan')"
+                onblur="isValidPrice('cbdiscountEdit')" value="<%= cashback[0].cashBack %>">
+            <span id="cbdiscountEditSpan" class="span"></span>
 
             <div class="button">
                 <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
-                    onclick="editCoupon('<%= coupon[0]._id %>')" style="width: 15rem;">Edit Coupon</button>
+                    onclick="editCashback('<%= cashback[0]._id %>')" style="width: 15rem;">Edit</button>
             </div>
         </div>
     </div>
     <%- include('../../partials/loginsFooter') %>
+        <script src="/javascripts/admin/adminCashback.js"></script>
         <script src="/javascripts/admin/adminCoupons.js"></script>

@@ -36,8 +36,8 @@
     let timerOn = true;
 
 function timer(remaining) {
-  var m = Math.floor(remaining / 60);
-  var s = remaining % 60;
+  const m = Math.floor(remaining / 60);
+  const s = remaining % 60;
   
   m = m < 10 ? '0' + m : m;
   s = s < 10 ? '0' + s : s;
@@ -52,7 +52,7 @@ function timer(remaining) {
   }
  document.getElementById('resndTimer').textContent=""
  document.getElementById('resentTxt').style.display="inline";
- var otpFields = document.querySelectorAll('.otpLine');
+ const otpFields = document.querySelectorAll('.otpLine');
             otpFields.forEach( (field) =>{
                 field.disabled = true;
 

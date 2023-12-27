@@ -3,7 +3,7 @@
 
 <%- include('../../partials/headers/adminHeaders') %>
 
-    <section >
+    <section>
         <div class="container">
             <div class="table-responsive">
                 <table class="table table-striped" id="productsTable">
@@ -23,7 +23,6 @@
                                 <th scope="row">
                                     <%= index + 1 %>
                                 </th>
-
                                 <td>
                                     <%= cashback.name%>
                                 </td>
@@ -34,18 +33,28 @@
                                     ₹ <%= cashback.cashBack%>
                                 </td>
                                 <td>
-                                    <% if (cashbacks.isValid===false) { %>
-                                        <p>Inactive</p>
-
+                                    <% if (cashback.isValid===false) { %>
+                                        <div class="d-flex">
+                                            <p>Inactive</p>
+                                            <p class="ml-2"
+                                                onclick="undoCashbackDelete('<%= cashback._id %>','<%= cashback.name%>')">
+                                                <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
+                                                    id="undoCashbackDlt">
+                                            </p>
+                                        </div>
                                         <%} else{ %>
                                             <div class="d-flex">
                                                 <p>Active</p>
-
+                                                <p class="ml-2"
+                                                    onclick="deleteCashback('<%= cashback._id %>','<%= cashback.name%>')">
+                                                    <img style="width: 1.2rem;" src="/images/navbar/delete.png"
+                                                        alt="delete">
+                                                </p>
                                             </div>
                                             <% } %>
                                 </td>
-                                <td><a href="/admin/cashbacks/edit/<%= cashbacks._id %>"><img
-                                            src="/images/navbar/edit.png" alt="edit" style="width: 1rem;"></a> </td>
+                                <td><a href="/admin/cashback/<%= cashback._id %>"><img src="/images/navbar/edit.png"
+                                            alt="edit" style="width: 1rem;"></a> </td>
 
                             </tr>
                             <% })%>
@@ -54,3 +63,5 @@
             </div>
         </div>
     </section>
+    <script src="/javascripts/admin/adminCashback.js"></script>
+    <script src="/javascripts/admin/adminCoupons.js"></script>

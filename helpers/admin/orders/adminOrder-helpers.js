@@ -131,7 +131,6 @@ module.exports = {
                 )
 
                 if (updateData.modifiedCount === 1) {
-                    console.log('order update success')
                     return { status: 'ok' }
                 } else {
                     return { status: 'nok' }
@@ -172,7 +171,7 @@ module.exports = {
     // for expiring return status
     scheduleReturnValidUpdate: () => {
         const rule = new schedule.RecurrenceRule();
-        rule.hour = 0; // Run daily at midnight
+        rule.hour = 0; 
         rule.minute = 0;
 
         schedule.scheduleJob(rule, async () => {

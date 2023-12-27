@@ -29,7 +29,7 @@ function isValidPrice(field) {
 }
 
 function addCoupon() {
-    const fields = ["name","description", "amount","discount" ,"validDate","endDate"];
+    const fields = ["name", "description", "amount", "discount", "validDate", "endDate"];
     let isError = false;
     //checking for any empty fields
     fields.forEach(field => {
@@ -47,7 +47,7 @@ function addCoupon() {
         const discount = document.getElementById('discount').value;
         const startDate = document.getElementById("validDate").value;
         const endDate = document.getElementById("endDate").value
-        const reqBody = { name,description, amount,discount, startDate,endDate };
+        const reqBody = { name, description, amount, discount, startDate, endDate };
 
 
         fetch("http://localhost:3000/admin/addCoupon", {
@@ -64,15 +64,14 @@ function addCoupon() {
             })
             .catch(err => console.log(err));
     }
-    
+
 }
 
 function editCoupon(couponId) {
 
-    const fields = ["nameEdit","descriptionEdit", "amountEdit",
-    "discountEdit","validDateEdit","endDateEdit"];
+    const fields = ["nameEdit", "descriptionEdit", "amountEdit",
+        "discountEdit", "validDateEdit", "endDateEdit"];
     let isError = false;
-    //checking for any empty fields
     fields.forEach(field => {
         const value = document.getElementById(field).value;
         if (!value) {
@@ -88,7 +87,7 @@ function editCoupon(couponId) {
         const discount = document.getElementById('discountEdit').value;
         const startDate = document.getElementById("validDateEdit").value;
         const endDate = document.getElementById("endDateEdit").value
-        const reqBody = { name,description, amount,discount, startDate,endDate };
+        const reqBody = { name, description, amount, discount, startDate, endDate };
 
 
         fetch(`http://localhost:3000/admin/coupon/edit/${couponId}`, {
@@ -101,11 +100,10 @@ function editCoupon(couponId) {
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/admin/coupons");
-                } else {
-                   console.log('Coupon editing failed')
                 }
             })
             .catch(err => console.log(err));
     }
-    
+
 }
+

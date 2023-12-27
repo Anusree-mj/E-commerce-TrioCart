@@ -300,7 +300,8 @@
                         <div class="d-flex flex-wrap ">
                             <% cartProducts.forEach(cartProduct=> { %>
                                 <div class="mt-4 ml-2">
-                                    <img class="prodImg" src="/<%= cartProduct.product.image %>" alt="cartproduct">
+                                    <a href="/products/<%= cartProduct.product._id %>">
+                                    <img class="prodImg" src="/<%= cartProduct.product.image %>" alt="cartproduct"></a>
                                     <p class="mt-2 darkHeads">Count : <%= cartProduct.Count %>
                                     </p>
                                 </div>

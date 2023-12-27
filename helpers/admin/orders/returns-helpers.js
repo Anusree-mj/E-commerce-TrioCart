@@ -30,7 +30,6 @@ module.exports = {
             )
 
             if (updateData.modifiedCount === 1) {
-                console.log('return update success')
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }

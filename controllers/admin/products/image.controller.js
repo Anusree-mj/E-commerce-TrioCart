@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 const uploadImage =(req, res) => {
     try {
         if (!req.file) {          

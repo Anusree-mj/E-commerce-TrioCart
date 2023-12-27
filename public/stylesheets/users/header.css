@@ -137,11 +137,14 @@
 
 .dropbtn {
   margin: 0 2rem;
+  max-width: 80%;
+
 }
 
 .category {
   color: black;
   display: block;
+  font-size: 1.2rem;
 }
 
 .category:hover {
@@ -234,8 +237,8 @@
   .dropbtn {
     display: inline-block;
     cursor: pointer;
-    width: 100%;
     box-sizing: border-box;
+    max-width: 80%;
   }
 
   .dropdown-content {
@@ -261,5 +264,5 @@
     left: 0;
   }
 
- 
+
 }

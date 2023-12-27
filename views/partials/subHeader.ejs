@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/users/header.css">
 <div class="sub-nav navbar navbar-light bg-light justify-content-center ">
     <% allCategories.forEach(categories=>{ %>
-        <div class="dropdown">
+        <div class="dropdown" >
             <div class="dropbtn">
                 <a class="category" href="#">
                     <%= categories.category %>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <% }) %>
-            <div class="search-wrapper">
+            <div class="search-wrapper mb-4">
                 <input class="search" type="search" id="search" placeholder="Search products...">
                 <div class="vertical-line"></div>
                 <img class="search-icon" src="/images/navbar/search.png" alt='search' onclick="search()">

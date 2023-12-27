@@ -63,7 +63,10 @@ router.get('/category', controller.adminControllers.categoryManagementController
 router.get('/addCategory', controller.adminControllers.categoryManagementController.getAddCategoryPage);
 
 //get edit category  page
-router.get('/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage);
+router.get('/category/:category/:subcategory', controller.adminControllers.categoryManagementController.getEditCategoryPage);
+
+//edit subcategory 
+router.put('/category', controller.adminControllers.categoryManagementController.editSubcategory);
 
 //delete subcategory;
 router.patch('/category', controller.adminControllers.categoryManagementController.softDeleteSubcategory);
@@ -100,6 +103,18 @@ router.put('/coupon/edit/:couponId', controller.adminControllers.couponControlle
 
 //get cashbacks list
 router.get('/cashBack', controller.adminControllers.cashBackController.getCashbacksPage);
+
+//get cashbacks list
+router.get('/cashBack/:cashbackId', controller.adminControllers.cashBackController.getEditCashbackPage);
+
+//edit cashbacks 
+router.put('/cashBack/:cashbackId', controller.adminControllers.cashBackController.editCashback);
+
+//edit cashbacks 
+router.patch('/cashBack/:cashbackId', controller.adminControllers.cashBackController.undoCashbackDelete);
+
+//edit cashbacks 
+router.delete('/cashBack/:cashbackId', controller.adminControllers.cashBackController.softDeleteCashback);
 
 //block users
 router.delete('/users', controller.adminControllers.userManagementController.softDeleteUser);

@@ -58,7 +58,7 @@ const getOrderHistoryPage = async (req, res, next) => {
                     res.render('customers/orders/orderHistory', {
                         layout: 'layout/layout', user, allCategories, totalCartProduct,
                         orderDetails: orderDetails.orderDetails, viewMoreProducts,
-                        currentPage, totalPages, // Add totalPages here
+                        currentPage, totalPages,
                     });
                 } else {
                     let viewMoreProducts = await getProductViewMoreProducts();
