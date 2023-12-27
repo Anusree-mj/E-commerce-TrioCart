@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="/stylesheets/users/orderHistory.css">
+<link rel="stylesheet" href="/stylesheets/users/productDetails.css">
 
 
 <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-     <%- include('../../partials/subHeader',allCategories) %>
+    <%- include('../../partials/subHeader',allCategories) %>
 
-        <section class="orderpage">
+        <section class="d-flex flex-column justify-content-around orderpage">
             <div class="pageHead">
                 <h2>Your Orders</h2>
                 <hr>
             </div>
-
             <div class="ordercontainer">
                 <div class="orderSctn">
                     <% if(orderDetails){ %>
@@ -28,7 +28,7 @@
                                             <p class="subHead">Total</p>
                                             <p>₹ <%= order.totalAmount %>/-</p>
                                         </div>
-                                        <div class="d-flex flex-column orderHeadSub">
+                                        <div class="d-flex flex-column orderHeadSub shipTo">
                                             <p class="subHead">Ship To</p>
                                             <p>
                                                 <%= order.billingAddress[0].name %>
@@ -59,28 +59,28 @@
                                     </div>
                                     <div class="d-flex flex-column prodctSctn ">
                                         <% order.products.forEach(product=> { %>
-                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                            <div class="d-flex justify-content-around align-items-center mt-4">
                                                 <a href="/products/<%= product.product._id %>">
                                                     <img class="prodImg" src="/<%= product.product.image %>"
                                                         alt="orderproduct">
                                                 </a>
 
-                                                <div class="">
+                                                <div class="ml-3">
                                                     <p class="prodName">
                                                         <%= product.product.name %>
                                                     </p>
                                                     <p class="prodName">
-                                                        ₹ <%= product.product.price %>/-
+                                                        ₹<%= product.product.price %>/-
                                                     </p>
                                                     <p class="prodName">Size:
                                                         <%= product.Size %>,
                                                     </p>
                                                     <p class="prodName"> Count : <%= product.Count %>
-                                                    </p>                                                  
+                                                    </p>
 
                                                 </div>
-                                                <div>
-                                                    <p class="prodName">Order Status</p>
+                                                <div class="ml-3">
+                                                    <p class="prodName orderStatusHead">Order Status</p>
                                                     <% if (order.orderStatus==='Cancelled by User' ){ %>
                                                         <p>Order: cancelled
                                                         </p>
@@ -101,7 +101,7 @@
                                                                         </p>
                                                                         <% } %>
                                                 </div>
-                                                <div class="d-flex flex-column">
+                                                <div class="d-flex flex-column ml-3">
                                                     <% if (order.orderStatus==='delivered' && order.returnValid &&
                                                         !product.isReturned) { %>
                                                         <div class="d-flex flex-wrap" style="max-width: 13rem;">
@@ -109,26 +109,24 @@
                                                                     order.returnDate %>
                                                             </p>
                                                         </div>
-                                                        <button type="button" class="btn btn-dark mt-3 commntBtn"
+                                                        <button type="button" class="btn btn-dark mt-3 ml-3 commntBtn"
                                                             onclick="triggerReturn('<%= product.product._id %>')">Return</button>
                                                         <% } else if ( product.isReturned && order.orderStatus
-                                                            !=='returned' && product.returnStatus !=='Rejected' && 
+                                                            !=='returned' && product.returnStatus !=='Rejected' &&
                                                             product.returnStatus !=='Completed' ) { %>
                                                             <p class="returnTxt">Your product will be collected within 2
                                                                 days.</p>
                                                             <% } else if (order.orderStatus !=='Cancelled by User' &&
-                                                                    !order.returnValid &&product.returnStatus !=='Completed' ) { %>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-dark mt-3 commntBtn">Leave
-                                                                        your Comment</button>
-                                                                    <% } if (product.returnStatus ==='Rejected' ) { %>
-                                                                        <p class="returnTxt">Your return request rejected.</p>
-                                                                        <button type="button"
-                                                                        class="btn btn-outline-dark mt-3 commntBtn">Leave
-                                                                        your Comment</button>
-                                                                        <% } %>
-                                                                        <%  if (product.returnStatus ==='Completed' ) { %>
-                                                                            <p class="returnTxt">Product Returned.</p>                                                                         
+                                                                !order.returnValid &&product.returnStatus !=='Completed'
+                                                                ) { %>
+                                                                <button type="button"
+                                                                    class="btn btn-outline-dark mt-3 commntBtn">Comment</button>
+                                                                <% } if (product.returnStatus==='Rejected' ) { %>
+                                                                    <p class="returnTxt">Your return request rejected.
+                                                                    </p>
+                                                                    <% } %>
+                                                                        <% if (product.returnStatus==='Completed' ) { %>
+                                                                            <p class="returnTxt">Product Returned.</p>
                                                                             <% } %>
                                                 </div>
                                             </div>
@@ -183,10 +181,10 @@
                                                 <hr>
                                             </div>
                                             <% }); %>
-                                                <div>
+                                                <div class="d-flex justify-content-center align-items-center">
                                                     <% if (order.orderStatus==='placed' || order.orderStatus==='packed'
                                                         && order.paymentMethod==='COD' ) { %>
-                                                        <button type="button" class="btn btn-dark mt-4 commntBtn"
+                                                        <button type="button" class="btn btn-dark mt-4 cancelBtn" 
                                                             onclick="cancelOrder('<%= order._id %>')">Cancel
                                                             Order</button>
                                                         <% } %>
@@ -195,22 +193,54 @@
                                 </div>
                                 <% } %>
                                     <% }); %>
+                                        <!-- Adding pagination controls -->
+                                        <div class="d-flex justify-content-center align-items-center pageNav mt-4">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination">
+                                                    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                                                        <a class="page-link"
+                                                            href="/order/history?page=<%= currentPage - 1 %>"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <% for (let i=1; i <=totalPages; i++) { %>
+                                                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                                            <a class="page-link" href="/order/history?page=<%= i %>">
+                                                                <%= i %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+
+                                                            <li
+                                                                class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                                                                <a class="page-link"
+                                                                    href="/order/history?page=<%= currentPage + 1 %>"
+                                                                    aria-label="Next">
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                    <span class="sr-only">Next</span>
+                                                                </a>
+                                                            </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+
                                         <% } else { %>
                                             <p class="noOrders">No orders yet</p>
                                             <% } %>
                 </div>
             </div>
-
             <div class="viewProducts">
                 <div class="cardHead">
                     <h3>Others Also Bought</h3>
                 </div>
-
                 <div class="cards-section ">
                     <% viewMoreProducts.forEach(product=>{%>
                         <div class="col-sm-3 mb-4">
                             <a href="/products/<%= product._id %>">
-                                <div class="card" style="width: 15rem;">
+                                <div class="card mycard" style="width: 18rem;">
                                     <div>
                                         <img class="img-fluid img-thumbnail " src="/<%= product.image %>"
                                             alt="Card image cap">

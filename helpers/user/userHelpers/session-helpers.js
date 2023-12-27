@@ -28,7 +28,6 @@ module.exports = {
                     return { status: 'ok', user }
                 }
                 else {
-                    console.log('user is blocked')
                     return { status: 'nok' }
                 }
             } else {

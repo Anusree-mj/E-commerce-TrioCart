@@ -43,14 +43,22 @@ const getOrderHistoryPage = async (req, res, next) => {
 
             if (cartResult) {
                 let totalCartProduct = cartResult.totalCount;
-
-                let orderDetails = await orderHelpers.getAllOrderDetails(userId);
+                // pagination
+                let currentPage = parseInt(req.query.page) || 1;
+                const ordersPerPage = 3;
+                const skip = (currentPage - 1) * ordersPerPage;
+                let orderDetails = await orderHelpers.getAllOrderDetails(userId, skip, ordersPerPage);
 
                 if (orderDetails.status === 'ok') {
+                    const totalOrdersResult = await orderHelpers.getTotalOrderCount(userId);
+                    const totalOrders = totalOrdersResult.status === 'ok' ? totalOrdersResult.totalOrders : 0;
+                    const totalPages = Math.ceil(totalOrders / ordersPerPage);
+
                     let viewMoreProducts = await getProductViewMoreProducts();
                     res.render('customers/orders/orderHistory', {
                         layout: 'layout/layout', user, allCategories, totalCartProduct,
-                        orderDetails: orderDetails.orderDetails, viewMoreProducts
+                        orderDetails: orderDetails.orderDetails, viewMoreProducts,
+                        currentPage, totalPages,
                     });
                 } else {
                     let viewMoreProducts = await getProductViewMoreProducts();
@@ -67,6 +75,7 @@ const getOrderHistoryPage = async (req, res, next) => {
         next(error);
     }
 };
+
 
 const getOrderDetailPage = async (req, res, next) => {
     try {

@@ -42,7 +42,7 @@ function uploadImage() {
             .then(res => res.blob())
             .then(blob => {
                 // Create a FormData object and append the blob
-                var formData = new FormData();
+                const formData = new FormData();
                 formData.append('image', blob, 'cropped_image.png');
 
                 // Fetch API request
@@ -62,8 +62,8 @@ function uploadImage() {
 
                             document.getElementById('croppedImageContainer').style.display = 'none';
                             // added image preview
-                            var previewContainer = document.getElementById('addedImagesPreview');
-                            var previewImage = document.createElement('img');
+                            const previewContainer = document.getElementById('addedImagesPreview');
+                            const previewImage = document.createElement('img');
                             previewImage.src = '/' + data.imagePathWithoutPublic;
                             previewImage.style.width = '2rem';
                             previewImage.style.marginRight = '1.5rem';

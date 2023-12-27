@@ -16,7 +16,15 @@ const getsubcategoryProductsPage = async (req, res, next) => {
         let categories = result.categories;
         let products = result.products;
         let sessionId = req.cookies.session;
+            //  pagination
+            const page = parseInt(req.query.page) || 1;
+            const productsPerPage = 16;
+            const startIndex = (page - 1) * productsPerPage;
+            const endIndex = page * productsPerPage;
 
+            const paginatedProducts = products.slice(startIndex, endIndex);
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            const currentPage = page;
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
 
         if (sessionResult.status === 'ok') {
@@ -33,9 +41,11 @@ const getsubcategoryProductsPage = async (req, res, next) => {
                     category,
                     subCategory,
                     categories,
-                    products,
+                    products: paginatedProducts,
                     user,
-                    totalCartProduct
+                    totalCartProduct,
+                    totalPages,
+                    currentPage
                 });
             }
         } else {
@@ -45,8 +55,10 @@ const getsubcategoryProductsPage = async (req, res, next) => {
                 category,
                 subCategory,
                 categories,
-                products,
-                user: undefined
+                products: paginatedProducts,
+                user: undefined,
+                totalPages,
+                currentPage
             });
         }
     } catch (error) {

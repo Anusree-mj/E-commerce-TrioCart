@@ -88,7 +88,8 @@ const getEditCategoryPage = async (req, res, next) => {
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            res.render('admin/editCategory', { layout: 'layout/layout', category, subCategory });
+
+            res.render('admin/adminCategory/categoryUpdates/editCategory', { layout: 'layout/layout', category, subCategory });
         } else {
             res.redirect('/admin');
         }

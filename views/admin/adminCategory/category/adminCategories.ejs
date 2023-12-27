@@ -2,7 +2,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <%- include('../../../partials/headers/adminHeaders') %>
-<% var count=1; %>
 
 <section>
     <div class="container">
@@ -36,9 +35,9 @@
                                     <p>
                                         <%= item.name %>
                                     </p>
-                                    <p class="ml-3" onclick="editSubcategory('<%= item.name %>','<%= category.category %>')">
+                                    <a class="ml-3" href="/admin/category/<%= category.category %>/<%= item.name %>">
                                         <img src="/images/navbar/edit.png" alt="edit" style="width: 1rem;">
-                                    </p>
+                                    </a>
                                 </div>
                                 <% }) %>
                             </td>

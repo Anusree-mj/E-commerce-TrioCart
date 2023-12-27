@@ -6,22 +6,20 @@ p {
 
 .orderpage {
     background-color: #f5f3f1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
-.noOrders{
+
+.noOrders {
     width: 60rem;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
     text-decoration: underline;
 }
+
 .pageHead {
-    width: 80rem;
+    width: 90rem;
     padding: 2rem 3rem;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .ordercontainer {
@@ -30,7 +28,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    max-width: 100%;
 }
 
 .orderSctn {
@@ -43,7 +41,7 @@ p {
     padding: 0.8rem 1rem 1rem 1rem;
     border-bottom: 1px solid black;
     border-radius: 1rem;
-
+    max-width: 100%;
 }
 
 .orders {
@@ -51,6 +49,7 @@ p {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     margin-top: 2.5rem;
+    max-width: 100%;
 }
 
 .order {
@@ -74,6 +73,7 @@ p {
     padding: 0.5rem 2rem 2rem 2rem;
     border-bottom: 1px solid black;
     border-radius: 1rem;
+    max-width: 100%;
 }
 
 .prodImg {
@@ -86,69 +86,51 @@ p {
     font-weight: 600;
 
 }
-.returnTxt{
-    color: red;    
+
+.returnTxt {
+    color: red;
     font-size: 0.8rem;
 }
+
 .viewDetails {
     color: #131313;
     text-decoration: underline;
     margin-top: 0.6rem;
 }
 
-.viewProducts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.cardHead {
-    margin-top: 6rem;
-    width: 74rem;
-    max-width: 90%;
-}
-
-.cards-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    max-width: 90%;
-}
-
 .commntBtn {
     padding: 0.3rem 0.5rem;
     border-radius: 0.5rem;
 }
-
-.card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    font-size: 1rem;
-    color: black;
-}
-
-.card-text {
-    font-size: 1rem;
-    color: black;
+.cancelBtn{
+    width: 15rem;
 }
 
 @media only screen and (max-width: 980px) {
-    .col-sm-3 {
-        width: 50% !important;
-        max-width: 80%;
+    p {
+        font-size: 0.7rem !important;
+        font-weight: 600;
     }
 
-    .card {
-        width: 12rem !important;
-        max-width: 100%;
+    .shipTo {
+        display: none !important;
     }
 
-    .cardHead {
-        margin-top: 1rem;
+    .prodImg {
+        width: 3rem;
     }
 
+    .orderStatusHead {
+        display: none;
+    }
+
+    .viewDetails {
+        margin: 0;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+    .cancelBtn{
+        width: 15rem;
+    }
+    
 }

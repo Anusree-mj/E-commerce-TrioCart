@@ -1,14 +1,14 @@
 // upload images
-let croppedImageUrl; // Variable to store the cropped image URL
+let croppedImageUrl; // variiable to store the cropped image URL
 let isNewFileChosen = false; // Flag to track if a new file is chosen
 let cropper; // Variable to store the Cropper instance
 
 function handleImageChange() {
-    var input = document.getElementById('inputImage');
-    var modal = document.getElementById('imageModal');
-    var modalImage = document.getElementById('modalImage');
+    const input = document.getElementById('inputImage');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
 
-    var file = input.files[0];
+    const file = input.files[0];
 
     // Reset state if a new file is chosen
     if (isNewFileChosen) {
@@ -26,7 +26,7 @@ function handleImageChange() {
     }
 
     // Display the selected image in the modal
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function (e) {
         modalImage.src = e.target.result;
 
@@ -54,11 +54,11 @@ function destroyCropper() {
 }
 
 function cropImage() {
-    var modal = document.getElementById('imageModal');
-    var modalImage = document.getElementById('modalImage');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
 
     // Get the cropped data
-    var croppedCanvas = cropper.getCroppedCanvas();
+    const croppedCanvas = cropper.getCroppedCanvas();
 
     // Convert the cropped canvas to a data URL
     croppedImageUrl = croppedCanvas.toDataURL();
@@ -78,8 +78,8 @@ function cropImage() {
 }
 
 function closeModal() {
-    var modal = document.getElementById('imageModal');
-    var modalImage = document.getElementById('modalImage');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
 
     // Destroy the Cropper instance
     destroyCropper();

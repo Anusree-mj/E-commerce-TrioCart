@@ -205,7 +205,11 @@ function getPasswordChange() {
     const editableElements = Array.from(document.getElementsByClassName('editablePassword'));
     editableElements.forEach(element => element.style.display = 'block');
 }
-
+function cancelPasswordChange(){
+    document.getElementById('changePassword').style.display = 'block';
+    const editableElements = Array.from(document.getElementsByClassName('editablePassword'));
+    editableElements.forEach(element => element.style.display = 'none');
+}
 // change password
 function changePassword(userId) {
     let isError = false;

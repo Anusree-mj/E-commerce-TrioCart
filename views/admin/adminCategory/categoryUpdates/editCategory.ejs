@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/stylesheets/admin/updates.css">
+<%- include('../../../partials/headers/adminHeaders') %>
+
+    <div class="row align-items-center justify-content-center" style="height: 70vh;">
+        <div class="addForm">
+            <h2 class="head">Edit Subcategory</h2>
+
+            <label class="label" for="subCategory">Category</label>
+            <input type="text" class="form-control" name="subCategory" id="subCategory" value="<%= category %>" readonly>
+
+            <label class="label" for="subCategory">SubCategory</label>
+            <input type="text" class="form-control" name="subCategory" id="subCategoryEdit" value="<%= subCategory %>"
+                onclick="clearSpan('subCategoryEditSpan')">
+            <span id="subCategoryEditSpan" class="span"></span>
+            <div class="button">
+                <button class="addProduct_button btn btn-success btn-lg btn-block" type="button"
+                    onclick="editCategory('<%= category %>','<%= subCategory %>')">Edit</button>
+            </div>
+        </div>
+    </div>
+    <%- include('../../../partials/loginsFooter') %>
+        <script src="/javascripts/admin/adminCategory.js"></script>

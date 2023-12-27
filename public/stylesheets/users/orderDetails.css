@@ -12,10 +12,6 @@ p {
 
 .orderpage {
     background-color: #f5f3f1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .horizontal-line {
@@ -27,7 +23,7 @@ p {
 .pageHead {
     width: 80rem;
     padding: 2rem 3rem;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .ordercontainer {
@@ -35,7 +31,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .orderSctn {
@@ -57,12 +53,6 @@ p {
     margin-top: 1.5rem;
 }
 
-.orderHeadSub {
-    width: 10rem;
-    max-width: 90%;
-
-}
-
 .subHead {
     color: #131313;
     font-weight: 600;
@@ -75,7 +65,6 @@ p {
     border-radius: 1rem;
     max-width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 .prodImg {
@@ -86,7 +75,6 @@ p {
     color: black;
     font-size: 0.8rem;
     font-weight: 600;
-
 }
 
 .viewDetails {
@@ -95,59 +83,80 @@ p {
     margin-top: 0.6rem;
 }
 
-.viewProducts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.cardHead {
-    margin-top: 6rem;
-    width: 74rem;
-    max-width: 90%;
-}
-
-.cards-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    max-width: 90%;
-}
-
 .commntBtn {
     padding: 0.3rem 0.5rem;
     border-radius: 0.5rem;
 }
 
-.card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    font-size: 1rem;
-    color: black;
-}
+.viewProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem; 
 
-.card-text {
-    font-size: 1rem;
-    color: black;
-}
+    .cardHead {
+        margin-top: 2rem;
+        width: 80%;      
+        max-width: 100%;
+        text-align: center;
+    } 
 
-@media only screen and (max-width: 980px) {
+     .cards-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; 
+        align-items: flex-start;
+        width: 80%; 
+         max-width: 100%;
+        margin-top: 1rem; 
+    }
+
     .col-sm-3 {
-        width: 50% !important;
-        max-width: 80%;
+        width: 100%; 
+       max-width: 100%;
+        box-sizing: border-box; 
+        padding: 0.5rem; 
     }
 
     .card {
-        width: 12rem !important;
+        width: 100%; 
+        max-width: 18rem; 
+         margin: 0.5rem;
+        
+    }
+
+    .card-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         max-width: 100%;
+        font-size: 1rem;
+        color: black;
+        margin-top: 0.5rem;
+       
     }
 
-    .cardHead {
-        margin-top: 1rem;
+    .card-text {
+        font-size: 1rem;
+        color: black;
+        margin-top: 0.3rem;
     }
 
+    @media only screen and (max-width: 980px) {
+        .cards-section {
+            justify-content: space-around;
+        }
+    
+        .card {
+            width: 100%;
+            max-width: 100%;
+        }  
+      
+    }
+}
+@media only screen and (max-width: 980px) {
+    p {
+        font-size: 0.6rem !important;
+    }
 }

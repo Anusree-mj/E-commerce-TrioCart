@@ -27,7 +27,7 @@ a:hover {
 }
 
 .checkoutDetails {
-    max-width: 50%;
+    max-width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +76,7 @@ a:hover {
     width: 25rem;
     max-width: 50%;
     margin-top: 2rem;
-    padding: 1rem;    
+    padding: 1rem;
 }
 
 .darkHeads {
@@ -143,6 +143,7 @@ a:hover {
     background-color: #a7a7a7;
     color: rgb(255, 255, 255);
 }
+
 .cardCoupon {
     width: 20rem;
     border-radius: 5px;
@@ -183,7 +184,8 @@ a:hover {
     color: #565656;
     text-transform: uppercase;
 }
-.content h1{
+
+.content h1 {
     color: #565656;
     font-size: 1.5rem;
     font-weight: 600;
@@ -194,14 +196,17 @@ a:hover {
     text-decoration: underline;
     color: #000 !important;
 }
-.couponAvailability{
+
+.couponAvailability {
     color: rgb(165, 16, 16);
     font-weight: 600;
 }
-.strikePrice{
+
+.strikePrice {
     text-decoration: line-through;
     text-decoration-color: red;
 }
+
 @media only screen and (max-width: 980px) {
     .checkout {
         display: flex;
@@ -225,9 +230,11 @@ a:hover {
     .delivery {
         max-width: 100%;
     }
+
     .checkoutDetails {
         max-width: 90%;
     }
+
     .prodImg {
         width: 6rem;
     }

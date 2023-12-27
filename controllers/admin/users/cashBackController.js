@@ -19,15 +19,17 @@ const getCashbacksPage = async (req, res, next) => {
         next(error);
     }
 };
-
-const getAddCouponsPage = async (req, res, next) => {
+const getEditCashbackPage = async (req, res, next) => {
     try {
+        let cashbackId = req.params.cashbackId;
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            res.render('admin/adminCoupons/addCoupon', {
+            const cashback = await cashbackHelpers.getACashBackForEdit(cashbackId);
+            res.render('admin/adminCashbacks/editCashback', {
                 layout: 'layout/layout',
+                cashback
             });
         } else {
             res.redirect('/admin');
@@ -37,19 +39,20 @@ const getAddCouponsPage = async (req, res, next) => {
     }
 };
 
-const addCoupon = async (req, res, next) => {
+const editCashback = async (req, res, next) => {
     try {
+        let cashbackId = req.params.cashbackId;
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            let insertStatus = await cashbackHelpers.addCoupon(req.body);
-            if (insertStatus.status === 'ok') {
+            const cashbackUpdate = await cashbackHelpers.editCashback(cashbackId, req.body);
+
+            if (cashbackUpdate.status === 'ok') {
                 res.status(200).json({ status: "ok" });
             } else {
                 res.status(400).json({ status: "nok" });
             }
-
         } else {
             res.redirect('/admin');
         }
@@ -58,17 +61,20 @@ const addCoupon = async (req, res, next) => {
     }
 };
 
-const getEditCouponsPage = async (req, res, next) => {
+const softDeleteCashback = async (req, res, next) => {
     try {
-        const couponId = req.params.couponId;
+        let cashbackId = req.params.cashbackId;
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            const coupon = await cashbackHelpers.getACoupon(couponId);
-            res.render('admin/adminCoupons/editCoupon', {
-                layout: 'layout/layout', coupon
-            });
+            const cashbackUpdate = await cashbackHelpers.deleteCashback(cashbackId);
+
+            if (cashbackUpdate.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         } else {
             res.redirect('/admin');
         }
@@ -77,15 +83,16 @@ const getEditCouponsPage = async (req, res, next) => {
     }
 };
 
-const editCoupon = async (req, res, next) => {
+const undoCashbackDelete = async (req, res, next) => {
     try {
-        const couponId = req.params.couponId;
+        let cashbackId = req.params.cashbackId;
         let sessionId = req.cookies.adminSession;
         let result = await adminLoginHelpers.checkSessions(sessionId);
 
         if (result.status === 'ok') {
-            const editStatus = await cashbackHelpers.editCoupon(couponId, req.body);
-            if (editStatus.status === 'ok') {
+            const cashbackUpdate = await cashbackHelpers.undodeleteCashback(cashbackId);
+
+            if (cashbackUpdate.status === 'ok') {
                 res.status(200).json({ status: "ok" });
             } else {
                 res.status(400).json({ status: "nok" });
@@ -100,8 +107,8 @@ const editCoupon = async (req, res, next) => {
 
 module.exports = {
     getCashbacksPage,
-    getAddCouponsPage,
-    addCoupon,
-    getEditCouponsPage,
-    editCoupon,
+    getEditCashbackPage,
+    editCashback,
+    softDeleteCashback,
+    undoCashbackDelete,
 }

@@ -3,66 +3,69 @@ const collection = require('../../../models/index-model')
 module.exports = {
     getAllCashbacks: async () => {
         try {
-            const coupons = await collection.cashBackCollection.find().sort({ createdAt: -1 });
+            const cashbacks = await collection.cashBackCollection.find().sort({ createdAt: -1 });
 
-            return coupons
+            return cashbacks
         } catch (err) {
             console.log(err)
         }
     },
-
-    addCoupon: async (data) => {
+    getACashBackForEdit: async (cashbackId) => {
         try {
-            const insertData = {
-                name: data.name,
-                description: data.description,
-                minAmount: data.amount,
-                discount: data.discount,
-                couponActivatingDate: data.endDate,
-                couponDeactivatingDate: data.startDate,
-            };
-            await collection.couponCollection.insertMany([insertData]);
-            return { status: 'ok' }
+            const cashback = await collection.cashBackCollection.find(
+                { _id: cashbackId }
+            )
+            return cashback
         } catch (err) {
             console.log(err)
         }
     },
-
-    getACoupon: async (couponId) => {
+    editCashback: async (cashbackId, data) => {
         try {
-            const coupon = await collection.couponCollection.find({
-                _id: couponId
-            })
-            return coupon
-        } catch (err) {
-            console.log(err)
-        }
-    },
-
-    editCoupon: async (couponId, data) => {
-        try {
-            const coupon = await collection.couponCollection.updateOne({
-                _id: couponId
-            },
-                {
-                    $set: {
-                        name: data.name,
-                        description: data.description,
-                        minAmount: data.amount,
-                        discount: data.discount,
-                        couponActivatingDate: data.startDate,
-                        couponDeactivatingDate: data.endDate,
-                    }
-                })
-            if (coupon) {
+            const updateCashback = await collection.cashBackCollection.findOneAndUpdate(
+                { _id: cashbackId },
+                { $set: { cashBack: data.newCashback } }
+            )
+            if (updateCashback) {
                 return { status: 'ok' }
-            }
-            else {
+            } else {
                 return { status: 'nok' }
             }
+
         } catch (err) {
             console.log(err)
         }
-    }
+    },
+   deleteCashback: async (cashbackId) => {
+        try {
+            const updateCashback = await collection.cashBackCollection.findOneAndUpdate(
+                { _id: cashbackId },
+                { $set: { isValid: false } }
+            )
+            if (updateCashback) {
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
 
+        } catch (err) {
+            console.log(err)
+        }
+    },
+   undodeleteCashback: async (cashbackId) => {
+        try {
+            const updateCashback = await collection.cashBackCollection.findOneAndUpdate(
+                { _id: cashbackId },
+                { $set: { isValid: true } }
+            )
+            if (updateCashback) {
+                return { status: 'ok' }
+            } else {
+                return { status: 'nok' }
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }

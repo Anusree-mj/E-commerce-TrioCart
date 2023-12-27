@@ -67,32 +67,15 @@ module.exports = {
             console.log(err)
         }
     },
-
     editSubCategory: async (body) => {
         try {
             const updateData = await collection.categoryCollection.updateOne(
                 {
-                    category: body.category,
-                    subCategory: body.subcategory
+                    category: body.category.trim(),
+                    'subCategory.name': body.subcategory.trim()
                 },
                 {
-                    $pull: {
-                        subCategory: body.subcategory
-                    }
-
-                }
-            )
-            if (updateData) {
-                console.log('collection got')
-            }
-            await collection.categoryCollection.updateOne(
-                {
-                    category: body.category,
-                },
-                {
-                    $push: {
-                        subCategory: body.newSubCategory
-                    }
+                    'subCategory.$.name': body.newSubCategory.trim()
 
                 }
             )

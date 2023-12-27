@@ -65,7 +65,7 @@ module.exports = {
             // discount percenteage
             const orderValue = orderDetails.totalPrice;
             const originalAmount = orderDetails.total;
-            const amountDifference=orderValue - originalAmount;
+            const amountDifference = orderValue - originalAmount;
             const discountPercentage = amountDifference !== 0 ? Math.round((amountDifference / orderValue) * 100) : 0;
             // update details in order collection
             const data = {
@@ -90,7 +90,7 @@ module.exports = {
                 estimatedDelivery: deliveryTym,
                 totalAmount: orderDetails.total,
                 orderValue: orderDetails.totalPrice,
-                discount:discountPercentage,
+                discount: discountPercentage,
                 orderStatus: (orderDetails.paymentMethod === 'onlinePayment' ? 'pending' : "placed")
             }
 
@@ -115,19 +115,33 @@ module.exports = {
         }
     },
 
-    getAllOrderDetails: async (userId) => {
+    getAllOrderDetails: async (userId, skip, limit) => {
         try {
-            const orderDetails = await collection.orderCollection.find({
-                userId: userId
-            }).sort({ createdAt: -1 }).populate('products.product');
+            const orderDetails = await collection.orderCollection
+                .find({ userId: userId })
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate('products.product');
+
             if (orderDetails) {
                 const latestOrder = orderDetails[0];
                 const estimatedDelivery = latestOrder.estimatedDelivery;
 
-                return { status: 'ok', orderDetails, estimatedDelivery, latestOrder }
+                return { status: 'ok', orderDetails, estimatedDelivery, latestOrder };
             } else {
-                return { status: 'ok' }
+                return { status: 'ok' };
             }
+        } catch (err) {
+            console.log(err);
+            return { status: 'nok' };
+        }
+    },
+
+    getTotalOrderCount: async (userId) => {
+        try {
+            const totalOrders = await collection.orderCollection.countDocuments({ userId });
+            return { status: 'ok', totalOrders };
         } catch (err) {
             console.log(err);
             return { status: 'nok' };

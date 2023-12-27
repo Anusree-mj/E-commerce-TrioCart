@@ -108,7 +108,7 @@ function refund(returnId,userId, amount,productId) {
 
 
 const razorpayPayment = (order,user,productId) => {
-    var options = {
+    const options = {
         "key": "rzp_test_mj8FaMjD2VYPW4", // Enter the Key ID generated from the Dashboard
         "amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
@@ -117,9 +117,7 @@ const razorpayPayment = (order,user,productId) => {
         "image": "https://example.com/your_logo",
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response) {
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature);
+
             verifyPayment(response,order,productId)
         },
         "prefill": {
@@ -134,7 +132,7 @@ const razorpayPayment = (order,user,productId) => {
             "color": "#3399cc"
         }
     };
-    var rzp1 = new Razorpay(options);    
+    const rzp1 = new Razorpay(options);    
         rzp1.open();
         
 }
