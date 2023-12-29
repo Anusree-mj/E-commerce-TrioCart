@@ -2,13 +2,13 @@
 
 <% if (user) { %>
     <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-    <%} else{ %>
+        <%} else{ %>
             <%- include('../../partials/headers/header') %>
                 <% } %>
                     <%- include('../../partials/subHeader',allCategories) %>
-                        <section class="d-flex flex-column justify-content-around">
+                        <section class="d-flex flex-column justify-content-around productDetailsPage">
                             <!-- product images -->
-                            <div class="d-flex justify-content-around mt-4">
+                            <div class="d-flex justify-content-around mt-4 prodctDetails">
                                 <div class="images mt-4">
                                     <img class="image" src="/<%= product.image %>" alt=""
                                         onclick="openImagePreview('<%= product.image %>')">
@@ -77,7 +77,6 @@
                                                     <img class="cart" src="/images/navbar/addCart.png" alt="img">Add
                                                 </button>
                                             </div>
-
                                             <div class="mt-4">
                                                 <p>Description & Fit</p>
                                                 <p class="description">

@@ -5,6 +5,7 @@
 .navbar {
     background-color: #faf9f8 !important;
     padding-top:1.2rem !important ;
+    max-width: 100% !important;
 }
 
 .nav_icon_text {

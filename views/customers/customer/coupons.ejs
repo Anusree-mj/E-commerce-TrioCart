@@ -4,13 +4,13 @@
 <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
     <%- include('../../partials/subHeader',allCategories) %>
 
-        <section class="profilepage">           
+        <section class="profilepage">
             <div class="pageHead">
                 <h2>Your Coupons</h2>
-                <p>You can view and get a coupon here</p>
+                <p>You can view your coupons here</p>
                 <hr>
             </div>
-            <div class="d-flex justify-content-center align-items-around flex-wrap couponSection">
+            <div class="d-flex justify-content-around align-items-center flex-wrap couponSection">
                 <% if (coupons && coupons.length> 0) { %>
                     <% coupons.forEach(coupon=>{%>
                         <div class="card ml-4 mt-3">
@@ -18,13 +18,13 @@
                                 <div class="co-img">
                                     <img src="/images/navbar/logo.png" alt="logo">
                                 </div>
-                                <div class="vertical"></div>
+                                <div class="vertical ml-3"></div>
                                 <div class="content">
-                                    <h2>TrioCarts</h2>
-                                    <h1>
+                                    <p class="TriocartTxt">TrioCarts</p>
+                                    <p class="nameTxt">
                                         <%= coupon.name %>
-                                    </h1>
-                                    <p>
+                                    </p>
+                                    <p class="descriptionTxt">
                                         <%= coupon.description %>
                                     </p>
                                     <% if (!user.coupon || !user.coupon.includes(coupon._id)) { %>

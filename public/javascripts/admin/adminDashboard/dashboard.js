@@ -130,14 +130,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         title: {
                             font: {
-                                size: 16,
-                                weight: 'bold',
+                                size: 24,
+                                weight: 'bolder',
                             }
                         },
                         body: {
                             font: {
                                 size: 24,
-                                weight: 'bold',
+                                weight: 'bolder',
                             }
                         }
                     }
