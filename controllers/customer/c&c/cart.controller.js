@@ -6,9 +6,9 @@ const cartHelpers = require('../../../helpers/user/c&c/cart-helpers');
 const getCartPage = async (req, res, next) => {
     try {
         let allCategories = await categoryHelpers.getCategoryDetails();
-        let result = await productHelpers.getNewArrivalProducts();
+        let result = await productHelpers.getOthersAlsoBroughtProducts();
         let viewMoreProducts = [...result.category1, ...result.category2,
-        ...result.category3, ...result.category4];
+        ...result.category3];
         let sessionId = req.cookies.session;
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
 

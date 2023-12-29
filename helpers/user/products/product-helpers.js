@@ -23,7 +23,17 @@ module.exports = {
             console.log(err)
         }
     },   
-
+    getOthersAlsoBroughtProducts: async () => {
+        try {
+            const category1 = await collection.productsCollection.find({ category: "Ladies", isDeleted: false }).limit(3).sort({ createdAt: -1 });
+            const category2 = await collection.productsCollection.find({ category: "Mens", isDeleted: false }).limit(2).sort({ createdAt: -1 });
+            const category3 = await collection.productsCollection.find({ category: "Kids", isDeleted: false }).limit(3).sort({ createdAt: -1 });
+            return { category1, category2, category3 }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    },   
     getAproduct: async (productId) => {
         try {
             const product = await collection.productsCollection.findOne({ _id: productId })

@@ -22,7 +22,9 @@ function selectedSize(selctdSize) {
 
 function addToCart(productId) {
     if (choosedSize === '') {
-
+        document.getElementById('addCart').style.color = 'brown';
+        document.getElementById('addCart').style.fontWeight = '600';
+        document.getElementById('addCart').style.fontSize = '0.9rem';
         document.getElementById('addCart').textContent = 'Select a Size'
     } else {
         let reqBody = { choosedSize };
@@ -37,11 +39,10 @@ function addToCart(productId) {
             .then((data) => {
                 if (data.status === "ok") {
                     const addToCartButton = document.getElementById('addToCart');
-                    addToCartButton.textContent = "Added To Cart";                   
-                    addToCartButton.style.backgroundColor='green'
+                    addToCartButton.innerHTML = '<img class="cart" src="/images/navbar/addCart.png" alt="img"> Added To Cart';
                     setTimeout(() => {
-                       window.location.reload()
-                    }, 3000);
+                        window.location.reload()
+                    }, 1000);
                 } else if (data.status === 'outofStock') {
                     document.getElementById('addCart').style.color = 'red'
                     document.getElementById('addCart').textContent = "Out of Stock"
@@ -50,5 +51,13 @@ function addToCart(productId) {
                 }
             })
             .catch(err => console.log(err));
+    }
+}
+function toggleWishlist() {
+    const wishlistImg = document.getElementById('whislistImg');
+    if (wishlistImg.src.endsWith('/images/navbar/wishlist.png')) {
+        wishlistImg.src = '/images/navbar/redheart.png';
+    } else {
+        wishlistImg.src = '/images/navbar/wishlist.png';
     }
 }

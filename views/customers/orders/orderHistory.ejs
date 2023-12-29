@@ -65,7 +65,7 @@
                                                         alt="orderproduct">
                                                 </a>
 
-                                                <div class="ml-3">
+                                                <div class="ml-3 ">
                                                     <p class="prodName">
                                                         <%= product.product.name %>
                                                     </p>
@@ -116,18 +116,14 @@
                                                             product.returnStatus !=='Completed' ) { %>
                                                             <p class="returnTxt">Your product will be collected within 2
                                                                 days.</p>
-                                                            <% } else if (order.orderStatus !=='Cancelled by User' &&
-                                                                !order.returnValid &&product.returnStatus !=='Completed'
-                                                                ) { %>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-dark mt-3 commntBtn">Comment</button>
-                                                                <% } if (product.returnStatus==='Rejected' ) { %>
-                                                                    <p class="returnTxt">Your return request rejected.
-                                                                    </p>
-                                                                    <% } %>
-                                                                        <% if (product.returnStatus==='Completed' ) { %>
-                                                                            <p class="returnTxt">Product Returned.</p>
-                                                                            <% } %>
+                                                            <% } %>
+                                                            <% if (product.returnStatus==='Rejected' ) { %>
+                                                                <p class="returnTxt">Your return request rejected.
+                                                                </p>
+                                                                <% } %>
+                                                                    <% if (product.returnStatus==='Completed' ) { %>
+                                                                        <p class="returnTxt">Product Returned.</p>
+                                                                        <% } %>
                                                 </div>
                                             </div>
 
@@ -184,7 +180,7 @@
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <% if (order.orderStatus==='placed' || order.orderStatus==='packed'
                                                         && order.paymentMethod==='COD' ) { %>
-                                                        <button type="button" class="btn btn-dark mt-4 cancelBtn" 
+                                                        <button type="button" class="btn btn-dark mt-4 cancelBtn"
                                                             onclick="cancelOrder('<%= order._id %>')">Cancel
                                                             Order</button>
                                                         <% } %>
@@ -234,7 +230,7 @@
             </div>
             <div class="viewProducts">
                 <div class="cardHead">
-                    <h3>Others Also Bought</h3>
+                    <h3 class="othersAlsoTxt mt-2">Others Also Bought</h3>
                 </div>
                 <div class="cards-section ">
                     <% viewMoreProducts.forEach(product=>{%>

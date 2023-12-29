@@ -105,6 +105,7 @@ a:hover {
 .save {
     width: 20rem;
     justify-content: center;
+    align-items: center;
     margin-top: 2rem;
     max-width: 100%;
 }
@@ -137,6 +138,11 @@ a:hover {
     margin-left: 2.3rem;
 }
 
+.onlinePaymnt {
+    display: flex;
+    justify-content: space-between;
+}
+
 .checkoutBtn {
     width: 25rem;
     max-width: 100%;
@@ -154,6 +160,12 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 100%;
+}
+
+.couponCancel {
+    width: 10rem !important;
+    max-width: 90% !important;
 }
 
 .main {
@@ -227,6 +239,13 @@ a:hover {
         max-width: 90%;
     }
 
+    .onlinePaymnt {
+        flex-direction: column !important;
+    }
+.payOptions{
+    display: flex;
+    margin-top: 0.5rem;
+}
     .delivery {
         max-width: 100%;
     }

@@ -18,6 +18,10 @@
     max-width: 50%;
 }
 
+.othersHead {
+    color: rgb(167, 20, 20);
+}
+
 .image {
     width: 20rem;
     max-width: 100%;
@@ -128,9 +132,15 @@
 }
 
 .cardHead {
-    margin-top: 6rem;
+    margin-top: 2rem;
     width: 74rem;
     max-width: 90%;
+}
+
+.othersAlsoTxt {
+    font-size: 2rem;
+    color: rgb(167, 20, 20);
+    margin-bottom: 2rem;
 }
 
 .card-text {
@@ -141,6 +151,16 @@
 @media only screen and (max-width: 980px) {
     .emptyHead {
         font-size: 1.2rem;
+    }
+
+    .cardHead {
+        width: 19rem;
+        margin-top: 1rem;
+    }
+
+    .othersAlsoTxt {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .prodctDetails {
