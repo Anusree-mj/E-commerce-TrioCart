@@ -7,6 +7,7 @@ const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
 const session = require('express-session');
 const cronFnctn = require('./utils/cron');
+require('dotenv').config()
 
 //multer
 const storage = multer.diskStorage({ 
