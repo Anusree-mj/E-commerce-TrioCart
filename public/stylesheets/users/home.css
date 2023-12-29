@@ -119,16 +119,12 @@
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: black;
-    /* Change this to your desired color */
 }
 
 .newArrivals {
     margin: 1.5rem 0;
 }
 
-/* .card-body{
-    padding: 0.5rem ;
-} */
 .card-title {
     font-size: 1rem;
 }
@@ -202,5 +198,10 @@
 @media only screen and (max-width: 480px) {
     .adds-img {
         height: 40vh;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .newArrivals_sectn{
+        display: none;
     }
 }

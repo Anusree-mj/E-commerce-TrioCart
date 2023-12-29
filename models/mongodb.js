@@ -1,7 +1,7 @@
-
+require('dotenv').config()
 const mongoosedb = require('mongoose');
 
-mongoosedb.connect("mongodb://localhost:27017/TrioCart")
+mongoosedb.connect(process.env.mongo_url)
     .then(() => {
         console.log("mongodb connected");
     })
@@ -9,4 +9,4 @@ mongoosedb.connect("mongodb://localhost:27017/TrioCart")
         console.log('failed to connect');
     });
 
-module.exports = mongoosedb
+module.exports = mongoosedb;
