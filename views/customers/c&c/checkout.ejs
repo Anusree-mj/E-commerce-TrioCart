@@ -50,10 +50,10 @@
                             </div>
                             <% }) %>
                                 <hr>
-                                <p class="addAddress" id="add" onclick="addAddress()">+ Add address</p>
+                                <p class="addAddress" id="addTxt" onclick="addAddress()">+ Add address</p>
                                 <!--else case  -->
                                 <%} else{ %>
-                                    <p class="addAddress" id="add" onclick="addAddress()">+ Add address</p>
+                                    <p class="addAddress" id="addTxt" onclick="addAddress()">+ Add address</p>
                                     <% } %>
                                         <!-- add address -->
                                         <div class="addAddress" style="display: none;">
@@ -344,7 +344,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="selectedPayment" id="onlinePayment"
                             value="option2" onclick="paymentSelected('onlinePayment')">
-                        <div class="d-flex justify-content-between">
+                        <div class=" onlinePaymnt">
                             <div class="d-flex flex-column">
                                 <label class="form-check-label" for="exampleRadios3">
                                     Online Payments
@@ -353,7 +353,7 @@
                                     No cancel option is available for online payment.
                                 </small>
                             </div>
-                            <div>
+                            <div class="payOptions">
                                 <img src="/images/home/visa.png" alt="visa">
                                 <img src="/images/home/rupay.png" alt="rupay">
                                 <p class="paytxt"><img src="/images/home/gpay.png" alt="gpay"> EMI</p>
@@ -477,7 +477,7 @@
                                                         <% } %>
                                                             <div>
                                                                 <p onclick="cancelCoupon()" type="button"
-                                                                    class="btn btn-dark save mt-3"
+                                                                    class="btn btn-dark save couponCancel mt-3"
                                                                     style="color: white;">
                                                                     Cancel</p>
                                                             </div>

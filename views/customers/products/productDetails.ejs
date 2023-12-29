@@ -41,7 +41,7 @@
                                 <!-- product details -->
                                 <div class="details">
                                     <div class="d-flex justify-content-end mr-4 "><img src="/images/navbar/wishlist.png"
-                                            class="wishlist" alt="wishlist"></div>
+                                            class="wishlist" alt="wishlist" id="whislistImg" onclick="toggleWishlist()" ></div>
                                     <h3>
                                         <%=product.name %>
                                     </h3>
@@ -88,9 +88,9 @@
                             <!-- <h4 class="d-flex justify-content-start mt-4" style="margin-left: 5.2rem;">Others also bought</h4> -->
                             <div class="viewProducts">
                                 <div class="cardHead">
-                                    <h3>Others Also Bought</h3>
+                                    <p class="othersAlsoTxt">Others Also Bought</p>
                                 </div>
-                                <div class="cards-section ">
+                                <div class="cards-section">
                                     <% viewMoreProducts.forEach(product=>{%>
                                         <div class="col-sm-3 mb-4">
                                             <a href="/products/<%= product._id %>">

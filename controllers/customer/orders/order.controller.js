@@ -99,9 +99,9 @@ const getOrderDetailPage = async (req, res, next) => {
                 let order = orderResult.order;
                 let userReadableId = orderResult.userReadableOrderId;
 
-                let newArrivalResult = await productHelpers.getNewArrivalProducts();
+                let newArrivalResult = await productHelpers.getOthersAlsoBroughtProducts();
                 let viewMoreProducts = [
-                    ...newArrivalResult.category1, ...newArrivalResult.category2, ...newArrivalResult.category3, ...newArrivalResult.category4
+                    ...newArrivalResult.category1, ...newArrivalResult.category2, ...newArrivalResult.category3
                 ];
 
                 res.render('customers/orders/orderDetails', {
@@ -166,8 +166,8 @@ const returnProduct = async (req, res, next) => {
 };
 
 async function getProductViewMoreProducts() {
-    let result = await productHelpers.getNewArrivalProducts();
-    return [...result.category1, ...result.category2, ...result.category3, ...result.category4];
+    let result = await productHelpers.getOthersAlsoBroughtProducts();
+    return [...result.category1, ...result.category2, ...result.category3];
 }
 
 

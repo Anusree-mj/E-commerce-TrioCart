@@ -62,7 +62,10 @@ p {
     max-width: 90%;
 
 }
-
+.prodctDetailTxt{
+    border: 1px solid red;
+    width: 10rem;
+}
 .subHead {
     color: #131313;
     font-weight: 600;

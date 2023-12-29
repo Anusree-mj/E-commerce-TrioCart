@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/stylesheets/users/cart.css">
+<link rel="stylesheet" href="/stylesheets/users/productDetails.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -149,11 +150,11 @@
                                         </div>
                                     </div>
                                     <% } %>
-                                        <br><br><br><br><br>
+                                        <br><br>
                                         <!--  -->
                                         <div class="viewProducts">
                                             <div class="cardHead">
-                                                <h3>Others Also Bought</h3>
+                                                <p class="othersAlsoTxt">Others Also Bought</p>
                                             </div>
                                             <div class="cards-section ">
                                                 <% viewMoreProducts.forEach(product=>{%>
@@ -178,7 +179,7 @@
                                                     </div>
                                                     <% }) %>
                                             </div>
-                                        </div>                                      
+                                        </div>
 
                         </section>
 

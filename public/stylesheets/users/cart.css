@@ -239,41 +239,6 @@ a:hover {
     color: #000;
 }
 
-.viewProducts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.cards-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    max-width: 90%;
-}
-
-.cardHead {
-    margin-top: 6rem;
-    width: 74rem;
-    max-width: 90%;
-}
-
-.card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    font-size: 1rem;
-    color: black;
-}
-
-.card-text {
-    font-size: 1rem;
-    color: black;
-}
-
 @media only screen and (max-width: 980px) {
     .emptyHead {
         font-size: 1.2rem;
@@ -283,12 +248,7 @@ a:hover {
         width: 50% !important;
         max-width: 80%;
     }
-
-    .card {
-        width: 12rem !important;
-        max-width: 100%;
-    }
-
+  
     .cartsctn {
         display: flex;
         flex-direction: column !important;
