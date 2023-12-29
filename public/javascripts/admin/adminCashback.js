@@ -6,7 +6,7 @@ function editCashback(cashbackId) {
     } else {
         let reqBody = { newCashback };
 
-        fetch(`http://localhost:3000/admin/cashback/${cashbackId}`, {
+        fetch(`/admin/cashback/${cashbackId}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
@@ -37,7 +37,7 @@ function undoCashbackDelete(cashBackId, cashbackName) {
     }).then((result) => {
         if (result.isConfirmed) {
 
-            fetch(`http://localhost:3000/admin/cashBack/${cashBackId}`, {
+            fetch(`/admin/cashBack/${cashBackId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -72,7 +72,7 @@ function deleteCashback(cashBackId, cashbackName) {
     }).then((result) => {
         if (result.isConfirmed) {
 
-            fetch(`http://localhost:3000/admin/cashBack/${cashBackId}`, {
+            fetch(`/admin/cashBack/${cashBackId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json"

@@ -17,7 +17,7 @@ function undoSubcategoryDelete(deleteStatus, subCategory, category) {
             confirmButtonText: 'Yes, undo it',
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('http://localhost:3000/admin/subcategory/undo', {
+                fetch('/admin/subcategory/undo', {
                     method: "PATCH",
                     body: JSON.stringify(reqBody),
                     headers: {
@@ -56,7 +56,7 @@ function deleteCategory(subCategory, category) {
         if (result.isConfirmed) {
             let reqBody = { subCategory, category };
 
-            fetch('http://localhost:3000/admin/category', {
+            fetch('/admin/category', {
                 method: "PATCH",
                 body: JSON.stringify(reqBody),
                 headers: {

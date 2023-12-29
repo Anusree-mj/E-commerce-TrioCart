@@ -50,7 +50,7 @@ function addCoupon() {
         const reqBody = { name, description, amount, discount, startDate, endDate };
 
 
-        fetch("http://localhost:3000/admin/addCoupon", {
+        fetch("/admin/addCoupon", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -90,7 +90,7 @@ function editCoupon(couponId) {
         const reqBody = { name, description, amount, discount, startDate, endDate };
 
 
-        fetch(`http://localhost:3000/admin/coupon/edit/${couponId}`, {
+        fetch(`/admin/coupon/edit/${couponId}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {

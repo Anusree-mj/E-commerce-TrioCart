@@ -26,7 +26,7 @@ function addCategory() {
     if (!isError) {
 
         let reqBody = { category, subCategory }
-        fetch("http://localhost:3000/admin/category", {
+        fetch("/admin/category", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -51,7 +51,7 @@ function editCategory(category,subcategory) {
         document.getElementById('subCategoryEditSpan').textContent = '*This field is required'
     } else {
         let reqBody = { subcategory, category, newSubCategory }
-        fetch(`http://localhost:3000/admin/category`, {
+        fetch(`/admin/category`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {

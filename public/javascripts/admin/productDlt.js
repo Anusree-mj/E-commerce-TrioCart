@@ -9,7 +9,7 @@ function deleteProduct(product_id, productName) {
         closeOnConfirm: false,
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`http://localhost:3000/admin/products/dlt/${product_id}`, {
+            fetch(`/admin/products/dlt/${product_id}`, {
                 method: "DELETE",
             })
             .then((res) => res.json())
@@ -46,7 +46,7 @@ function undoProductDelete(product_id, productName, deleteStatus) {
     }).then((result) => {
         if (result.isConfirmed) {
             if (deleteStatus === 'true') {
-                fetch(`http://localhost:3000/admin/products/dlt/${product_id}/`, {
+                fetch(`/admin/products/dlt/${product_id}/`, {
                     method: "PUT",
                 }).then((res) => res.json())
                     .then((data) => {

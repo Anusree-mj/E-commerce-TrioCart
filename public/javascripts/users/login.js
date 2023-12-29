@@ -25,7 +25,7 @@ function login() {
         document.getElementById('emailSpan').textContent = 'Fill this field'
     } else {
         let reqBody = { email, password }
-        fetch("http://localhost:3000/user/login", {
+        fetch("/user/login", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -88,7 +88,7 @@ function getOtp() {
         document.getElementById('emailSpan').textContent = "Enter your email"
     } else {
         let reqBody = { email }
-        fetch("http://localhost:3000/user/getOtp", {
+        fetch("/user/getOtp", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -114,7 +114,7 @@ function verifyOtp() {
     let otp = document.getElementById('otp').value;
     let email = document.getElementById('email').value
     let reqbody = { email, otp }
-    fetch("http://localhost:3000/user/verifyOtp", {
+    fetch("/user/verifyOtp", {
         method: "POST",
         body: JSON.stringify(reqbody),
         headers: {
@@ -144,7 +144,7 @@ function changePassword() {
     }
     else {
         let reqbody = { email, password }
-        fetch("http://localhost:3000/user/forgotPassword", {
+        fetch("/user/forgotPassword", {
             method: "PUT",
             body: JSON.stringify(reqbody),
             headers: {

@@ -19,7 +19,7 @@ function getDailySales(day) {
         }
     }
 
-    let url = `http://localhost:3000/admin/sales?day=${date}`;
+    let url = `/admin/sales?day=${date}`;
     window.location.replace(url)
 }
 
@@ -46,7 +46,7 @@ function getYearlySales(yearRecieved) {
                 }
             }
 
-    let url = `http://localhost:3000/admin/sales?yearly=${year}`;
+    let url = `/admin/sales?yearly=${year}`;
     window.location.replace(url)
 }
 
@@ -60,7 +60,7 @@ function getWeeklySales(weakReceived) {
         end = new Date();
         end.setDate(end.getDate() - 7);
 
-        let url = `http://localhost:3000/admin/sales?startingWeak=${start}&endingWeak=${end}`;
+        let url = `/admin/sales?startingWeak=${start}&endingWeak=${end}`;
         window.location.replace(url);
     } else if (weakReceived === 'custom') {
         const startingWeakValue = document.getElementById('startPoint').value;
@@ -70,7 +70,7 @@ function getWeeklySales(weakReceived) {
             start = new Date(startingWeakValue);
             end = new Date(endingWeakValue);
 
-            let url = `http://localhost:3000/admin/sales?startingWeak=${start}&endingWeak=${end}`;
+            let url = `/admin/sales?startingWeak=${start}&endingWeak=${end}`;
             window.location.replace(url);
         } else {
             document.getElementById('weaklyCustomSpan').textContent = '*Please select a date';

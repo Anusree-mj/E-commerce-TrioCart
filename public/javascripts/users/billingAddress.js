@@ -95,7 +95,7 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
         };
 
 
-        fetch("http://localhost:3000/checkout/user", {
+        fetch("/checkout/user", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -117,7 +117,7 @@ function saveBillingAddress(userId, nameId, phoneId, addressId, townId, pincodeI
 let editedAddressId = '';
 function editBillingAdress(addressId, name, phone, address, town, pincode, state) {
 
-    fetch(`http://localhost:3000/billingAddress/${addressId}`, {
+    fetch(`/billingAddress/${addressId}`, {
         method: "GET",
     }).then((res) => res.json())
         .then((data) => {
@@ -177,7 +177,7 @@ function updateBillingAddress(nameid, phoneid, addressid, townid, pincodeid, sta
             pincode: document.getElementById(pincodeid).value,
             state: document.getElementById(stateid).value
         }
-        fetch(`http://localhost:3000/billingAddress`, {
+        fetch(`/billingAddress`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
@@ -206,7 +206,7 @@ function confirmDeleteBillingAddress() {
 
     // Close the modal
     $('#confirmationModal').modal('hide');
-    fetch(`http://localhost:3000/billingAddress/${addressId}`, {
+    fetch(`/billingAddress/${addressId}`, {
         method: "DELETE",
     }).then((res) => res.json())
         .then((data) => {

@@ -1,7 +1,7 @@
 function cancelOrder(orderId) {
     alert('Are you sure you want to cancel your order?');
 
-    fetch(`http://localhost:3000/order/${orderId}/cancel`, {
+    fetch(`/order/${orderId}/cancel`, {
         method: "PUT",
 
     }).then((res) => res.json())
@@ -33,7 +33,7 @@ function returnProduct(productId, price, size, count, orderId) {
         const reason = selectedRadio.value;
         let reqBody = { reason, price, size, count, orderId }
 
-        fetch(`http://localhost:3000/order/${productId}/return`, {
+        fetch(`/order/${productId}/return`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {

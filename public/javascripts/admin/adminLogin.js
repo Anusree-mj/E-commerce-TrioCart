@@ -16,7 +16,7 @@ function handleSubmit() {
     // let reqBody={username:userName,password:Password}
     let reqBody = { email, password }
 
-    fetch("http://localhost:3000/admin/adminLogin", {
+    fetch("/admin/adminLogin", {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {

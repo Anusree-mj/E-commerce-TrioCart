@@ -129,7 +129,7 @@ function signup() {
             phone: document.getElementById("phone").value,
             password: document.getElementById("password").value,
         }
-        fetch("http://localhost:3000/user/signup", {
+        fetch("/user/signup", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
@@ -160,7 +160,7 @@ function verifyUser() {
 
     let otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
 
-    fetch("http://localhost:3000/user/verify", {
+    fetch("/user/verify", {
         method: "POST",
         body: JSON.stringify({ otp }),
         headers: {

@@ -24,7 +24,7 @@ function editCategoryOffer(category, subcategory) {
     if (offer && isOfferValid) {
         let reqBody = { offer }
 
-        fetch(`http://localhost:3000/admin/category/offer/${category}/${subcategory}`, {
+        fetch(`/admin/category/offer/${category}/${subcategory}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
@@ -47,7 +47,7 @@ function editProductOffer(productId) {
     if (offer && isOfferValid) {
         let reqBody = { offer }
 
-        fetch(`http://localhost:3000/admin/products/offer/${productId}`, {
+        fetch(`/admin/products/offer/${productId}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {

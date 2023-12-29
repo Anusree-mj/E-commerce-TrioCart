@@ -26,7 +26,7 @@ function addToCart(productId) {
         document.getElementById('addCart').textContent = 'Select a Size'
     } else {
         let reqBody = { choosedSize };
-        fetch(`http://localhost:3000/cart/${productId}`, {
+        fetch(`/cart/${productId}`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {

@@ -13,7 +13,7 @@ function editOrderStatus(status, orderId) {
         if (result.isConfirmed) {
             let reqBody = { status, orderId };
 
-            fetch('http://localhost:3000/admin/orders', {
+            fetch('/admin/orders', {
                 method: "PUT",
                 body: JSON.stringify(reqBody),
                 headers: {
@@ -52,7 +52,7 @@ function editReturnStatus(returnId, orderId, status, productId) {
         if (result.isConfirmed) {
             let reqBody = { returnId, orderId, status, productId };
 
-            fetch('http://localhost:3000/admin/return', {
+            fetch('/admin/return', {
                 method: "PUT",
                 body: JSON.stringify(reqBody),
                 headers: {
@@ -89,7 +89,7 @@ function getStatusText(status) {
 function refund(returnId,userId, amount,productId) {
     let reqBody = { returnId,userId, amount };
 
-    fetch('http://localhost:3000/admin/refund', {
+    fetch('/admin/refund', {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {
@@ -140,7 +140,7 @@ const razorpayPayment = (order,user,productId) => {
 const verifyPayment = (payment,order,productId)=>{
     let productSize=document.getElementById('size').value;
     let reqBody={payment,order,productId,productSize};
-    fetch("http://localhost:3000/admin/verifyPayment", {
+    fetch("/admin/verifyPayment", {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {

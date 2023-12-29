@@ -4,7 +4,7 @@ function changeMainImage(productId) {
 
     let reqBody = { productId };
 
-    fetch('http://localhost:3000/admin/products/mainImage', {
+    fetch('/admin/products/mainImage', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function uploadImage() {
                 formData.append('image', blob, 'cropped_image.png');
 
                 // Fetch API request
-                fetch('http://localhost:3000/image', {
+                fetch('/image', {
                     method: 'POST',
                     body: formData,
                 })
@@ -172,7 +172,7 @@ function editProduct(product_id) {
         }
 
         console.log(reqBody);
-        fetch(`http://localhost:3000/admin/products/${product_id}`, {
+        fetch(`/admin/products/${product_id}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
