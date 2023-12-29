@@ -8,18 +8,18 @@ function addFilter(category) {
     if (size !=="" && price==="") {
          
         const encodedSize = encodeURIComponent(size);
-        const url = `http://localhost:3000/products/${category}/viewAll?size=${encodedSize}`;
+        const url = `/products/${category}/viewAll?size=${encodedSize}`;
         window.location.replace(url)
     }
     else if (size==="" && price!=="") {
         const encodedPrice = encodeURIComponent(price);
-        const url = `http://localhost:3000/products/${category}/viewAll?price=${encodedPrice}`;
+        const url = `/products/${category}/viewAll?price=${encodedPrice}`;
         window.location.replace(url)
     }
      else if (size!=="" && price!=="") {
         const encodedSize = encodeURIComponent(size);
         const encodedPrice = encodeURIComponent(price);
-        const url = `http://localhost:3000/products/${category}/viewAll?size=${encodedSize}&price=${encodedPrice}`;
+        const url = `/products/${category}/viewAll?size=${encodedSize}&price=${encodedPrice}`;
         window.location.replace(url)
     }
 }

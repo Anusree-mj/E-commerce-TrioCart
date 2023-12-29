@@ -12,7 +12,7 @@ function addAddress() {
 function selectedAddress(userId, name, phone,
     address, town, pincode, state) {
     let reqBody = { name, phone, address, town, pincode, state }
-    fetch(`http://localhost:3000/orderAddress/${userId}`, {
+    fetch(`/orderAddress/${userId}`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
         headers: {
@@ -62,7 +62,7 @@ function purchase(userId, discount,totalPrice) {
         reqBody = { userId, paymentMethod, total,totalPrice }
     }
 
-    fetch("http://localhost:3000/checkout", {
+    fetch("/checkout", {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {
@@ -114,7 +114,7 @@ const razorpayPayment = (order, user) => {
 
 const verifyPayment = (payment, order) => {
     let reqBody = { payment, order };
-    fetch("http://localhost:3000/verifyPayment", {
+    fetch("/verifyPayment", {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {
@@ -155,7 +155,7 @@ function applyCoupon(couponId, totalprice, cartId) {
     document.getElementById('applyCouponConfirmationModal').querySelector('.btn-success').onclick = function () {
      
         let reqBody = { couponId,totalprice,cartId };
-        fetch("http://localhost:3000/applyCoupon", {
+        fetch("/applyCoupon", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {

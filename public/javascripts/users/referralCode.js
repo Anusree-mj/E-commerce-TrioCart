@@ -29,7 +29,7 @@ function addReferralCode() {
     }
     else{  
         let reqBody={referralCode}      
-        fetch(`http://localhost:3000/referral`, {
+        fetch(`/referral`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {

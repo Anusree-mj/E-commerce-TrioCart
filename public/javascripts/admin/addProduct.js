@@ -13,7 +13,7 @@ function uploadImage() {
                 formData.append('image', blob, 'cropped_image.png');
 
                 // Fetch API request
-                fetch('http://localhost:3000/image', {
+                fetch('/image', {
                     method: 'POST',
                     body: formData,
                 })
@@ -135,7 +135,7 @@ function addProduct() {
             size, stock, imagePath, detailedImagePath
         }
 
-        fetch("http://localhost:3000/admin/product", {
+        fetch("/admin/product", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {

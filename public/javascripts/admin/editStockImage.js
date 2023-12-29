@@ -15,7 +15,7 @@ function editStock(productId,size){
     if(stock && isStockValid){
     let reqBody = { stock,size }
 
-fetch(`http://localhost:3000/admin/stock/${productId}/`, {
+fetch(`/admin/stock/${productId}/`, {
     method: "PUT",
     body: JSON.stringify(reqBody),
     headers: {
@@ -36,7 +36,7 @@ fetch(`http://localhost:3000/admin/stock/${productId}/`, {
 // delete detailed image
 function deleteImage(image, productId) {
     let reqBody = { image, productId }
-    fetch('http://localhost:3000/admin/products/image', {
+    fetch('/admin/products/image', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

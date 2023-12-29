@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('entered in fetch')
-    fetch('http://localhost:3000/admin/dashboard')
+    fetch('/admin/dashboard')
         .then(response => response.json())
         .then(data => {
             if (data.status === 'ok') {

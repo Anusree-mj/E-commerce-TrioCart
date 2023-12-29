@@ -14,7 +14,7 @@ function blockUser(user, userName) {
         if (result.isConfirmed) {
             const reqBody = { userId };
 
-            fetch('http://localhost:3000/admin/users', {
+            fetch('/admin/users', {
                 method: "DELETE",
                 body: JSON.stringify(reqBody),
                 headers: {
@@ -53,7 +53,7 @@ function unblockUser(user, userName) {
         if (result.isConfirmed) {
             const reqBody = { userId };
 
-            fetch('http://localhost:3000/admin/users', {
+            fetch('/admin/users', {
                 method: "PUT",
                 body: JSON.stringify(reqBody),
                 headers: {

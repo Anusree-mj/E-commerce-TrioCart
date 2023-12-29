@@ -1,7 +1,7 @@
 //decremetn
 function decrementCount(productId,size) {
     let reqBody={size}
-    fetch(`http://localhost:3000/${productId}/cancel`, {
+    fetch(`/${productId}/cancel`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
         headers: {
@@ -19,7 +19,7 @@ function decrementCount(productId,size) {
 }
 function incrementCount(productId,size) {
     let reqBody={size}
-    fetch(`http://localhost:3000/${productId}/add`, {
+    fetch(`/${productId}/add`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
         headers: {
@@ -54,7 +54,7 @@ function removeProduct(productId, userId, size,count) {
 
 function performRemoval(productId, userId, size, count) {
     let reqBody = { userId, size, count };
-    fetch(`http://localhost:3000/cart/${productId}`, {
+    fetch(`/cart/${productId}`, {
         method: 'PUT',
         body: JSON.stringify(reqBody),
         headers: {

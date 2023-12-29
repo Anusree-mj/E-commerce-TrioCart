@@ -80,7 +80,7 @@ function verifyUser(userId) {
         isValidEmail,
         isValidPhoneNumber,
         isValidName)) {
-        fetch(`http://localhost:3000/profile/${userId}`, {
+        fetch(`/profile/${userId}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
@@ -118,7 +118,7 @@ function startTimer() {
 
 function resendOtp(){
     const reqBody={tempUserId}
-    fetch('http://localhost:3000/resendOTP', {
+    fetch('/resendOTP', {
         method: "PUT",
         body: JSON.stringify(reqBody),
         headers: {
@@ -237,7 +237,7 @@ function changePassword(userId) {
             currentPassword: document.getElementById("currntPassword").value,
             password: document.getElementById("password").value,
         }
-        fetch("http://localhost:3000/password", {
+        fetch("/password", {
             method: "PUT",
             body: JSON.stringify(reqBody),
             headers: {
@@ -259,7 +259,7 @@ function updateProfile(userId) {
 
     let otp = document.getElementById('otp').value;  
 
-    fetch(`http://localhost:3000/profile/${userId}/update`, {
+    fetch(`/profile/${userId}/update`, {
         method: "PUT",
         body: JSON.stringify({ otp }),
         headers: {
