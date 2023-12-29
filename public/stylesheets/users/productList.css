@@ -88,11 +88,9 @@
 .cards-section{
     width: 70rem;
     max-width: 80%;
-    border: 1px solid red;
 }
 .filterSortSctn {
        max-width: 80%;
-    border: 1px solid green;
     margin: 0 !important;
     padding: 0 !important;
 }
