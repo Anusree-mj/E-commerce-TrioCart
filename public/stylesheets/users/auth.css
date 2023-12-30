@@ -1,0 +1,155 @@
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,
+body {
+    background-image: url('/images/home/loginBg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Numans', sans-serif;
+}
+
+.container {
+    align-content: center;
+    justify-content: center;
+    margin-top: 4rem;
+    max-width: 90%;
+}
+
+.card {
+    width: 30rem;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #FFC312;
+}
+.subHead {
+    margin-top: 2.5rem;
+    color: rgb(245, 222, 179);
+}
+.dividngLine {
+    width: 100%;
+    border: 1.5px solid  rgb(245, 222, 179);
+
+}
+.social_icon span:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h3 {
+    color: white;
+    margin: 0;
+    padding-bottom: 0 !important;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding-left: 0.5rem;
+    color: white;
+}
+
+.required {
+    color: red
+}
+
+.card-body {
+    margin: 0 !important;
+    padding-top: 0 !important;
+}
+
+.span {
+    height: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.password-box {
+    position: relative;
+}
+.passwordInput{
+    width: 23.9rem !important;
+    border-radius: 1px !important;
+}
+.show {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: #232627;
+    font-weight: bold;
+    font-size: 0.9rem;
+    position: absolute;
+    right: 0.1rem;
+    top: 0.5rem;
+}
+
+.signupShow {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: #232627;
+    font-weight: bold;
+    font-size: 0.9rem;
+    position: absolute;
+    right: 0.4rem;
+    top: 2.5rem;
+}
+
+.show:focus {
+    border: none;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+.login_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+.login_btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
+
+@media only screen and (max-width: 980px) {
+    .show {
+        right: -.1rem;
+        font-size: 0.8rem;
+        top: 0.5rem;
+    }
+    .passwordInput{
+        width: 13rem !important;
+    }
+}
