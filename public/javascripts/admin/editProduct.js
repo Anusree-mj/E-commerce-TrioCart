@@ -71,10 +71,19 @@ function uploadImage() {
                             previewContainer.appendChild(previewImage);
 
                             imageUploaded = true;
-                            console.log('image:', imagePath, "detailedImages:", detailedImagePath)
-                            return imagePath, detailedImagePath;
+                            console.log('image:', imagePath, "detailedImages:", detailedImagePath);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Image uploaded successfully.',
+                            });
                         } else {
-                            alert("Uploading Image Failed");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Uploading Image Failed.',
+                            });
                         }
                     })
                     .catch(error => {
@@ -107,10 +116,10 @@ function isValidPrice(field) {
 
 // edit product
 function editProduct(product_id) {
-
     const fields = ["name", "detailed_description", "category", "subCategory", "price"];
     let isError = false;
-    //checking for any empty fields
+
+    // checking for any empty fields
     fields.forEach(field => {
         const value = document.getElementById(field).value;
         if (!value) {
@@ -126,12 +135,13 @@ function editProduct(product_id) {
         isError = true;
         document.getElementById('sizeSpan').textContent = '*Please select at least one size.';
     }
+
     // getting values
     let name = document.getElementById('name').value;
     let detailed_description = document.getElementById('detailed_description').value;
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
-    let price = document.getElementById('price').value;   
+    let price = document.getElementById('price').value;
 
     let sizeMap = {
         'option1': 'S',
@@ -149,29 +159,26 @@ function editProduct(product_id) {
             selectedSizes.push(sizeValue);
         }
     });
-    let size = selectedSizes.join(',')
+    let size = selectedSizes.join(',');
 
     let detailedImageElements = document.querySelectorAll('.preview-image');
-
     let detailedImages = Array.from(detailedImageElements).map(element => {
         return element.src.replace(window.location.origin + '/', '');
     });
-    console.log(detailedImages);
-
     let detailedImagePaths = [...detailedImagePath, ...detailedImages];
-
 
     if (!imageUploaded) {
         document.getElementById('imageSpan').textContent = '*Please upload a main image.';
     }
+
     if (!isError && isValidPrice && isValidInput && imageUploaded) {
-        let reqBody =
-        {
+        let reqBody = {
             name, detailed_description, category,
             subCategory, price, size, imagePath, detailedImagePaths
-        }
+        };
 
         console.log(reqBody);
+
         fetch(`/admin/products/${product_id}`, {
             method: "PUT",
             body: JSON.stringify(reqBody),
@@ -181,14 +188,23 @@ function editProduct(product_id) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/admin/products");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Product edited successfully.',
+                    }).then(() => {
+                        window.location.replace("/admin/products");
+                    });
                 } else {
-                    alert("Editing product failed");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Editing product failed.',
+                    });
                 }
             })
             .catch(err => console.log(err));
     }
 }
-
 
 

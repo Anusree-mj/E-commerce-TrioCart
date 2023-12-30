@@ -256,8 +256,7 @@ function changePassword(userId) {
 }
 
 function updateProfile(userId) {
-
-    let otp = document.getElementById('otp').value;  
+    let otp = document.getElementById('otp').value;
 
     fetch(`/profile/${userId}/update`, {
         method: "PUT",
@@ -265,17 +264,26 @@ function updateProfile(userId) {
         headers: {
             "Content-Type": "application/json"
         },
-
-    }).then((res) => res.json())
-        .then((data) => {
-            if (data.status === "ok") {
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.status === "ok") {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Profile updated successfully.',
+            }).then(() => {
                 window.location.replace("/profile");
-            } else {
-                alert("Invalid OTP");
-
-            }
-        })
-        .catch(err => console.log(err));
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Invalid OTP',
+            });
+        }
+    })
+    .catch(err => console.log(err));
 }
 
 // toggle wallet

@@ -27,19 +27,30 @@ function uploadImage() {
                             }
 
                             document.getElementById('croppedImageContainer').style.display = 'none';
-                            // added image preview
-                            const previewContainer = document.getElementById('addedImagesPreview');
-                            const previewImage = document.createElement('img');
-                            previewImage.src = '/' + data.imagePathWithoutPublic;
-                            previewImage.style.width = '2rem';
-                            previewImage.style.marginRight = '1.5rem';
 
-                            previewContainer.appendChild(previewImage);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Image uploaded successfully.',
+                            }).then(() => {
+                                // added image preview
+                                const previewContainer = document.getElementById('addedImagesPreview');
+                                const previewImage = document.createElement('img');
+                                previewImage.src = '/' + data.imagePathWithoutPublic;
+                                previewImage.style.width = '2rem';
+                                previewImage.style.marginRight = '1.5rem';
 
-                            imageUploaded = true;
-                            return imagePath, detailedImagePath;
+                                previewContainer.appendChild(previewImage);
+
+                                imageUploaded = true;
+                                return imagePath, detailedImagePath;
+                            });
                         } else {
-                            alert("Uploading Image Failed");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Uploading image failed.',
+                            });
                         }
                     })
                     .catch(error => {
@@ -48,6 +59,7 @@ function uploadImage() {
             });
     }
 }
+
 
 // validation
 
@@ -83,7 +95,16 @@ function isValidPrice(field) {
 function addProduct() {
     const fields = ["name", "detailed_description", "category", "subCategory", "price", "stock"];
     let isError = false;
-    //checking for any empty fields
+
+    // Reset styles and error messages
+    fields.forEach(field => {
+        document.getElementById(`${field}`).style.border = '';
+        document.getElementById(`${field}`).style.boxShadow = '';
+    });
+    document.getElementById('sizeSpan').textContent = '';
+    document.getElementById('imageSpan').textContent = '';
+
+    // Checking for any empty fields
     fields.forEach(field => {
         const value = document.getElementById(field).value;
         if (!value) {
@@ -93,20 +114,20 @@ function addProduct() {
         }
     });
 
-    // check empty size
+    // Check empty size
     let checkboxes = document.querySelectorAll('input[name="size"]:checked');
     if (checkboxes.length === 0) {
         isError = true;
         document.getElementById('sizeSpan').textContent = '*Please select at least one size.';
     }
-    // getting values
+
+    // Getting values
     let name = document.getElementById('name').value;
     let detailed_description = document.getElementById('detailed_description').value;
     let category = document.getElementById('category').value;
     let subCategory = document.getElementById('subCategory').value;
     let price = document.getElementById('price').value;
     let stock = document.getElementById('stock').value;
-
 
     let sizeMap = {
         'option1': 'S',
@@ -124,16 +145,17 @@ function addProduct() {
             selectedSizes.push(sizeValue);
         }
     });
-    let size = selectedSizes.join(',')
+    let size = selectedSizes.join(',');
+
     if (!imageUploaded) {
         document.getElementById('imageSpan').textContent = '*Please upload at least one image.';
     }
+
     if (!isError && isValidPrice && isValidInput && imageUploaded) {
-        let reqBody =
-        {
+        let reqBody = {
             name, detailed_description, category, subCategory, price,
             size, stock, imagePath, detailedImagePath
-        }
+        };
 
         fetch("/admin/product", {
             method: "POST",
@@ -141,15 +163,25 @@ function addProduct() {
             headers: {
                 "Content-Type": "application/json"
             },
-        }).then((res) => res.json())
-            .then((data) => {
-                if (data.status === "ok") {
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Product added successfully.',
+                }).then(() => {
                     window.location.replace("/admin/products");
-                } else {
-                    alert("Adding product failed");
-                }
-            })
-            .catch(err => console.log(err));
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Adding product failed.',
+                });
+            }
+        })
+        .catch(err => console.log(err));
     }
 }
-

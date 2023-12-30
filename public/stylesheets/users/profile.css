@@ -130,9 +130,11 @@ p {
 }
 
 .verifyHead {
-    text-align: center;
+    text-align: center;  
 }
-
+.verify{
+    max-width: 100%;
+}
 .resnd {
     font-size: 0.8rem;
     color: #000;
@@ -151,4 +153,12 @@ p {
     border-bottom: 2px solid #000;
     outline: none;
     background: transparent;
+}
+@media only screen and (max-width: 980px) {
+    .login-form{
+        max-width: 90%;
+    }
+    .verifyHead{
+        font-size: 1.5rem;
+    }
 }

@@ -30,7 +30,7 @@ function checkName() {
     }
     const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
     if (!nameRegex.test(name)) {
-        document.getElementById("nameSpan").textContent = "Invalid Name. Please enter a valid name containing only letters and optional spaces.";
+        document.getElementById("nameSpan").textContent = "Invalid Name.";
         return isValidName = false;
     }
 }
@@ -151,14 +151,7 @@ function signup() {
 
 //verifying otp and authenticating user
 function verifyUser() {
-    let otp1 = document.getElementById('otp1').value;
-    let otp2 = document.getElementById('otp2').value;
-    let otp3 = document.getElementById('otp3').value;
-    let otp4 = document.getElementById('otp4').value;
-    let otp5 = document.getElementById('otp5').value;
-    let otp6 = document.getElementById('otp6').value;
-
-    let otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+    let otp = document.getElementById('otpVerify').value;
 
     fetch("/user/verify", {
         method: "POST",
@@ -166,15 +159,30 @@ function verifyUser() {
         headers: {
             "Content-Type": "application/json"
         },
-
     }).then((res) => res.json())
         .then((data) => {
             if (data.status === "ok") {
-                window.location.replace("/");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Verification Successful',
+                    text: 'You have been successfully verified.',
+                }).then(() => {
+                    window.location.replace("/");
+                });
             } else {
-                alert("OTP doesnt match");
-
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'OTP doesn\'t match!',
+                });
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            });
+        });
 }
