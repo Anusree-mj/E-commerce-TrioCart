@@ -19,10 +19,9 @@ function isValidPrice(field) {
 
 // edit offer
 function editCategoryOffer(category, subcategory) {
-
     let offer = document.getElementById('offer').value;
     if (offer && isOfferValid) {
-        let reqBody = { offer }
+        let reqBody = { offer };
 
         fetch(`/admin/category/offer/${category}/${subcategory}`, {
             method: "PUT",
@@ -33,9 +32,19 @@ function editCategoryOffer(category, subcategory) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/admin/category");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Category offer edited successfully.',
+                    }).then(() => {
+                        window.location.replace("/admin/category");
+                    });
                 } else {
-                    alert("Editing stock failed");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Editing category offer failed.',
+                    });
                 }
             })
             .catch(err => console.log(err));
@@ -56,9 +65,19 @@ function editProductOffer(productId) {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/admin/products");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Product offer edited successfully.',
+                    }).then(() => {
+                        window.location.replace("/admin/products");
+                    });
                 } else {
-                    alert("Editing stock failed");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Editing product offer failed.',
+                    });
                 }
             })
             .catch(err => console.log(err));

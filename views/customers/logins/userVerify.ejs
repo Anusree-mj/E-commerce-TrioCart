@@ -1,64 +1,75 @@
-<link rel="stylesheet" href="/stylesheets/users/login.css">
+<link rel="stylesheet" href="/stylesheets/users/auth.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <section>
     <%- include('../../partials/loginHeader') %>
-
-        <div class=" d-flex flex-column justify-content-center align-items-center ">
-            <div class="login-form">
-                <h2 class="head">Verification required</h2>
-                <p  style="font-size: 0.8rem;">To continue, complete this verification step. We've sent an OTP to your email.
-                    Please enter it below to complete verification.</p>
-                <label class="label">
-                    Enter OTP
-                </label>
-                <div class="otp-container d-flex justify-content-center align-items-center">
-                    <input type="text" id="otp1" class="ml-4 otpLine" name="digit1" maxlength="1" pattern="\d" title="Please enter a digit" required>
-                    <input type="text" id="otp2" class="ml-4 otpLine" name="digit2" maxlength="1" pattern="\d" title="Please enter a digit" required>
-                    <input type="text" id="otp3" class="ml-4 otpLine" name="digit3" maxlength="1" pattern="\d" title="Please enter a digit" required>
-                    <input type="text" id="otp4" class="ml-4 otpLine" name="digit4" maxlength="1" pattern="\d" title="Please enter a digit" required>
-                    <input type="text" id="otp5" class="ml-4 otpLine" name="digit5" maxlength="1" pattern="\d" title="Please enter a digit" required>
-                    <input type="text" id="otp6" class="ml-4 otpLine" name="digit6" maxlength="1" pattern="\d" title="Please enter a digit" required>
+    
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header" onclick="clearSpan('commonSpan')">
+                    <h3 class="head mt-3">Verification required</h3>
                 </div>
-                <div class="resnd mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
-                
-                <hr class="dividngLine">
-                <a href="/user/resend/otp" class="resndTxt" id="resentTxt">resend OTP</a>
-                <div class="coloumn mt-2">                   
-                    <button class="btn  btn-success btn-lg btn-block mt-4" type="button" id="signin_button"
-                        onclick="verifyUser()">Verify</button>
-                    
+                <span id="signupSpan" class="span ml-3"></span>
+                <span id="commonSpan" class="span ml-3"></span>
+                <div class="card-body">
+                    <span id="emailSpan" class="span"></span>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="otpVerify" placeholder=" Enter your OTP"
+                            onclick="clearSpan('otpVerifySpan')">
+                    </div>
+                    <span id="otpVerifySpan" class="span"></span>
+                    <div class="subHead mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
+
+                    <hr class="dividngLine">
+                    <a href="/user/resend/otp" class="resndTxt" id="resentTxt">Resend OTP</a>
+                    <div class="coloumn mt-2">
+                        <button class="btn btn-success btn-lg btn-block mt-4" type="button" id="signin_button"
+                            onclick="verifyUser()">Verify</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <%- include('../../partials/loginsFooter') %>
+    </div>
+    
+    <%- include('../../partials/loginsFooter') %>
 </section>
 <script>
     let timerOn = true;
 
-function timer(remaining) {
-  const m = Math.floor(remaining / 60);
-  const s = remaining % 60;
-  
-  m = m < 10 ? '0' + m : m;
-  s = s < 10 ? '0' + s : s;
-  document.getElementById('timer').innerHTML = m + ':' + s;
-  remaining -= 1;
-  
-  if(remaining >= 0 && timerOn) {
-    setTimeout(function() {
-        timer(remaining);
-    }, 1000);
-    return;
-  }
- document.getElementById('resndTimer').textContent=""
- document.getElementById('resentTxt').style.display="inline";
- const otpFields = document.querySelectorAll('.otpLine');
-            otpFields.forEach( (field) =>{
-                field.disabled = true;
+    function timer(remaining) {
+        let m = Math.floor(remaining / 60);
+        let s = remaining % 60;
 
-})
-}
+        m = m < 10 ? '0' + m : m;
+        s = s < 10 ? '0' + s : s;
+        document.getElementById('timer').innerHTML = m + ':' + s;
+        remaining -= 1;
 
-timer(60);
+        if (remaining >= 0 && timerOn) {
+            setTimeout(function () {
+                timer(remaining);
+            }, 1000);
+            return;
+        }
+        document.getElementById('resndTimer').textContent = "";
+        document.getElementById('resentTxt').style.display = "inline";
+        const otpFields = document.querySelectorAll('.otpLine');
+        otpFields.forEach((field) => {
+            field.disabled = true;
+        });
+    }
+
+    // Call the timer function when the DOM is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        timer(60);
+    });
 </script>
 <script src="/javascripts/users/signup.js"></script>

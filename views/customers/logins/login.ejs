@@ -1,44 +1,59 @@
-<link rel="stylesheet" href="/stylesheets/users/login.css">
+<link rel="stylesheet" href="/stylesheets/users/auth.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <section>
     <%- include('../../partials/loginHeader') %>
 
-        <div class=" d-flex flex-column justify-content-center align-items-center ">
-            <div class="login-form" onclick="clearSpan('commonSpan')">
-                <h2 class="head">Login</h2>
-                <span id="signupSpan" class="span" style="color: green !important;"></span><br>
-                <span id="commonSpan" class="span"></span><br>
-                <label class="label">
-                   EmailId
-                </label>
-                <input type="text" class=" form-control" id="my-email" aria-describedby="emailHelp"
-                    placeholder=" Enter e-mailid" onclick="clearSpan('emailSpan')">
-                <span id="emailSpan" class="span"></span><br>
-
-                <label class="label">
-                    Password
-                </label>
-                <div class="password-box">
-                    <input type="password" class=" form-control" id="my-password" placeholder="Enter your password"
-                        onclick="clearSpan('emailSpan')">
-                    <button class="show" type="button" id="visibility" onclick="togglePassword()">Show</button>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Login</h3>
                 </div>
-                <span id="passwrdSpan" class="span"></span><br>
-
-                <a href="/user/forgotPassword">
-                    <p class="forgot">Forgot Password?</p>
-                </a>
-                <div class="coloumn">
-                    <p id="emailHelp" class="form-text formText">
-                        By continuing, you agree to TrioCarts <a href="#">Terms & Conditions</a> .
-                    </p>
-                    <button class="btn  btn-success btn-lg btn-block" type="button" id="signin_button"
-                        onclick="login()">Login</button>
-                    <hr class="dividngLine">
-                    <a class="dropdown-item signup-text  " href="/user/signup">New around here? Sign up</a>
+                <div class="card-body" onclick="clearSpan('commonSpan')">
+                    <span id="signupSpan" class="span"></span><br>
+                    <span id="commonSpan" class="span"></span><br>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="my-email" aria-describedby="emailHelp"
+                            placeholder="Enter e-mailid" onclick="clearSpan('emailSpan')">
+                        <span id="emailSpan" class="span"></span><br>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <div class="password-box">
+                            <input type="password" class="form-control passwordInput" id="my-password" 
+                                placeholder="Enter your password" onclick="clearSpan('emailSpan')">
+                            <button class="show" type="button" id="visibility" onclick="togglePassword()">Show</button>
+                        </div>
+                        <span id="passwrdSpan" class="span"></span><br>
+                    </div>                                    
+                    <div class="form-group">
+                        <button class="btn float-right login_btn" type="button" id="signin_button"
+                            onclick="login()">Login</button>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Don't have an account?<a href="/user/signup">Sign Up</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="/user/forgotPassword">Forgot your password?</a>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <%- include('../../partials/loginsFooter') %>
+    </div>
+
+    <%- include('../../partials/loginsFooter') %>
 </section>
+
 <script src="/javascripts/users/login.js"></script>

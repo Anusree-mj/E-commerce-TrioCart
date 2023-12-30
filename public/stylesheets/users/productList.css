@@ -1,5 +1,7 @@
 .productsSctn {
     margin-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
 .sidebar-ul {
@@ -19,11 +21,10 @@
 .sidebar-sctn {
     padding: 0 !important;
     background-color: #f5f3f1;
-    ;
+
 }
 
 .filterSortSctn {
-   
     background-color: #f5f3f1;
     padding: 0.5rem 0;
     max-width: 100%;
@@ -53,16 +54,18 @@
 }
 
 .cards-section {
-    width: 75rem;
+    width: 70rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
     max-width: 100%;
 }
-.pageNav{
+
+.pageNav {
     max-width: 80%;
 }
+
 .card-body {
     max-width: 90%;
 }
@@ -82,29 +85,45 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .productsSctn {
+        flex-direction: column !important;
+    }
+
     .sidebar-sctn {
         display: none;
     }
-.cards-section{
-    width: 70rem;
-    max-width: 80%;
-}
-.filterSortSctn {
-       max-width: 80%;
-    margin: 0 !important;
-    padding: 0 !important;
-}
+
+    .productListing {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cards-section {
+        margin-top: 2rem;
+        width: 70rem;
+        max-width: 100%;
+    }
+
+    .filterSortSctn {
+        width: 40rem !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     .productsSctn {
         justify-content: space-around !important;
     }
 
     .col-sm-3 {
-        width: 10rem !important;
+        width: 50% !important;
         max-width: 80%;
     }
 
     .card {
-        width: 10rem !important;
+        width: 12rem !important;
         max-width: 100%;
     }
 }

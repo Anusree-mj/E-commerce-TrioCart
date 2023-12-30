@@ -10,19 +10,30 @@ function togglePassword() {
     }
 
 }
+const passwordInput = document.getElementById("my-password");
+const visibilityButton = document.getElementById("visibility");
+
+passwordInput.addEventListener("focus", () => {
+    visibilityButton.style.display = "block";
+});
+
+passwordInput.addEventListener("blur", () => {
+    visibilityButton.style.display = "block";
+});
+
 
 //login
 function login() {
     let email = document.getElementById("my-email").value;
     let password = document.getElementById("my-password").value;
     if (!email && !password) {
-        document.getElementById('emailSpan').textContent = 'Fill this field'
-        document.getElementById('passwrdSpan').textContent = 'Fill this field'
+        document.getElementById('my-email').style.border = '2px solid red'
+        document.getElementById('my-password').style.border = '2px solid red'
     }
     else if (!password) {
-        document.getElementById('passwrdSpan').textContent = 'Fill this field'
+        document.getElementById('my-password').style.border = '2px solid red'
     } else if (!email) {
-        document.getElementById('emailSpan').textContent = 'Fill this field'
+        document.getElementById('my-email').style.border = '2px solid red'
     } else {
         let reqBody = { email, password }
         fetch("/user/login", {
@@ -33,34 +44,53 @@ function login() {
             },//used to specify the format of the data being sent in an HTTP request when you're making a 
             //  POST request with JSON data.//
 
-
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/");
-                } 
-                else if(data.status==='blocked') {
-                    alert("Your account has been blocked");
-                }
-                else{
-                    document.getElementById('commonSpan').textContent = 'Invalid Email or Password'
+                } else if (data.status === 'blocked') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Account Blocked',
+                        text: 'Your account has been blocked.',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Credentials',
+                        text: 'Invalid Email or Password.',
+                    });
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            });
     }
 }
+
+
 //clearing span
 function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
+    console.log('entered in clearspan')
 }
-
+function clearBorder(inputField){
+    document.getElementById(inputField).style.border = 'none'
+    console.log('entered in border')
+}
 let resendTimer;
 let countdown = 60;
 
 function startResendTimer() {
     document.getElementById('resndTimer').style.display = 'block';
 
-    
+
     resendTimer = setInterval(() => {
         countdown--;
         document.getElementById('timer').textContent = countdown;
@@ -69,7 +99,7 @@ function startResendTimer() {
             clearInterval(resendTimer);
             document.getElementById('resndTimer').style.display = 'none';
             document.getElementById('resentTxt').style.display = 'block';
-           
+
         }
     }, 1000);
 }
@@ -83,31 +113,48 @@ function stopResendTimer() {
 
 //get otp
 function getOtp() {
-    let email = document.getElementById('email').value
+    let email = document.getElementById('email').value;
     if (!email) {
-        document.getElementById('emailSpan').textContent = "Enter your email"
+        document.getElementById('emailSpan').textContent = "Enter your email";
     } else {
-        let reqBody = { email }
+        let reqBody = { email };
         fetch("/user/getOtp", {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
                 "Content-Type": "application/json"
             },
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    document.getElementById('getOtp').disabled = true
-                    document.getElementById('verifyOtp').disabled = false
+                    // Disable button and enable OTP input
+                    document.getElementById('getOtp').disabled = true;
+                    document.getElementById('otp').disabled = false;
+                    document.getElementById('verifyOtp').disabled = false;
+
+                    // Start the timer
                     startResendTimer();
                 } else {
-                    alert("Email doesnt match");
-
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email doesn\'t match!',
+                    });
                 }
             })
-            .catch(err => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                // Handle other errors
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            });
     }
 }
+
 
 //verify otp for changing password
 function verifyOtp() {
@@ -120,46 +167,76 @@ function verifyOtp() {
         headers: {
             "Content-Type": "application/json"
         },
-
     }).then((res) => res.json())
         .then((data) => {
             if (data.status === "ok") {
-                document.getElementById('verifyOtp').disabled = true
-                document.getElementById('chngePsswrd').disabled = false
+                document.getElementById('verifyOtp').disabled = true;
+                document.getElementById('my-password').disabled = false;
+                document.getElementById('confrmPsswrd').disabled = false;
+                document.getElementById('chngePsswrd').disabled = false;
                 stopResendTimer();
             } else {
-                alert("OTP doesnt match");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'OTP doesn\'t match!',
+                });
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            // Handle other errors
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            });
+        });
 }
 
 //change password
 function changePassword() {
-    let email = document.getElementById('email').value
-    let password = document.getElementById('my-password').value
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('my-password').value;
+
     if (password !== document.getElementById("confrmPsswrd").value) {
-        document.getElementById("psswrdSpan").textContent = "Passwords doesn't match";
+        document.getElementById("psswrdSpan").textContent = "Passwords don't match";
         password = undefined;
-    }
-    else {
-        let reqbody = { email, password }
+    } else {
+        let reqbody = { email, password };
         fetch("/user/forgotPassword", {
             method: "PUT",
             body: JSON.stringify(reqbody),
             headers: {
                 "Content-Type": "application/json"
             },
-
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    window.location.replace("/user/login");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password Changed',
+                        text: 'Your password has been successfully changed.',
+                    }).then(() => {
+                        window.location.replace("/user/login");
+                    });
                 } else {
-                    alert("OTP doesnt match");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'OTP doesn\'t match!',
+                    });
                 }
             })
-            .catch(err => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                // Handle other errors
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            });
     }
-
 }

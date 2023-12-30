@@ -1,19 +1,40 @@
 function cancelOrder(orderId) {
-    alert('Are you sure you want to cancel your order?');
-
-    fetch(`/order/${orderId}/cancel`, {
-        method: "PUT",
-
-    }).then((res) => res.json())
-        .then((data) => {
-            if (data.status === "ok") {
-                location.reload();
-            } else {
-                console.log('Order cancel failed')
-            }
-        })
-        .catch(err => console.log(err));
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'Are you sure you want to cancel your order?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/order/${orderId}/cancel`, {
+                method: "PUT",
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.status === "ok") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Canceled!',
+                            text: 'Your order has been canceled successfully.',
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Order cancel failed.',
+                        });
+                    }
+                })
+                .catch(err => console.log(err));
+        }
+    });
 }
+
 // let returningProductId;
 function triggerReturn(productId) {
     const returnDetails = document.querySelector(`#returnDetails_${productId}`);

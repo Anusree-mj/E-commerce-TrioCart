@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/users/profile.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
      <%- include('../../partials/subHeader',allCategories) %>
 
@@ -33,7 +35,7 @@
                             <%= user.referralCode.name %>
                         </p>
                         <% if (user.referralCode.isValid) { %>
-                            <p class="referralTxt">Share your referral code and get a discount for the first reference!
+                            <p class="referralTxt mt-2">Share your referral code and get a discount for the first reference!
                             </p>
                             <% } else { %>
                                 <p class="referralTxt">You've already been referred. Enjoy your discount!</p>
@@ -68,10 +70,10 @@
                     </div>
                     <!-- verification -->
                     <div class=" d-flex flex-column justify-content-center align-items-center verify"
-                        style="display: none !important;">
+                      style="display: none !important;"  >
                         <div class="login-form">
                             <h2 class="verifyHead">Verification required</h2>
-                            <p style="font-size: 0.8rem;">To continue, complete this verification step. We've sent an
+                            <p style="font-size: 0.8rem;">We've sent an
                                 OTP to your email.
                                 Please enter it below to complete verification.</p>
 

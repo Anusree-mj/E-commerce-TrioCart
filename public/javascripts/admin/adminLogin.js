@@ -13,25 +13,31 @@ function togglePassword() {
 function handleSubmit() {
     let email = document.getElementById("my-email").value;
     let password = document.getElementById("my-password").value;
-    // let reqBody={username:userName,password:Password}
-    let reqBody = { email, password }
+    let reqBody = { email, password };
 
     fetch("/admin/adminLogin", {
         method: "POST",
         body: JSON.stringify(reqBody),
         headers: {
             "Content-Type": "application/json"
-        },//used to specify the format of the data being sent in an HTTP request when you're making a 
-        //  POST request with JSON data.//
-
-
-    }).then((res) => res.json())
+        },
+    })
+    .then((res) => res.json())
     .then((data) => {
         if (data.status === "ok") {
-            window.location.replace("/admin");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Logged in successfully.',
+            }).then(() => {
+                window.location.replace("/admin");
+            });
         } else {
-            alert("Invalid Username or Password");
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Invalid Username or Password.',
+            });
         }
     })
     .catch(err => console.log(err));
