@@ -13,15 +13,16 @@ const searchProduct = async (req, res, next) => {
         const isAuthenticated = sessionResult.status === 'ok';
         let productQueryResult = await productQueryHelpers.getSearchProduct(query);
         let searchProducts = productQueryResult.searchProducts;
-          // Pagination
-          const page = parseInt(req.query.page) || 1;
-          const productsPerPage = 16;
-          const startIndex = (page - 1) * productsPerPage;
-          const endIndex = page * productsPerPage;
-  
-          const paginatedSearchProducts = searchProducts.slice(startIndex, endIndex);
-          const totalPages = Math.ceil(searchProducts.length / productsPerPage);
-          const currentPage = page;
+
+        // Pagination
+        const page = parseInt(req.query.page) || 1;
+        const productsPerPage = 16;
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = page * productsPerPage;
+
+        const paginatedSearchProducts = searchProducts.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(searchProducts.length / productsPerPage);
+        const currentPage = page;
 
         if (productQueryResult.status === 'ok') {
             if (isAuthenticated) {
@@ -33,7 +34,7 @@ const searchProduct = async (req, res, next) => {
                 if (cartResult) {
                     let totalCartProduct = cartResult.totalCount;
                     res.render('customers/search', {
-                       layout: 'layout/layout',
+                        layout: 'layout/layout',
                         allCategories,
                         user,
                         totalCartProduct,
@@ -67,6 +68,8 @@ const searchProduct = async (req, res, next) => {
                 allCategories,
                 user: undefined,
                 searchProducts: undefined,
+                totalPages,
+                currentPage,
             });
         }
     } catch (error) {
