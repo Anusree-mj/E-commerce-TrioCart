@@ -63,9 +63,12 @@
 }
 
 .pageNav {
-    max-width: 80%;
+    max-width: 90%;
 }
-
+.searchPagination{
+    max-width: 100%;
+    width: 65rem;
+}
 .card-body {
     max-width: 90%;
 }
