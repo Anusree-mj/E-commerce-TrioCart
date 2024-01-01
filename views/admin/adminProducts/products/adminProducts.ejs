@@ -66,17 +66,23 @@
                                 </td>
                                 <td>
                                     <% if (product.isDeleted===true) { %>
-                                        <p>Deleted<p class="ml-2"
-                                                onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')"><img
-                                                    src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
-                                                    id="undoProductDlt"></p></p>
+                                        <div class="d-flex">
+                                        <p>Deleted
+                                        <p class="ml-2"
+                                            onclick="undoProductDelete('<%= product._id%>','<%= product.name%>','<%= product.isDeleted%>')">
+                                            <img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"
+                                                id="undoProductDlt">
+                                        </p>
+                                        </p>
+                                    </div>
                                         <%} else{ %>
                                             <div class="d-flex">
                                                 <p>Available</p>
                                                 <p class="ml-2"
-                                                    onclick="deleteProduct('<%= product._id %>','<%= product.name%>')"><img
-                                                        style="width: 1.2rem;" src="/images/navbar/delete.png"
-                                                        alt="delete"></p>
+                                                    onclick="deleteProduct('<%= product._id %>','<%= product.name%>')">
+                                                    <img style="width: 1.2rem;" src="/images/navbar/delete.png"
+                                                        alt="delete">
+                                                </p>
                                             </div>
                                             <% } %>
                                 </td>

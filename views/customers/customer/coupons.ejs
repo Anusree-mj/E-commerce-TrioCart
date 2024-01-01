@@ -13,6 +13,7 @@
             <div class="d-flex justify-content-around align-items-center flex-wrap couponSection">
                 <% if (coupons && coupons.length> 0) { %>
                     <% coupons.forEach(coupon=>{%>
+                        <% if (coupon.isValid && new Date(coupon.couponDeactivatingDate) > new Date()) { %>
                         <div class="card ml-4 mt-3">
                             <div class="main">
                                 <div class="co-img">
@@ -35,6 +36,7 @@
                                 </div>
                             </div>
                         </div>
+                        <% } %>
                         <% }) %>
                             <% } else { %>
                                 <div class="card ml-4">
