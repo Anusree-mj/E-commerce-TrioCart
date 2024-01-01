@@ -34,7 +34,7 @@ function login() {
         document.getElementById('passwrdSpan').textContent = '*Fill this field'
     } else if (!email) {
         document.getElementById('emailSpan').textContent = '*Fill this field'
-    } else {
+    } else { 
         let reqBody = { email, password }
         fetch("/user/login", {
             method: "POST",

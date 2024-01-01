@@ -1,25 +1,6 @@
 const cron = require('node-cron');
 const collection = require('../models/index-model')
 
-async function markExpiredOTPs() {
-  try {
-    const currentTime = new Date();
-
-    await collection.tempUsersCollection.updateMany(
-      {
-        otpExpiryTime: { $lt: currentTime },
-        otpExpired: false,
-      },
-      {
-        $set: { otpExpired: true },
-      }
-    );
-
-  } catch (error) {
-    console.error('Error occured', error);
-  }
-}
-
 async function markExpiredOrders() {
   try {
     const currentDate = new Date().toLocaleDateString('en-US', {
@@ -51,39 +32,9 @@ async function markExpiredOrders() {
   }
 }
 
-async function markExpiredCoupons() {
-  try {
-    const currentDate = new Date();
-
-    const expiredCoupons = await collection.couponCollection.find({
-      couponActivatingDate: { $lte: currentDate },
-      couponDeactivatingDate: { $gt: currentDate },
-      isValid: true,
-    });
-
-    for (const coupon of expiredCoupons) {      
-      if (
-        currentDate < coupon.couponActivatingDate ||
-        currentDate >= coupon.couponDeactivatingDate
-      ) {
-        coupon.isValid = false;
-        await coupon.save();
-      }
-    }
-
-  } catch (error) {
-    console.error('Error marking expired coupons:', error);
-  }
-}
-
-
-function expireOTP() {
-  cron.schedule('*/1 * * * *', markExpiredOTPs);
-}
 function scheduleCronJob() {
   cron.schedule('0 0 * * *', markExpiredOrders);
-  cron.schedule('0 0 * * *', markExpiredCoupons);
 }
 
 
-module.exports = { scheduleCronJob, expireOTP };
+module.exports = { scheduleCronJob };
