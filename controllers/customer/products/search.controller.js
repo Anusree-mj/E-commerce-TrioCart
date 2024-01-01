@@ -23,7 +23,8 @@ const searchProduct = async (req, res, next) => {
         const paginatedSearchProducts = searchProducts.slice(startIndex, endIndex);
         const totalPages = Math.ceil(searchProducts.length / productsPerPage);
         const currentPage = page;
-
+        console.log('page', page);
+        console.log('currentpage', currentPage);
         if (productQueryResult.status === 'ok') {
             if (isAuthenticated) {
                 let user = sessionResult.user;
