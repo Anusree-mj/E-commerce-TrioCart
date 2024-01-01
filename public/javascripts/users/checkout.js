@@ -85,7 +85,7 @@ function purchase(userId, discount, totalPrice) {
 
 const razorpayPayment = (order, user) => {
     const options = {
-        "key": process.env.RazorpayKey_id_url, // Enter the Key ID generated from the Dashboard
+        "key": 'rzp_test_mj8FaMjD2VYPW4', // Enter the Key ID generated from the Dashboard
         "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
         "name": "TrioCart",
