@@ -15,16 +15,14 @@ const searchProduct = async (req, res, next) => {
         let searchProducts = productQueryResult.searchProducts;
 
         // Pagination
-        const page = parseInt(req.query.page) || 1;
+        const page = req.query.page !== undefined ? parseInt(req.query.page) : 1;
         const productsPerPage = 16;
         const startIndex = (page - 1) * productsPerPage;
         const endIndex = page * productsPerPage;
 
         const paginatedSearchProducts = searchProducts.slice(startIndex, endIndex);
         const totalPages = Math.ceil(searchProducts.length / productsPerPage);
-        const currentPage = page;
         console.log('page', page);
-        console.log('currentpage', currentPage);
         if (productQueryResult.status === 'ok') {
             if (isAuthenticated) {
                 let user = sessionResult.user;
@@ -41,7 +39,7 @@ const searchProduct = async (req, res, next) => {
                         totalCartProduct,
                         searchProducts: paginatedSearchProducts,
                         totalPages,
-                        currentPage,
+                        page,
                     });
                 } else {
                     res.render('customers/search', {
@@ -50,7 +48,7 @@ const searchProduct = async (req, res, next) => {
                         user,
                         searchProducts: paginatedSearchProducts,
                         totalPages,
-                        currentPage,
+                        page,
                     });
                 }
             } else {
@@ -60,7 +58,7 @@ const searchProduct = async (req, res, next) => {
                     user: undefined,
                     searchProducts: paginatedSearchProducts,
                     totalPages,
-                    currentPage,
+                    page,
                 });
             }
         } else {
@@ -70,7 +68,7 @@ const searchProduct = async (req, res, next) => {
                 user: undefined,
                 searchProducts: undefined,
                 totalPages,
-                currentPage,
+                page,
             });
         }
     } catch (error) {
