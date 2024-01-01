@@ -15,7 +15,7 @@ const searchProduct = async (req, res, next) => {
         let searchProducts = productQueryResult.searchProducts;
 
         // Pagination
-        const page = req.query.page !== undefined ? parseInt(req.query.page) : 1;
+        const page = req?.query?.page? parseInt(req.query.page) : 1;
         const productsPerPage = 16;
         const startIndex = (page - 1) * productsPerPage;
         const endIndex = page * productsPerPage;
@@ -29,9 +29,10 @@ const searchProduct = async (req, res, next) => {
                 let userId = user._id;
 
                 let cartResult = await cartHelpers.getMyCartProducts(userId);
-
+                console.log('page in 1st if', page)
                 if (cartResult) {
                     let totalCartProduct = cartResult.totalCount;
+                    console.log('page in 1st render', page)
                     res.render('customers/search', {
                         layout: 'layout/layout',
                         allCategories,
@@ -42,6 +43,8 @@ const searchProduct = async (req, res, next) => {
                         page,
                     });
                 } else {
+                    console.log('page in 2ndt render', page)
+
                     res.render('customers/search', {
                         layout: 'layout/layout',
                         allCategories,
@@ -52,6 +55,8 @@ const searchProduct = async (req, res, next) => {
                     });
                 }
             } else {
+                console.log('page in 3rd render', page)
+
                 res.render('customers/search', {
                     layout: 'layout/layout',
                     allCategories,
@@ -62,6 +67,8 @@ const searchProduct = async (req, res, next) => {
                 });
             }
         } else {
+            console.log('page in 4th render', page)
+
             res.render('customers/search', {
                 layout: 'layout/layout',
                 allCategories,
