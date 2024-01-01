@@ -18,7 +18,19 @@ module.exports = {
     },
     getAllOrdersGraph: async () => {
         try {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+
             const orders = await collection.orderCollection.aggregate([
+                {
+                    $match: {
+                        createdAt: { 
+                            $gte: new Date(currentYear, currentMonth - 1, 1),
+                            $lt: new Date(currentYear, currentMonth, 1)
+                        }
+                    }
+                },
                 {
                     $group: {
                         _id: {
@@ -171,7 +183,7 @@ module.exports = {
     // for expiring return status
     scheduleReturnValidUpdate: () => {
         const rule = new schedule.RecurrenceRule();
-        rule.hour = 0; 
+        rule.hour = 0;
         rule.minute = 0;
 
         schedule.scheduleJob(rule, async () => {

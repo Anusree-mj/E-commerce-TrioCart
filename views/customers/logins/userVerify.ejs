@@ -3,43 +3,43 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <section>
     <%- include('../../partials/loginHeader') %>
-    
-    <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header" onclick="clearSpan('commonSpan')">
-                    <h3 class="head mt-3">Verification required</h3>
-                </div>
-                <span id="signupSpan" class="span ml-3"></span>
-                <span id="commonSpan" class="span ml-3"></span>
-                <div class="card-body">
-                    <span id="emailSpan" class="span"></span>
-                    <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input type="text" class="form-control" id="otpVerify" placeholder=" Enter your OTP"
-                            onclick="clearSpan('otpVerifySpan')">
-                    </div>
-                    <span id="otpVerifySpan" class="span"></span>
-                    <div class="subHead mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
 
-                    <hr class="dividngLine">
-                    <a href="/user/resend/otp" class="resndTxt" id="resentTxt">Resend OTP</a>
-                    <div class="coloumn mt-2">
-                        <button class="btn btn-success btn-lg btn-block mt-4" type="button" id="signin_button"
-                            onclick="verifyUser()">Verify</button>
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card">
+                    <div class="card-header" onclick="clearSpan('commonSpan')">
+                        <h3 class="head mt-3">Verification required</h3>
+                    </div>
+                    <span id="signupSpan" class="span ml-3"></span>
+                    <span id="commonSpan" class="span ml-3"></span>
+                    <div class="card-body">
+                        <span id="emailSpan" class="span"></span>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="otpVerify" placeholder=" Enter your OTP"
+                                onclick="clearSpan('otpVerifySpan')">
+                        </div>
+                        <span id="otpVerifySpan" class="span"></span>
+                        <div class="subHead mt-3" id="resndTimer">Resend OTP in: <span id="timer"></span></div>
+
+                        <hr class="dividngLine">
+                        <a href="/user/resend/otp" class="resndTxt" id="resentTxt">Resend OTP</a>
+                        <div class="coloumn mt-2">
+                            <button class="btn btn-success btn-lg btn-block mt-4" type="button" id="signin_button"
+                                onclick="verifyUser()">Verify</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <%- include('../../partials/loginsFooter') %>
+
+        <%- include('../../partials/loginsFooter') %>
 </section>
 <script>
     let timerOn = true;
@@ -61,10 +61,7 @@
         }
         document.getElementById('resndTimer').textContent = "";
         document.getElementById('resentTxt').style.display = "inline";
-        const otpFields = document.querySelectorAll('.otpLine');
-        otpFields.forEach((field) => {
-            field.disabled = true;
-        });
+        const isDisabled = document.getElementById('otpVerify').disabled;
     }
 
     // Call the timer function when the DOM is loaded

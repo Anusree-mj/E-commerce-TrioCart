@@ -50,17 +50,19 @@
                                                                         src="/images/navbar/wishlist.png"
                                                                         alt=""></button>
                                                                 <div class="counter-btn ml-4">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-dark bttn"
-                                                                        onclick="decrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">-</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-dark bttn count"
-                                                                        disabled>
-                                                                        <%= cartProduct.Count %>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-dark bttn"
-                                                                        onclick="incrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">+</button>
+                                                                    <% if ( cartProduct.Count !==1){ %>
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-dark bttn"
+                                                                            onclick="decrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">-</button>
+                                                                        <% }%>
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-dark bttn count ml-1"
+                                                                                disabled>
+                                                                                <%= cartProduct.Count %>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-dark bttn"
+                                                                                onclick="incrementCount('<%= cartProduct.product._id %>','<%= cartProduct.Size %>')">+</button>
                                                                 </div>
                                                             </div>
                                                     </div>

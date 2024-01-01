@@ -35,12 +35,13 @@
                                 </td>
 
                                 <td>
+                                    <div class="d-flex">
                                     <% if (user.isBlocked) { %>
-                                        <p>Blocked<p onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"></p></p>
+                                        <p>Blocked<p class="ml-2" onclick="unblockUser('<%= user._id%>','<%= user.name%>')"><img src="/images/navbar/undo.png" alt="edit" style="width: 1rem;"></p></p>
                                      <% } else { %>
                                         <p>Active</p>
                                      <% } %>
-                                     
+                                    </div>
                                 </td>
                                 <td>
                                     <p onclick="blockUser('<%= user._id%>','<%= user.name%>')"><img

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('entered in fetch')
+    console.log('entered in fetch');
     fetch('/admin/dashboard')
         .then(response => response.json())
         .then(data => {
@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error fetching orders:', error));
 
     function createLineGraph(orders) {
+        const currentDate = new Date();
+        const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
+
         const orderWeeks = Array.from({ length: 5 }, (_, weekIndex) => {
             const startDay = weekIndex * 7 + 1;
             const endDay = Math.min((weekIndex + 1) * 7, 31); // Assuming a month has at most 31 days
@@ -26,9 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
             };
         });
 
-        const formattedDates = orderWeeks.map(week => `${week.startDay}-${week.endDay} Dec`);
+        const formattedDates = orderWeeks.map(week => `${week.startDay}-${week.endDay} ${currentMonth}`);
 
         const lineGraph = document.getElementById('ordersPerDay');
+        let fontSize = 16;
+
+        const mediaQuery = window.matchMedia('(max-width: 600px)');
+        if (mediaQuery.matches) {
+            fontSize = 12; // Adjust this value as needed
+        }
+
         new Chart(lineGraph, {
             type: 'line',
             data: {
@@ -51,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         beginAtZero: true,
                         ticks: {
                             font: {
-                                size: 16,
+                                size: fontSize,
                                 weight: 'bolder',
                             },
                             stepSize: 1,
@@ -61,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     x: {
                         ticks: {
                             font: {
-                                size: 16,
+                                size: fontSize, // Adjust this value as needed
                                 weight: 'bolder',
                             }
                         }

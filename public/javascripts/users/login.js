@@ -23,10 +23,10 @@ passwordInput.addEventListener("blur", () => {
 
 
 //login
-function login(){
+function login() {
     let email = document.getElementById("my-email").value;
     let password = document.getElementById("my-password").value;
-    if (!email && !password) { 
+    if (!email && !password) {
         document.getElementById('emailSpan').textContent = '*Fill this field'
         document.getElementById('passwrdSpan').textContent = '*Fill this field'
     }
