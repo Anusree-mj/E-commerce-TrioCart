@@ -9,10 +9,25 @@ function togglePassword() {
     }
 
 }
+//clearing span
+function clearSpan(spanId) {
+    document.getElementById(spanId).textContent = "";
+}
 
 function handleSubmit() {
-    let email = document.getElementById("my-email").value;
-    let password = document.getElementById("my-password").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    if (!email && !password) { 
+        document.getElementById('emailSpan').textContent = '*Fill this field'
+        document.getElementById('passwrdSpan').textContent = '*Fill this field'
+    }
+    else if (!password) {
+        document.getElementById('passwrdSpan').textContent = '*Fill this field'
+    } else if (!email) {
+        document.getElementById('emailSpan').textContent = '*Fill this field'
+    } else {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
     let reqBody = { email, password };
 
     fetch("/admin/adminLogin", {
@@ -24,14 +39,8 @@ function handleSubmit() {
     })
     .then((res) => res.json())
     .then((data) => {
-        if (data.status === "ok") {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Logged in successfully.',
-            }).then(() => {
-                window.location.replace("/admin");
-            });
+        if (data.status === "ok") {           
+                window.location.replace("/admin");          
         } else {
             Swal.fire({
                 icon: 'error',
@@ -41,4 +50,5 @@ function handleSubmit() {
         }
     })
     .catch(err => console.log(err));
+}
 }

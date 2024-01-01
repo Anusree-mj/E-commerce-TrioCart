@@ -23,17 +23,17 @@ passwordInput.addEventListener("blur", () => {
 
 
 //login
-function login() {
+function login(){
     let email = document.getElementById("my-email").value;
     let password = document.getElementById("my-password").value;
-    if (!email && !password) {
-        document.getElementById('my-email').style.border = '2px solid red'
-        document.getElementById('my-password').style.border = '2px solid red'
+    if (!email && !password) { 
+        document.getElementById('emailSpan').textContent = '*Fill this field'
+        document.getElementById('passwrdSpan').textContent = '*Fill this field'
     }
     else if (!password) {
-        document.getElementById('my-password').style.border = '2px solid red'
+        document.getElementById('passwrdSpan').textContent = '*Fill this field'
     } else if (!email) {
-        document.getElementById('my-email').style.border = '2px solid red'
+        document.getElementById('emailSpan').textContent = '*Fill this field'
     } else {
         let reqBody = { email, password }
         fetch("/user/login", {
@@ -78,12 +78,8 @@ function login() {
 //clearing span
 function clearSpan(spanId) {
     document.getElementById(spanId).textContent = "";
-    console.log('entered in clearspan')
 }
-function clearBorder(inputField){
-    document.getElementById(inputField).style.border = 'none'
-    console.log('entered in border')
-}
+
 let resendTimer;
 let countdown = 60;
 

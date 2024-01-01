@@ -50,16 +50,16 @@ function paymentSelected(method) {
 }
 
 // make purchase
-function purchase(userId, discount,totalPrice) {
+function purchase(userId, discount, totalPrice) {
     let reqBody;
     let total;
 
     if (discount === '0') {
         total = totalPrice
-        reqBody = { userId, paymentMethod, total,totalPrice }
+        reqBody = { userId, paymentMethod, total, totalPrice }
     } else {
         total = discount;
-        reqBody = { userId, paymentMethod, total,totalPrice }
+        reqBody = { userId, paymentMethod, total, totalPrice }
     }
 
     fetch("/checkout", {
@@ -85,14 +85,14 @@ function purchase(userId, discount,totalPrice) {
 
 const razorpayPayment = (order, user) => {
     const options = {
-        "key": "rzp_test_mj8FaMjD2VYPW4", // Enter the Key ID generated from the Dashboard
+        "key": process.env.RazorpayKey_id_url, // Enter the Key ID generated from the Dashboard
         "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
         "name": "TrioCart",
         "description": "Test Transaction",
         "image": "https://example.com/your_logo",
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response) {           
+        "handler": function (response) {
             verifyPayment(response, order)
         },
         "prefill": {
@@ -153,8 +153,8 @@ function cancelCoupon() {
 function applyCoupon(couponId, totalprice, cartId) {
     console.log(couponId)
     document.getElementById('applyCouponConfirmationModal').querySelector('.btn-success').onclick = function () {
-     
-        let reqBody = { couponId,totalprice,cartId };
+
+        let reqBody = { couponId, totalprice, cartId };
         fetch("/applyCoupon", {
             method: "POST",
             body: JSON.stringify(reqBody),
@@ -163,7 +163,7 @@ function applyCoupon(couponId, totalprice, cartId) {
             },
         }).then((res) => res.json())
             .then((data) => {
-                if (data.status === "ok") {                   
+                if (data.status === "ok") {
                     location.reload()
                 } else {
                     console.log("failed to apply coupon");
