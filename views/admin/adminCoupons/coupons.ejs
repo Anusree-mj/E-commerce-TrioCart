@@ -51,12 +51,12 @@
                                     <%= coupon.couponDeactivatingDate.toDateString() %>
                                 </td>                               
                                 <td>
-                                    <% if (coupon.isValid===false) { %>
-                                        <p>Inactive</p>
+                                    <% if (new Date(coupon.couponDeactivatingDate) > new Date()) { %>
+                                        <p>Active</p>
                                        
                                         <%} else{ %>
                                             <div class="d-flex">
-                                                <p>Active</p>
+                                                <p>Inactive</p>
                                                
                                             </div>
                                             <% } %>

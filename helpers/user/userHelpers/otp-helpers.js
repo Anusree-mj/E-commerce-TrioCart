@@ -19,7 +19,6 @@ module.exports = {
             )
             if (user) {
                 await signupUtil.sendOtpByEmail(email, otp)
-                cronFnctn.expireOTP();
                 return { status: 'ok' }
             } else {
                 return { status: 'nok' }

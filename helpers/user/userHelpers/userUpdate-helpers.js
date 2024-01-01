@@ -22,7 +22,6 @@ module.exports = {
 
             if (updateTempUser) {
                 await signupUtil.sendOtpByEmail(userData.email, otp);
-                cronFnctn.expireOTP();
               const tempUserId= updateTempUser._id
                 return { status: 'ok',tempUserId }
             } 
