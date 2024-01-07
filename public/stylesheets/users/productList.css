@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-between;
     max-width: 100%;
-    border: 1px solid red;
 }
 
 .sidebar-ul {
@@ -16,7 +15,6 @@
 }
 
 .productListing {
-    border: 1px solid gray;
     width: 80rem;
     max-width: 80%;
 }
@@ -31,7 +29,6 @@
     background-color: #f5f3f1;
     width: 30rem;
     max-width: 100%;
-    border: 1px solid green;
 }
 
 .filterSortSctn {

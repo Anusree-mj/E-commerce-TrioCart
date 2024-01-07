@@ -38,9 +38,9 @@ const getCartPage = async (req, res, next) => {
 
 const addProductToCart = async (req, res, next) => {
     try {
+        let sessionId = req.cookies.session;
         let productId = req.params.product_id;
         let size = req.body.choosedSize;
-        let sessionId = req.cookies.session;
         let sessionResult = await sessionHelpers.checkSessions(sessionId);
 
         if (sessionResult.status === 'ok') {
@@ -53,7 +53,7 @@ const addProductToCart = async (req, res, next) => {
                 res.status(200).json({ status: "outofStock" });
             }
         } else {
-            res.status(400).json({ status: "nok" });
+            res.redirect('/user/login');
         }
     } catch (error) {
         next(error);
@@ -78,14 +78,22 @@ const removeProductFromCart = async (req, res, next) => {
 
 const addProductCount = async (req, res, next) => {
     try {
+        let sessionId = req.cookies.session;
         let productId = req.params.product_id;
         let size = req.body.size;
-        let result = await cartHelpers.cartProductIncrement(productId, size);
+        let sessionResult = await sessionHelpers.checkSessions(sessionId);
 
-        if (result.status === 'ok') {
-            res.status(200).json({ status: "ok" });
+        if (sessionResult.status === 'ok') {
+            let user = sessionResult.user;
+            let result = await cartHelpers.cartProductIncrement(productId, size, user);
+
+            if (result.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         } else {
-            res.status(400).json({ status: "nok" });
+            res.redirect('/user/login');
         }
     } catch (error) {
         next(error);
@@ -94,14 +102,22 @@ const addProductCount = async (req, res, next) => {
 
 const decreaseProductCount = async (req, res, next) => {
     try {
+        let sessionId = req.cookies.session;
         let productId = req.params.product_id;
         let size = req.body.size;
-        let result = await cartHelpers.cartProductDecremnt(productId, size);
+        let sessionResult = await sessionHelpers.checkSessions(sessionId);
 
-        if (result.status === 'ok') {
-            res.status(200).json({ status: "ok" });
+        if (sessionResult.status === 'ok') {
+            let user = sessionResult.user;
+            let result = await cartHelpers.cartProductDecremnt(productId, size,user);
+
+            if (result.status === 'ok') {
+                res.status(200).json({ status: "ok" });
+            } else {
+                res.status(400).json({ status: "nok" });
+            }
         } else {
-            res.status(400).json({ status: "nok" });
+            res.redirect('/user/login');
         }
     } catch (error) {
         next(error);

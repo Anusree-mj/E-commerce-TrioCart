@@ -51,7 +51,6 @@ module.exports = {
                 }
 
             ]);
-console.log('orders',orders)
             return { orders }
         }
         catch (err) {

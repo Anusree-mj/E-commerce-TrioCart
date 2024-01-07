@@ -61,6 +61,7 @@ let tempUserId;
 function verifyUser(userId) {
     let isError = false
     const fields = ['name_profile', 'email_profile', 'phone__profile'];
+    console.log(userId)
 
     // checking for any empty fields
     fields.forEach(field => {
@@ -257,7 +258,7 @@ function changePassword(userId) {
 
 function updateProfile(userId) {
     let otp = document.getElementById('otp').value;
-
+    console.log(userId)
     fetch(`/profile/${userId}/update`, {
         method: "PUT",
         body: JSON.stringify({ otp }),

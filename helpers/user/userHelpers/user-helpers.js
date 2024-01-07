@@ -8,24 +8,24 @@ let referralCreditCount = 0;
 
 module.exports = {
     doSignup: async (userData, otp) => {
-        try {           
+        try {
             const user = await collection.usersCollection.findOne({ email: userData.email })
             if (user) {
                 return { status: 'same email' }
-            } else {              
-                    userData.password = await bcrypt.hash(userData.password, 10)
-                    const data = {
-                        name: userData.name,
-                        phone: userData.phone,
-                        email: userData.email,
-                        password: userData.password,
-                        otp: otp
-                    }
-                    const email = userData.email
-                    await collection.tempUsersCollection.insertMany([data])
-                    await signupUtil.sendOtpByEmail(userData.email, otp);
-                    return { status: 'ok', email }
-                
+            } else {
+                userData.password = await bcrypt.hash(userData.password, 10)
+                const data = {
+                    name: userData.name,
+                    phone: userData.phone,
+                    email: userData.email,
+                    password: userData.password,
+                    otp: otp
+                }
+                const email = userData.email
+                await collection.tempUsersCollection.insertMany([data])
+                await signupUtil.sendOtpByEmail(userData.email, otp);
+                return { status: 'ok', email }
+
             }
         } catch (err) {
             console.log(err)
@@ -48,12 +48,16 @@ module.exports = {
                     coupon: [
                         {
                             name: 'Referral Credit',
-                            count: referralCreditCount
+                             count: referralCreditCount
                         }
                     ]
                 }
                 await collection.usersCollection.insertMany(updateData)
                 const user = await collection.usersCollection.findOne({ email: check.email });
+                await collection.tempUsersCollection.findOneAndUpdate(
+                    { email: user.email },
+                    { $set: { userId: user._id } }
+                );
                 if (user) {
                     return { user }
                 }

@@ -2,11 +2,11 @@ const collection = require('../../../models/index-model')
 const stockHelpers = require('../orders/stock-helpers');
 
 module.exports = {
-    cartProductIncrement: async (productId, size) => {
+    cartProductIncrement: async (productId, size,user) => {
         try {
-
-            const updateData = await collection.cartCollection.updateOne(
+            const updateData = await collection.cartCollection.updateOne(                
                 {
+                    userId:user._id,
                     'products.product': productId,
                     'products.Size': size,
                 },
@@ -15,18 +15,19 @@ module.exports = {
             if (updateData.modifiedCount === 1) {
                 return { status: 'ok' }
             } else {
-                return { status: 'nok' }
+                return { status: 'nok' }               
             }
         } catch (err) {
             console.log(err);
         }
     },
 
-    cartProductDecremnt: async (productId, size) => {
+    cartProductDecremnt: async (productId, size,user) => {
         try {
 
             const updateData = await collection.cartCollection.updateOne(
                 {
+                    userId:user._id,
                     'products.product': productId,
                     'products.Size': size,
                 },

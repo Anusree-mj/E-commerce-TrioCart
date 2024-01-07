@@ -7,9 +7,9 @@ module.exports = {
     verifyUser: async (userData, otp, userId) => {
         try {          
             const otpExpiryTime = new Date();
-            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
+            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 2);
             const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(
-                { email: userId },
+                { userId: userId },
                 {
                     name: userData.name,
                     phone: userData.phone,
@@ -24,7 +24,9 @@ module.exports = {
                 await signupUtil.sendOtpByEmail(userData.email, otp);
               const tempUserId= updateTempUser._id
                 return { status: 'ok',tempUserId }
-            } 
+            } else{
+                console.log('user not found')
+            }
 
         } catch (err) {
             console.log(err)
@@ -33,7 +35,7 @@ module.exports = {
     resendOtp: async (otp, userId) => {
         try {
             const otpExpiryTime = new Date();
-            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 1.5);
+            otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() + 2);
             const updateTempUser = await collection.tempUsersCollection.findOneAndUpdate(
                 { _id: userId },
                 {                   
@@ -58,7 +60,8 @@ module.exports = {
             const check = await collection.tempUsersCollection.findOne(
                 { 
                 otp: otp,
-                otpExpired:false
+                otpExpired:false,
+                otpExpiryTime: { $lte: new Date() }
              }
                 );
             if (check) {

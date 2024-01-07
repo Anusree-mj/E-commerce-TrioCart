@@ -15,7 +15,7 @@
 
 .pagesctn-contnts {
     background-image: url(/images/home/banner1.png);
-    width: 80%;
+    width: 90%;
     max-width: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -23,14 +23,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
+    color: #FFD578;
     padding: 1rem 0;
 }
-
-/* .bannerTxts {
-    background-color: rgba(0, 0, 0, 0.267);
-    width: 20rem;
-} */
 
 .pagesctn-head {
     font-weight: bolder;
@@ -50,13 +45,14 @@
     position: relative;
     margin: 1.5rem 0;
     max-width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .adds-img {
     width: 60rem;
-    max-width: 80%;
-    height: 50rem;
-
+    max-width: 90%;
+    margin-bottom: 1rem;
 }
 
 .adds-contnt {
@@ -65,10 +61,12 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 75%;
-    left: 35%;
-    width: 26rem;
+    top: 30rem;
+    left: 34rem;
+    width: 28rem;
     max-width: 50%;
+    background-color: rgba(0, 0, 0, 0.274);
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
 }
 
 .head {
@@ -79,24 +77,10 @@
 }
 
 .subHead {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bolder;
     color: rgb(255, 255, 255);
-    margin-bottom: 0.2rem !important;
-}
-
-.head-men {
-    font-size: 2rem;
-    font-weight: bolder;
-    color: rgb(177, 174, 174);
-    margin-bottom: 0.2rem !important;
-}
-
-.subHead-men {
-    font-size: 1rem;
-    font-weight: bolder;
-    color: rgb(177, 174, 174);
-    margin-bottom: 0.2rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .shopNow-btn {
@@ -105,15 +89,15 @@
 }
 
 .pagesctn2-contnts {
-    background-image: url(/images/home/pgImage2.jpg);
-    width: 80%;
+    background-image: url(/images/home/banner2.jpg);
+    width: 90%;
     max-width: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     justify-content: center;
     text-align: center;
-    color: white;
+    color: #FFD578;
     padding: 1rem 0;
 }
 
@@ -154,23 +138,21 @@
         display: none;
     }
 
-    .adds-img {
-        height: 60vh;
+    .adds-sectn {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .bannerTxts {
+        color: #FFD578;
+        background-color: rgba(0, 0, 0, 0.13);
     }
 
     .head {
         font-size: 1rem;
     }
 
-    .head-men {
-        font-size: 1rem;
-    }
-
     .subHead {
-        font-size: 0.5rem;
-    }
-
-    .subHead-men {
         font-size: 0.5rem;
     }
 
@@ -181,8 +163,9 @@
     }
 
     .adds-contnt {
-        left: 25%;
-        top: 70%;
+        width: 20rem;
+        top: 7.5rem;
+        left: 6rem;
     }
 
     .emptyHead {
@@ -191,18 +174,12 @@
 
     .col-sm-3 {
         width: 50% !important;
-        max-width: 80%;
+        max-width: 90%;
     }
 
     .card {
         width: 12rem !important;
         max-width: 100%;
-    }
-}
-
-@media only screen and (max-width: 480px) {
-    .adds-img {
-        height: 40vh;
     }
 }
 
