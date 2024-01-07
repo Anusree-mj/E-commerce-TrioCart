@@ -1,7 +1,9 @@
 .productsSctn {
     margin-top: 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    max-width: 100%;
+    border: 1px solid red;
 }
 
 .sidebar-ul {
@@ -13,6 +15,12 @@
     margin-bottom: 0.5rem;
 }
 
+.productListing {
+    border: 1px solid gray;
+    width: 80rem;
+    max-width: 80%;
+}
+
 .sublist {
     color: black;
     font-size: 1rem;
@@ -21,7 +29,9 @@
 .sidebar-sctn {
     padding: 0 !important;
     background-color: #f5f3f1;
-
+    width: 30rem;
+    max-width: 100%;
+    border: 1px solid green;
 }
 
 .filterSortSctn {
@@ -65,10 +75,12 @@
 .pageNav {
     max-width: 90%;
 }
-.searchPagination{
+
+.searchPagination {
     max-width: 100%;
     width: 65rem;
 }
+
 .card-body {
     max-width: 90%;
 }
@@ -101,6 +113,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        max-width: 100%;
     }
 
     .cards-section {

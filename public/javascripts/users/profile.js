@@ -88,8 +88,8 @@ function verifyUser(userId) {
             },
         }).then((res) => res.json())
             .then((data) => {
-                if (data.status === "ok") {  
-                    tempUserId= data.tempUserId
+                if (data.status === "ok") {
+                    tempUserId = data.tempUserId
                     document.querySelector('.editableDetails').style.display = 'none';
                     document.querySelector('.verify').style.display = 'block';
                     startTimer();
@@ -101,7 +101,7 @@ function verifyUser(userId) {
     }
 }
 let timer;
-let countdown = 60; 
+let countdown = 60;
 function startTimer() {
     timer = setInterval(() => {
         document.getElementById('timer').textContent = countdown;
@@ -116,8 +116,8 @@ function startTimer() {
 }
 
 
-function resendOtp(){
-    const reqBody={tempUserId}
+function resendOtp() {
+    const reqBody = { tempUserId }
     fetch('/resendOTP', {
         method: "PUT",
         body: JSON.stringify(reqBody),
@@ -131,7 +131,7 @@ function resendOtp(){
                 document.getElementById('resentTxt').style.display = 'none';
                 countdown = 60;
                 document.getElementById('timer').textContent = countdown;
-            
+
                 startTimer();
             } else {
                 console.log('update failed')
@@ -205,7 +205,7 @@ function getPasswordChange() {
     const editableElements = Array.from(document.getElementsByClassName('editablePassword'));
     editableElements.forEach(element => element.style.display = 'block');
 }
-function cancelPasswordChange(){
+function cancelPasswordChange() {
     document.getElementById('changePassword').style.display = 'block';
     const editableElements = Array.from(document.getElementsByClassName('editablePassword'));
     editableElements.forEach(element => element.style.display = 'none');
@@ -265,29 +265,23 @@ function updateProfile(userId) {
             "Content-Type": "application/json"
         },
     })
-    .then((res) => res.json())
-    .then((data) => {
-        if (data.status === "ok") {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Profile updated successfully.',
-            }).then(() => {
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "ok") {
                 window.location.replace("/profile");
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Invalid OTP',
-            });
-        }
-    })
-    .catch(err => console.log(err));
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Invalid OTP',
+                });
+            }
+        })
+        .catch(err => console.log(err));
 }
 
 // toggle wallet
-function toggleWalletHistory(){
+function toggleWalletHistory() {
     const displayWallet = document.querySelector('.displayWallet');
     const walletToggle = document.getElementById('walletToggle');
 
