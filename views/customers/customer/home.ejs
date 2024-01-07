@@ -3,9 +3,9 @@
 <div class="fluid">
   <% if (user) { %>
     <%- include('../../partials/headers/homeHeader',{ totalCartProduct: totalCartProduct}) %>
-    <%} else{ %>
+      <%} else{ %>
         <%- include('../../partials/headers/header') %>
-        <% } %>
+          <% } %>
             <%- include('../../partials/subHeader',allCategories) %>
               <div class="subTittle d-flex justify-content-around align-items-center">
                 <p class="subTittle-text">Members get free shipping above Rs.1999</p">
@@ -15,11 +15,13 @@
               <!-- page redirect1 -->
               <section class="page-sectn">
                 <div class="pagesctn-contnts">
-                  <p class="pagesctn-head">The festive collection</p>
-                  <p class="pagesctn-sub">Celebrate in standout styles!</p>
-                  <a href="/products/Ladies/viewAll" type="button" class="btn btn-light button-txt">Ladies</a>
-                  <a href="/products/Mens/viewAll" type="button" class="btn btn-light button-txt">Mens</a>
-                  <a href="/products/Kids/viewAll" type="button" class="btn btn-light button-txt">Kids</a>
+                  <!-- <div class="bannerTxts"> -->
+                    <p class="pagesctn-head">The festive collection</p>
+                    <p class="pagesctn-sub">Celebrate in standout styles!</p>
+                    <a href="/products/Ladies/viewAll" type="button" class="btn btn-light button-txt">Ladies</a>
+                    <a href="/products/Mens/viewAll" type="button" class="btn btn-light button-txt">Mens</a>
+                    <a href="/products/Kids/viewAll" type="button" class="btn btn-light button-txt">Kids</a>
+                  <!-- </div> -->
                 </div>
               </section>
 
@@ -47,9 +49,9 @@
                                   <div class="card">
                                     <img class="card-img-top productImg" src="/<%= totalProducts[j].image %>"
                                       alt="Card image cap">
-                                      <a href="/order/history">
-                                        <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
-                                      </a>
+                                    <a href="/order/history">
+                                      <img src="/images/navbar/wishlist.png" class="wishlist" alt="wishlist">
+                                    </a>
                                     <div class="card-body">
                                       <h3 class="card-title">
                                         <%= totalProducts[j].name %>

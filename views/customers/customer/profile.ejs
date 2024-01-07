@@ -88,6 +88,8 @@
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <button class="btn btn-dark save  mt-4" type="button" id="signin_button"
                                     onclick="updateProfile('<%= user._id %>')">Verify</button>
+                                    <a href="/profile" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
+
 
                             </div>
                         </div>
@@ -312,7 +314,7 @@
                             <button type="button" class="btn btn-dark save mt-3"
                                 onclick="saveBillingAddress('<%= user._id %>','name_addressAdd','phone_addressAdd',
                                 'address_addressAdd','town_addressAdd','pincode_addressAdd','state_addressAdd')">Save</button>
-                            <a href="/checkout" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
+                            <a href="/profile" type="button" class="btn btn-outline-dark save mt-3">Cancel</a>
                         </div>
                     </div>
 

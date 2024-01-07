@@ -64,10 +64,7 @@ function performRemoval(productId, userId, size, count) {
     .then((res) => res.json())
     .then((data) => {
         if (data.status === 'ok') {
-            Swal.fire('Deleted!', 'Your product has been deleted.', 'success')
-                .then(() => {
-                    location.reload();
-                });
+            location.reload();
         } else {          
             Swal.fire('Error!', 'Product removal failed.', 'error');
         }

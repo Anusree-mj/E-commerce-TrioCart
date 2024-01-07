@@ -11,21 +11,26 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
 }
 
 .pagesctn-contnts {
-    background-image: url(/images/navbar/festive.jpg);
+    background-image: url(/images/home/banner1.png);
     width: 80%;
     max-width: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     justify-content: center;
+    align-items: center;
     text-align: center;
     color: white;
     padding: 1rem 0;
 }
+
+/* .bannerTxts {
+    background-color: rgba(0, 0, 0, 0.267);
+    width: 20rem;
+} */
 
 .pagesctn-head {
     font-weight: bolder;
@@ -200,8 +205,9 @@
         height: 40vh;
     }
 }
+
 @media only screen and (max-width: 575px) {
-    .newArrivals_sectn{
+    .newArrivals_sectn {
         display: none;
     }
 }

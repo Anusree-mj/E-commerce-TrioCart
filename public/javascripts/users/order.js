@@ -15,13 +15,7 @@ function cancelOrder(orderId) {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.status === "ok") {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Order Canceled!',
-                            text: 'Your order has been canceled successfully.',
-                        }).then(() => {
-                            location.reload();
-                        });
+                        location.reload();
                     } else {
                         Swal.fire({
                             icon: 'error',
