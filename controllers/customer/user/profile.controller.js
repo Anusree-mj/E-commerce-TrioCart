@@ -44,7 +44,7 @@ const getProfilePage = async (req, res, next) => {
 };
 
 const sendUserProfileUpdateRequest = async (req, res, next) => {
-  try {
+  try {    
     let userId = req.params.userId;
     const otp = signupUtil.generateOTP();
     let result = await userUpdateHelpers.verifyUser(req.body, otp, userId);

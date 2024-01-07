@@ -1,6 +1,6 @@
 //decremetn
-function decrementCount(productId,size) {
-    let reqBody={size}
+function decrementCount(productId, size) {
+    let reqBody = { size }
     fetch(`/${productId}/cancel`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
@@ -17,8 +17,8 @@ function decrementCount(productId,size) {
         })
         .catch(err => console.log(err));
 }
-function incrementCount(productId,size) {
-    let reqBody={size}
+function incrementCount(productId, size) {
+    let reqBody = { size }
     fetch(`/${productId}/add`, {
         method: "PUT",
         body: JSON.stringify(reqBody),
@@ -36,7 +36,7 @@ function incrementCount(productId,size) {
         .catch(err => console.log(err));
 }
 
-function removeProduct(productId, userId, size,count) {
+function removeProduct(productId, userId, size, count) {
     Swal.fire({
         title: 'Are you sure?',
         text: 'You won\'t be able to revert this!',
@@ -44,7 +44,7 @@ function removeProduct(productId, userId, size,count) {
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, remove it!'
     }).then((result) => {
         if (result.isConfirmed) {
             performRemoval(productId, userId, size, count);
@@ -61,13 +61,13 @@ function performRemoval(productId, userId, size, count) {
             'Content-Type': 'application/json'
         },
     })
-    .then((res) => res.json())
-    .then((data) => {
-        if (data.status === 'ok') {
-            location.reload();
-        } else {          
-            Swal.fire('Error!', 'Product removal failed.', 'error');
-        }
-    })
-    .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === 'ok') {
+                location.reload();
+            } else {
+                Swal.fire('Error!', 'Product removal failed.', 'error');
+            }
+        })
+        .catch((err) => console.log(err));
 }

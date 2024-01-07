@@ -33,7 +33,11 @@ const TemporaryUserSchema = new mongoosedb.Schema(
         otpExpired: {
             type: Boolean,
             default: false
-        }
+        },
+        userId: {
+            type: mongoosedb.Schema.Types.ObjectId,
+            ref: 'users',
+        },
     },
     {
         timestamps: true, // This option adds createdAt and updatedAt timestamps
