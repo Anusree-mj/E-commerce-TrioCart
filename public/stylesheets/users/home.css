@@ -61,8 +61,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 30rem;
-    left: 29rem;
+  bottom: 3rem;
     width: 28rem;
     max-width: 50%;
     background-color: rgba(0, 0, 0, 0.274);
@@ -164,8 +163,7 @@
 
     .adds-contnt {
         width: 20rem;
-        top: 7.5rem;
-        left: 6rem;
+       
     }
 
     .emptyHead {
