@@ -18,6 +18,9 @@
   .footerLink:hover{
     color: rgb(0, 0, 0);
   }
+  .footerTxts{
+    color: black;
+  }
    .footer-ul{
     display: flex;
    justify-content: space-between;
