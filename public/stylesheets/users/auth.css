@@ -9,6 +9,17 @@ body {
     background-repeat: no-repeat;
     font-family: 'Numans', sans-serif;
 }
+.signupSctn{
+    background-color: rgba(255, 255, 255, 0.075);
+}
+.loginsSectn {
+    background-color: rgba(255, 255, 255, 0.075);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
 
 .container {
     align-content: center;
@@ -27,15 +38,18 @@ body {
     margin-left: 10px;
     color: #FFC312;
 }
+
 .subHead {
     margin-top: 2.5rem;
     color: rgb(245, 222, 179);
 }
+
 .dividngLine {
     width: 100%;
-    border: 1.5px solid  rgb(245, 222, 179);
+    border: 1.5px solid rgb(245, 222, 179);
 
 }
+
 .social_icon span:hover {
     color: white;
     cursor: pointer;
@@ -91,10 +105,12 @@ input:focus {
 .password-box {
     position: relative;
 }
-.passwordInput{
+
+.passwordInput {
     width: 23.9rem !important;
     border-radius: 1px !important;
 }
+
 .show {
     border: none;
     background-color: rgba(255, 255, 255, 0);
@@ -142,14 +158,20 @@ input:focus {
 .links a {
     margin-left: 4px;
 }
-
+.footerLink{
+color: white !important;
+}
+.footerTxts{
+    color: white !important;
+}
 @media only screen and (max-width: 980px) {
     .show {
         right: -.1rem;
         font-size: 0.8rem;
         top: 0.5rem;
     }
-    .passwordInput{
+
+    .passwordInput {
         width: 13rem !important;
     }
 }
