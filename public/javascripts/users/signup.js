@@ -122,13 +122,16 @@ function signup() {
         isStrongPassword, isValidEmail,
         isValidPhoneNumber,
         isValidName)) {
+            referral: document.getElementById('referral').value ? document.getElementById('referral').value : null
 
         let reqBody = {
             name: document.getElementById("name").value,
             email: document.getElementById("email").value,
             phone: document.getElementById("phone").value,
             password: document.getElementById("password").value,
+            referal: document.getElementById('referral').value ? document.getElementById('referral').value : null
         }
+        console.log(referral)
         fetch("/user/signup", {
             method: "POST",
             body: JSON.stringify(reqBody),
@@ -139,9 +142,9 @@ function signup() {
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/user/verify");
-                }else{
-                    document.getElementById('emailSpan').textContent="Email already exist"
-                    document.getElementById('emailSpan').style.fontSize='1.5rem';
+                } else {
+                    document.getElementById('emailSpan').textContent = "Email already exist"
+                    document.getElementById('emailSpan').style.fontSize = '1.5rem';
                 }
             })
             .catch(err => console.log(err));
@@ -161,14 +164,8 @@ function verifyUser() {
         },
     }).then((res) => res.json())
         .then((data) => {
-            if (data.status === "ok") {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Verification Successful',
-                    text: 'You have been successfully verified.',
-                }).then(() => {
-                    window.location.replace("/");
-                });
+            if (data.status === "ok") {                
+                    window.location.replace("/");               
             } else {
                 Swal.fire({
                     icon: 'error',

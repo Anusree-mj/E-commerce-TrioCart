@@ -17,7 +17,7 @@ const WalletSchema = new mongoosedb.Schema(
                 required: true,
             },
             createdAt: {
-                type: Date, 
+                type: Date,
                 required: true,
             },
         }],

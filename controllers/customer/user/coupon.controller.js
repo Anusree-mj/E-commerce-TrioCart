@@ -45,8 +45,10 @@ const getCashBack = async (req, res, next) => {
 
             if (couponResult.status === 'ok') {
                 res.status(200).json({ status: "ok" });
-            } else {
+            } else if(couponResult.status === 'nok') {
                 res.status(400).json({ status: "nok" });
+            }else{
+                res.status(400).json({ status: "placeOrder" });
             }
         } else {
             res.redirect('/user/login');

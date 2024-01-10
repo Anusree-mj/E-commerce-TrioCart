@@ -5,16 +5,16 @@ function clearSpan(spanId) {
 
 function getAddReferrlSection() {
     document.getElementById('addReferralCode').style.display = 'none';
-    document.getElementById('walletToggle').style.display='none';
+    document.getElementById('walletToggle').style.display = 'none';
     const referralContainers = document.querySelectorAll('.referralContainer');
     if (referralContainers.length > 0) {
         referralContainers[0].style.display = 'block';
     }
 }
 
-function cancelReferring(){
+function cancelReferring() {
     document.getElementById('addReferralCode').style.display = 'block';
-    document.getElementById('walletToggle').style.display='block';
+    document.getElementById('walletToggle').style.display = 'block';
     const referralContainers = document.querySelectorAll('.referralContainer');
     if (referralContainers.length > 0) {
         referralContainers[0].style.display = 'none';
@@ -27,22 +27,25 @@ function addReferralCode() {
     if (referralCode === "") {
         document.getElementById('referralCodeSpan').textContent = 'Add a referral code'
     }
-    else{  
-        let reqBody={referralCode}      
+    else {
+        let reqBody = { referralCode }
         fetch(`/referral`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: {
                 "Content-Type": "application/json"
             },
-    
+
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status === "ok") {
                     window.location.replace("/profile");
+                } else if (data.status === 'placeOrder') {
+                    document.getElementById('referralCodeSpan').textContent = 'Place your first order for getting cashback.'
+
                 } else {
                     document.getElementById('referralCodeSpan').textContent = 'Invalid referral code'
-    
+
                 }
             })
             .catch(err => console.log(err));

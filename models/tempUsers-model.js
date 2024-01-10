@@ -34,6 +34,10 @@ const TemporaryUserSchema = new mongoosedb.Schema(
             type: Boolean,
             default: false
         },
+        referredCode: {
+            type: String,
+            required: true,
+        },
         userId: {
             type: mongoosedb.Schema.Types.ObjectId,
             ref: 'users',
