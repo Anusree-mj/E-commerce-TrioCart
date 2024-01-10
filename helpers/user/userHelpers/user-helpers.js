@@ -14,11 +14,13 @@ module.exports = {
                 return { status: 'same email' }
             } else {
                 userData.password = await bcrypt.hash(userData.password, 10)
+                console.log('referred codeee',userData.referal)
                 const data = {
                     name: userData.name,
                     phone: userData.phone,
                     email: userData.email,
                     password: userData.password,
+                    referredCode:userData.referal,
                     otp: otp
                 }
                 const email = userData.email
@@ -43,6 +45,7 @@ module.exports = {
                     name: check.name,
                     phone: check.phone,
                     email: check.email,
+                    referredCode:check.referredCode,
                     password: check.password,
                     'referralCode.name': getReferralCode,
                     coupon: [

@@ -3,7 +3,7 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <section class="signupSctn">
     <%- include('../../partials/loginHeader') %>
@@ -32,6 +32,11 @@
                             placeholder="Enter your contact number" onclick="clearSpan('phoneSpan')"
                             onblur="checkPhone()">
                         <span id="phoneSpan" class="span"></span><br>
+                        <!-- add referral -->
+                        <label class="label" for="email">Referral Code</label>
+                        <input type="email" class="form-control" name="email" id="referral"
+                            placeholder="Enter a referral code">
+                            <span id="referralSpan" class="span"></span><br>
 
                         <!-- change password -->
                         <div class="password-box">

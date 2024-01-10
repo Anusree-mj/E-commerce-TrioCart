@@ -25,6 +25,10 @@ const UserSchema = new mongoosedb.Schema(
             type: Boolean,
             default: false,
         },
+        referredCode: {
+            type: String,
+            required: true,
+        },
         billingAddress: [
             {
                 name: {

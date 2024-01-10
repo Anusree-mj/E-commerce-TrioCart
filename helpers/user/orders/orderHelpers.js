@@ -1,7 +1,7 @@
 const collection = require('../../../models/index-model')
 const delvryTimeUtil = require('../../../utils/delvryTymUtil');
 const userReadableIdUtil = require('../../../utils/userReadableId');
-
+const cashBackHelper = require('../userHelpers/coupon-helpers')
 module.exports = {
     saveOrderAddress: async (userId, billingAddress) => {
         try {
@@ -37,7 +37,7 @@ module.exports = {
                 _id: orderDetails.userId
             })
             const address = getBillingAddress.orderAddress[0];
-
+           
             const getOrderedProducts = await collection.cartCollection.findOne({
                 userId: orderDetails.userId
             })
@@ -107,6 +107,15 @@ module.exports = {
                     userId: orderDetails.userId
                 })
             }
+             // give cashback if any
+             const checkCashback = await collection.orderCollection.find({
+                userId: orderDetails.userId
+            });
+            
+            if (checkCashback.length === 1) {
+                const referredCode = getBillingAddress.referredCode;
+                await cashBackHelper.getCashBack(orderDetails.userId, referredCode);
+            } 
             return { status: 'ok', orderId, totalAmount }
 
         } catch (err) {
