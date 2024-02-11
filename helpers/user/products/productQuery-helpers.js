@@ -10,7 +10,7 @@ module.exports = {
                     { category: { $regex: new RegExp(query, 'i') } },
                     { subCategory: { $regex: new RegExp(query, 'i') } },
                 ],
-            });
+            }).sort({ createdAt: -1 });
 
             if (searchProducts) {
                 return { status: 'ok', searchProducts }
