@@ -4,6 +4,19 @@ TrioCart is an eCommerce platform specializes in dress shopping, catering to lad
 
 ## UI Demo
 
+## Table of Contents
+
+- [TrioCart](#triocart)
+- [UI Demo](#ui-demo)
+- [Features](#features)
+- [Customer Side](#customer-side)
+- [Admin Side](#admin-side)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ## Features
 
 ### Customer Side:
