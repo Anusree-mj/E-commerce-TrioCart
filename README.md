@@ -1,6 +1,6 @@
 # 🛒 TrioCart 
 
-Welcome to TrioCart! 🎉 TrioCart is an eCommerce platform specializing in dress shopping, catering to ladies, men, and kids. 👗👔👶. Node.js 🟢 Express.js 🚀 MongoDB 🍃 And many more! 🌟. It provides a comprehensive set of features for both customers and administrators. ✨
+TrioCart is an eCommerce platform specializing in dress shopping, catering to ladies, men, and kids. Node.js Express.js MongoDB And many more! It provides a comprehensive set of features for both customers and administrators. ✨
 
 ## UI Demo
 ![Screenshot 1](https://raw.githubusercontent.com/Anusree-mj/E-commerce-TrioCart/main/public/images/trioCart_ui.gif)
